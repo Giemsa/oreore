@@ -5,4 +5,6 @@ cocos2dxオレオレフレームワーク
 ## 使い方
 ソース見れ
 ## Utils.h
-乱数生成ルーチンとかのテンプレートクラスはcocos2dx以外でも使えます。
+OTL(Oreore Template Library)  
+cocos2dxに限らず利用できます。USE_COCOS2DXマクロを定義するとcocos2dx向けにビルドします。  
+定義しない場合は汎用的にビルドします。
