@@ -12,32 +12,6 @@
 
 namespace CommonGameBase
 {
-    /* 数字を表示するスプライト */
-    class NumberSprite : public cocos2d::Sprite
-    {
-    private:
-        cocos2d::Rect rect;
-        char *format;
-    public:
-        CREATE_FUNC(NumberSprite);
-        static NumberSprite *createWithTexture(cocos2d::Texture2D *tex, const cocos2d::Rect &rect)
-        {
-            NumberSprite *self = create();
-            self->setNumberTexture(tex, rect);
-            return self;
-        }
-    
-        NumberSprite();
-        virtual ~NumberSprite();
-        
-        bool init() override;
-        void setNumberTexture(cocos2d::Texture2D *tex, const cocos2d::Rect &rect);
-        
-        void setNumber(const int n);
-        void setReed(const int reed, bool zerofill = false);
-    };
-
-
 	/* シーン/スクリーンのIDをユニークにふるやつ */
 	class IDConnector
 	{

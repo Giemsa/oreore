@@ -17,6 +17,16 @@ namespace Utils
 	{
 		return cocos2d::Rect(point.x, point.y, size, size);
 	}
+    
+    // Color4F -> Color3B
+    inline Color3B toColor3B(const cocos2d::Color4F &color)
+    {
+        return Color3B(
+            static_cast<GLubyte>(255.f * color.r),
+            static_cast<GLubyte>(255.f * color.g),
+            static_cast<GLubyte>(255.f * color.b)
+        );
+    }
 }
 
 #endif
