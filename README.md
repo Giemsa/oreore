@@ -3,7 +3,115 @@ cocos2dxオレオレフレームワーク
 ## 概要
 俺得フレームワーク。面倒なリソース管理とか全部やってくれる勢い。
 ## 使い方
-ソース見れ
+### CommonGameBase::ScreenBase
+シーン1枚に相当するクラス。このクラスを継承してシーンを作成します。
+
+    class GameScreen : public CommonGameBase::ScreenBase
+    {
+    private:
+    public:
+        CONNECT_ID;
+        CREATE_FUNC(GameScreen);
+
+        GameScreen();
+        virtual ~GameScreen();
+
+        bool init() override;
+    };
+
+CONNECT_IDマクロとCREATE_FUNCマクロは必須です。また、initメソッド内で初期化を行います。  
+**コンストラクタ内で初期化は行わないようにしてください。**oreoreが内部でメモリ管理を行っているので、コンストラクタ内で初期化すると死にます。
+
+また、cpp側に
+
+	INIT_BASE_SCREEN(GameScreen);
+	
+を記述してください。
+
+### CommonGameBase::GameManager
+リソースの管理を行うクラスです。このクラスを継承してGameManagerを作成します。
+
+	// Sprite Index
+    enum SpriteIndex : int
+    {
+        Count
+    };
+
+    class GameManager : public CommonGameBase::GameManager<GameManager, 2, SpriteIndex, SpriteIndex::Count>
+    {
+    private:
+    public:
+        GameManager();
+        virtual ~GameManager();
+
+        void init();
+    };
+
+CommonGameBase::GameManagerはテンプレートクラスです。それぞれ
+
+ * 継承後のクラス名
+ * 総シーン数
+ * スプライト管理に使うインデックスのenum型
+ * 総スプライト数(enumの最後にCountを付けておくとこのような書き方ができます。)
+
+です。
+initメソッド内でリソースの読み込みを行います。
+
+    void GameManager::init()
+    {
+    	// スクリーンを生成して登録する
+        GameScreen *screen = new GameScreen();
+        registerScreen(screen);
+
+		// スプライトレジストラを取得する。
+        CommonGameBase::SpriteRegistrar<SpriteIndex> reg = 
+        	loadSprite(screen, "ball.png");
+
+        // テクスチャの登録
+        reg.add(SpriteIndex::Ball);
+
+		// メソッドチェーン的な使い方
+        loadSprite(screen, "images.png")
+        	.add(SpriteIndex::LifeBar, 0, 140, 320, 16)
+        	.add(SpriteIndex::ItemLifeRecover, 0, 156, 32, 32);
+       
+		// 初期化(このタイミングで各シーンのinitメソッドが呼ばれます)
+        initScreens();
+    }
+
+CommonGameBase::SpriteRegistrar::addメソッドは、引数にスプライトのインデックスを指定すると画像全体をテクスチャとして登録します。第二〜第五引数を指定すると、その範囲をテクスチャとして登録します。
+
+#### GameManager::sprite(const E index)
+登録されたテクスチャからスプライトを生成します。
+
+	cocos2d::Sprite *sprite = GameManager::sprite(SpriteIndex::Ball);
+	addChild(sprite);
+
+#### GameManager::texture(const E index)
+登録されたテクスチャを返します。
+
+#### GameManager::rect(const E index)
+登録されたテクスチャの矩形領域を返します。
+
+	cocos2d::Sprite *sprite = cocos2d::Sprite::create();
+	sprite->setTexture(GameManager::texture(SpriteIndex::Ball));
+	sprite->setTextureRect(GameManager::rect(SpriteIndex::Ball));
+	
+通常はSpriteを継承して、init内でこのメソッドを使います。
+
+	bool SugoiSprite::init()
+	{
+		if(Sprite::init())
+		{
+			setTexture(GameManager::texture(SpriteIndex::Ball));
+			setTextureRect(GameManager::rect(SpriteIndex::Ball));
+		}
+		return false;
+	}
+
+#### その他
+適当にどうぞ
+
 ## Utils.h
 OTL(Oreore Template Library)  
 cocos2dxに限らず利用できます。USE_COCOS2DXマクロを定義するとcocos2dx向けにビルドします。  
