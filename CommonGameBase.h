@@ -86,7 +86,7 @@ namespace CommonGameBase
 	template<typename E>
 	class SpriteRegistrar
 	{
-		template<typename T, int N, typename _E, int C>
+		template<typename T, int N, typename _E, _E C>
 		friend class GameManager;
 	private:
 		SpriteInfoList *list;
@@ -97,13 +97,13 @@ namespace CommonGameBase
 	public:
 		SpriteRegistrar &add(const E id, const float x, const float y, const float w, const float h)
 		{
-			(*list)[id] = new SpriteBatchInfo(batch, x, y, w, h);
+			(*list)[static_cast<int>(id)] = new SpriteBatchInfo(batch, x, y, w, h);
 			return *this;
 		}
 		
 		SpriteRegistrar &add(const E id)
 		{
-			(*list)[id] = new SpriteBatchInfoWhole(batch);
+			(*list)[static_cast<int>(id)] = new SpriteBatchInfoWhole(batch);
 			return *this;
 		}
 	};
@@ -116,7 +116,7 @@ namespace CommonGameBase
 	 * E: スプライト管理に用いるIDの列挙型とかint型default = int)
 	 * C: 読み込む画像の最大枚数(default = 4/immutableに管理するのであとから増やすとかはできない)
 	 */
-	template<typename T, int N, typename E = int, int C = 4>
+	template<typename T, int N, typename E = int, E C = 4>
 	class GameManager
 	{
 		typedef std::vector<ScreenBase *> ScreenList;
@@ -160,7 +160,7 @@ namespace CommonGameBase
 		}
 	public:
 		GameManager()
-			: size(cocos2d::Director::getInstance()->getWinSize()), screens(N), sprite_list(C)
+			: size(cocos2d::Director::getInstance()->getWinSize()), screens(N), sprite_list(static_cast<int>(C))
 		{
 		}
 
@@ -184,9 +184,9 @@ namespace CommonGameBase
 		inline const cocos2d::Size &getScreenSize() const { return size; }
 		inline const float getWidth() const { return getScreenSize().width; }
 		inline const float getHeight() const { return getScreenSize().height; }
-		inline static cocos2d::Sprite *sprite(const E id) { return get()->sprite_list[id]->getSprite(); }
-		inline static cocos2d::Texture2D *texture(const E id) { return get()->sprite_list[id]->getTexture(); }
-		inline static cocos2d::Rect rect(const E id) { return get()->sprite_list[id]->getRect(); }
+		inline static cocos2d::Sprite *sprite(const E id) { return get()->sprite_list[static_cast<int>(id)]->getSprite(); }
+		inline static cocos2d::Texture2D *texture(const E id) { return get()->sprite_list[static_cast<int>(id)]->getTexture(); }
+		inline static cocos2d::Rect rect(const E id) { return get()->sprite_list[static_cast<int>(id)]->getRect(); }
 	};
 }
 
