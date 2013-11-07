@@ -159,6 +159,8 @@ namespace CommonGameBase
 					(*it)->init();
 		}
 	public:
+        typedef E ElementType;
+
 		GameManager()
 			: size(cocos2d::Director::getInstance()->getWinSize()), screens(N), sprite_list(static_cast<int>(C))
 		{
@@ -188,6 +190,57 @@ namespace CommonGameBase
 		inline static cocos2d::Texture2D *texture(const E id) { return get()->sprite_list[static_cast<int>(id)]->getTexture(); }
 		inline static cocos2d::Rect rect(const E id) { return get()->sprite_list[static_cast<int>(id)]->getRect(); }
 	};
+    
+    /*
+     * Menuのボタンを作るクラス
+     * T:                GameManagerクラス
+     * buttonBG:         ボタンの背景画像のインデックス
+     * selectedButtonBG: 選択時のボタンの背景画像のインデックス
+     */
+    template<typename T, typename T::ElementType buttonBG, typename T::ElementType selectedButtonBG>
+    class MenuItemGenerator
+    {
+    private:
+        cocos2d::Sprite *bg, *selbg;
+        
+        cocos2d::Sprite *getSprite(cocos2d::Sprite *bg, cocos2d::Sprite *text, const cocos2d::Size &size)
+        {
+            cocos2d::RenderTexture *tex = cocos2d::RenderTexture::create(size.width, size.height);
+            tex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
+            bg->visit();
+            text->visit();
+            tex->end();
+            return cocos2d::Sprite::createWithTexture(tex->getSprite()->getTexture());
+        }
+    public:
+        MenuItemGenerator()
+        {
+            bg = T::sprite(buttonBG);
+            bg->setAnchorPoint(cocos2d::Point::ZERO);
+            bg->setPosition(cocos2d::Point::ZERO);
+            selbg = T::sprite(selectedButtonBG);
+            selbg->setAnchorPoint(cocos2d::Point::ZERO);
+            selbg->setPosition(cocos2d::Point::ZERO);
+        }
+        
+        virtual ~MenuItemGenerator()
+        {
+        }
+    
+        cocos2d::MenuItemSprite *generate(const typename T::ElementType index, const cocos2d::ccMenuCallback &callback)
+        {
+            const cocos2d::Size &size = bg->getContentSize();
+            cocos2d::Sprite *text = T::sprite(index);
+            text->setPosition(cocos2d::Point(size.width / 2, size.height / 2));
+            text->setFlippedY(true);
+
+            return cocos2d::MenuItemSprite::create(
+                getSprite(bg, text, size),
+                getSprite(selbg, text,size),
+                callback
+            );
+        }
+    };
 }
 
 #define CONNECT_ID	\
