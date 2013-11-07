@@ -1,11 +1,12 @@
 #ifndef __NULL_H__
 #define __NULL_H__
 
-#if defined(__GNUG__) && defined(__GNUC__) && __GNUC__ >= 4
-#	define null __null
+#if __cplusplus > 199711L
+const decltype(nullptr) null = nullptr;
+//#elif defined(__GNUG__) && defined(__GNUC__) && __GNUC__ >= 4
 #else
 
-class __null {
+const class null_t {
 public:
 	template<class T>
 	operator T*() const { return 0; }
@@ -13,9 +14,8 @@ public:
 	operator T C::*() const { return 0; }
 private:
 	void operator&() const;
-};
+} null = {};
 
-const __Null::__null null = __Null::__null();
 #endif
 
 #endif
