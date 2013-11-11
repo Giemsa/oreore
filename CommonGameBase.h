@@ -200,6 +200,7 @@ namespace CommonGameBase
     template<typename T, typename T::ElementType buttonBG, typename T::ElementType selectedButtonBG>
     class MenuItemGenerator
     {
+            typedef typename T::ElementType element_type;
     private:
         cocos2d::Sprite *bg, *selbg;
         
@@ -212,31 +213,43 @@ namespace CommonGameBase
             tex->end();
             return cocos2d::Sprite::createWithTexture(tex->getSprite()->getTexture());
         }
-    public:
-        MenuItemGenerator()
-        {
-            bg = T::sprite(buttonBG);
-            bg->setAnchorPoint(cocos2d::Point::ZERO);
-            bg->setPosition(cocos2d::Point::ZERO);
-            selbg = T::sprite(selectedButtonBG);
-            selbg->setAnchorPoint(cocos2d::Point::ZERO);
-            selbg->setPosition(cocos2d::Point::ZERO);
-        }
         
-        virtual ~MenuItemGenerator()
+        cocos2d::Sprite *getSprite(const element_type index) const
         {
+            cocos2d::Sprite *sprite = T::sprite(index);
+            sprite->setAnchorPoint(cocos2d::Point::ZERO);
+            sprite->setPosition(cocos2d::Point::ZERO);
+            return sprite;
         }
+    public:
+        MenuItemGenerator() : bg(null), selbg(null) { }
+        virtual ~MenuItemGenerator() { }
     
-        cocos2d::MenuItemSprite *generate(const typename T::ElementType index, const cocos2d::ccMenuCallback &callback)
+        cocos2d::MenuItemSprite *generate(const element_type index, const cocos2d::ccMenuCallback &callback)
         {
+            if(!bg)
+                bg = getSprite(buttonBG);
+            if(!selbg)
+                selbg = getSprite(selectedButtonBG);
+
             const cocos2d::Size &size = bg->getContentSize();
             cocos2d::Sprite *text = T::sprite(index);
             text->setPosition(cocos2d::Point(size.width / 2, size.height / 2));
             text->setFlippedY(true);
-
+            
             return cocos2d::MenuItemSprite::create(
                 getSprite(bg, text, size),
                 getSprite(selbg, text,size),
+                callback
+            );
+        }
+
+        template<typename S>
+        inline S *generate(const cocos2d::ccMenuCallback &callback) const
+        {
+            return S::create(
+                getSprite(buttonBG),
+                getSprite(selectedButtonBG),
                 callback
             );
         }
