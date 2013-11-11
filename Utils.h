@@ -22,6 +22,9 @@
 #include <cmath>
 #include <limits>
 
+#include "TimeCounter.h"
+
+
 namespace Utils
 {
     // use Xorshift
