@@ -21,8 +21,8 @@ namespace Utils
         {
             typedef time_t type;
             typedef time_t span_t;
-            inline type time() const { return std::time(null); }
-            inline int getClockPerMSec() const { return 1; }
+            inline static type time() { return std::time(null); }
+            inline static int getClockPerMSec() { return 1; }
         };
         
 
@@ -31,8 +31,8 @@ namespace Utils
         {
             typedef clock_t type;
             typedef double span_t;
-            inline type time() const { return std::clock(); }
-            inline int getClockPerMSec() const { return CLOCKS_PER_SEC / 1000; }
+            inline type static time() { return std::clock(); }
+            inline int static getClockPerMSec() { return CLOCKS_PER_SEC / 1000; }
         };
     }
 
