@@ -92,6 +92,18 @@ namespace cocos2d
         }
     }
 
+    void OverlayLayer::setOpacity(GLubyte opacity)
+    {
+        Object* child;
+        CCARRAY_FOREACH(getChildren(), child)
+        {
+            RGBAProtocol *p = dynamic_cast<RGBAProtocol*>(child);
+            if(p)
+                p->setOpacity(opacity);
+        }
+        LayerColor::setOpacity(opacity);
+    }
+
     void OverlayLayer::setChildrenVisible(const bool visible)
     {
         Object *obj;

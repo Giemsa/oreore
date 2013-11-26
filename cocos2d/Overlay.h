@@ -46,6 +46,8 @@ namespace cocos2d
 
         virtual void show(const bool anime = true);
         virtual void close(const bool anime = true);
+
+        void setOpacity(GLubyte opacity) override;
     };
 }
 
