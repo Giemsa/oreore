@@ -27,6 +27,12 @@ namespace Utils
             static_cast<GLubyte>(255.f * color.b)
         );
     }
+    
+    inline cocos2d::Point center(cocos2d::Node *node)
+    {
+        const cocos2d::Size &s = node->getContentSize();
+        return cocos2d::Point(s.width / 2, s.height / 2);
+    }
 }
 
 #endif

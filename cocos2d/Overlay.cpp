@@ -12,20 +12,35 @@ namespace cocos2d
     {
     
     }
-    
-    bool OverlayLayer::init()
+
+    OverlayLayer *OverlayLayer::create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
     {
-        if(!LayerColor::initWithColor(Color4B(0, 0, 0, 0)))
+        OverlayLayer *r = new OverlayLayer();
+        if(r && r->init(color, opacity, speed))
+        {
+            r->autorelease();
+            return r;
+        }
+        delete r;
+        return null;
+    }
+    
+    bool OverlayLayer::init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
+    {
+        if(!LayerColor::initWithColor(color))
             return false;
+        
+        this->opacity = opacity;
+        displaySpeed = speed;
         
         setZOrder(200);
         setAnchorPoint(Point::ZERO);
         setOpacity(0);
         setPosition(Point::ZERO);
         
-        return true;
+        return true;  
     }
-    
+
     void OverlayLayer::show(const bool anime)
     {
         stopAllActions();
@@ -46,7 +61,7 @@ namespace cocos2d
         }
         else
         {
-            setOpacity(0xFF);
+            setOpacity(opacity);
             shown = true;
             onShow();
         }

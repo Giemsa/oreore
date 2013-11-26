@@ -19,18 +19,28 @@ namespace cocos2d
 
         void setChildrenVisible(const bool visible);
     public:
-        CREATE_FUNC(OverlayLayer);
-        static OverlayLayer *create(const cocos2d::Color4B &color);
+        inline static OverlayLayer *create()
+        {
+            return create(cocos2d::Color4B(), 0x90, 0.4f);
+        }
+
+        inline static OverlayLayer *create(const cocos2d::Color4B &color)
+        {
+            return create(color, 0x90, 0.4f);
+        }
+
+        inline static OverlayLayer *create(const GLubyte opacity, const float speed)
+        {
+            return create(cocos2d::Color4B(), opacity, speed);
+        }
+
         static OverlayLayer *create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
-        static OverlayLayer *create(const GLubyte opacity, const float speed);
 
         OverlayLayer();
         virtual ~OverlayLayer();
 
-        bool init() override;
-        bool init(const cocos2d::Color4B &color);
+        bool init() override { return init(cocos2d::Color4B(), 0x90, 0.4f); }
         bool init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
-        bool init(const GLubyte opacity, const float speed);
 
         inline bool isShown() const { return shown; }
 
