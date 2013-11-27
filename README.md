@@ -1,7 +1,8 @@
 # Oreore
 cocos2dxオレオレフレームワーク
 ## 概要
-俺得フレームワーク。面倒なリソース管理とか全部やってくれる勢い。
+俺得フレームワーク。面倒なリソース管理とか全部やってくれる勢い。  
+ビルドにはC++11に対応したコンパイラが必要です。たぶん。全部使うにはcocos2dx 3.0以降が必要です。
 ## 使い方
 ### CommonGameBase::ScreenBase
 シーン1枚に相当するクラス。このクラスを継承してシーンを作成します。
@@ -32,7 +33,7 @@ CONNECT_IDマクロとCREATE_FUNCマクロは必須です。また、initメソ�
 リソースの管理を行うクラスです。このクラスを継承してGameManagerを作成します。
 
 	// Sprite Index
-    enum SpriteIndex : int
+    enum class SpriteIndex
     {
         Count
     };
@@ -112,7 +113,39 @@ CommonGameBase::SpriteRegistrar::addメソッドは、引数にスプライト�
 #### その他
 適当にどうぞ
 
-## Utils.h
+### Utils.h
 OTL(Oreore Template Library)  
+汎用的っぽい感じの処理をまとめたライブラリです。乱数とか、色変換とか。  
 cocos2dxに限らず利用できます。USE_COCOS2DXマクロを定義するとcocos2dx向けにビルドします。  
 定義しない場合は汎用的にビルドします。
+
+### TimeCounter.h
+時間測るのに使おうと思ったけど使い道なかったから多分使うことないと思う。
+
+##cocos2d
+### Overlay.h
+**OverlayLayer**: オーバーレイ周りのクラス。継承するとメニュー画面とかが簡単に作れます。  
+onShowとonCloseをオーバーライドすると、それぞれオーバーレイの表示が完了した時、非表示が完了した時にそれらのメソッドが呼ばれます。  
+showとcloseはオーバーライド可能です。表示開始前、非表示開始前になにかやりたいときはこれらのメソッドをオーバーライドしてください。オーバーライドしたらかならずOverlayLayerのshowとcloseを呼んでくだしあ。
+
+	class KagekinaLayer : public cocos2d::OverlayLayer
+    {
+    private:
+    protected:
+        void onShow() override;
+        void onClose() override;
+    public:
+        CREATE_FUNC(KagekinaLayer);
+
+        KagekinaLayer() { }
+        ~KagekinaLayer() { }
+    
+        bool init() override;
+    };
+
+こんな感じで。
+
+### Shake.h
+**Shake**: 画面を揺らすアクション
+### Utils.h
+ユーティリティのうち、cocos2dxで役に立ちそうなものをぶっこんだ
