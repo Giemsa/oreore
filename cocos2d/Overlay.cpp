@@ -35,7 +35,7 @@ namespace cocos2d
         
         setZOrder(200);
         setAnchorPoint(Point::ZERO);
-        setOpacity(0);
+        LayerColor::setOpacity(0);
         setPosition(Point::ZERO);
         
         return true;  
@@ -47,7 +47,7 @@ namespace cocos2d
     
         if(anime)
         {
-            setOpacity(0);
+            LayerColor::setOpacity(0);
             runAction(
                 Sequence::create(
                     FadeTo::create(displaySpeed, opacity),
@@ -61,7 +61,7 @@ namespace cocos2d
         }
         else
         {
-            setOpacity(opacity);
+            LayerColor::setOpacity(opacity);
             shown = true;
             onShow();
         }
@@ -87,6 +87,7 @@ namespace cocos2d
         }
         else
         {
+            LayerColor::setOpacity(0);
             shown = false;
             onClose();
         }
@@ -94,13 +95,16 @@ namespace cocos2d
 
     void OverlayLayer::setOpacity(GLubyte opacity)
     {
+        setCascadeOpacityEnabled(true);
         Object* child;
+        const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
         CCARRAY_FOREACH(getChildren(), child)
         {
             RGBAProtocol *p = dynamic_cast<RGBAProtocol*>(child);
             if(p)
-                p->setOpacity(opacity);
+                p->updateDisplayedOpacity(static_cast<GLubyte>(p->getOpacity() * r));
         }
+        setCascadeOpacityEnabled(false);
         LayerColor::setOpacity(opacity);
     }
 
