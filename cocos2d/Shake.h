@@ -13,16 +13,16 @@ namespace cocos2d
 	public:
 		Shake();
 
-		static Shake* create(float duration, float level);
-		static Shake* create(float duration, float level_x, float level_y);
-		bool initWithDuration(float duration, float level_x, float level_y);
+		static Shake* create(const float duration, const float level);
+		static Shake* create(const float duration, const float level_x, const float level_y);
+		bool initWithDuration(const float duration, const float level_x, const float level_y);
 
 		virtual void startWithTarget(Node *pTarget);
 		virtual void update(float time);
 		virtual void stop(void) override;
-        
-        virtual Shake *reverse() const override;
-        virtual Shake *clone() const override;
+
+		virtual Shake *reverse() const override;
+		virtual Shake *clone() const override;
 	};
 }
 
