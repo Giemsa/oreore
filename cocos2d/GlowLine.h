@@ -59,6 +59,7 @@ namespace cocos2d
         void setSegments(const int seg);
         
         void setPoints(const Point &p, const Point &q);
+        inline void setDestination(const Point &p) { setPoints(src, p); }
        
         inline float getLineWidth() const { return lineWidth; }
         inline void setLineWidth(const float w) { lineWidth = w; }
