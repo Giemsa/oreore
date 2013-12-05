@@ -50,7 +50,7 @@ namespace cocos2d
     {
         points.clear();
         const Point v = (dst - src) / seg;
-        for(int i = 0; i < seg; i++)
+        for(int i = 0; i < seg - 1; i++)
             points.push_back(src + v * i);
         points.push_back(dst);
     }
