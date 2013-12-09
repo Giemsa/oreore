@@ -153,6 +153,30 @@ namespace Utils
 #	define va_copy(dest, src) ((dest) = (src))
 #endif
 
+#define property_rw(Type, Name, Field)  \
+    private: \
+        Type Field;   \
+    public:     \
+        inline Type get ## Name() const { return Field; } \
+        inline void set ## Name(Type Field) { this->Field = Field; } \
+    private:
+
+#define property_r(Type, Name, Field)  \
+    private: \
+        Type Field;   \
+    public:     \
+        inline Type get ## Name() const { return Field; } \
+    private:
+
+#define property_w(Type, Name, Field)  \
+    private: \
+        Type Field;   \
+    public:     \
+        inline void set ## Name(Type Field) { this->Field = Field; } \
+    private:
+
+#define property(Attr, Type, Name, Field)  property_##Attr(Type, Name, Field)
+
 #undef __IS_COCOS2DX_ENABLED__
 #undef __IS_CPP_11__
 #undef __constexpr

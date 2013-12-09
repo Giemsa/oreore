@@ -1,7 +1,6 @@
 #include "Utils.h"
 #include <ctime>
 
-
 namespace Utils
 {
 	unsigned long random()
