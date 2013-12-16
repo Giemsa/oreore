@@ -121,7 +121,7 @@ namespace CommonGameBase
 	{
 		typedef std::vector<ScreenBase *> ScreenList;
 	private:
-		const cocos2d::Size size;
+		static cocos2d::Size size;
 		ScreenList screens;
 		SpriteInfoList sprite_list;
 		cocos2d::SpriteBatchNode **batchNodes;
@@ -162,8 +162,9 @@ namespace CommonGameBase
         typedef E ElementType;
 
 		GameManager()
-			: size(cocos2d::Director::getInstance()->getWinSize()), screens(N), sprite_list(static_cast<int>(C))
+			: screens(N), sprite_list(static_cast<int>(C))
 		{
+            size = cocos2d::Director::getInstance()->getWinSize();
 		}
 
 		virtual ~GameManager()
@@ -183,14 +184,18 @@ namespace CommonGameBase
 		template<typename S>
 		static inline S *screen() { return static_cast<S *>(get()->screens[S::getID()]); }
 		
-		inline const cocos2d::Size &getScreenSize() const { return size; }
-		inline const float getWidth() const { return getScreenSize().width; }
-		inline const float getHeight() const { return getScreenSize().height; }
+		inline static cocos2d::Size &getScreenSize() { return size; }
+		inline static float getWidth() { return size.width; }
+		inline static float getHeight() { return size.height; }
 		inline static cocos2d::Sprite *sprite(const E id) { return get()->sprite_list[static_cast<int>(id)]->getSprite(); }
 		inline static cocos2d::Texture2D *texture(const E id) { return get()->sprite_list[static_cast<int>(id)]->getTexture(); }
 		inline static cocos2d::Rect rect(const E id) { return get()->sprite_list[static_cast<int>(id)]->getRect(); }
 	};
     
+    
+	template<typename T, int N, typename E, E C>
+	cocos2d::Size GameManager<T, N, E, C>::size;
+
     /*
      * Menuのボタンを作るクラス
      * T:                GameManagerクラス
