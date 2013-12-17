@@ -33,6 +33,16 @@ namespace Utils
         const cocos2d::Size &s = node->getContentSize();
         return cocos2d::Point(s.width / 2, s.height / 2);
     }
+
+    inline int cut(const int v, const int n)
+    {
+        return v / n * n;
+    }
+
+    inline cocos2d::Point cut(const cocos2d::Point &p, const int n)
+    {
+        return cocos2d::Point(cut(p.x, n), cut(p.y, n));
+    }
 }
 
 #endif
