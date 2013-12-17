@@ -1,5 +1,6 @@
 #include "GlowLine.h"
 #include "../Utils.h"
+#include <cstdlib>
 
 namespace cocos2d
 {
