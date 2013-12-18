@@ -1,7 +1,7 @@
 #include "Utils.h"
 #include <ctime>
 
-namespace Utils
+namespace oreore
 {
 	unsigned long random()
 	{

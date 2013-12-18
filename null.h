@@ -3,7 +3,6 @@
 
 #if __cplusplus > 199711L
 const decltype(nullptr) null = nullptr;
-//#elif defined(__GNUG__) && defined(__GNUC__) && __GNUC__ >= 4
 #else
 
 const class null_t {

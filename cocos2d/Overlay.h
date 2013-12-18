@@ -1,10 +1,10 @@
-#ifndef __COCOS2D_EXT_OVERLAY__
-#define __COCOS2D_EXT_OVERLAY__
+#ifndef __OREORE_COCOS2D_OVERLAY__
+#define __OREORE_COCOS2D_OVERLAY__
 
 #include "cocos2d.h"
 #include "../null.h"
 
-namespace cocos2d
+namespace oreore
 {
     // オーバーレイレイヤ
     class OverlayLayer : public cocos2d::LayerColor
@@ -51,4 +51,4 @@ namespace cocos2d
     };
 }
 
-#endif /* defined(__REFLEX__TextAnimation__) */
+#endif

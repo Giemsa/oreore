@@ -2,8 +2,9 @@
 #include "../Utils.h"
 #include <cstdlib>
 
-namespace cocos2d
+namespace oreore
 {
+    using namespace cocos2d;
     GlowLine *GlowLine::create(const Point &p, const Point &q, const int segments)
     {
         GlowLine *line = new GlowLine();
@@ -15,7 +16,7 @@ namespace cocos2d
         delete line;
         return null;
     }
-    
+
     /* GlowLine */
     bool GlowLine::init()
     {
@@ -66,7 +67,7 @@ namespace cocos2d
     void GlowLine::draw()
     {
         Node::draw();
-       
+
         Points vecs;
         vecs.reserve(points.size());
         Points::iterator it = points.begin();
@@ -74,7 +75,7 @@ namespace cocos2d
         for(int i = 1; it != points.end(); ++it, i++)
         {
             if(1 < i && i < points.size())
-                vecs.push_back(Point(it->x + Utils::random(rl) - level, it->y + Utils::random(rl) - level));
+                vecs.push_back(Point(it->x + random(rl) - level, it->y + random(rl) - level));
             else
                 vecs.push_back(*it);
         }
