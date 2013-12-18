@@ -1,5 +1,5 @@
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __OREORE_UTILS_H__
+#define __OREORE_UTILS_H__
 
 /*
  * 雑多な便利ルーチン群
@@ -9,11 +9,10 @@
 #   define __IS_CPP_11__
 #   define __constexpr constexpr
 #else
-#   define __constexpr
+#   define __constexpr inline
 #endif
 
 #ifdef USE_COCOS2DX
-#   define __IS_COCOS2DX_ENABLED__
 #   include "./cocos2d/Utils.h"
 #endif
 
@@ -25,7 +24,7 @@
 #include "TimeCounter.h"
 
 
-namespace Utils
+namespace oreore
 {
     // use Xorshift
 	class Random
@@ -73,71 +72,14 @@ namespace Utils
         return value;
     }
 
-    struct Types
-    {
-#ifdef __IS_COCOS2DX_ENABLED__
-        typedef GLubyte byte;
-#else
-        typedef unsigned char byte;
-        
-        struct Color3B
-        {
-            byte r, g, b;
-
-            Color3B(): r(0), g(0), b(0) {}
-            Color3B(const byte _r, const byte _g, const byte _b) : r(_r), g(_g), b(_b) { }
-        };
-#endif
-    };
-    
-    
-#ifndef __IS_COCOS2DX_ENABLED__
-#   define Color3B Types::Color3B
-#endif
-
-    /* 色Aから色Bへのグラデーションを計算する(等比グラデーション) */
-	template<
-		int Ra, int Ga, int Ba,
-		int Rb, int Gb, int Bb
-	>
-	inline Color3B gradient(const double count)
-	{
-		return Color3B(
-			static_cast<Types::byte>((Rb - Ra) * count / 100 + Ra),
-			static_cast<Types::byte>((Gb - Ga) * count / 100 + Ga),
-			static_cast<Types::byte>((Ba - Ba) * count / 100 + Ba)
-		);
-	}
-    
-	inline Color3B gradient(const double count, const Color3B &a, const Color3B &b)
-	{
-		return Color3B(
-			static_cast<Types::byte>((b.r - a.r) * count / 100 + a.r),
-			static_cast<Types::byte>((b.g - a.g) * count / 100 + a.g),
-			static_cast<Types::byte>((b.b - a.b) * count / 100 + a.b)
-		);
-	}
-
-
-#ifdef __IS_CPP_11__
     template<typename T>
-    constexpr T digits(const T n) { return static_cast<int>(std::ceil(log10(static_cast<long double>(n)))); }
+    __constexpr T digits(const T n) { return static_cast<int>(std::ceil(log10(static_cast<long double>(n)))); }
 
     template<typename T>
-    constexpr int digits() { return std::numeric_limits<T>::digits10 + 1; }
+    __constexpr int digits() { return std::numeric_limits<T>::digits10 + 1; }
     
     template<int N>
-    constexpr int digits() { return digits(N); }
-#else
-    template<typename T>
-    inline T digits(const T n) { return static_cast<int>(std::ceil(log10(static_cast<long double>(n)))); }
-
-    template<typename T>
-    inline int digits() { return std::numeric_limits<T>::digits10 + 1; }
-
-    template<int N>
-    inline int digits() { return digits(N); }
-#endif
+    __constexpr int digits() { return digits(N); }
 
     template<typename T>
     inline int sgn(const T v) { return ((static_cast<int>(v) >> std::numeric_limits<int>::digits) << 1) + 1; }
@@ -177,9 +119,7 @@ namespace Utils
 
 #define property(Attr, Type, Name, Field)  property_##Attr(Type, Name, Field)
 
-#undef __IS_COCOS2DX_ENABLED__
 #undef __IS_CPP_11__
 #undef __constexpr
-#undef Color3B
 
 #endif

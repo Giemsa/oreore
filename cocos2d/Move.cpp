@@ -1,52 +1,52 @@
 #include "Move.h"
-#include "cocos2d.h"
-#include "../Utils.h"
+#include "../null.h"
 
-
-namespace cocos2d
+namespace oreore
 {
-	Move *Move::create(const float duration, const Point &vec)
-	{
-		Move *action = new Move();
-		action->initWithDuration(duration, vec);
-		action->autorelease();
-		return action;
-	}
+    using namespace cocos2d;
 
-	bool Move::initWithDuration(const float duration, const Point &vec)
-	{
-		if(ActionInterval::initWithDuration(duration))
-		{
-			this->vec = vec;
-			return true;
-		}
+    Move *Move::create(const float duration, const Point &vec)
+    {
+        Move *action = new Move();
+        action->initWithDuration(duration, vec);
+        action->autorelease();
+        return action;
+    }
 
-		return false;
-	}
+    bool Move::initWithDuration(const float duration, const Point &vec)
+    {
+        if(ActionInterval::initWithDuration(duration))
+        {
+            this->vec = vec;
+            return true;
+        }
 
-	void Move::update(float time)
-	{
-		getOriginalTarget()->setPosition(getOriginalTarget()->getPosition() + vec);
-	}
+        return false;
+    }
 
-	void Move::startWithTarget(Node *target)
-	{
-		ActionInterval::startWithTarget(target);
-	}
+    void Move::update(float time)
+    {
+        getOriginalTarget()->setPosition(getOriginalTarget()->getPosition() + vec);
+    }
 
-	void Move::stop(void)
-	{
-		ActionInterval::stop();
-	}
+    void Move::startWithTarget(Node *target)
+    {
+        ActionInterval::startWithTarget(target);
+    }
 
-	Move *Move::reverse() const
-	{
+    void Move::stop(void)
+    {
+        ActionInterval::stop();
+    }
+
+    Move *Move::reverse() const
+    {
         CCASSERT(0, "reverse is not implemented");
-		return null;
-	}
+        return null;
+    }
 
-	Move *Move::clone() const
-	{
-		return Move::create(getDuration(), vec);
-	}
+    Move *Move::clone() const
+    {
+        return Move::create(getDuration(), vec);
+    }
 }

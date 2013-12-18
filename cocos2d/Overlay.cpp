@@ -1,16 +1,18 @@
 #include "Overlay.h"
 
-namespace cocos2d
+namespace oreore
 {
+    using namespace cocos2d;
+
     /* OverlayLayer */
     OverlayLayer::OverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
     {
-    
+
     }
-    
+
     OverlayLayer::~OverlayLayer()
     {
-    
+
     }
 
     OverlayLayer *OverlayLayer::create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
@@ -24,27 +26,27 @@ namespace cocos2d
         delete r;
         return null;
     }
-    
+
     bool OverlayLayer::init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
     {
         if(!LayerColor::initWithColor(color))
             return false;
-        
+
         this->opacity = opacity;
         displaySpeed = speed;
-        
+
         setZOrder(200);
         setAnchorPoint(Point::ZERO);
         LayerColor::setOpacity(0);
         setPosition(Point::ZERO);
-        
-        return true;  
+
+        return true;
     }
 
     void OverlayLayer::show(const bool anime)
     {
         stopAllActions();
-    
+
         if(anime)
         {
             LayerColor::setOpacity(0);
@@ -66,7 +68,7 @@ namespace cocos2d
             onShow();
         }
     }
-    
+
     void OverlayLayer::close(const bool anime)
     {
         if(!shown)

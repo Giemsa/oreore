@@ -1,9 +1,9 @@
 #include "CommonGameBase.h"
 #include "Utils.h"
 
-namespace CommonGameBase
+namespace oreore
 {
-    using namespace cocos2d;
+    using namespace ::cocos2d;
     
     /* IDConnector */
     unsigned int IDConnector::id = 0;
@@ -11,7 +11,7 @@ namespace CommonGameBase
     /* ScreenBase */
     ScreenBase::ScreenBase()
     {
-        _scene = cocos2d::Scene::create();
+        _scene = Scene::create();
         _scene->retain();
         _scene->addChild(this);
     }

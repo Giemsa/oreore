@@ -1,5 +1,5 @@
-#ifndef __COMMON_SCREEN_BASE_H__
-#define __COMMON_SCREEN_BASE_H__
+#ifndef __OREORE_COMMON_SCREEN_BASE_H__
+#define __OREORE_COMMON_SCREEN_BASE_H__
 
 #include "cocos2d.h"
 #include <cstdarg>
@@ -10,7 +10,7 @@
  * ゲーム作るときに共通しそうなやつ
 */
 
-namespace CommonGameBase
+namespace oreore
 {
 	/* シーン/スクリーンのIDをユニークにふるやつ */
 	class IDConnector
@@ -267,6 +267,6 @@ namespace CommonGameBase
 	public:			\
 		inline static unsigned int getID() { return __uid; }
 
-#define INIT_BASE_SCREEN(T)	unsigned int T::__uid = CommonGameBase::IDConnector::get();
+#define INIT_BASE_SCREEN(T)	unsigned int T::__uid = oreore::IDConnector::get();
 
 #endif

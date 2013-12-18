@@ -1,12 +1,12 @@
-#ifndef __TIME_COUNTER_H__
-#define __TIME_COUNTER_H__
+#ifndef __OREORE_TIME_COUNTER_H__
+#define __OREORE_TIME_COUNTER_H__
 
 // 時間を測るクラス
 // 必要になったらプラットフォームごとに精度高い関数使う
 #include <ctime>
 #include "null.h"
 
-namespace Utils
+namespace oreore
 {
     enum class TimerPrecision
     {

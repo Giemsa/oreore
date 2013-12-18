@@ -1,30 +1,29 @@
-#ifndef __COCOS2D_EXT_SHAKE_H__
-#define __COCOS2D_EXT_SHAKE_H__
+#ifndef __OREORE_COCOS2D_SHAKE_H__
+#define __OREORE_COCOS2D_SHAKE_H__
 
 #include "cocos2d.h"
 
-namespace cocos2d
+namespace oreore
 {
-	class Shake : public ActionInterval
-	{
-	private:
-		Point dpos;
-		float strength_x, strength_y;
-	public:
-		Shake();
+    class Shake : public cocos2d::ActionInterval
+    {
+    private:
+        cocos2d::Point dpos;
+        float strength_x, strength_y;
+    public:
+        Shake();
 
-		static Shake* create(const float duration, const float level);
-		static Shake* create(const float duration, const float level_x, const float level_y);
-		bool initWithDuration(const float duration, const float level_x, const float level_y);
+        static Shake* create(const float duration, const float level);
+        static Shake* create(const float duration, const float level_x, const float level_y);
+        bool initWithDuration(const float duration, const float level_x, const float level_y);
 
-		virtual void startWithTarget(Node *pTarget);
-		virtual void update(float time);
-		virtual void stop(void) override;
+        virtual void startWithTarget(cocos2d::Node *pTarget);
+        virtual void update(float time);
+        virtual void stop(void) override;
 
-		virtual Shake *reverse() const override;
-		virtual Shake *clone() const override;
-	};
+        virtual Shake *reverse() const override;
+        virtual Shake *clone() const override;
+    };
 }
-
 
 #endif
