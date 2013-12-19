@@ -82,13 +82,11 @@ namespace oreore
     __constexpr int digits() { return digits(N); }
 
     template<typename T>
-    inline int sgn(const T v) { return ((static_cast<int>(v) >> std::numeric_limits<int>::digits) << 1) + 1; }
+    __constexpr int sgn(const T v) { return ((static_cast<int>(v) >> std::numeric_limits<int>::digits) << 1) + 1; }
 
-    template<typename T>
-    inline T rad2deg(const T rad) { return rad * 180 / M_PI; }
+    __constexpr double rad2deg(const double rad) { return rad * 180 / M_PI; }
 
-    template<typename T>
-    inline T deg2rad(const T deg) { return deg * M_PI / 180; }
+    __constexpr double deg2rad(const double deg) { return deg * M_PI / 180; }
 }
 
 #ifndef va_copy
