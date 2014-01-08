@@ -13,7 +13,7 @@ namespace oreore
         Second,
         MilliSecond
     };
-    
+
     namespace Times
     {
         template<TimerPrecision prec>
@@ -24,7 +24,7 @@ namespace oreore
             inline static type time() { return std::time(null); }
             inline static int getClockPerMSec() { return 1; }
         };
-        
+
 
         template<>
         struct Funcs<TimerPrecision::MilliSecond>
@@ -46,7 +46,7 @@ namespace oreore
         SpanType total;
     public:
         TimeCounter() : total(), begin() { }
-    
+
         inline void start()
         {
             begin = Times::Funcs<prec>::time();
@@ -56,7 +56,7 @@ namespace oreore
         {
             total += static_cast<SpanType>((Times::Funcs<prec>::time() - begin)) / Times::Funcs<prec>::getClockPerMSec();
         }
-        
+
         inline SpanType getTime() const { return total; }
         inline void reset() { total = SpanType(); }
     };

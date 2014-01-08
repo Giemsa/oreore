@@ -4,7 +4,7 @@
 namespace oreore
 {
     using namespace ::cocos2d;
-    
+
     /* IDConnector */
     unsigned int IDConnector::id = 0;
 

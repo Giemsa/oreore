@@ -1,5 +1,5 @@
 #include "GlowLine.h"
-#include "../Utils.h"
+#include "../../Utils.h"
 #include <cstdlib>
 
 namespace oreore

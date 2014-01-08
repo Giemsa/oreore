@@ -2,7 +2,7 @@
 #define __OREORE_COCOS2D_GLOWLINE_H__
 
 #include "cocos2d.h"
-#include "../null.h"
+#include "../../null.h"
 
 namespace oreore
 {

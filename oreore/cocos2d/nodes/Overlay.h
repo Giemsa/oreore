@@ -2,11 +2,10 @@
 #define __OREORE_COCOS2D_OVERLAY__
 
 #include "cocos2d.h"
-#include "../null.h"
+#include "../../null.h"
 
 namespace oreore
 {
-    // オーバーレイレイヤ
     class OverlayLayer : public cocos2d::LayerColor
     {
     private:
