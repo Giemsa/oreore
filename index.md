@@ -40,7 +40,7 @@ cocos2dxで利用できるノードやレイヤのライブラリです。
 
 ## Fluxion (cocos2dx Action Generator)
 アクションを簡潔に記述、生成するためのDSLを提供します。  
-[Fluxion Reference](/fluxion.html) を参照してください。
+[Fluxion Reference](./fluxion.html) を参照してください。
 
 #ライセンス
 This software is released under the zlib License, see LICENSE.txt.
