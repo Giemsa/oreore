@@ -28,6 +28,7 @@ namespace oreore
 
         class ActionInterval : public Action
         {
+            friend ParallelAction operator+(cocos2d::ActionInterval *, const ActionInterval &);
         private:
             template<typename T>
             inline T __mul(const T &op, typename std::enable_if<std::is_base_of<Ease, T>::value>::type* = nullptr)
@@ -93,6 +94,8 @@ namespace oreore
                 actions->addObject(static_cast<cocos2d::Action *>(b));
             }
 
+            inline SequentialAction(cocos2d::Array *array) : actions(array) { }
+
             inline SequentialAction &operator>>(const Action &action)
             {
                 actions->addObject(static_cast<cocos2d::Action *>(action));
@@ -120,26 +123,61 @@ namespace oreore
             {
                 return cocos2d::Sequence::create(actions.get());
             }
+
+            template<typename... Args>
+            inline static SequentialAction createFromActions(const Args &...args)
+            {
+                return SequentialAction(cocos2d::Array::create(static_cast<cocos2d::Action *>(args)..., nullptr));
+            }
         };
 
         class ParallelAction : public ActionInterval
         {
             friend class ActionInterval;
         private:
-            cocos2d::Spawn *actions;
+            std::unique_ptr<cocos2d::Array> actions;
+        public:
+            inline ParallelAction() : actions(new cocos2d::Array())
+            {
+                actions->initWithCapacity(2);
+            }
+            
+            inline ParallelAction(cocos2d::Array *array) : actions(array) { }
 
             template<typename S, typename T>
-            inline static ParallelAction create(const S &a, const T &b)
+            inline ParallelAction(const S &a, const T &b) : actions(new cocos2d::Array())
             {
-                return ParallelAction(static_cast<cocos2d::ActionInterval *>(a), static_cast<cocos2d::ActionInterval *>(b));
+                actions->initWithObject(static_cast<cocos2d::ActionInterval *>(a));
+                actions->addObject(static_cast<cocos2d::ActionInterval *>(b));
             }
-        public:
-            template<typename... Args>
-            ParallelAction(const Args... args) : actions(cocos2d::Spawn::create(static_cast<cocos2d::FiniteTimeAction *>(args)..., nullptr)) { }
-            ~ParallelAction() { }
 
-            inline operator cocos2d::Action *() const override { return actions; }
-            inline operator cocos2d::ActionInterval *() const override { return actions; }
+            inline ParallelAction &operator+(const ActionInterval &action)
+            {
+                actions->addObject(static_cast<cocos2d::ActionInterval *>(action));
+                return *this;
+            }
+
+            inline ParallelAction &operator+(cocos2d::ActionInterval *action)
+            {
+                actions->addObject(action);
+                return *this;
+            }
+
+            inline operator cocos2d::Action *() const override
+            {
+                return cocos2d::Spawn::create(actions.get());
+            }
+
+            inline operator cocos2d::ActionInterval *() const override
+            {
+                return cocos2d::Spawn::create(actions.get());
+            }
+
+            template<typename... Args>
+            inline static ParallelAction createFromActions(const Args &...args)
+            {
+                return ParallelAction(cocos2d::Array::create(static_cast<cocos2d::ActionInterval *>(args)..., nullptr));
+            }
         };
 
         class Repeat : public ActionInterval
@@ -210,12 +248,12 @@ namespace oreore
         /* ActionInterval impl */
         inline ParallelAction ActionInterval::operator+(const ActionInterval &action)
         {
-            return ParallelAction::create(*this, action);
+            return ParallelAction(*this, action);
         }
     
         inline ParallelAction ActionInterval::operator+(cocos2d::ActionInterval *action)
         {
-            return ParallelAction::create(*this, action);
+            return ParallelAction(*this, action);
         }
 
         template<typename T>
@@ -223,6 +261,16 @@ namespace oreore
         {
             return Repeat(*this, op);
         }
+    }
+
+    inline Fluxion::SequentialAction operator>>(cocos2d::Action *a, const Fluxion::Action &b)
+    {
+        return Fluxion::SequentialAction(a, b);
+    }
+
+    inline Fluxion::ParallelAction operator+(cocos2d::ActionInterval *a, const Fluxion::ActionInterval &b)
+    {
+        return Fluxion::ParallelAction(a, static_cast<cocos2d::ActionInterval *>(b));
     }
 
     namespace x
@@ -280,8 +328,15 @@ namespace oreore
         inline CallFunc call(const std::function<void()> &func) { return CallFunc(func); }
 
         template<typename... Args>
-        inline Fluxion::ParallelAction p(const Args... args) { return Fluxion::ParallelAction(args...); }
+        inline Fluxion::ParallelAction p(const Args... args) { return Fluxion::ParallelAction::createFromActions(args...); }
+        template<typename... Args>
+        inline Fluxion::ParallelAction par(const Args... args) { return p(args...); }
         
+        template<typename... Args>
+        inline Fluxion::SequentialAction s(const Args... args) { return Fluxion::SequentialAction::createFromActions(args...); }
+        template<typename... Args>
+        inline Fluxion::SequentialAction seq(const Args... args) { return s(args...); }
+
         namespace Ease
         {
             /* ease */
