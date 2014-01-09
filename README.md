@@ -3,7 +3,7 @@
 俺がゲーム開発するときに得するライブラリ。  
 OTL(Oreore Template Library)とOreore cocos2dx Libraryをまとめたもの。
 
-** ドキュメントは[Oreore/俺々 cocos2dxライブラリ](http://giemsa.github.io/oreore/)に移行します。**
+**ドキュメントは[Oreore/俺々 cocos2dxライブラリ](http://giemsa.github.io/oreore/)に移行します。**
 
 ##OTL
 汎用的っぽい感じの処理をまとめたライブラリです。乱数とか、色変換とか。  
