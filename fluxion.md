@@ -2,6 +2,7 @@
 layout: default
 ---
 # Fluxion (cocos2dx Action Generator)
+
 ## 概要
 　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。
 

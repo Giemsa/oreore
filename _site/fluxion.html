@@ -28,12 +28,13 @@
       </header>
       <section>
         <p><h1 id="fluxion-cocos2dx-action-generator">Fluxion (cocos2dx Action Generator)</h1>
-<p>## 概要
-　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。</p>
 
-<h2 id="section">使い方</h2>
+<h2 id="section">概要</h2>
+<p>　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。</p>
 
-<h3 id="section-1">はじめに</h3>
+<h2 id="section-1">使い方</h2>
+
+<h3 id="section-2">はじめに</h3>
 <p>　マクロ「USE_COCOS2DX」を有効にした状態&#8221;でoreore.h&#8221;をインクルードしてください。</p>
 
 <pre><code>#define USE_COCOS2DX
@@ -43,7 +44,7 @@
 <p>　名前空間はoreoreになっています。面倒なので、cppの頭で「using namespace oreore;」しておきましょう。<br />
 ここから先のコードは名前空間oreoreを省略します。</p>
 
-<h3 id="section-2">アクションの生成</h3>
+<h3 id="section-3">アクションの生成</h3>
 <p>　基本的なアクションは「x」という名前空間に定義されています。</p>
 
 <pre><code>Sprite *sprite = Sprite::create("hoge.png");
@@ -55,7 +56,7 @@ sprite-&gt;runAction(x::moveTo(1.0f, 100.0f, 100.0f));
 <p>　引数はcocos2dxのアクションのcreateメソッドに渡すものと同等です。moveToやmoveByのように、本来cocos2dx::Pointで渡さなければならないメソッドは、上記コードのようにfloat, floatで渡すことも出来ます。
 　現在鋭意実装中のため、基本アクション以外は使用できません。その場合は、cocos2dxのアクションをそのまま利用してください。</p>
 
-<h3 id="section-3">連続アクション</h3>
+<h3 id="section-4">連続アクション</h3>
 <p>　連続でアクションを実行したい場合は「&#187;」演算子を利用します。</p>
 
 <pre><code>sprite-&gt;runAction(
@@ -74,7 +75,7 @@ sprite-&gt;runAction(x::moveTo(1.0f, 100.0f, 100.0f));
 );
 </code></pre>
 
-<h3 id="section-4">並列アクション</h3>
+<h3 id="section-5">並列アクション</h3>
 <p>　同時に複数のアクションを実行したい場合は、「+」演算子を利用します。</p>
 
 <pre><code>sprite-&gt;runAction(
@@ -108,7 +109,7 @@ x::Ease::ExpIn
 ...
 </code></pre>
 
-<h3 id="section-5">繰り返し</h3>
+<h3 id="section-6">繰り返し</h3>
 <p>　アクションの繰り返しを行うには、「*」演算子を利用します。</p>
 
 <pre><code>sprite-&gt;runAction(
@@ -116,7 +117,7 @@ x::Ease::ExpIn
 ); 　このように記述することで、移動が5回繰り返されます。
 </code></pre>
 
-<h3 id="section-6">関数呼び出し</h3>
+<h3 id="section-7">関数呼び出し</h3>
 <p>　cocos2dxにおけるCallFuncを登録するには、ラムダ関数をそのまま追加します。</p>
 
 <pre><code>sprite-&gt;runAction(
@@ -144,7 +145,7 @@ x::Ease::ExpIn
 );
 </code></pre>
 
-<h2 id="section-7">複雑なアクション</h2>
+<h2 id="section-8">複雑なアクション</h2>
 
 <pre><code>sprite-&gt;runAction(
     x::moveTo(1.0f, 200.0f, 200.0f) &gt;&gt;
