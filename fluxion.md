@@ -9,7 +9,7 @@ layout: default
 ## 使い方
 
 ### はじめに
-　マクロ「USE_COCOS2DX」を有効にした状態"でoreore.h"をインクルードしてください。
+　マクロ「USE_COCOS2DX」を有効にした状態で"oreore.h"をインクルードしてください。
 
 	#define USE_COCOS2DX
 	#include "./oreore/oreore.h"
@@ -25,8 +25,8 @@ layout: default
 
 	sprite->runAction(x::moveTo(1.0f, 100.0f, 100.0f));
 
-　引数はcocos2dxのアクションのcreateメソッドに渡すものと同等です。moveToやmoveByのように、本来cocos2dx::Pointで渡さなければならないメソッドは、上記コードのようにfloat, floatで渡すことも出来ます。
-　現在鋭意実装中のため、基本アクション以外は使用できません。その場合は、cocos2dxのアクションをそのまま利用してください。
+　引数はcocos2dxのアクションのcreateメソッドに渡すものと同等です。moveToやmoveByのように、本来cocos2dx::Pointで渡さなければならないメソッドは、上記コードのようにfloat, floatで渡すことも出来ます。  
+　現在鋭意実装中のため、基本アクション以外は使用できません。使用する場合は、cocos2dxのアクションをそのまま利用してください。
 
 ### 連続アクション
 　連続でアクションを実行したい場合は「>>」演算子を利用します。
