@@ -28,7 +28,6 @@ namespace oreore
 
         class ActionInterval : public Action
         {
-            friend ParallelAction operator+(cocos2d::ActionInterval *, const ActionInterval &);
         private:
             template<typename T>
             inline T __mul(const T &op, typename std::enable_if<std::is_base_of<Ease, T>::value>::type* = nullptr)
