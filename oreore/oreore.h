@@ -5,7 +5,7 @@
 #include "TimeCounter.h"
 #include "Utils.h"
 
-#ifdef USE_COCOS2DX
+#ifndef NOT_USE_COCOS2DX
 #   include "./cocos2d/oreore.h"
 #endif
 
