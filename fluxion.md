@@ -9,16 +9,15 @@ layout: default
 ## 使い方
 
 ### はじめに
-　マクロ「USE_COCOS2DX」を有効にした状態で"oreore.h"をインクルードしてください。
+　oreore.hをインクルードしてください。
 
-	#define USE_COCOS2DX
 	#include "./oreore/oreore.h"
 
 　名前空間はoreoreになっています。面倒なので、cppの頭で「using namespace oreore;」しておきましょう。  
 ここから先のコードは名前空間oreoreを省略します。
 
 ### アクションの生成
-　基本的なアクションは「x」という名前空間に定義されています。
+　基本的なアクションは「oreore::x」という名前空間に定義されています。
 
 	Sprite *sprite = Sprite::create("hoge.png");
 	addChild(Sprite);
@@ -81,6 +80,7 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 	sprite->runAction(
 	    (x::moveTo(1.0f, 500.0f, 500.0f) >> x::moveTo(1.0f, 100.0f, 100.0f)) * 5
 	);
+
 　このように記述することで、移動が5回繰り返されます。
 
 ### 関数呼び出し

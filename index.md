@@ -2,7 +2,7 @@
 layout: default
 ---
 # 概要
-"Oreore/俺々"は、俺がゲームを開発するときに得するユーティリティライブラリです。  
+　"Oreore/俺々"は、俺がゲームを開発するときに得するユーティリティライブラリです。  
 cocos2dx 3.0 alpha1 向けの汎用的な処理群をまとめました。
 
 # 動作環境
@@ -10,19 +10,21 @@ cocos2dx 3.0 alpha1 向けの汎用的な処理群をまとめました。
 * cocos2dx 3.0 alpha1
 
 # 使い方
-## cocos2dxを利用しない場合
-oreoreをcloneします。
+
+## cocos2dxを利用する場合
+　oreoreをcloneします。
 
 	git clone https://github.com/Giemsa/oreore.git
 
-oreoreフォルダ内の"oreore.h"をincludeしてください。  
+　oreoreフォルダ内の"oreore.h"をincludeしてください。  
 また、oreoreフォルダ内の*.cppファイルをビルド対象に加えてください。
 
-## cocos2dxを利用する場合
-マクロ「USE_COCOS2DX」が有効になっている場合、oreore/cocos2dフォルダ以下のユーティリティ群も同時にincludeします。
+## cocos2dxを利用しない場合
+　マクロ「NOT_USE_COCOS2DX」が有効になっている場合、cocos2dxに関連する機能の読み込みが無効化されます。
+
 
 # 構成
-俺々は、以下のライブラリ群を含んでいます。
+　俺々は、以下のライブラリ群を含んでいます。
 
 * common utility
 * cocos2dx Action library
