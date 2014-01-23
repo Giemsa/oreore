@@ -208,7 +208,7 @@ namespace oreore
     class MenuItemGenerator
     {
             typedef typename T::ElementType element_type;
-    private:
+    public:
         cocos2d::Sprite *bg, *selbg;
 
         cocos2d::Sprite *getSprite(cocos2d::Sprite *bg, cocos2d::Sprite *text, const cocos2d::Size &size)
@@ -218,7 +218,9 @@ namespace oreore
             bg->visit();
             text->visit();
             tex->end();
-            return cocos2d::Sprite::createWithTexture(tex->getSprite()->getTexture());
+            cocos2d::Sprite *sprite = cocos2d::Sprite::createWithTexture(tex->getSprite()->getTexture());
+            sprite->setFlippedY(true);
+            return sprite;
         }
 
         cocos2d::Sprite *getSprite(const element_type index) const
@@ -242,7 +244,6 @@ namespace oreore
             const cocos2d::Size &size = bg->getContentSize();
             cocos2d::Sprite *text = T::sprite(index);
             text->setPosition(cocos2d::Point(size.width / 2, size.height / 2));
-            text->setFlippedY(true);
 
             return cocos2d::MenuItemSprite::create(
                 getSprite(bg, text, size),

@@ -99,19 +99,15 @@ namespace oreore
     {
         setCascadeOpacityEnabled(true);
         const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
-        for(Object *child : getChildren())
-        {
-            RGBAProtocol *p = dynamic_cast<RGBAProtocol*>(child);
-            if(p)
-                p->updateDisplayedOpacity(static_cast<GLubyte>(p->getOpacity() * r));
-        }
+        for(Node *child : getChildren())
+            child->updateDisplayedOpacity(static_cast<GLubyte>(child->getOpacity() * r));
         setCascadeOpacityEnabled(false);
         LayerColor::setOpacity(opacity);
     }
 
     void OverlayLayer::setChildrenVisible(const bool visible)
     {
-        for(Object *child : getChildren())
+        for(Node *child : getChildren())
             static_cast<Node *>(child)->setVisible(visible);
     }
 }
