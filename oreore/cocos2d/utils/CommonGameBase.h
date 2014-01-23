@@ -27,6 +27,8 @@ namespace oreore
      */
     class ScreenBase : public cocos2d::Layer
     {
+        template<typename T, int N, typename E, E C>
+        friend class GameManager;
     protected:
         cocos2d::Scene *_scene;
 

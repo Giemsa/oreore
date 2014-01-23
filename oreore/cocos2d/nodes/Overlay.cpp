@@ -98,9 +98,8 @@ namespace oreore
     void OverlayLayer::setOpacity(GLubyte opacity)
     {
         setCascadeOpacityEnabled(true);
-        Object* child;
         const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
-        CCARRAY_FOREACH(getChildren(), child)
+        for(Object *child : getChildren())
         {
             RGBAProtocol *p = dynamic_cast<RGBAProtocol*>(child);
             if(p)
@@ -112,8 +111,7 @@ namespace oreore
 
     void OverlayLayer::setChildrenVisible(const bool visible)
     {
-        Object *obj;
-        CCARRAY_FOREACH(getChildren(), obj)
-            static_cast<Node *>(obj)->setVisible(visible);
+        for(Object *child : getChildren())
+            static_cast<Node *>(child)->setVisible(visible);
     }
 }

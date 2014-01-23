@@ -17,16 +17,10 @@ namespace oreore
         class ParallelAction;
         class Repeat;
         class Ease;
-        
-        struct Action
-        {
-            inline SequentialAction operator>>(const Action &action);
-            inline SequentialAction operator>>(cocos2d::Action *action);
-            inline SequentialAction operator>>(const std::function<void()> &action);
-            virtual operator cocos2d::Action *() const = 0;
-        };
 
-        class ActionInterval : public Action
+        typedef cocos2d::Vector<cocos2d::FiniteTimeAction *> ActionList;
+
+        class Action
         {
         private:
             template<typename T>
@@ -38,19 +32,14 @@ namespace oreore
             template<typename T>
             inline Repeat __mul(const T &op, typename std::enable_if<std::numeric_limits<T>::is_integer>::type* = nullptr);
         public:
-            inline ParallelAction operator+(const ActionInterval &action);
-            inline ParallelAction operator+(cocos2d::ActionInterval *action);
+        inline SequentialAction operator>>(const Action &action);
+            inline SequentialAction operator>>(cocos2d::FiniteTimeAction *action);
+            inline SequentialAction operator>>(const std::function<void()> &action);
+            inline ParallelAction operator+(const Action &action);
+            inline ParallelAction operator+(cocos2d::FiniteTimeAction *action);
             template<typename T>
             inline auto operator*(const T &op) -> decltype(__mul(op)) { return __mul(op); }
-            virtual operator cocos2d::ActionInterval *() const = 0;
-        };
-        
-        class Ease : public ActionInterval
-        {
-        private:
-        public:
-            Ease() { }
-            virtual ~Ease() { }
+            virtual operator cocos2d::FiniteTimeAction *() const = 0;
         };
 
         template<typename T>
@@ -61,132 +50,126 @@ namespace oreore
         public:
             template<typename... Args>
             inline WrapAction(const Args... args) : action(T::create(args...)) { }
-            inline operator cocos2d::Action *() const override { return action; }
+            inline operator cocos2d::FiniteTimeAction *() const override { return action; }
         };
 
         template<typename T>
-        class WrapFiniteAction : public ActionInterval
+        class WrapFiniteAction : public Action
         {
         private:
             T *action;
         public:
             template<typename... Args>
             inline WrapFiniteAction(const Args... args) : action(T::create(args...)) { }
-            inline operator cocos2d::ActionInterval *() const override { return action; }
-            inline operator cocos2d::Action *() const override { return action; }
+            inline operator cocos2d::FiniteTimeAction *() const override { return action; }
         };
 
-        class SequentialAction : public ActionInterval
+        class SequentialAction : public Action
         {
         private:
-            std::unique_ptr<cocos2d::Array> actions;
+            std::unique_ptr<ActionList> actions;
         public:
-            inline SequentialAction() : actions(new cocos2d::Array())
+            inline SequentialAction() : actions(new ActionList())
             {
-                actions->initWithCapacity(4);
+                actions->reserve(4);
             }
 
             template<typename S, typename T>
-            inline SequentialAction(const S &a, const T &b) : actions(new cocos2d::Array())
+            inline SequentialAction(const S &a, const T &b) : actions(new ActionList())
             {
-                actions->initWithObject(static_cast<cocos2d::Action *>(a));
-                actions->addObject(static_cast<cocos2d::Action *>(b));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(a));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(b));
             }
 
-            inline SequentialAction(cocos2d::Array *array) : actions(array) { }
+            inline SequentialAction(ActionList *array) : actions(array) { }
 
             inline SequentialAction &operator>>(const Action &action)
             {
-                actions->addObject(static_cast<cocos2d::Action *>(action));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(action));
                 return *this;
             }
 
-            inline SequentialAction &operator>>(cocos2d::Action *action)
+            inline SequentialAction &operator>>(cocos2d::FiniteTimeAction *action)
             {
-                actions->addObject(action);
+                actions->pushBack(action);
                 return *this;
             }
 
             inline SequentialAction &operator>>(const std::function<void()> &func)
             {
-                actions->addObject(cocos2d::CallFunc::create(func));
+                actions->pushBack(cocos2d::CallFunc::create(func));
                 return *this;
             }
 
-            inline operator cocos2d::Action *() const override
+            inline operator cocos2d::FiniteTimeAction *() const override
             {
-                return cocos2d::Sequence::create(actions.get());
-            }
-
-            inline operator cocos2d::ActionInterval *() const override
-            {
-                return cocos2d::Sequence::create(actions.get());
+                return cocos2d::Sequence::create(*actions.get());
             }
 
             template<typename... Args>
             inline static SequentialAction createFromActions(const Args &...args)
             {
-                return SequentialAction(cocos2d::Array::create(static_cast<cocos2d::Action *>(args)..., nullptr));
+                return SequentialAction(cocos2d::Array::create(static_cast<cocos2d::FiniteTimeAction *>(args)..., nullptr));
             }
         };
 
-        class ParallelAction : public ActionInterval
+        class ParallelAction : public Action
         {
-            friend class ActionInterval;
         private:
-            std::unique_ptr<cocos2d::Array> actions;
+            std::unique_ptr<ActionList> actions;
         public:
-            inline ParallelAction() : actions(new cocos2d::Array())
+            inline ParallelAction() : actions(new ActionList())
             {
-                actions->initWithCapacity(2);
+                actions->reserve(2);
             }
             
-            inline ParallelAction(cocos2d::Array *array) : actions(array) { }
+            inline ParallelAction(ActionList *array) : actions(array) { }
 
             template<typename S, typename T>
-            inline ParallelAction(const S &a, const T &b) : actions(new cocos2d::Array())
+            inline ParallelAction(const S &a, const T &b) : actions(new ActionList())
             {
-                actions->initWithObject(static_cast<cocos2d::ActionInterval *>(a));
-                actions->addObject(static_cast<cocos2d::ActionInterval *>(b));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(a));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(b));
             }
 
-            inline ParallelAction &operator+(const ActionInterval &action)
+            inline ParallelAction &operator+(const Action &action)
             {
-                actions->addObject(static_cast<cocos2d::ActionInterval *>(action));
+                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(action));
                 return *this;
             }
 
-            inline ParallelAction &operator+(cocos2d::ActionInterval *action)
+            inline ParallelAction &operator+(cocos2d::FiniteTimeAction *action)
             {
-                actions->addObject(action);
+                actions->pushBack(action);
                 return *this;
             }
 
-            inline operator cocos2d::Action *() const override
+            inline operator cocos2d::FiniteTimeAction *() const override
             {
-                return cocos2d::Spawn::create(actions.get());
-            }
-
-            inline operator cocos2d::ActionInterval *() const override
-            {
-                return cocos2d::Spawn::create(actions.get());
+                return cocos2d::Spawn::create(*actions.get());
             }
 
             template<typename... Args>
             inline static ParallelAction createFromActions(const Args &...args)
             {
-                return ParallelAction(cocos2d::Array::create(static_cast<cocos2d::ActionInterval *>(args)..., nullptr));
+                return ParallelAction(cocos2d::Array::create(static_cast<cocos2d::FiniteTimeAction *>(args)..., nullptr));
             }
         };
 
-        class Repeat : public ActionInterval
+        class Repeat : public Action
         {
             cocos2d::Repeat *action;
         private:
         public:
-            Repeat(const ActionInterval &action, const int times) : action(cocos2d::Repeat::create(action, times)) { }
-            inline operator cocos2d::Action *() const override { return action; }
-            inline operator cocos2d::ActionInterval *() const override { return action; }
+            Repeat(const Action &action, const int times) : action(cocos2d::Repeat::create(action, times)) { }
+            inline operator cocos2d::FiniteTimeAction *() const override { return action; }
+        };
+
+        class Ease : public Action
+        {
+        public:
+            Ease() { }
+            virtual ~Ease() { }
         };
 
         template<typename T>
@@ -199,11 +182,10 @@ namespace oreore
             WrapEase(T *ease) : ease(ease) { }
             ~WrapEase() { }
 
-            inline operator cocos2d::Action *() const { return ease; }
-            inline operator cocos2d::ActionInterval *() const { return ease; }
-            inline WrapEase<T> apply(const ActionInterval *action) const
+            inline operator cocos2d::FiniteTimeAction *() const { return ease; }
+            inline WrapEase<T> apply(const Action *action) const
             {
-                return WrapEase<T>(T::create(static_cast<cocos2d::ActionInterval *>(*action)));
+                return WrapEase<T>(T::create(static_cast<cocos2d::FiniteTimeAction *>(*action)));
             }
         };
 
@@ -220,11 +202,10 @@ namespace oreore
             WrapEase1(T *ease, const P param) : ease(ease), param(param) { }
             ~WrapEase1() { }
 
-            inline operator cocos2d::Action *() const { return ease; }
-            inline operator cocos2d::ActionInterval *() const { return ease; }
-            inline WrapEase1<T, P> apply(const ActionInterval *action) const
+            inline operator cocos2d::FiniteTimeAction *() const { return ease; }
+            inline WrapEase1<T, P> apply(const Action *action) const
             {
-                return WrapEase1<T, P>(T::create(static_cast<cocos2d::ActionInterval *>(*action), param), param);
+                return WrapEase1<T, P>(T::create(static_cast<cocos2d::FiniteTimeAction *>(*action), param), param);
             }
         };
 
@@ -234,7 +215,7 @@ namespace oreore
             return SequentialAction(*this, action);
         }
     
-        inline SequentialAction Action::operator>>(cocos2d::Action *action)
+        inline SequentialAction Action::operator>>(cocos2d::FiniteTimeAction *action)
         {
             return SequentialAction(*this, action);
         }
@@ -244,19 +225,18 @@ namespace oreore
             return SequentialAction(*this, cocos2d::CallFunc::create(action));
         }
         
-        /* ActionInterval impl */
-        inline ParallelAction ActionInterval::operator+(const ActionInterval &action)
+        inline ParallelAction Action::operator+(const Action &action)
         {
             return ParallelAction(*this, action);
         }
     
-        inline ParallelAction ActionInterval::operator+(cocos2d::ActionInterval *action)
+        inline ParallelAction Action::operator+(cocos2d::FiniteTimeAction *action)
         {
             return ParallelAction(*this, action);
         }
 
         template<typename T>
-        inline Repeat ActionInterval::__mul(const T &op, typename std::enable_if<std::numeric_limits<T>::is_integer>::type*)
+        inline Repeat Action::__mul(const T &op, typename std::enable_if<std::numeric_limits<T>::is_integer>::type*)
         {
             return Repeat(*this, op);
         }
@@ -267,9 +247,9 @@ namespace oreore
         return Fluxion::SequentialAction(a, b);
     }
 
-    inline Fluxion::ParallelAction operator+(cocos2d::ActionInterval *a, const Fluxion::ActionInterval &b)
+    inline Fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const Fluxion::Action &b)
     {
-        return Fluxion::ParallelAction(a, static_cast<cocos2d::ActionInterval *>(b));
+        return Fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
     }
 
     namespace x
