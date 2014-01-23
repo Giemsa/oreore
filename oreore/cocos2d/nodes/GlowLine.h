@@ -6,7 +6,7 @@
 
 namespace oreore
 {
-    class GlowLine : public cocos2d::Node, public cocos2d::RGBAProtocol
+    class GlowLine : public cocos2d::Node
     {
         typedef std::vector<cocos2d::Point> Points;
     private:
