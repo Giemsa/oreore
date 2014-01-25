@@ -74,8 +74,9 @@ namespace oreore
     template<int N>
     __constexpr int digits() { return digits(N); }
 
-    template<typename T>
-    __constexpr int sgn(const T v) { return ((static_cast<int>(v) >> std::numeric_limits<int>::digits) << 1) + 1; }
+    __constexpr int sgn(const int v) { return ((v >> std::numeric_limits<int>::digits) << 1) + 1; }
+    __constexpr int sgn(const double v) { return (v > 0) - (v < 0); }
+    __constexpr int sgn(const float v) { return (v > 0) - (v < 0); }
 
     __constexpr double rad2deg(const double rad) { return rad * 180 / M_PI; }
 

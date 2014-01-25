@@ -6,6 +6,7 @@
 #include "actions/CircleMoveTo.h"
 #include "actions/Shake.h"
 #include "actions/Move.h"
+#include "actions/AttractMove.h"
 
 /* nodes */
 #include "nodes/GlowLine.h"
