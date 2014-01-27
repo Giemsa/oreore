@@ -16,5 +16,6 @@
 #include "utils/Utils.h"
 #include "utils/Fluxion.h"
 #include "utils/CommonGameBase.h"
+#include "utils/MultiResolution.h"
 
 #endif
