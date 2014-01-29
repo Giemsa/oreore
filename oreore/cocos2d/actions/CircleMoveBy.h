@@ -5,24 +5,24 @@
 
 namespace oreore
 {
-    class CircleMoveBy : public cocos2d::ActionInterval
+    class CCCircleMoveBy : public cocos2d::CCActionInterval
     {
     protected:
-        cocos2d::Point center, pos, cpos;
+        cocos2d::CCPoint center, pos, cpos;
         float deg, rad;
     public:
-        CircleMoveBy() { }
-        virtual ~CircleMoveBy() { }
+        CCCircleMoveBy() { }
+        virtual ~CCCircleMoveBy() { }
 
-        static CircleMoveBy* create(const float duration, const cocos2d::Point &center, const float deg);
-        bool initWithDuration(const float duration, const cocos2d::Point &center, const float deg);
+        static CCCircleMoveBy* create(const float duration, const cocos2d::CCPoint &center, const float deg);
+        bool initWithDuration(const float duration, const cocos2d::CCPoint &center, const float deg);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget) override;
-        virtual void update(float time) override;
-        virtual void stop(void) override;
+        virtual void startWithTarget(cocos2d::CCNode *pTarget); // override
+        virtual void update(float time); // override
+        virtual void stop(void); // override
 
-        virtual CircleMoveBy *reverse() const override;
-        virtual CircleMoveBy *clone() const override;
+        virtual CCCircleMoveBy *reverse(); // override
+        virtual CCCircleMoveBy *clone(); // override
     };
 }
 

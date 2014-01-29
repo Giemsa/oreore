@@ -5,26 +5,26 @@
 
 namespace oreore
 {
-    class AttractMove : public cocos2d::ActionInterval
+    class CCAttractMove : public cocos2d::CCActionInterval
     {
     private:
-        cocos2d::Point dpos;
-        cocos2d::Point target;
-        cocos2d::Point accelVec, v0;
+        cocos2d::CCPoint dpos;
+        cocos2d::CCPoint target;
+        cocos2d::CCPoint accelVec, v0;
 
     public:
-        AttractMove() { }
-        virtual ~AttractMove() { }
+        CCAttractMove() { }
+        virtual ~CCAttractMove() { }
 
-        static AttractMove* create(const float duration, const cocos2d::Point &target, const cocos2d::Point &v0);
-        bool initWithDuration(const float duration, const cocos2d::Point &target, const cocos2d::Point &v0);
+        static CCAttractMove* create(const float duration, const cocos2d::CCPoint &target, const cocos2d::CCPoint &v0);
+        bool initWithDuration(const float duration, const cocos2d::CCPoint &target, const cocos2d::CCPoint &v0);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget);
+        virtual void startWithTarget(cocos2d::CCNode *pTarget);
         virtual void update(float time);
-        virtual void stop(void) override;
+        virtual void stop(void); // override
 
-        virtual AttractMove *reverse() const override;
-        virtual AttractMove *clone() const override;
+        virtual CCAttractMove *reverse(); // override
+        virtual CCAttractMove *clone(); // override
     };
 }
 

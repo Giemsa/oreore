@@ -5,36 +5,36 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    CircleMoveTo *CircleMoveTo::create(const float duration, const Point &center, const float deg)
+    CCCircleMoveTo *CCCircleMoveTo::create(const float duration, const CCPoint &center, const float deg)
     {
-        CircleMoveTo *action = new CircleMoveTo();
+        CCCircleMoveTo *action = new CCCircleMoveTo();
         action->initWithDuration(duration, center, deg);
         action->autorelease();
         return action;
     }
 
-    bool CircleMoveTo::initWithDuration(const float duration, const Point &center, const float deg)
+    bool CCCircleMoveTo::initWithDuration(const float duration, const CCPoint &center, const float deg)
     {
-        if(!CircleMoveBy::initWithDuration(duration, center, deg))
+        if(!CCCircleMoveBy::initWithDuration(duration, center, deg))
             return false;
 
         return true;
     }
 
-    void CircleMoveTo::startWithTarget(Node *target)
+    void CCCircleMoveTo::startWithTarget(CCNode *target)
     {
         rad -= (target->getPosition() - center).getAngle();
-        CircleMoveBy::startWithTarget(target);
+        CCCircleMoveBy::startWithTarget(target);
     }
 
-    CircleMoveTo *CircleMoveTo::reverse() const
+    CCCircleMoveTo *CCCircleMoveTo::reverse()
     {
-        CCASSERT(0, "reverse is not implemented");
+        CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CircleMoveTo *CircleMoveTo::clone() const
+    CCCircleMoveTo *CCCircleMoveTo::clone()
     {
-        return CircleMoveTo::create(getDuration(), center, deg);
+        return CCCircleMoveTo::create(getDuration(), center, deg);
     }
 }

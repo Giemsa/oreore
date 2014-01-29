@@ -3,7 +3,7 @@
 
 namespace oreore
 {
-    using namespace ::cocos2d;
+    using namespace cocos2d;
 
     /* IDConnector */
     unsigned int IDConnector::id = 0;
@@ -11,7 +11,7 @@ namespace oreore
     /* ScreenBase */
     ScreenBase::ScreenBase()
     {
-        _scene = Scene::create();
+        _scene = CCScene::create();
         _scene->retain();
         _scene->addChild(this);
     }
@@ -21,9 +21,9 @@ namespace oreore
         _scene->release();
     }
 
-    SpriteBatchNode *ScreenBase::registerSprite(const char *filename)
+    CCSpriteBatchNode *ScreenBase::registerSprite(const char *filename)
     {
-        SpriteBatchNode *batch = SpriteBatchNode::create(filename);
+        CCSpriteBatchNode *batch = CCSpriteBatchNode::create(filename);
         addChild(batch);
         return batch;
     }

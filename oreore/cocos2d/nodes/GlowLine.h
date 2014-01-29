@@ -6,50 +6,49 @@
 
 namespace oreore
 {
-    class GlowLine : public cocos2d::Node, public cocos2d::RGBAProtocol
+    class CCGlowLine : public cocos2d::CCNode, public cocos2d::CCRGBAProtocol
     {
-        typedef std::vector<cocos2d::Point> Points;
+        typedef std::vector<cocos2d::CCPoint> Points;
     private:
         Points points;
-        cocos2d::Point src, dst;
-        cocos2d::Color3B color;
+        cocos2d::CCPoint src, dst;
+        cocos2d::ccColor3B color;
         int level;
         float lineWidth;
 
         GLubyte _displayedOpacity, _realOpacity;
-        cocos2d::Color3B _displayedColor, _realColor;
+        cocos2d::ccColor3B _displayedColor, _realColor;
         bool  _cascadeOpacityEnabled, _cascadeColorEnabled;
 
     public:
-        CREATE_FUNC(GlowLine);
+        CREATE_FUNC(CCGlowLine);
 
-        static GlowLine *create(const cocos2d::Point &p, const cocos2d::Point &q) { return create(p, q, 5); }
-        static GlowLine *create(const cocos2d::Point &p, const cocos2d::Point &q, const int segments);
+        static CCGlowLine *create(const cocos2d::CCPoint &p, const cocos2d::CCPoint &q) { return create(p, q, 5); }
+        static CCGlowLine *create(const cocos2d::CCPoint &p, const cocos2d::CCPoint &q, const int segments);
 
-        GlowLine() { }
-        ~GlowLine() { }
+        CCGlowLine() { }
+        ~CCGlowLine() { }
 
-        bool init() override;
-        bool init(const cocos2d::Point &p, const cocos2d::Point &q, const int segments);
-        void draw() override;
+        bool init(); // override
+        bool init(const cocos2d::CCPoint &p, const cocos2d::CCPoint &q, const int segments);
+        void draw(); // override
 
+        void setColor(const cocos2d::ccColor3B& color) {  this->color = color; } // override
+        const cocos2d::ccColor3B& getColor() { return color;} // override
+        GLubyte getOpacity() { return _realOpacity; } // override
+        GLubyte getDisplayedOpacity() { return _displayedOpacity; } // override
+        void setOpacity(GLubyte opacity) { _realOpacity = opacity; } // override
+        void updateDisplayedOpacity(GLubyte parentOpacity) { _displayedOpacity = parentOpacity; } // override
+        bool isCascadeOpacityEnabled() { return _cascadeOpacityEnabled; } // override
+        void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) { _cascadeOpacityEnabled = cascadeOpacityEnabled; } // override
 
-        void setColor(const cocos2d::Color3B& color) override {  this->color = color; }
-        const cocos2d::Color3B& getColor() const override { return color;}
-        GLubyte getOpacity() const override { return _realOpacity; }
-        GLubyte getDisplayedOpacity() const override { return _displayedOpacity; }
-        void setOpacity(GLubyte opacity) override { _realOpacity = opacity; }
-        void updateDisplayedOpacity(GLubyte parentOpacity) override { _displayedOpacity = parentOpacity; }
-        bool isCascadeOpacityEnabled() const override { return _cascadeOpacityEnabled; }
-        void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { _cascadeOpacityEnabled = cascadeOpacityEnabled; }
+        const cocos2d::ccColor3B& getDisplayedColor() { return _displayedColor; } // override
+        void updateDisplayedColor(const cocos2d::ccColor3B& parentColor) { _displayedColor = parentColor; } // override
+        bool isCascadeColorEnabled() { return _cascadeColorEnabled; } // override
+        void setCascadeColorEnabled(bool cascadeColorEnabled) { _cascadeColorEnabled = cascadeColorEnabled; } // override
 
-        const cocos2d::Color3B& getDisplayedColor() const override { return _displayedColor; }
-        void updateDisplayedColor(const cocos2d::Color3B& parentColor) override { _displayedColor = parentColor; }
-        bool isCascadeColorEnabled() const override { return _cascadeColorEnabled; }
-        void setCascadeColorEnabled(bool cascadeColorEnabled) override { _cascadeColorEnabled = cascadeColorEnabled; }
-
-        void setOpacityModifyRGB(bool bValue) override { CC_UNUSED_PARAM(bValue); }
-        bool isOpacityModifyRGB() const override { return false; }
+        void setOpacityModifyRGB(bool bValue) { CC_UNUSED_PARAM(bValue); } // override
+        bool isOpacityModifyRGB() { return false; } // override
 
         inline int getLevel() const { return level; }
         inline void setLevel(const int n) { level = n; }
@@ -57,13 +56,13 @@ namespace oreore
         inline int getSegments() const { return static_cast<int>(points.size()); }
         void setSegments(const int seg);
 
-        void setPoints(const cocos2d::Point &p, const cocos2d::Point &q);
-        inline void setDestination(const cocos2d::Point &p) { setPoints(src, p); }
+        void setPoints(const cocos2d::CCPoint &p, const cocos2d::CCPoint &q);
+        inline void setDestination(const cocos2d::CCPoint &p) { setPoints(src, p); }
 
         inline float getLineWidth() const { return lineWidth; }
         inline void setLineWidth(const float w) { lineWidth = w; }
 
-        inline void addPoint(const cocos2d::Point &p) { points.push_back(p); }
+        inline void addPoint(const cocos2d::CCPoint &p) { points.push_back(p); }
         inline void clear() { points.clear(); }
     };
 }

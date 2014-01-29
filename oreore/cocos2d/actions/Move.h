@@ -5,23 +5,23 @@
 
 namespace oreore
 {
-    class Move : public cocos2d::ActionInterval
+    class CCMove : public cocos2d::CCActionInterval
     {
     private:
-        cocos2d::Point vec;
+        cocos2d::CCPoint vec;
     public:
-        Move() { }
-        virtual ~Move() { }
+        CCMove() { }
+        virtual ~CCMove() { }
 
-        static Move* create(const float duration, const cocos2d::Point &vec);
-        bool initWithDuration(const float duration, const cocos2d::Point &vec);
+        static CCMove* create(const float duration, const cocos2d::CCPoint &vec);
+        bool initWithDuration(const float duration, const cocos2d::CCPoint &vec);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget);
+        virtual void startWithTarget(cocos2d::CCNode *pTarget);
         virtual void update(float time);
-        virtual void stop(void) override;
+        virtual void stop(void); // override
 
-        virtual Move *reverse() const override;
-        virtual Move *clone() const override;
+        virtual CCMove *reverse(); // override
+        virtual CCMove *clone();
     };
 }
 

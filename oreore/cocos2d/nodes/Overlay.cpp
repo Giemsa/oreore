@@ -4,20 +4,20 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    /* OverlayLayer */
-    OverlayLayer::OverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
+    /* CCCCOverlayLayer */
+    CCOverlayLayer::CCOverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
     {
 
     }
 
-    OverlayLayer::~OverlayLayer()
+    CCOverlayLayer::~CCOverlayLayer()
     {
 
     }
 
-    OverlayLayer *OverlayLayer::create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
+    CCOverlayLayer *CCOverlayLayer::create(const cocos2d::ccColor4B &color, const GLubyte opacity, const float speed)
     {
-        OverlayLayer *r = new OverlayLayer();
+        CCOverlayLayer *r = new CCOverlayLayer();
         if(r && r->init(color, opacity, speed))
         {
             r->autorelease();
@@ -27,49 +27,58 @@ namespace oreore
         return null;
     }
 
-    bool OverlayLayer::init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
+    bool CCOverlayLayer::init(const cocos2d::ccColor4B &color, const GLubyte opacity, const float speed)
     {
-        if(!LayerColor::initWithColor(color))
+        if(!CCLayerColor::initWithColor(color))
             return false;
 
         this->opacity = opacity;
         displaySpeed = speed;
 
         setZOrder(200);
-        setAnchorPoint(Point::ZERO);
-        LayerColor::setOpacity(0);
-        setPosition(Point::ZERO);
+        setAnchorPoint(CCPointZero);
+        CCLayerColor::setOpacity(0);
+        setPosition(CCPointZero);
 
         return true;
     }
 
-    void OverlayLayer::show(const bool anime)
+    void CCOverlayLayer::onCompleteShow()
+    {
+        shown = true;
+        onShow();
+    }
+
+    void CCOverlayLayer::show(const bool anime)
     {
         stopAllActions();
 
         if(anime)
         {
-            LayerColor::setOpacity(0);
+            CCLayerColor::setOpacity(0);
             runAction(
-                Sequence::create(
-                    FadeTo::create(displaySpeed, opacity),
-                    CallFunc::create([this]() {
-                        shown = true;
-                        onShow();
-                    }),
+                CCSequence::create(
+                    CCFadeTo::create(displaySpeed, opacity),
+                    CCCallFunc::create(this, callfunc_selector(CCOverlayLayer::onCompleteShow)),
                     null
                 )
             );
         }
         else
         {
-            LayerColor::setOpacity(opacity);
+            CCLayerColor::setOpacity(opacity);
             shown = true;
             onShow();
         }
     }
 
-    void OverlayLayer::close(const bool anime)
+    void CCOverlayLayer::onCompleteClose()
+    {
+        shown = false;
+        onClose();
+    }
+
+    void CCOverlayLayer::close(const bool anime)
     {
         if(!shown)
             return;
@@ -77,43 +86,40 @@ namespace oreore
         if(anime)
         {
             runAction(
-                Sequence::create(
-                    FadeTo::create(displaySpeed, 0x00),
-                    CallFunc::create([this]() {
-                        shown = false;
-                        onClose();
-                    }),
+                CCSequence::create(
+                    CCFadeTo::create(displaySpeed, 0x00),
+                    CCCallFunc::create(this, callfunc_selector(CCOverlayLayer::onCompleteClose)),
                     null
                 )
             );
         }
         else
         {
-            LayerColor::setOpacity(0);
+            CCLayerColor::setOpacity(0);
             shown = false;
             onClose();
         }
     }
 
-    void OverlayLayer::setOpacity(GLubyte opacity)
+    void CCOverlayLayer::setOpacity(GLubyte opacity)
     {
         setCascadeOpacityEnabled(true);
-        Object* child;
+        CCObject* child;
         const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
         CCARRAY_FOREACH(getChildren(), child)
         {
-            RGBAProtocol *p = dynamic_cast<RGBAProtocol*>(child);
+            CCRGBAProtocol *p = dynamic_cast<CCRGBAProtocol*>(child);
             if(p)
                 p->updateDisplayedOpacity(static_cast<GLubyte>(p->getOpacity() * r));
         }
         setCascadeOpacityEnabled(false);
-        LayerColor::setOpacity(opacity);
+        CCLayerColor::setOpacity(opacity);
     }
 
-    void OverlayLayer::setChildrenVisible(const bool visible)
+    void CCOverlayLayer::setChildrenVisible(const bool visible)
     {
-        Object *obj;
+        CCObject *obj;
         CCARRAY_FOREACH(getChildren(), obj)
-            static_cast<Node *>(obj)->setVisible(visible);
+            static_cast<CCNode *>(obj)->setVisible(visible);
     }
 }

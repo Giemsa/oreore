@@ -8,15 +8,18 @@
 
 namespace oreore
 {
-    enum class TimerPrecision
+    namespace TimerPrecision
     {
-        Second,
-        MilliSecond
-    };
+        enum  Type
+        {
+            Second,
+            MilliSecond
+        };
+    }
 
     namespace Times
     {
-        template<TimerPrecision prec>
+        template<TimerPrecision::Type prec>
         struct Funcs
         {
             typedef time_t type;
@@ -36,7 +39,7 @@ namespace oreore
         };
     }
 
-    template<TimerPrecision prec>
+    template<TimerPrecision::Type prec>
     class TimeCounter
     {
         typedef typename Times::Funcs<prec>::type TimeType;

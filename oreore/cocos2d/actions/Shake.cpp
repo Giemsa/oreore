@@ -5,27 +5,27 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    Shake::Shake() : strength_x(0), strength_y(0)
+    CCShake::CCShake() : strength_x(0), strength_y(0)
     {
     }
 
-    Shake *Shake::create(const float duration, const float strength)
+    CCShake *CCShake::create(const float duration, const float strength)
     {
         return create(duration, strength, strength);
     }
 
-    Shake *Shake::create(const float duration, const float level_x, const float level_y)
+    CCShake *CCShake::create(const float duration, const float level_x, const float level_y)
     {
-        Shake *action = new Shake();
+        CCShake *action = new CCShake();
         action->initWithDuration(duration, level_x, level_y);
         action->autorelease();
 
         return action;
     }
 
-    bool Shake::initWithDuration(const float duration, const float level_x, const float level_y)
+    bool CCShake::initWithDuration(const float duration, const float level_x, const float level_y)
     {
-        if(ActionInterval::initWithDuration(duration))
+        if(CCActionInterval::initWithDuration(duration))
         {
             strength_x = level_x;
             strength_y = level_y;
@@ -35,33 +35,33 @@ namespace oreore
         return false;
     }
 
-    void Shake::update(float time)
+    void CCShake::update(float time)
     {
         const float x = random<float>(-strength_x, strength_x);
         const float y = random<float>(-strength_y, strength_y);
 
-        getOriginalTarget()->setPosition(dpos + Point(x, y));
+        getOriginalTarget()->setPosition(dpos + ccp(x, y));
     }
 
-    void Shake::startWithTarget(Node *target)
+    void CCShake::startWithTarget(CCNode *target)
     {
-        ActionInterval::startWithTarget(target);
+        CCActionInterval::startWithTarget(target);
         dpos = target->getPosition();
     }
 
-    void Shake::stop(void)
+    void CCShake::stop(void)
     {
         getOriginalTarget()->setPosition(dpos);
-        ActionInterval::stop();
+        CCActionInterval::stop();
     }
 
-    Shake *Shake::reverse() const
+    CCShake *CCShake::reverse()
     {
         return clone();
     }
 
-    Shake *Shake::clone() const
+    CCShake *CCShake::clone()
     {
-        return Shake::create(getDuration(), strength_x, strength_y);
+        return CCShake::create(getDuration(), strength_x, strength_y);
     }
 }

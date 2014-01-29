@@ -6,7 +6,7 @@
 
 namespace oreore
 {
-    class OverlayLayer : public cocos2d::LayerColor
+    class CCOverlayLayer : public cocos2d::CCLayerColor
     {
     private:
         GLubyte opacity;
@@ -16,37 +16,40 @@ namespace oreore
         virtual void onShow() { }
         virtual void onClose() { }
 
+        void onCompleteShow();
+        void onCompleteClose();
+
         void setChildrenVisible(const bool visible);
     public:
-        inline static OverlayLayer *create()
+        inline static CCOverlayLayer *create()
         {
-            return create(cocos2d::Color4B(), 0x90, 0.4f);
+            return create(cocos2d::ccColor4B(), 0x90, 0.4f);
         }
 
-        inline static OverlayLayer *create(const cocos2d::Color4B &color)
+        inline static CCOverlayLayer *create(const cocos2d::ccColor4B &color)
         {
             return create(color, 0x90, 0.4f);
         }
 
-        inline static OverlayLayer *create(const GLubyte opacity, const float speed)
+        inline static CCOverlayLayer *create(const GLubyte opacity, const float speed)
         {
-            return create(cocos2d::Color4B(), opacity, speed);
+            return create(cocos2d::ccColor4B(), opacity, speed);
         }
 
-        static OverlayLayer *create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
+        static CCOverlayLayer *create(const cocos2d::ccColor4B &color, const GLubyte opacity, const float speed);
 
-        OverlayLayer();
-        virtual ~OverlayLayer();
+        CCOverlayLayer();
+        virtual ~CCOverlayLayer();
 
-        bool init() override { return init(cocos2d::Color4B(), 0x90, 0.4f); }
-        bool init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
+        bool init() { return init(cocos2d::ccColor4B(), 0x90, 0.4f); } // override
+        bool init(const cocos2d::ccColor4B &color, const GLubyte opacity, const float speed);
 
         inline bool isShown() const { return shown; }
 
         virtual void show(const bool anime = true);
         virtual void close(const bool anime = true);
 
-        void setOpacity(GLubyte opacity) override;
+        void setOpacity(GLubyte opacity); // override
     };
 }
 

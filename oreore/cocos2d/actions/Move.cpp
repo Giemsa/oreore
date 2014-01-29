@@ -5,17 +5,17 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    Move *Move::create(const float duration, const Point &vec)
+    CCMove *CCMove::create(const float duration, const CCPoint &vec)
     {
-        Move *action = new Move();
+        CCMove *action = new CCMove();
         action->initWithDuration(duration, vec);
         action->autorelease();
         return action;
     }
 
-    bool Move::initWithDuration(const float duration, const Point &vec)
+    bool CCMove::initWithDuration(const float duration, const CCPoint &vec)
     {
-        if(ActionInterval::initWithDuration(duration))
+        if(CCActionInterval::initWithDuration(duration))
         {
             this->vec = vec;
             return true;
@@ -24,29 +24,29 @@ namespace oreore
         return false;
     }
 
-    void Move::update(float time)
+    void CCMove::update(float time)
     {
         getOriginalTarget()->setPosition(getOriginalTarget()->getPosition() + vec);
     }
 
-    void Move::startWithTarget(Node *target)
+    void CCMove::startWithTarget(CCNode *target)
     {
-        ActionInterval::startWithTarget(target);
+        CCActionInterval::startWithTarget(target);
     }
 
-    void Move::stop(void)
+    void CCMove::stop(void)
     {
-        ActionInterval::stop();
+        CCActionInterval::stop();
     }
 
-    Move *Move::reverse() const
+    CCMove *CCMove::reverse()
     {
-        CCASSERT(0, "reverse is not implemented");
+        CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    Move *Move::clone() const
+    CCMove *CCMove::clone()
     {
-        return Move::create(getDuration(), vec);
+        return CCMove::create(getDuration(), vec);
     }
 }

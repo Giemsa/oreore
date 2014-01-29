@@ -25,55 +25,55 @@ namespace oreore
      * 初期化はbool init()を継承してその中で行う。
      * リソース初期化の都合上、コンストラクタの中で初期化してもうまく動かない場合がある。
      */
-    class ScreenBase : public cocos2d::Layer
+    class ScreenBase : public cocos2d::CCLayer
     {
     protected:
-        cocos2d::Scene *_scene;
+        cocos2d::CCScene *_scene;
 
     public:
         ScreenBase();
         virtual ~ScreenBase();
 
-        inline cocos2d::Scene *scene() const { return _scene; }
-        cocos2d::SpriteBatchNode *registerSprite(const char *filename);
+        inline cocos2d::CCScene *scene() const { return _scene; }
+        cocos2d::CCSpriteBatchNode *registerSprite(const char *filename);
     };
 
 
     struct SpriteInfoBase
     {
         virtual ~SpriteInfoBase() { }
-        virtual cocos2d::Sprite *getSprite() const = 0;
-        virtual cocos2d::Texture2D *getTexture() const = 0;
-        virtual cocos2d::Rect getRect() const = 0;
+        virtual cocos2d::CCSprite *getSprite() const = 0;
+        virtual cocos2d::CCTexture2D *getTexture() const = 0;
+        virtual cocos2d::CCRect getRect() const = 0;
     };
 
 
     struct SpriteBatchInfo : public SpriteInfoBase
     {
-        cocos2d::SpriteBatchNode *batch;
-        const cocos2d::Rect rect;
+        cocos2d::CCSpriteBatchNode *batch;
+        const cocos2d::CCRect rect;
 
-        SpriteBatchInfo(cocos2d::SpriteBatchNode *batch, const float x, const float y, const float w, const float h)
+        SpriteBatchInfo(cocos2d::CCSpriteBatchNode *batch, const float x, const float y, const float w, const float h)
             : batch(batch), rect(x, y, w, h) { }
         virtual ~SpriteBatchInfo() { }
-        cocos2d::Sprite *getSprite() const { return cocos2d::Sprite::createWithTexture(batch->getTexture(), rect); }
-        cocos2d::Texture2D *getTexture() const { return batch->getTexture(); }
-        cocos2d::Rect getRect() const { return rect; }
+        cocos2d::CCSprite *getSprite() const { return cocos2d::CCSprite::createWithTexture(batch->getTexture(), rect); }
+        cocos2d::CCTexture2D *getTexture() const { return batch->getTexture(); }
+        cocos2d::CCRect getRect() const { return rect; }
     };
 
     struct SpriteBatchInfoWhole : public SpriteInfoBase
     {
-        cocos2d::SpriteBatchNode *batch;
+        cocos2d::CCSpriteBatchNode *batch;
 
-        SpriteBatchInfoWhole(cocos2d::SpriteBatchNode *batch)
+        SpriteBatchInfoWhole(cocos2d::CCSpriteBatchNode *batch)
             : batch(batch) { }
         virtual ~SpriteBatchInfoWhole() { }
-        cocos2d::Sprite *getSprite() const { return cocos2d::Sprite::createWithTexture(batch->getTexture()); }
-        cocos2d::Texture2D *getTexture() const { return batch->getTexture(); }
-        cocos2d::Rect getRect() const
+        cocos2d::CCSprite *getSprite() const { return cocos2d::CCSprite::createWithTexture(batch->getTexture()); }
+        cocos2d::CCTexture2D *getTexture() const { return batch->getTexture(); }
+        cocos2d::CCRect getRect() const
         {
-            cocos2d::Rect rect;
-            rect.origin = cocos2d::Point(0, 0);
+            cocos2d::CCRect rect;
+            rect.origin = cocos2d::CCPointZero;
             rect.size = batch->getContentSize();
             return rect;
         }
@@ -90,9 +90,9 @@ namespace oreore
         friend class GameManager;
     private:
         SpriteInfoList *list;
-        cocos2d::SpriteBatchNode *batch;
+        cocos2d::CCSpriteBatchNode *batch;
         const char *filename;
-        SpriteRegistrar(SpriteInfoList &list, cocos2d::SpriteBatchNode *batch) : list(&list), batch(batch) { }
+        SpriteRegistrar(SpriteInfoList &list, cocos2d::CCSpriteBatchNode *batch) : list(&list), batch(batch) { }
 
     public:
         SpriteRegistrar &add(const E id, const float x, const float y, const float w, const float h)
@@ -121,10 +121,10 @@ namespace oreore
     {
         typedef std::vector<ScreenBase *> ScreenList;
     private:
-        static cocos2d::Size size;
+        static cocos2d::CCSize size;
         ScreenList screens;
         SpriteInfoList sprite_list;
-        cocos2d::SpriteBatchNode **batchNodes;
+        cocos2d::CCSpriteBatchNode **batchNodes;
 
     protected:
         template<typename S>
@@ -137,16 +137,16 @@ namespace oreore
         SpriteRegistrar<E> loadSprite(const char *filename)
         {
             ScreenBase *screen = screens[S::getID()];
-            cocos2d::SpriteBatchNode *batch = screen->registerSprite(filename);
+            cocos2d::CCSpriteBatchNode *batch = screen->registerSprite(filename);
             return SpriteRegistrar<E>(sprite_list, batch);
         }
 
         /* リソースの読み込みを行う。
          * 登録先は任意のレイヤ
          */
-        SpriteRegistrar<E> loadSprite(cocos2d::Layer *layer, const char *filename)
+        SpriteRegistrar<E> loadSprite(cocos2d::CCLayer *layer, const char *filename)
         {
-            cocos2d::SpriteBatchNode *batch = cocos2d::SpriteBatchNode::create(filename);
+            cocos2d::CCSpriteBatchNode *batch = cocos2d::CCSpriteBatchNode::create(filename);
             layer->addChild(batch);
             return SpriteRegistrar<E>(sprite_list, batch);
         }
@@ -164,7 +164,7 @@ namespace oreore
         GameManager()
             : screens(N), sprite_list(static_cast<int>(C))
         {
-            size = cocos2d::Director::getInstance()->getWinSize();
+            size = cocos2d::CCDirector::sharedDirector()->getWinSize();
         }
 
         virtual ~GameManager()
@@ -184,17 +184,17 @@ namespace oreore
         template<typename S>
         static inline S *screen() { return static_cast<S *>(get()->screens[S::getID()]); }
 
-        inline static cocos2d::Size &getScreenSize() { return size; }
+        inline static cocos2d::CCSize &getScreenSize() { return size; }
         inline static float getWidth() { return size.width; }
         inline static float getHeight() { return size.height; }
-        inline static cocos2d::Sprite *sprite(const E id) { return get()->sprite_list[static_cast<int>(id)]->getSprite(); }
-        inline static cocos2d::Texture2D *texture(const E id) { return get()->sprite_list[static_cast<int>(id)]->getTexture(); }
-        inline static cocos2d::Rect rect(const E id) { return get()->sprite_list[static_cast<int>(id)]->getRect(); }
+        inline static cocos2d::CCSprite *sprite(const E id) { return get()->sprite_list[static_cast<int>(id)]->getSprite(); }
+        inline static cocos2d::CCTexture2D *texture(const E id) { return get()->sprite_list[static_cast<int>(id)]->getTexture(); }
+        inline static cocos2d::CCRect rect(const E id) { return get()->sprite_list[static_cast<int>(id)]->getRect(); }
     };
 
 
     template<typename T, int N, typename E, E C>
-    cocos2d::Size GameManager<T, N, E, C>::size;
+    cocos2d::CCSize GameManager<T, N, E, C>::size;
 
     /*
      * Menuのボタンを作るクラス
@@ -207,42 +207,42 @@ namespace oreore
     {
             typedef typename T::ElementType element_type;
     private:
-        cocos2d::Sprite *bg, *selbg;
+        cocos2d::CCSprite *bg, *selbg;
 
-        cocos2d::Sprite *getSprite(cocos2d::Sprite *bg, cocos2d::Sprite *text, const cocos2d::Size &size)
+        cocos2d::CCSprite *getSprite(cocos2d::CCSprite *bg, cocos2d::CCSprite *text, const cocos2d::CCSize &size)
         {
-            cocos2d::RenderTexture *tex = cocos2d::RenderTexture::create(size.width, size.height);
+            cocos2d::CCRenderTexture *tex = cocos2d::CCRenderTexture::create(size.width, size.height);
             tex->beginWithClear(0.0f, 0.0f, 0.0f, 0.0f);
             bg->visit();
             text->visit();
             tex->end();
-            return cocos2d::Sprite::createWithTexture(tex->getSprite()->getTexture());
+            return cocos2d::CCSprite::createWithTexture(tex->getSprite()->getTexture());
         }
 
-        cocos2d::Sprite *getSprite(const element_type index) const
+        cocos2d::CCSprite *getSprite(const element_type index) const
         {
-            cocos2d::Sprite *sprite = T::sprite(index);
-            sprite->setAnchorPoint(cocos2d::Point::ZERO);
-            sprite->setPosition(cocos2d::Point::ZERO);
+            cocos2d::CCSprite *sprite = T::sprite(index);
+            sprite->setAnchorPoint(cocos2d::CCPointZero);
+            sprite->setPosition(cocos2d::CCPointZero);
             return sprite;
         }
     public:
         MenuItemGenerator() : bg(null), selbg(null) { }
         virtual ~MenuItemGenerator() { }
 
-        cocos2d::MenuItemSprite *generate(const element_type index, const cocos2d::ccMenuCallback &callback)
+        cocos2d::CCMenuItemSprite *generate(const element_type index, const cocos2d::SEL_MenuHandler &callback)
         {
             if(!bg)
                 bg = getSprite(buttonBG);
             if(!selbg)
                 selbg = getSprite(selectedButtonBG);
 
-            const cocos2d::Size &size = bg->getContentSize();
-            cocos2d::Sprite *text = T::sprite(index);
-            text->setPosition(cocos2d::Point(size.width / 2, size.height / 2));
-            text->setFlippedY(true);
+            const cocos2d::CCSize &size = bg->getContentSize();
+            cocos2d::CCSprite *text = T::sprite(index);
+            text->setPosition(ccp(size.width / 2, size.height / 2));
+            text->setFlipY(true);
 
-            return cocos2d::MenuItemSprite::create(
+            return cocos2d::CCMenuItemSprite::create(
                 getSprite(bg, text, size),
                 getSprite(selbg, text,size),
                 callback
@@ -250,7 +250,7 @@ namespace oreore
         }
 
         template<typename S>
-        inline S *generate(const cocos2d::ccMenuCallback &callback) const
+        inline S *generate(const cocos2d::SEL_MenuHandler &callback) const
         {
             return S::create(
                 getSprite(buttonBG),

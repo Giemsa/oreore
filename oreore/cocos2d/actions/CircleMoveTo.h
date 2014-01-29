@@ -6,20 +6,20 @@
 
 namespace oreore
 {
-    class CircleMoveTo : public CircleMoveBy
+    class CCCircleMoveTo : public CCCircleMoveBy
     {
     private:
     public:
-        CircleMoveTo() { }
-        virtual ~CircleMoveTo() { }
+        CCCircleMoveTo() { }
+        virtual ~CCCircleMoveTo() { }
 
-        static CircleMoveTo* create(const float duration, const cocos2d::Point &center, const float deg);
-        bool initWithDuration(const float duration, const cocos2d::Point &center, const float deg);
+        static CCCircleMoveTo* create(const float duration, const cocos2d::CCPoint &center, const float deg);
+        bool initWithDuration(const float duration, const cocos2d::CCPoint &center, const float deg);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget) override;
+        virtual void startWithTarget(cocos2d::CCNode *pTarget); // override
 
-        virtual CircleMoveTo *reverse() const override;
-        virtual CircleMoveTo *clone() const override;
+        virtual CCCircleMoveTo *reverse(); // override
+        virtual CCCircleMoveTo *clone(); // override
     };
 }
 

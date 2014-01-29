@@ -6,17 +6,17 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    CircleMoveBy *CircleMoveBy::create(const float duration, const Point &center, const float deg)
+    CCCircleMoveBy *CCCircleMoveBy::create(const float duration, const CCPoint &center, const float deg)
     {
-        CircleMoveBy *action = new CircleMoveBy();
+        CCCircleMoveBy *action = new CCCircleMoveBy();
         action->initWithDuration(duration, center, deg);
         action->autorelease();
         return action;
     }
 
-    bool CircleMoveBy::initWithDuration(const float duration, const Point &center, const float deg)
+    bool CCCircleMoveBy::initWithDuration(const float duration, const CCPoint &center, const float deg)
     {
-        if(!ActionInterval::initWithDuration(duration))
+        if(!CCActionInterval::initWithDuration(duration))
             return false;
 
         this->center = center;
@@ -26,7 +26,7 @@ namespace oreore
         return true;
     }
 
-    void CircleMoveBy::update(float time)
+    void CCCircleMoveBy::update(float time)
     {
         const float r = rad * time;
 
@@ -36,29 +36,29 @@ namespace oreore
         const float nx = (cr * cpos.x - sr * cpos.y) + center.x;
         const float ny = (sr * cpos.x + cr * cpos.y) + center.y;
 
-        getOriginalTarget()->setPosition(Point(nx, ny));
+        getOriginalTarget()->setPosition(ccp(nx, ny));
     }
 
-    void CircleMoveBy::startWithTarget(Node *target)
+    void CCCircleMoveBy::startWithTarget(CCNode *target)
     {
-        ActionInterval::startWithTarget(target);
+        CCActionInterval::startWithTarget(target);
         pos = target->getPosition();
         cpos = pos - center;
     }
 
-    void CircleMoveBy::stop(void)
+    void CCCircleMoveBy::stop(void)
     {
-        ActionInterval::stop();
+        CCActionInterval::stop();
     }
 
-    CircleMoveBy *CircleMoveBy::reverse() const
+    CCCircleMoveBy *CCCircleMoveBy::reverse()
     {
-        CCASSERT(0, "reverse is not implemented");
+        CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CircleMoveBy *CircleMoveBy::clone() const
+    CCCircleMoveBy *CCCircleMoveBy::clone()
     {
-        return CircleMoveBy::create(getDuration(), center, deg);
+        return CCCircleMoveBy::create(getDuration(), center, deg);
     }
 }

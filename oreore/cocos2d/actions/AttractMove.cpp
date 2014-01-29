@@ -1,20 +1,21 @@
 #include "AttractMove.h"
+#include "../../null.h"
 
 namespace oreore
 {
     using namespace cocos2d;
 
-    AttractMove *AttractMove::create(const float duration, const Point &target, const Point &v0)
+    CCAttractMove *CCAttractMove::create(const float duration, const CCPoint &target, const CCPoint &v0)
     {
-        AttractMove *action = new AttractMove();
+        CCAttractMove *action = new CCAttractMove();
         action->initWithDuration(duration, target, v0);
         action->autorelease();
         return action;
     }
 
-    bool AttractMove::initWithDuration(const float duration, const Point &target, const Point &v0)
+    bool CCAttractMove::initWithDuration(const float duration, const CCPoint &target, const CCPoint &v0)
     {
-        if(ActionInterval::initWithDuration(duration))
+        if(CCActionInterval::initWithDuration(duration))
         {
             this->target = target;
             this->v0 = v0;
@@ -24,32 +25,32 @@ namespace oreore
         return false;
     }
 
-    void AttractMove::update(float time)
+    void CCAttractMove::update(float time)
     {
         const float t1 = getDuration() * time;
         getOriginalTarget()->setPosition(dpos + v0 * t1 + accelVec * (t1 * t1 / 2));
     }
 
-    void AttractMove::startWithTarget(Node *target)
+    void CCAttractMove::startWithTarget(CCNode *target)
     {
-        ActionInterval::startWithTarget(target);
+        CCActionInterval::startWithTarget(target);
         dpos = target->getPosition();
         accelVec = ((this->target - dpos) - v0 * getDuration()) * 2 / (getDuration() * getDuration());
     }
 
-    void AttractMove::stop(void)
+    void CCAttractMove::stop(void)
     {
-        ActionInterval::stop();
+        CCActionInterval::stop();
     }
 
-    AttractMove *AttractMove::reverse() const
+    CCAttractMove *CCAttractMove::reverse()
     {
-        CCASSERT(0, "reverse is not implemented");
-        return nullptr;
+        CCAssert(0, "reverse is not implemented");
+        return null;
     }
 
-    AttractMove *AttractMove::clone() const
+    CCAttractMove *CCAttractMove::clone()
     {
-        return AttractMove::create(getDuration(), target, v0);
+        return CCAttractMove::create(getDuration(), target, v0);
     }
 }

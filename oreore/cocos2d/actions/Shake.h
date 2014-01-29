@@ -5,24 +5,24 @@
 
 namespace oreore
 {
-    class Shake : public cocos2d::ActionInterval
+    class CCShake : public cocos2d::CCActionInterval
     {
     private:
-        cocos2d::Point dpos;
+        cocos2d::CCPoint dpos;
         float strength_x, strength_y;
     public:
-        Shake();
+        CCShake();
 
-        static Shake* create(const float duration, const float level);
-        static Shake* create(const float duration, const float level_x, const float level_y);
+        static CCShake* create(const float duration, const float level);
+        static CCShake* create(const float duration, const float level_x, const float level_y);
         bool initWithDuration(const float duration, const float level_x, const float level_y);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget);
+        virtual void startWithTarget(cocos2d::CCNode *pTarget);
         virtual void update(float time);
         virtual void stop(void) override;
 
-        virtual Shake *reverse() const override;
-        virtual Shake *clone() const override;
+        virtual CCShake *reverse(); // override
+        virtual CCShake *clone();
     };
 }
 
