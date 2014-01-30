@@ -2,21 +2,53 @@
 #define __OREORE_COCOS2D_MULTIRESOLITION_H__
 
 #include "cocos2d.h"
+#include <set>
 
 namespace oreore
 {
 	struct Resolution
 	{
-		cocos2d::Size size;
+		cocos2d::CCSize size;
 		char directory[64];
+
+        Resolution(const cocos2d::CCSize &size, const char *name);
+        bool operator<(const Resolution &rhs) const;
+        bool operator>(const Resolution &rhs) const;
 	};
+
+    namespace ResolutionType
+    {
+        enum Type
+        {
+            iPhone,
+            iPhoneHD,
+            iPad,
+            iPadHD,
+
+            Small,
+            Medium,
+            Large,
+            XLarge,
+
+            All
+        };
+    }
 
 	class MultiResolution
 	{
 	private:
+        static const char *names[ResolutionType::All];
+        static const char *searchPaths[2];
+
+        cocos2d::CCSize swap(const cocos2d::CCSize &size, const bool doSwap);
 	public:
-		MultiResolution() { }
+		MultiResolution();
 		~MultiResolution() { }
+
+        void resolve();
+        void addDirectory(const ResolutionType::Type res, const char *name);
+        void addSearchPathiOS(const char *name);
+        void addSearchPathAndroid(const char *name);
 	};
 }
 
