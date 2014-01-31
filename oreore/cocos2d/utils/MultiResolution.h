@@ -36,9 +36,11 @@ namespace oreore
 
 	class MultiResolution
 	{
+        typedef std::vector<std::string> StringList;
 	private:
+        StringList searchPaths;
         static const char *names[ResolutionType::All];
-        static const char *searchPaths[2];
+        //static const char *searchPaths[2];
 
         cocos2d::CCSize swap(const cocos2d::CCSize &size, const bool doSwap);
 	public:
@@ -47,8 +49,7 @@ namespace oreore
 
         void resolve();
         void addDirectory(const ResolutionType::Type res, const char *name);
-        void addSearchPathiOS(const char *name);
-        void addSearchPathAndroid(const char *name);
+        void addSearchPath(const char *name);
 	};
 }
 

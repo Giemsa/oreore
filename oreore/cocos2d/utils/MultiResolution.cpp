@@ -39,11 +39,13 @@ namespace oreore
         SEARCHPATH_IOS,
         SEARCHPATH_ANDROID
     };
-    
+   
+    /*
     const char *MultiResolution::searchPaths[2] = {
         "Published-ios",
         ""
     };
+    */
     
     MultiResolution::MultiResolution()
     {
@@ -66,18 +68,11 @@ namespace oreore
         const CCSize size = swap(fsize, v);
         const CCSize dsize = swap(CCSizeMake(960, 640), v);
 
-        std::vector<std::string> paths;
         std::vector<std::string> order;
 
         TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
         if(platform == kTargetIphone || platform == kTargetIpad)
         {
-            if(strlen(searchPaths[SEARCHPATH_IOS]) > 0)
-            {
-                paths.push_back(searchPaths[SEARCHPATH_IOS]);
-                CCFileUtils::sharedFileUtils()->setSearchPaths(paths);
-            }
-
             if(size.height > 768)
             {
                 rsize = CCSizeMake(2048, 1536);
@@ -104,12 +99,6 @@ namespace oreore
         }
         else if(platform == kTargetAndroid)
         {
-            if(strlen(searchPaths[SEARCHPATH_ANDROID]) > 0)
-            {
-                paths.push_back(searchPaths[SEARCHPATH_ANDROID]);
-                CCFileUtils::sharedFileUtils()->setSearchPaths(paths);
-            }
-
             if(size.height > 1200)
             {
                 rsize = CCSizeMake(1200, 800);
@@ -135,6 +124,7 @@ namespace oreore
         rsize = swap(rsize, v);
         CCDirector::sharedDirector()->setContentScaleFactor(dsize.width / rsize.width);
         eglView->setDesignResolutionSize(rsize.width, rsize.height,/* kResolutionFixedHeight */ kResolutionShowAll);
+        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
 
@@ -149,15 +139,9 @@ namespace oreore
         names[res] = name;
     }
 
-    void MultiResolution::addSearchPathiOS(const char *name)
+    void MultiResolution::addSearchPath(const char *name)
     {
         if(name)
-            searchPaths[SEARCHPATH_IOS] = name;
-    }
-
-    void MultiResolution::addSearchPathAndroid(const char *name)
-    {
-        if(name)
-            searchPaths[SEARCHPATH_ANDROID] = name;
+            searchPaths.push_back(name);
     }
 }
