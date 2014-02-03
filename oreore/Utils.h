@@ -19,7 +19,10 @@
 
 namespace oreore
 {
-    // use Xorshift
+    /*
+     * Random Number Generator using Xorshift
+     * You can use this class for std::random_shuffle()
+     */
     class Random
     {
     private:
@@ -42,6 +45,8 @@ namespace oreore
 
         inline unsigned long next(const unsigned long max) { return next() % max; }
         inline unsigned long next(const unsigned long min, const unsigned long max) { return min + next(max - min); }
+
+        inline unsigned long operator()(const unsigned long max) { return next(max); }
     };
 
     unsigned long random();
