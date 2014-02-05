@@ -48,10 +48,28 @@ namespace oreore
         );
     }
 
-    inline cocos2d::Point center(cocos2d::Node *node)
+    inline cocos2d::CCPoint center()
+    {
+        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getWinSize();
+        return cocos2d::CCPoint(s.width / 2, s.height / 2);
+    }
+
+    inline cocos2d::CCPoint center(cocos2d::CCNode *node)
     {
         const cocos2d::Size &s = node->getContentSize();
         return cocos2d::Point(s.width / 2, s.height / 2);
+    }
+
+    inline cocos2d::CCPoint percent(const float x, const float y)
+    {
+        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getWinSize();
+        return cocos2d::CCPoint(s.width * x / 100, s.height * y / 100);
+    }
+
+    inline cocos2d::CCPoint percent(cocos2d::CCNode *node, const float x, const float y)
+    {
+        const cocos2d::CCSize &s = node->getContentSize();
+        return cocos2d::CCPoint(s.width * x / 100, s.height * y / 100);
     }
 
     inline int cut(const int v, const int n)
