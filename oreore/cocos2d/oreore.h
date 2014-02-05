@@ -11,6 +11,7 @@
 /* nodes */
 #include "nodes/GlowLine.h"
 #include "nodes/Overlay.h"
+#include "nodes/SimpleButton.h"
 
 /* utils */
 #include "utils/Utils.h"
