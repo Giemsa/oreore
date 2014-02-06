@@ -4,7 +4,7 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    /* CCCCOverlayLayer */
+    /* CCOverlayLayer */
     CCOverlayLayer::CCOverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
     {
 

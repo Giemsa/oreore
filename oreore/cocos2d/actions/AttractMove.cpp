@@ -8,9 +8,13 @@ namespace oreore
     CCAttractMove *CCAttractMove::create(const float duration, const CCPoint &target, const CCPoint &v0)
     {
         CCAttractMove *action = new CCAttractMove();
-        action->initWithDuration(duration, target, v0);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, target, v0))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CCAttractMove::initWithDuration(const float duration, const CCPoint &target, const CCPoint &v0)

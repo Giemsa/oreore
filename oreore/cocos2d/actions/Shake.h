@@ -7,7 +7,7 @@ namespace oreore
 {
     class CCShake : public cocos2d::CCActionInterval
     {
-    private:
+    protected:
         cocos2d::CCPoint dpos;
         float strength_x, strength_y;
     public:

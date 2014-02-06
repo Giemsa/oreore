@@ -1,5 +1,6 @@
 #include "Shake.h"
 #include "../../Utils.h"
+#include "../../null.h"
 
 namespace oreore
 {
@@ -17,10 +18,13 @@ namespace oreore
     CCShake *CCShake::create(const float duration, const float level_x, const float level_y)
     {
         CCShake *action = new CCShake();
-        action->initWithDuration(duration, level_x, level_y);
-        action->autorelease();
-
-        return action;
+        if(action && action->initWithDuration(duration, level_x, level_y))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CCShake::initWithDuration(const float duration, const float level_x, const float level_y)

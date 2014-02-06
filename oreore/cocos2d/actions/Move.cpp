@@ -8,9 +8,13 @@ namespace oreore
     CCMove *CCMove::create(const float duration, const CCPoint &vec)
     {
         CCMove *action = new CCMove();
-        action->initWithDuration(duration, vec);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, vec))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CCMove::initWithDuration(const float duration, const CCPoint &vec)

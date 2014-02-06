@@ -9,9 +9,13 @@ namespace oreore
     CCCircleMoveBy *CCCircleMoveBy::create(const float duration, const CCPoint &center, const float deg)
     {
         CCCircleMoveBy *action = new CCCircleMoveBy();
-        action->initWithDuration(duration, center, deg);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, center, deg))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CCCircleMoveBy::initWithDuration(const float duration, const CCPoint &center, const float deg)
