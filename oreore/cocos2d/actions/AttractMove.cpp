@@ -7,9 +7,13 @@ namespace oreore
     AttractMove *AttractMove::create(const float duration, const Point &target, const Point &v0)
     {
         AttractMove *action = new AttractMove();
-        action->initWithDuration(duration, target, v0);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, target, v0))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool AttractMove::initWithDuration(const float duration, const Point &target, const Point &v0)

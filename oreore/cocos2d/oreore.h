@@ -5,6 +5,7 @@
 #include "actions/CircleMoveBy.h"
 #include "actions/CircleMoveTo.h"
 #include "actions/Shake.h"
+#include "actions/ShakeFadeOut.h"
 #include "actions/Move.h"
 #include "actions/AttractMove.h"
 

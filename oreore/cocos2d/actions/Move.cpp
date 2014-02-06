@@ -8,9 +8,13 @@ namespace oreore
     Move *Move::create(const float duration, const Point &vec)
     {
         Move *action = new Move();
-        action->initWithDuration(duration, vec);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, vec))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool Move::initWithDuration(const float duration, const Point &vec)

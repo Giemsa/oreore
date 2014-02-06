@@ -1,5 +1,6 @@
 #include "Shake.h"
 #include "../../Utils.h"
+#include "../../null.h"
 
 namespace oreore
 {
@@ -17,10 +18,13 @@ namespace oreore
     Shake *Shake::create(const float duration, const float level_x, const float level_y)
     {
         Shake *action = new Shake();
-        action->initWithDuration(duration, level_x, level_y);
-        action->autorelease();
-
-        return action;
+        if(action && action->initWithDuration(duration, level_x, level_y))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool Shake::initWithDuration(const float duration, const float level_x, const float level_y)

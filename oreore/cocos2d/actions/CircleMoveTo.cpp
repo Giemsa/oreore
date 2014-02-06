@@ -8,9 +8,13 @@ namespace oreore
     CircleMoveTo *CircleMoveTo::create(const float duration, const Point &center, const float deg)
     {
         CircleMoveTo *action = new CircleMoveTo();
-        action->initWithDuration(duration, center, deg);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, center, deg))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CircleMoveTo::initWithDuration(const float duration, const Point &center, const float deg)
