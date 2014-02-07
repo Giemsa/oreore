@@ -6,7 +6,7 @@ namespace oreore
     using namespace cocos2d;
 
     /* Resolution */
-    Resolution::Resolution(const CCSize &size, const char *name) : size(size)
+    Resolution::Resolution(const Size &size, const char *name) : size(size)
     {
         strncpy(directory, name, sizeof(directory));
     }
@@ -22,7 +22,7 @@ namespace oreore
     }
 
     /* MultiResolution */
-    const char *MultiResolution::names[ResolutionType::All] = {
+    const char *MultiResolution::names[static_cast<int>(ResolutionType::All)] = {
         "resources-iphone",
         "resources-iphonehd",
         "resources-ipad",
@@ -34,109 +34,96 @@ namespace oreore
         "resources-small"
     };
     
-    enum
-    {
-        SEARCHPATH_IOS,
-        SEARCHPATH_ANDROID
-    };
-   
-    /*
-    const char *MultiResolution::searchPaths[2] = {
-        "Published-ios",
-        ""
-    };
-    */
-    
     MultiResolution::MultiResolution()
     {
 
     }
 
-    cocos2d::CCSize MultiResolution::swap(const cocos2d::CCSize &size, const bool doSwap)
+    Size MultiResolution::swap(const Size &size, const bool doSwap)
     {
         if(doSwap)
-            return CCSizeMake(size.height, size.width);
+            return Size(size.height, size.width);
         return size;
     }
 
     void MultiResolution::resolve()
     {
-        CCEGLView *eglView = CCEGLView::sharedOpenGLView();
-        CCSize rsize;
-        const CCSize fsize = eglView->getFrameSize();
+        EGLView *eglView = EGLView::getInstance();
+        Size rsize;
+        const Size fsize = eglView->getFrameSize();
         const bool v = fsize.height / fsize.width > 1.0f;
-        const CCSize size = swap(fsize, v);
-        const CCSize dsize = swap(CCSizeMake(960, 640), v);
+        const Size size = swap(fsize, v);
+        const Size dsize = swap(Size(960, 640), v);
 
         std::vector<std::string> order;
 
-        TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
-        if(platform == kTargetIphone || platform == kTargetIpad)
+        ApplicationProtocol::Platform platform = Application::getInstance()->getTargetPlatform();
+        if(platform == ApplicationProtocol::Platform::OS_IPHONE || platform == ApplicationProtocol::Platform::OS_IPAD)
         {
             if(size.height > 768)
             {
-                rsize = CCSizeMake(2048, 1536);
-                order.push_back(names[ResolutionType::iPadHD]);
+                rsize = Size(2048, 1536);
+                order.push_back(names[static_cast<int>(ResolutionType::iPadHD)]);
             }
             else if(size.height > 640)
             {
-                rsize = CCSizeMake(1536, 768);
-                order.push_back(names[ResolutionType::iPad]);
+                rsize = Size(1536, 768);
+                order.push_back(names[static_cast<int>(ResolutionType::iPad)]);
             }
             else if(size.height > 480)
             {
                 if(size.width < 1136)
-                    rsize = CCSizeMake(960, 640);
+                    rsize = Size(960, 640);
                 else
-                    rsize = CCSizeMake(1136, 640);
-                order.push_back(names[ResolutionType::iPhoneHD]);
+                    rsize = Size(1136, 640);
+                order.push_back(names[static_cast<int>(ResolutionType::iPhoneHD)]);
             }
             else
             {
-                rsize = CCSizeMake(480, 320);
-                order.push_back(names[ResolutionType::iPhone]);
+                rsize = Size(480, 320);
+                order.push_back(names[static_cast<int>(ResolutionType::iPhone)]);
             }
         }
-        else if(platform == kTargetAndroid)
+        else if(platform == ApplicationProtocol::Platform::OS_ANDROID)
         {
             if(size.height > 1200)
             {
-                rsize = CCSizeMake(1200, 800);
-                order.push_back(names[ResolutionType::XLarge]);
+                rsize = Size(1200, 800);
+                order.push_back(names[static_cast<int>(ResolutionType::XLarge)]);
             }
             else if(size.height > 960)
             {
-                rsize = CCSizeMake(960, 640);
-                order.push_back(names[ResolutionType::Large]);
+                rsize = Size(960, 640);
+                order.push_back(names[static_cast<int>(ResolutionType::Large)]);
             }
             else if(size.height > 480)
             {
-                rsize = CCSizeMake(720, 480);
-                order.push_back(names[ResolutionType::Medium]);
+                rsize = Size(720, 480);
+                order.push_back(names[static_cast<int>(ResolutionType::Medium)]);
             }
             else
             {
-                rsize = CCSizeMake(568, 320);
-                order.push_back(names[ResolutionType::Small]);
+                rsize = Size(568, 320);
+                order.push_back(names[static_cast<int>(ResolutionType::Small)]);
             }
         }
 
         rsize = swap(rsize, v);
-        CCDirector::sharedDirector()->setContentScaleFactor(dsize.width / rsize.width);
-        eglView->setDesignResolutionSize(rsize.width, rsize.height,/* kResolutionFixedHeight */ kResolutionShowAll);
-        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
-        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
+        Director::getInstance()->setContentScaleFactor(dsize.width / rsize.width);
+        eglView->setDesignResolutionSize(rsize.width, rsize.height,/* kResolutionFixedHeight */ ResolutionPolicy::SHOW_ALL);
+        FileUtils::getInstance()->setSearchPaths(searchPaths);
+        FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
 
-    void MultiResolution::addDirectory(const ResolutionType::Type res, const char *name)
+    void MultiResolution::addDirectory(const ResolutionType res, const char *name)
     {
         if(res == ResolutionType::All)
         {
-            for(int i = 0; i < ResolutionType::All; i++)
+            for(int i = 0; i < static_cast<int>(ResolutionType::All); i++)
                 names[i] = name;
             return;
         }
-        names[res] = name;
+        names[static_cast<int>(res)] = name;
     }
 
     void MultiResolution::addSearchPath(const char *name)
