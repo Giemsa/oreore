@@ -6,16 +6,16 @@
 
 namespace oreore
 {
-    class CCShakeFadeOut : public CCShake
+    class ShakeFadeOut : public Shake
     {
     public:
-        static CCShakeFadeOut* create(const float duration, const float level);
-        static CCShakeFadeOut* create(const float duration, const float level_x, const float level_y);
+        static ShakeFadeOut* create(const float duration, const float level);
+        static ShakeFadeOut* create(const float duration, const float level_x, const float level_y);
 
-        virtual void update(float time);
+        virtual void update(float time) override;
 
-        virtual CCShakeFadeOut *reverse(); // override
-        virtual CCShakeFadeOut *clone();
+        virtual ShakeFadeOut *reverse() const override;
+        virtual ShakeFadeOut *clone() const override;
     };
 }
 

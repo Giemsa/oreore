@@ -2,6 +2,7 @@
 #define __OREORE_COCOS2D_ATTRACTMOVE_H__
 
 #include "cocos2d.h"
+#include "../../null.h"
 
 namespace oreore
 {
