@@ -62,25 +62,25 @@ namespace oreore
         {
             if(size.height > 768)
             {
-                rsize = Size(2048, 1536);
+                rsize.setSize(2048, 1536);
                 order.push_back(names[static_cast<int>(ResolutionType::iPadHD)]);
             }
             else if(size.height > 640)
             {
-                rsize = Size(1536, 768);
+                rsize.setSize(1536, 768);
                 order.push_back(names[static_cast<int>(ResolutionType::iPad)]);
             }
             else if(size.height > 480)
             {
                 if(size.width < 1136)
-                    rsize = Size(960, 640);
+                    rsize.setSize(960, 649);
                 else
-                    rsize = Size(1136, 640);
+                    rsize.setSize(1136, 640);
                 order.push_back(names[static_cast<int>(ResolutionType::iPhoneHD)]);
             }
             else
             {
-                rsize = Size(480, 320);
+                rsize.setSize(480, 320);
                 order.push_back(names[static_cast<int>(ResolutionType::iPhone)]);
             }
         }
@@ -88,22 +88,22 @@ namespace oreore
         {
             if(size.height > 1200)
             {
-                rsize = Size(1200, 800);
+                rsize.setSize(1200, 800);
                 order.push_back(names[static_cast<int>(ResolutionType::XLarge)]);
             }
             else if(size.height > 960)
             {
-                rsize = Size(960, 640);
+                rsize.setSize(960, 640);
                 order.push_back(names[static_cast<int>(ResolutionType::Large)]);
             }
             else if(size.height > 480)
             {
-                rsize = Size(720, 480);
+                rsize.setSize(720, 480);
                 order.push_back(names[static_cast<int>(ResolutionType::Medium)]);
             }
             else
             {
-                rsize = Size(568, 320);
+                rsize.setSize(568, 320);
                 order.push_back(names[static_cast<int>(ResolutionType::Small)]);
             }
         }
