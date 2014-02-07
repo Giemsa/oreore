@@ -9,9 +9,13 @@ namespace oreore
     CircleMoveBy *CircleMoveBy::create(const float duration, const Point &center, const float deg)
     {
         CircleMoveBy *action = new CircleMoveBy();
-        action->initWithDuration(duration, center, deg);
-        action->autorelease();
-        return action;
+        if(action && action->initWithDuration(duration, center, deg))
+        {
+            action->autorelease();
+            return action;
+        }
+        delete action;
+        return null;
     }
 
     bool CircleMoveBy::initWithDuration(const float duration, const Point &center, const float deg)

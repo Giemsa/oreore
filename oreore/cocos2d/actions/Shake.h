@@ -7,7 +7,7 @@ namespace oreore
 {
     class Shake : public cocos2d::ActionInterval
     {
-    private:
+    protected:
         cocos2d::Point dpos;
         float strength_x, strength_y;
     public:
