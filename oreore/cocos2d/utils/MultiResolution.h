@@ -29,12 +29,12 @@ namespace oreore
         typedef std::vector<std::string> StringList;
     private:
         StringList searchPaths;
-        cocos2d::Size designSize;
+        cocos2d::CCSize designSize;
         static const char *names[ResolutionType::All];
 
         cocos2d::CCSize swap(const cocos2d::CCSize &size, const bool doSwap);
     public:
-        MultiResolution() : designSize() { }
+        MultiResolution() : designSize(960, 640) { }
         MultiResolution(const cocos2d::CCSize &designSize) : designSize(designSize) { }
         ~MultiResolution() { }
 

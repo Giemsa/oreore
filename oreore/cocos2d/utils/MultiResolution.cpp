@@ -32,7 +32,6 @@ namespace oreore
         const CCSize fsize = eglView->getFrameSize();
         const bool v = fsize.height / fsize.width > 1.0f;
         const CCSize size = swap(fsize, v);
-        const CCSize dsize = swap(CCSizeMake(960, 640), v);
 
         std::vector<std::string> order;
 
@@ -51,7 +50,7 @@ namespace oreore
         else if(platform == kTargetAndroid)
         {
             if(size.height > 1200)
-                order.push_back(names[esolutionType::XLarge]);
+                order.push_back(names[ResolutionType::XLarge]);
             else if(size.height > 960)
                 order.push_back(names[ResolutionType::Large]);
             else if(size.height > 480)
@@ -60,7 +59,7 @@ namespace oreore
                 order.push_back(names[ResolutionType::Small]);
         }
 
-        eglView->setDesignResolutionSize(dsize.width, dsize.height, kResolutionShowAll);
+        eglView->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
