@@ -31,7 +31,6 @@ namespace oreore
         const Size fsize = eglView->getFrameSize();
         const bool v = fsize.height / fsize.width > 1.0f;
         const Size size = swap(fsize, v);
-        const Size dsize = swap(Size(960, 640), v);
 
         std::vector<std::string> order;
 
@@ -59,7 +58,7 @@ namespace oreore
                 order.push_back(names[static_cast<int>(ResolutionType::Small)]);
         }
 
-        eglView->setDesignResolutionSize(dsize.width, dsize.height, ResolutionPolicy::SHOW_ALL);
+        eglView->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
         FileUtils::getInstance()->setSearchPaths(searchPaths);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }

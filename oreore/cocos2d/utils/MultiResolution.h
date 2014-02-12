@@ -31,7 +31,7 @@ namespace oreore
 
         cocos2d::Size swap(const cocos2d::Size &size, const bool doSwap);
     public:
-        MultiResolution() : designSize() { }
+        MultiResolution() : designSize(960, 640) { }
         MultiResolution(const cocos2d::Size &designSize) : designSize(designSize) { }
         ~MultiResolution() { }
 
