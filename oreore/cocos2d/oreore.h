@@ -18,6 +18,7 @@
 #include "utils/Utils.h"
 #include "utils/Fluxion.h"
 #include "utils/CommonGameBase.h"
+#include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
 
 #endif
