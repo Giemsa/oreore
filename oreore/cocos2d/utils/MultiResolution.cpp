@@ -36,7 +36,7 @@ namespace oreore
         EGLView *eglView = EGLView::getInstance();
         Size rsize;
         const Size fsize = eglView->getFrameSize();
-        const Size size = swap(fsize, fsize.height / fsize.width > 1.0f);
+        const Size size = swap(fsize, fsize.height / fsize.width < 1.0f);
 
         std::vector<std::string> order;
 
