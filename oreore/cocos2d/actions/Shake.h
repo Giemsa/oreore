@@ -19,7 +19,7 @@ namespace oreore
 
         virtual void startWithTarget(cocos2d::CCNode *pTarget);
         virtual void update(float time);
-        virtual void stop(void) override;
+        virtual void stop(void); // override
 
         virtual CCShake *reverse(); // override
         virtual CCShake *clone();

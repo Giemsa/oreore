@@ -6,17 +6,24 @@ namespace oreore
     using namespace cocos2d;
 
     /* MultiResolution */
-    const char *MultiResolution::names[ResolutionType::All] = {
-        "resources-iphone",
-        "resources-iphonehd",
-        "resources-ipad",
-        "resources-ipadhs",
+    MultiResolution::StringList MultiResolution::names;
 
-        "resources-xlarge",
-        "resources-large",
-        "resources-medium",
-        "resources-small"
-    };
+    void MultiResolution::initNames()
+    {
+        if(names.size() > 0)
+            return;
+
+        names.reserve(ResolutionType::All);
+        names.push_back("resources-iphone");
+        names.push_back("resources-iphonehd");
+        names.push_back("resources-ipad");
+        names.push_back("resources-ipadhd");
+
+        names.push_back("resources-small");
+        names.push_back("resources-medium");
+        names.push_back("resources-large");
+        names.push_back("resources-xlarge");
+    }
 
     CCSize MultiResolution::swap(const CCSize &size, const bool doSwap)
     {
@@ -30,8 +37,7 @@ namespace oreore
         CCEGLView *eglView = CCEGLView::sharedOpenGLView();
         CCSize rsize;
         const CCSize fsize = eglView->getFrameSize();
-        const bool v = fsize.height / fsize.width > 1.0f;
-        const CCSize size = swap(fsize, v);
+        const CCSize size = swap(fsize, fsize.height / fsize.width > 1.0f);
 
         std::vector<std::string> order;
 
@@ -59,12 +65,11 @@ namespace oreore
                 order.push_back(names[ResolutionType::Small]);
         }
 
-        eglView->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
-        CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+        eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
 
-    void MultiResolution::addDirectory(const ResolutionType::Type res, const char *name)
+    void MultiResolution::setDirectory(const ResolutionType::Type res, const char *name)
     {
         if(res == ResolutionType::All)
         {
@@ -78,6 +83,6 @@ namespace oreore
     void MultiResolution::addSearchPath(const char *name)
     {
         if(name)
-            searchPaths.push_back(name);
+            CCFileUtils::sharedFileUtils()->addSearchPath(name);
     }
 }
