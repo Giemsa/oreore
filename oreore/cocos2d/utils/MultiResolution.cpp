@@ -5,17 +5,24 @@ namespace oreore
     using namespace cocos2d;
 
     /* MultiResolution */
-    const char *MultiResolution::names[static_cast<int>(ResolutionType::All)] = {
-        "resources-iphone",
-        "resources-iphonehd",
-        "resources-ipad",
-        "resources-ipadhs",
+    MultiResolution::StringList MultiResolution::names;
 
-        "resources-xlarge",
-        "resources-large",
-        "resources-medium",
-        "resources-small"
-    };
+    void MultiResolution::initNames()
+    {
+        if(names.size() > 0)
+            return;
+
+        names.reserve(static_cast<int>(ResolutionType::All));
+        names.push_back("resources-iphone");
+        names.push_back("resources-iphonehd");
+        names.push_back("resources-ipad");
+        names.push_back("resources-ipadhd");
+
+        names.push_back("resources-small");
+        names.push_back("resources-medium");
+        names.push_back("resources-large");
+        names.push_back("resources-xlarge");
+    }
 
     Size MultiResolution::swap(const Size &size, const bool doSwap)
     {
@@ -29,8 +36,7 @@ namespace oreore
         EGLView *eglView = EGLView::getInstance();
         Size rsize;
         const Size fsize = eglView->getFrameSize();
-        const bool v = fsize.height / fsize.width > 1.0f;
-        const Size size = swap(fsize, v);
+        const Size size = swap(fsize, fsize.height / fsize.width > 1.0f);
 
         std::vector<std::string> order;
 
@@ -58,8 +64,7 @@ namespace oreore
                 order.push_back(names[static_cast<int>(ResolutionType::Small)]);
         }
 
-        eglView->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-        FileUtils::getInstance()->setSearchPaths(searchPaths);
+        eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
 
@@ -77,6 +82,6 @@ namespace oreore
     void MultiResolution::addSearchPath(const char *name)
     {
         if(name)
-            searchPaths.push_back(name);
+            FileUtils::getInstance()->addSearchPath(name);
     }
 }

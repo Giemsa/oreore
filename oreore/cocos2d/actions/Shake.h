@@ -17,8 +17,8 @@ namespace oreore
         static Shake* create(const float duration, const float level_x, const float level_y);
         bool initWithDuration(const float duration, const float level_x, const float level_y);
 
-        virtual void startWithTarget(cocos2d::Node *pTarget);
-        virtual void update(float time);
+        virtual void startWithTarget(cocos2d::Node *pTarget) override;
+        virtual void update(float time) override;
         virtual void stop(void) override;
 
         virtual Shake *reverse() const override;

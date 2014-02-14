@@ -25,20 +25,23 @@ namespace oreore
     {
         typedef std::vector<std::string> StringList;
     private:
-        StringList searchPaths;
         cocos2d::Size designSize;
-        static const char *names[static_cast<int>(ResolutionType::All)];
+        ResolutionPolicy policy;
+        static StringList names;
 
         cocos2d::Size swap(const cocos2d::Size &size, const bool doSwap);
+        void initNames();
     public:
-        MultiResolution() : designSize(960, 640) { }
-        MultiResolution(const cocos2d::Size &designSize) : designSize(designSize) { }
+        MultiResolution() : designSize(960, 640), policy(ResolutionPolicy::SHOW_ALL) { initNames(); }
+        MultiResolution(const cocos2d::Size &designSize) : designSize(designSize), policy(ResolutionPolicy::SHOW_ALL) { initNames(); }
         ~MultiResolution() { }
 
         void resolve();
         void addDirectory(const ResolutionType res, const char *name);
         void addSearchPath(const char *name);
         inline void setDesignSize(const cocos2d::Size &size) { designSize = size; }
+        inline void setResolutionPolicy(const ResolutionPolicy policy) { this->policy = policy; }
+        inline ResolutionPolicy getResolutionPolicy() const { return policy; }
     };
 }
 
