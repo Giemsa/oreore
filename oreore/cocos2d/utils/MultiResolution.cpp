@@ -37,7 +37,7 @@ namespace oreore
         CCEGLView *eglView = CCEGLView::sharedOpenGLView();
         CCSize rsize;
         const CCSize fsize = eglView->getFrameSize();
-        const CCSize size = swap(fsize, fsize.height / fsize.width > 1.0f);
+        const CCSize size = swap(fsize, fsize.height / fsize.width < 1.0f);
 
         std::vector<std::string> order;
 
