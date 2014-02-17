@@ -13,6 +13,7 @@
 #include "nodes/GlowLine.h"
 #include "nodes/Overlay.h"
 #include "nodes/SimpleButton.h"
+#include "nodes/TextureMappedPolygon.h"
 
 /* utils */
 #include "utils/Utils.h"
