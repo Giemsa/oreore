@@ -8,13 +8,13 @@ namespace oreore
      * CCDirectorのシーンスタックに強制的にアクセスするためのクラス
      * 本来はよくない使い方だけどこうする他ないので仕方ない
      */
-    class DirectorWrapper : public CCDirector
+    class DirectorWrapper : public Director
     {
     private:
     public:
-        inline CCArray *getSceneStack() { return m_pobScenesStack; }
-        inline void setSendCleanupToScene(const bool s) { m_bSendCleanupToScene = s; }
-        inline void setNextSceneWrapper(CCScene *scene) { m_pNextScene = scene; }
+        inline Vector<Scene *> &getSceneStack() { return _scenesStack; }
+        inline void setSendCleanupToScene(const bool s) { _sendCleanupToScene = s; }
+        inline void setNextSceneWrapper(Scene *scene) { _nextScene = scene; }
     };
 
 
@@ -31,19 +31,19 @@ namespace oreore
 
     bool ManagedSceneBase::init()
     {
-        if(!CCLayer::init())
+        if(!Layer::init())
             return false;
         return true;
     }
 
-    CCTransitionScene *ManagedSceneBase::transition(CCScene *nextScene)
+    TransitionScene *ManagedSceneBase::transition(Scene *nextScene)
     {
-        return CCTransitionFade::create(transitionTime, nextScene, ccBLACK);
+        return TransitionFade::create(transitionTime, nextScene, Color3B::BLACK);
     }
 
 
     /* LoadingScene */
-    LoadingScene *LoadingScene::create(const ccColor4B &color)
+    LoadingScene *LoadingScene::create(const Color4B &color)
     {
         LoadingScene *r = new LoadingScene();
         if(r && r->init(color))
@@ -55,7 +55,7 @@ namespace oreore
         return null;
     }
 
-    LoadingScene *LoadingScene::create(const ccColor4B &color, const float maxDuration)
+    LoadingScene *LoadingScene::create(const Color4B &color, const float maxDuration)
     {
         LoadingScene *r = new LoadingScene();
         if(r && r->init(color, maxDuration))
@@ -69,7 +69,7 @@ namespace oreore
 
     LoadingScene::LoadingScene() : disposeNext(false)
     {
-        scene = cocos2d::CCScene::create();
+        scene = Scene::create();
         scene->retain();
         scene->addChild(this);
     }
@@ -79,9 +79,9 @@ namespace oreore
         scene->release();
     }
 
-    bool LoadingScene::init(const ccColor4B &color, const float maxDuration)
+    bool LoadingScene::init(const Color4B &color, const float maxDuration)
     {
-        if(!CCLayerColor::initWithColor(color))
+        if(!LayerColor::initWithColor(color))
             return false;
 
         this->maxDuration = maxDuration;
@@ -91,7 +91,7 @@ namespace oreore
 
     void LoadingScene::onEnter()
     {
-        CCLayerColor::onEnter();
+        LayerColor::onEnter();
         duration = 0.0f;
         scheduleUpdate();
     }
@@ -104,9 +104,9 @@ namespace oreore
             unscheduleUpdate();
         
             if(currentScene)
-                CCDirector::sharedDirector()->replaceScene(currentScene->transition(nextScene));
+                Director::getInstance()->replaceScene(currentScene->transition(nextScene));
             else
-                CCDirector::sharedDirector()->replaceScene(nextScene);
+                Director::getInstance()->replaceScene(nextScene);
 
             if(disposeNext)
                 currentScene->getScene()->release();
@@ -129,27 +129,26 @@ namespace oreore
     
     }
 
-    CCObject *SceneManager::getCurrentScene()
+    Object *SceneManager::getCurrentScene()
     {
-        CCScene *scene = CCDirector::sharedDirector()->getRunningScene();
+        Scene *scene = Director::getInstance()->getRunningScene();
         CCAssert(scene->getChildrenCount() == 1, "CCScene must have only 1 CCLayer.");
-        return scene->getChildren()->objectAtIndex(0);
+        return scene->getChildren().front();
     }
 
     void SceneManager::backScene(const bool disposeScene)
     {
-        cocos2d::CCScene *next = null;
-        DirectorWrapper *dir = static_cast<DirectorWrapper *>(CCDirector::sharedDirector());
-        CCArray *stack = dir->getSceneStack();
-        stack->removeLastObject();
-        const unsigned int count = stack->count();
-        if(count == 0)
+        Scene *next = null;
+        DirectorWrapper *dir = static_cast<DirectorWrapper *>(Director::getInstance());
+        Vector<Scene *> &stack = dir->getSceneStack();
+        stack.erase(stack.size() - 1);
+        if(stack.empty())
         {
             dir->end();
             return;
         }
 
-        CCScene *scene = static_cast<CCScene *>(stack->lastObject());
+        Scene *scene = stack.back();
         ManagedSceneBase *current = dynamic_cast<ManagedSceneBase *>(getCurrentScene());
 
         if(disposeScene)
@@ -184,7 +183,7 @@ namespace oreore
             else
                 next = scene;
         }
-        cocos2d::CCDirector::sharedDirector()->replaceScene(next);
+        Director::getInstance()->replaceScene(next);
     }
 
     LoadingScene *SceneManager::setLoadingScene(LoadingScene *scene)
