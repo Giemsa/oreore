@@ -48,6 +48,9 @@ namespace oreore
 
         virtual cocos2d::CCAction *touchAction();
         virtual cocos2d::CCAction *unTouchAction();
+
+        virtual void onEnter(); // override
+        virtual void onExit(); // override
     };
 }
 

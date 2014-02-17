@@ -90,10 +90,8 @@ namespace oreore
         return NULL;
     }
 
-
     void CCSimpleButton::_init(CCObject *target, SEL_MenuHandler selector)
     {
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
         this->target = target;
         this->selector = selector;
     }
@@ -183,5 +181,17 @@ namespace oreore
     CCAction *CCSimpleButton::unTouchAction()
     {
         return CCScaleTo::create(0.1f, 1.0f);
+    }
+
+    void CCSimpleButton::onEnter()
+    {
+        CCSprite::onEnter();
+        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
+    }
+
+    void CCSimpleButton::onExit()
+    {
+        CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+        CCSprite::onExit();
     }
 }
