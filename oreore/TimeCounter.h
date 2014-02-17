@@ -4,6 +4,7 @@
 // 時間を測るクラス
 // 必要になったらプラットフォームごとに精度高い関数使う
 #include <ctime>
+#include <sys/time.h>
 #include "null.h"
 
 namespace oreore
@@ -13,7 +14,8 @@ namespace oreore
         enum  Type
         {
             Second,
-            MilliSecond
+            MilliSecond,
+            MicroSecond
         };
     }
 
@@ -25,17 +27,30 @@ namespace oreore
             typedef time_t type;
             typedef time_t span_t;
             inline static type time() { return std::time(null); }
-            inline static int getClockPerMSec() { return 1; }
+            inline static double getClockPerMSec() { return 1; }
         };
-
 
         template<>
         struct Funcs<TimerPrecision::MilliSecond>
         {
             typedef clock_t type;
             typedef double span_t;
-            inline type static time() { return std::clock(); }
-            inline int static getClockPerMSec() { return CLOCKS_PER_SEC / 1000; }
+            inline static type time() { return std::clock(); }
+            inline static double getClockPerMSec() { return static_cast<double>(CLOCKS_PER_SEC) / 1000; }
+        };
+
+        template<>
+        struct Funcs<TimerPrecision::MicroSecond>
+        {
+            typedef double type;
+            typedef double span_t;
+            inline static type time()
+            {
+                timeval tv;
+                gettimeofday(&tv, NULL);
+                return tv.tv_sec + static_cast<double>(tv.tv_usec) * 1e-6;
+            }
+            inline static double getClockPerMSec() { return 1; }
         };
     }
 
