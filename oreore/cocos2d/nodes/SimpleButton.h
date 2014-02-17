@@ -11,6 +11,7 @@ namespace oreore
     private:
         cocos2d::ccMenuCallback selector;
         cocos2d::Point bpos;
+        cocos2d::EventListenerTouchOneByOne *listener;
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
         void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
@@ -44,6 +45,10 @@ namespace oreore
 
         virtual cocos2d::Action *touchAction();
         virtual cocos2d::Action *unTouchAction();
+
+
+        virtual void onEnter() override;
+        virtual void onExit() override;
     };
 }
 

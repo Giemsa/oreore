@@ -90,13 +90,8 @@ namespace oreore
         return NULL;
     }
 
-
     void SimpleButton::_init(const ccMenuCallback &selector)
     {
-        auto listener = EventListenerTouchOneByOne::create();
-        listener->onTouchBegan = CC_CALLBACK_2(SimpleButton::onTouchBegan, this);
-        listener->onTouchEnded = CC_CALLBACK_2(SimpleButton::onTouchEnded, this);
-        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
         this->selector = selector;
     }
@@ -181,5 +176,20 @@ namespace oreore
     Action *SimpleButton::unTouchAction()
     {
         return CCScaleTo::create(0.1f, 1.0f);
+    }
+
+    void SimpleButton::onEnter()
+    {
+        Sprite::onEnter();
+        listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(SimpleButton::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(SimpleButton::onTouchEnded, this);
+        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    }
+
+    void SimpleButton::onExit()
+    {
+        getEventDispatcher()->removeEventListener(listener);
+        Sprite::onExit();
     }
 }
