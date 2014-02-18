@@ -6,23 +6,74 @@ namespace oreore
     using namespace cocos2d;
 
     /* MultiResolution */
-    MultiResolution::StringList MultiResolution::names;
+    MultiResolution::ResolutionList MultiResolution::resolutions;
 
     void MultiResolution::initNames()
     {
-        if(names.size() > 0)
+        if(resolutions.size() > 0)
             return;
 
-        names.reserve(ResolutionType::All);
-        names.push_back("resources-iphone");
-        names.push_back("resources-iphonehd");
-        names.push_back("resources-ipad");
-        names.push_back("resources-ipadhd");
+        resolutions.reserve(ResolutionType::All);
 
-        names.push_back("resources-small");
-        names.push_back("resources-medium");
-        names.push_back("resources-large");
-        names.push_back("resources-xlarge");
+        /* iOS */
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(320, 480),
+                "resources-iphone",
+                0.5f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(640, 960),
+                "resources-iphonehd",
+                1.0f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(768, 1024),
+                "resources-ipad",
+                1.0f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(1536, 2048),
+                "resources-ipadhd",
+                2.0f
+            )
+        );
+
+        /* Android */
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(360, 640),
+                "resources-small",
+                0.5f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(540, 960),
+                "resources-medium",
+                1.0f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(720, 1280),
+                "resources-large",
+                2.0f
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
+                CCSizeMake(1080, 1920),
+                "resources-xlarge",
+                3.0f
+            )
+        );
     }
 
     CCSize MultiResolution::swap(const CCSize &size, const bool doSwap)
@@ -42,42 +93,50 @@ namespace oreore
         std::vector<std::string> order;
 
         TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
-        if(platform == kTargetIphone || platform == kTargetIpad)
+
+        const int offset = (platform == kTargetIphone || platform == kTargetIpad) ? 0 : 4;
+        bool set = false;
+        float factor = 1.0f;
+        for(int i = 2 + offset; i >= offset; i--)
         {
-            if(size.height > 768)
-                order.push_back(names[ResolutionType::iPadHD]);
-            else if(size.height > 640)
-                order.push_back(names[ResolutionType::iPad]);
-            else if(size.height > 480)
-                order.push_back(names[ResolutionType::iPhoneHD]);
-            else
-                order.push_back(names[ResolutionType::iPhone]);
+            if(size.height > resolutions[i].size.height)
+            {
+                const ResolutionConfig &config = resolutions[i + 1];
+                order.push_back(config.dirname);
+                rsize = config.size;
+                factor = config.scaleFactor;
+                set = true;
+                break;
+            }
         }
-        else if(platform == kTargetAndroid)
+        if(!set)
         {
-            if(size.height > 1200)
-                order.push_back(names[ResolutionType::XLarge]);
-            else if(size.height > 960)
-                order.push_back(names[ResolutionType::Large]);
-            else if(size.height > 480)
-                order.push_back(names[ResolutionType::Medium]);
-            else
-                order.push_back(names[ResolutionType::Small]);
+            const ResolutionConfig &config = resolutions[offset];
+            order.push_back(config.dirname);
+            rsize = config.size;
+            factor = config.scaleFactor;
         }
 
+        //CCDirector::sharedDirector()->setContentScaleFactor(std::max(rsize.width / designSize.width, rsize.height / designSize.height));
+        CCDirector::sharedDirector()->setContentScaleFactor(factor);
         eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
 
-    void MultiResolution::setDirectory(const ResolutionType::Type res, const char *name)
+    void MultiResolution::setDirectory(const ResolutionType::Type res, const char *dirname, const CCSize &size, const float scaleFactor)
     {
         if(res == ResolutionType::All)
         {
             for(int i = 0; i < ResolutionType::All; i++)
-                names[i] = name;
+                resolutions[i].setConfig(size, dirname, scaleFactor);
             return;
         }
-        names[res] = name;
+        resolutions[res].setConfig(size, dirname, scaleFactor);
+    }
+
+    void MultiResolution::copyConfig(const ResolutionType::Type from, const ResolutionType::Type to)
+    {
+        resolutions[to] = resolutions[from];
     }
 
     void MultiResolution::addSearchPath(const char *name)
