@@ -6,30 +6,29 @@
 
 namespace oreore
 {
-    class TextureMappedPolygon : public cocos2d::Node
+    class CCTextureMappedPolygon : public cocos2d::CCNode
     {
     public:
-		using Points = std::vector<cocos2d::Vertex2F>;
+		typedef std::vector<cocos2d::ccVertex2F> Points;
     private:
 		Points texCoord, coord;
-		cocos2d::Texture2D *texture;
-		cocos2d::BlendFunc blendFunc;
-		cocos2d::CustomCommand cmd;
+		cocos2d::CCTexture2D *texture;
+		cocos2d::ccBlendFunc blendFunc;
         
 		void calcTexCoord();
 	protected:
 		virtual bool init() override;
     public:
-		CREATE_FUNC(TextureMappedPolygon);
+		CREATE_FUNC(CCTextureMappedPolygon);
 
-		TextureMappedPolygon() { }
-		virtual ~TextureMappedPolygon() { }
+		CCTextureMappedPolygon() { }
+		virtual ~CCTextureMappedPolygon() { }
 
-		void setTexture(cocos2d::Texture2D* texture2D);
-		inline cocos2d::Texture2D* getTexture() const { return texture; }
+		void setTexture(cocos2d::CCTexture2D* texture2D);
+		inline cocos2d::CCTexture2D* getTexture() const { return texture; }
         void setTextureCoord(const Points &points);
 		void updateBlendFunc();
-		void setBlendFunc(cocos2d::BlendFunc blendFunc);
+		void setBlendFunc(cocos2d::ccBlendFunc blendFunc);
 		virtual void cleanup() override;
 		virtual void draw() override;
     };

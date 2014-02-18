@@ -5,35 +5,38 @@ namespace oreore
 {
     using namespace cocos2d;
 
-	/* TextureMappedPolygon */
-	bool TextureMappedPolygon::init()
+	/* CCTextureMappedPolygon */
+	bool CCTextureMappedPolygon::init()
 	{
-		if(!Node::init())
+		if(!CCNode::init())
 			return false;
 
 		texture = null;
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
-		setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+        setAnchorPoint(ccp(0.5f, 0.5f));
+		setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
 		//setTexture(GameManager::texture(SpriteIndex::Debug));
 		//setContentSize(getTexture()->getContentSize());
 
 		return true;
 	}
 
-	void TextureMappedPolygon::calcTexCoord()
+	void CCTextureMappedPolygon::calcTexCoord()
 	{
-		const float r = Director::getInstance()->getContentScaleFactor() / texture->getPixelsWide();
+		const float r = CCDirector::sharedDirector()->getContentScaleFactor() / texture->getPixelsWide();
 		texCoord.clear();
 		for(Points::iterator it = coord.begin(); it != coord.end(); ++it)
-			texCoord.push_back(Vertex2F(it->x * r, 1.0f - it->y * r));
+        {
+            const ccVertex2F v2f = { it->x * r, 1.0f - it->y * r };
+			texCoord.push_back(v2f);
+        }
 	}
 
-	void TextureMappedPolygon::setBlendFunc(BlendFunc blendFunc)
+	void CCTextureMappedPolygon::setBlendFunc(ccBlendFunc blendFunc)
 	{
 		this->blendFunc = blendFunc;
 	}
 	
-	void TextureMappedPolygon::setTexture(Texture2D* texture2D)
+	void CCTextureMappedPolygon::setTexture(CCTexture2D* texture2D)
 	{
 		CCAssert(texture2D, "texture is null");
 		CC_SAFE_RELEASE(texture);
@@ -41,21 +44,21 @@ namespace oreore
 		texture = texture2D;
 		CC_SAFE_RETAIN(texture);
 		
-		Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT };
-		texture->setTexParameters(texParams);
+		ccTexParams texParams = { GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT };
+		texture->setTexParameters(&texParams);
 		setContentSize(getTexture()->getContentSize());
 		
 		updateBlendFunc();
 		calcTexCoord();
 	}
 
-    void TextureMappedPolygon::setTextureCoord(const Points &points)
+    void CCTextureMappedPolygon::setTextureCoord(const Points &points)
     {
         coord = points;
         calcTexCoord();
     }
 
-	void TextureMappedPolygon::updateBlendFunc()
+	void CCTextureMappedPolygon::updateBlendFunc()
 	{
 		if(!texture || !texture->hasPremultipliedAlpha())
 		{
@@ -69,34 +72,30 @@ namespace oreore
 		}
 	}
 	
-	void TextureMappedPolygon::cleanup()
+	void CCTextureMappedPolygon::cleanup()
 	{
 		CC_SAFE_RELEASE_NULL(texture);
-		Node::cleanup();
+		CCNode::cleanup();
 	}
 	
-	void TextureMappedPolygon::draw()
+	void CCTextureMappedPolygon::draw()
 	{
 		if(texCoord.size() <= 1)
 			return;
+        
+        CC_NODE_DRAW_SETUP();
 
-		cmd.init(_vertexZ);
-		cmd.func = [this]() {
-			CC_NODE_DRAW_SETUP();
+        ccGLBindTexture2D(texture->getName());
 
-			GL::bindTexture2D(texture->getName());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        ccGLBlendFunc(blendFunc.src, blendFunc.dst);
 
-			GL::blendFunc(blendFunc.src, blendFunc.dst);
-
-			GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &coord[0]);
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
-			glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast<GLsizei>(texCoord.size()));
-			CC_INCREMENT_GL_DRAWS(1);
-		};
-		Director::getInstance()->getRenderer()->addCommand(&cmd);
+        ccGLEnableVertexAttribs(kCCVertexAttrib_Position | kCCVertexAttrib_TexCoords);
+        glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, &coord[0]);
+        glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast<GLsizei>(texCoord.size()));
+        CC_INCREMENT_GL_DRAWS(1);
 	}
 }
