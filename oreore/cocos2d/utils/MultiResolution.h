@@ -21,13 +21,30 @@ namespace oreore
         All
     };
 
+    struct ResolutionConfig
+    {
+        cocos2d::Size size;
+        std::string dirname;
+        float scaleFactor;
+
+        inline ResolutionConfig(const cocos2d::Size &size, const std::string &dirname, const float scaleFactor)
+            : size(size), dirname(dirname), scaleFactor(scaleFactor) { }
+
+        inline void setConfig(const cocos2d::Size &size, const std::string &dirname, const float scaleFactor)
+        {
+            this->size = size;
+            this->dirname = dirname;
+            this->scaleFactor = scaleFactor;
+        }
+    };
+
     class MultiResolution
     {
-        typedef std::vector<std::string> StringList;
+        typedef std::vector<ResolutionConfig> ResolutionList;
     private:
         cocos2d::Size designSize;
         ResolutionPolicy policy;
-        static StringList names;
+        static ResolutionList resolutions;
 
         cocos2d::Size swap(const cocos2d::Size &size, const bool doSwap);
         void initNames();
@@ -37,7 +54,8 @@ namespace oreore
         ~MultiResolution() { }
 
         void resolve();
-        void addDirectory(const ResolutionType res, const char *name);
+        void setDirectory(const ResolutionType res, const char *dirname, const cocos2d::Size &size, const float scaleFactor);
+        void copyConfig(const ResolutionType from, const ResolutionType to);
         void addSearchPath(const char *name);
         inline void setDesignSize(const cocos2d::Size &size) { designSize = size; }
         inline void setResolutionPolicy(const ResolutionPolicy policy) { this->policy = policy; }
