@@ -17,7 +17,7 @@ namespace oreore
         
 		void calcTexCoord();
 	protected:
-		virtual bool init() override;
+		virtual bool init(); // override
     public:
 		CREATE_FUNC(CCTextureMappedPolygon);
 
@@ -29,8 +29,8 @@ namespace oreore
         void setTextureCoord(const Points &points);
 		void updateBlendFunc();
 		void setBlendFunc(cocos2d::ccBlendFunc blendFunc);
-		virtual void cleanup() override;
-		virtual void draw() override;
+		virtual void cleanup(); // override
+		virtual void draw(); // override
     };
 }
 
