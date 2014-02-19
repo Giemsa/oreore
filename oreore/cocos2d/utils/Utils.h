@@ -50,7 +50,7 @@ namespace oreore
 
     inline cocos2d::Point center()
     {
-        const cocos2d::Size &s = cocos2d::Director::getInstance()->getWinSize();
+        const cocos2d::Size &s = cocos2d::Director::getInstance()->getVisibleSize();
         return cocos2d::Point(s.width / 2, s.height / 2);
     }
 
@@ -62,7 +62,7 @@ namespace oreore
 
     inline cocos2d::Point percent(const float x, const float y)
     {
-        const cocos2d::Size &s = cocos2d::Director::getInstance()->getWinSize();
+        const cocos2d::Size &s = cocos2d::Director::getInstance()->getVisibleSize();
         return cocos2d::Point(s.width * x / 100, s.height * y / 100);
     }
 

@@ -115,8 +115,8 @@ namespace oreore
             factor = config.scaleFactor;
         }
 
-        //CCDirector::sharedDirector()->setContentScaleFactor(std::max(rsize.width / designSize.width, rsize.height / designSize.height));
-        Director::getInstance()->setContentScaleFactor(factor);
+        Director::getInstance()->setContentScaleFactor(std::min(rsize.width / designSize.width, rsize.height / designSize.height));
+        //Director::getInstance()->setContentScaleFactor(factor);
         eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
