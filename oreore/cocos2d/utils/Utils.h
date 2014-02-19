@@ -50,7 +50,7 @@ namespace oreore
 
     inline cocos2d::CCPoint center()
     {
-        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getWinSize();
+        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getVisibleSize();
         return cocos2d::CCPoint(s.width / 2, s.height / 2);
     }
 
@@ -62,7 +62,7 @@ namespace oreore
 
     inline cocos2d::CCPoint percent(const float x, const float y)
     {
-        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getWinSize();
+        const cocos2d::CCSize &s = cocos2d::CCDirector::sharedDirector()->getVisibleSize();
         return cocos2d::CCPoint(s.width * x / 100, s.height * y / 100);
     }
 
