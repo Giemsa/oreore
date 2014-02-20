@@ -102,12 +102,11 @@ namespace oreore
         if(duration > maxDuration)
         {
             unscheduleUpdate();
-        
+      
             if(currentScene)
                 CCDirector::sharedDirector()->replaceScene(currentScene->transition(nextScene));
             else
                 CCDirector::sharedDirector()->replaceScene(nextScene);
-
             if(disposeNext)
                 currentScene->getScene()->release();
         }
@@ -157,7 +156,7 @@ namespace oreore
             current->getScene()->autorelease();
             scenes[current->getID()] = null;
         }
-    
+
         dir->setSendCleanupToScene(true);
 
         if(loadingScene)
@@ -200,6 +199,4 @@ namespace oreore
         loadingScene = scene;
         return tmp;
     }
-
-
 }
