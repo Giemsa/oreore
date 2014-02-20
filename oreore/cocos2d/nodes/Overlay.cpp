@@ -34,6 +34,7 @@ namespace oreore
 
         this->opacity = opacity;
         displaySpeed = speed;
+        syncChild = true;
 
         setZOrder(200);
         setAnchorPoint(Point::ZERO);
@@ -57,7 +58,7 @@ namespace oreore
                         shown = true;
                         onShow();
                     }),
-                    null
+                    NULL
                 )
             );
         }
@@ -83,7 +84,7 @@ namespace oreore
                         shown = false;
                         onClose();
                     }),
-                    null
+                    NULL
                 )
             );
         }
@@ -97,11 +98,14 @@ namespace oreore
 
     void OverlayLayer::setOpacity(GLubyte opacity)
     {
-        setCascadeOpacityEnabled(true);
-        const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
-        for(Node *child : getChildren())
-            child->updateDisplayedOpacity(static_cast<GLubyte>(child->getOpacity() * r));
-        setCascadeOpacityEnabled(false);
+        if(syncChild)
+        {
+            setCascadeOpacityEnabled(true);
+            const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
+            for(Node *child : getChildren())
+                child->updateDisplayedOpacity(static_cast<GLubyte>(child->getOpacity() * r));
+            setCascadeOpacityEnabled(false);
+        }
         LayerColor::setOpacity(opacity);
     }
 
@@ -109,5 +113,10 @@ namespace oreore
     {
         for(Node *child : getChildren())
             static_cast<Node *>(child)->setVisible(visible);
+    }
+
+    void OverlayLayer::setSyncOpecityChild(const bool sync)
+    {
+        syncChild = sync;
     }
 }

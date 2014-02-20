@@ -11,7 +11,7 @@ namespace oreore
     private:
         GLubyte opacity;
         float displaySpeed;
-        bool shown;
+        bool shown, syncChild;
     protected:
         virtual void onShow() { }
         virtual void onClose() { }
@@ -47,6 +47,7 @@ namespace oreore
         virtual void close(const bool anime = true);
 
         void setOpacity(GLubyte opacity) override;
+        void setSyncOpecityChild(const bool sync);
     };
 }
 
