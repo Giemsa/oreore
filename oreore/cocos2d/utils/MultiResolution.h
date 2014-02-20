@@ -29,9 +29,10 @@ namespace oreore
         cocos2d::CCSize size;
         std::string dirname;
         float scaleFactor;
+        int height;
 
-        inline ResolutionConfig(const cocos2d::CCSize &size, const std::string &dirname, const float scaleFactor)
-            : size(size), dirname(dirname), scaleFactor(scaleFactor) { }
+        inline ResolutionConfig(const cocos2d::CCSize &size, const std::string &dirname, const float scaleFactor, const int height)
+            : size(size), dirname(dirname), scaleFactor(scaleFactor), height(height) { }
 
         inline void setConfig(const cocos2d::CCSize &size, const std::string &dirname, const float scaleFactor)
         {

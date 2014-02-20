@@ -20,28 +20,32 @@ namespace oreore
             ResolutionConfig(
                 CCSizeMake(320, 480),
                 "resources-iphone",
-                0.5f
+                0.5f,
+                480
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(640, 960),
                 "resources-iphonehd",
-                1.0f
+                1.0f,
+                960
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(768, 1024),
                 "resources-ipad",
-                1.0f
+                1.0f,
+                1024
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(1536, 2048),
                 "resources-ipadhd",
-                2.0f
+                2.0f,
+                2048
             )
         );
 
@@ -50,28 +54,32 @@ namespace oreore
             ResolutionConfig(
                 CCSizeMake(360, 640),
                 "resources-small",
-                0.5f
+                0.5f,
+                640
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(540, 960),
                 "resources-medium",
-                1.0f
+                1.0f,
+                960
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(720, 1280),
                 "resources-large",
-                2.0f
+                2.0f,
+                1280
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(1080, 1920),
                 "resources-xlarge",
-                3.0f
+                3.0f,
+                1920
             )
         );
     }
@@ -136,7 +144,9 @@ namespace oreore
 
     void MultiResolution::copyConfig(const ResolutionType::Type from, const ResolutionType::Type to)
     {
-        resolutions[to] = resolutions[from];
+        resolutions[to].size = resolutions[from].size;
+        resolutions[to].dirname = resolutions[from].dirname;
+        resolutions[to].scaleFactor = resolutions[from].scaleFactor;
     }
 
     void MultiResolution::addSearchPath(const char *name)
