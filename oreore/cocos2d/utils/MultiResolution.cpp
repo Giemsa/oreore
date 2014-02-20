@@ -19,28 +19,32 @@ namespace oreore
             ResolutionConfig(
                 Size(320, 480),
                 "resources-iphone",
-                0.5f
+                0.5f,
+                480
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(640, 960),
                 "resources-iphonehd",
-                1.0f
+                1.0f,
+                960
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(768, 1024),
                 "resources-ipad",
-                1.0f
+                1.0f,
+                1024
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(1536, 2048),
                 "resources-ipadhd",
-                2.0f
+                2.0f,
+                2048
             )
         );
 
@@ -49,28 +53,32 @@ namespace oreore
             ResolutionConfig(
                 Size(360, 640),
                 "resources-small",
-                0.5f
+                0.5f,
+                640
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(540, 960),
                 "resources-medium",
-                1.0f
+                1.0f,
+                960
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(720, 1280),
                 "resources-large",
-                2.0f
+                2.0f,
+                1280
             )
         );
         resolutions.push_back(
             ResolutionConfig(
                 Size(1080, 1920),
                 "resources-xlarge",
-                3.0f
+                3.0f,
+                1920
             )
         );
     }
@@ -134,7 +142,9 @@ namespace oreore
 
     void MultiResolution::copyConfig(const ResolutionType from, const ResolutionType to)
     {
-        resolutions[static_cast<int>(to)] = resolutions[static_cast<int>(from)];
+        resolutions[static_cast<int>(to)].size = resolutions[static_cast<int>(from)].size;
+        resolutions[static_cast<int>(to)].dirname = resolutions[static_cast<int>(from)].dirname;
+        resolutions[static_cast<int>(to)].scaleFactor = resolutions[static_cast<int>(from)].scaleFactor;
     }
 
     void MultiResolution::addSearchPath(const char *name)
