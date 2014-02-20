@@ -34,6 +34,7 @@ namespace oreore
 
         this->opacity = opacity;
         displaySpeed = speed;
+        syncChild = true;
 
         setZOrder(200);
         setAnchorPoint(CCPointZero);
@@ -60,7 +61,7 @@ namespace oreore
                 CCSequence::create(
                     CCFadeTo::create(displaySpeed, opacity),
                     CCCallFunc::create(this, callfunc_selector(CCOverlayLayer::onCompleteShow)),
-                    null
+                    NULL
                 )
             );
         }
@@ -89,7 +90,7 @@ namespace oreore
                 CCSequence::create(
                     CCFadeTo::create(displaySpeed, 0x00),
                     CCCallFunc::create(this, callfunc_selector(CCOverlayLayer::onCompleteClose)),
-                    null
+                    NULL
                 )
             );
         }
@@ -103,16 +104,19 @@ namespace oreore
 
     void CCOverlayLayer::setOpacity(GLubyte opacity)
     {
-        setCascadeOpacityEnabled(true);
-        CCObject* child;
-        const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
-        CCARRAY_FOREACH(getChildren(), child)
+        if(syncChild)
         {
-            CCRGBAProtocol *p = dynamic_cast<CCRGBAProtocol*>(child);
-            if(p)
-                p->updateDisplayedOpacity(static_cast<GLubyte>(p->getOpacity() * r));
+            setCascadeOpacityEnabled(true);
+            CCObject* child;
+            const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
+            CCARRAY_FOREACH(getChildren(), child)
+            {
+                CCRGBAProtocol *p = dynamic_cast<CCRGBAProtocol*>(child);
+                if(p)
+                    p->updateDisplayedOpacity(static_cast<GLubyte>(p->getOpacity() * r));
+            }
+            setCascadeOpacityEnabled(false);
         }
-        setCascadeOpacityEnabled(false);
         CCLayerColor::setOpacity(opacity);
     }
 
@@ -121,5 +125,10 @@ namespace oreore
         CCObject *obj;
         CCARRAY_FOREACH(getChildren(), obj)
             static_cast<CCNode *>(obj)->setVisible(visible);
+    }
+
+    void CCOverlayLayer::setSyncOpecityChild(const bool sync)
+    {
+        syncChild = sync;
     }
 }
