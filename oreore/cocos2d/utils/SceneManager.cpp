@@ -102,12 +102,11 @@ namespace oreore
         if(duration > maxDuration)
         {
             unscheduleUpdate();
-        
+      
             if(currentScene)
                 Director::getInstance()->replaceScene(currentScene->transition(nextScene));
             else
                 Director::getInstance()->replaceScene(nextScene);
-
             if(disposeNext)
                 currentScene->getScene()->release();
         }
@@ -156,7 +155,7 @@ namespace oreore
             current->getScene()->autorelease();
             scenes[current->getID()] = null;
         }
-    
+
         dir->setSendCleanupToScene(true);
 
         if(loadingScene)
@@ -199,6 +198,4 @@ namespace oreore
         loadingScene = scene;
         return tmp;
     }
-
-
 }

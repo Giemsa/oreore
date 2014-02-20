@@ -9,6 +9,15 @@ namespace oreore
 {
     class SceneManager;
 
+    class TransitionArguments
+    {
+    private:
+        void *data;
+    public:
+        template<typename T>
+        inline T &get() { return *static_cast<T *>(data); }
+    };
+
     /* Do not inherit this class directly */
     class ManagedSceneBase : public cocos2d::Layer
     {
@@ -26,6 +35,9 @@ namespace oreore
 
         inline float getTransitionTime() const { return transitionTime; }
         inline void setTransitionTime(const float t) { transitionTime = t; }
+
+        virtual void onEnter(const TransitionArguments &args) { }
+        virtual void onExit(const TransitionArguments &args) { }
     };
 
     typedef std::vector<ManagedSceneBase *> SceneList;
