@@ -11,6 +11,7 @@ namespace oreore
         iPhone,
         iPhoneHD,
         iPad,
+        iPhoneHD4inch,
         iPadHD,
 
         Small,
@@ -46,12 +47,18 @@ namespace oreore
         cocos2d::Size designSize;
         ResolutionPolicy policy;
         static ResolutionList resolutions;
+        float realScale;
 
         cocos2d::Size swap(const cocos2d::Size &size, const bool doSwap);
         void initNames();
     public:
+        inline static MultiResolution &getInstance()
+        {
+            static MultiResolution r;
+            return r;
+        }
+
         MultiResolution() : designSize(960, 640), policy(ResolutionPolicy::SHOW_ALL) { initNames(); }
-        MultiResolution(const cocos2d::Size &designSize) : designSize(designSize), policy(ResolutionPolicy::SHOW_ALL) { initNames(); }
         ~MultiResolution() { }
 
         void resolve();
@@ -61,6 +68,7 @@ namespace oreore
         inline void setDesignSize(const cocos2d::Size &size) { designSize = size; }
         inline void setResolutionPolicy(const ResolutionPolicy policy) { this->policy = policy; }
         inline ResolutionPolicy getResolutionPolicy() const { return policy; }
+        inline float getRealScaleFactor() const { return realScale; }
     };
 }
 

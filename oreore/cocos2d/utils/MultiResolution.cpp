@@ -18,6 +18,7 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 Size(320, 480),
+                //Size(384, 568),
                 "resources-iphone",
                 0.5f,
                 480
@@ -26,6 +27,7 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 Size(640, 960),
+                //Size(768, 1136),
                 "resources-iphonehd",
                 1.0f,
                 960
@@ -33,7 +35,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                Size(768, 1024),
+                //Size(768, 1024),
+                Size(768, 1136),
                 "resources-ipad",
                 1.0f,
                 1024
@@ -41,7 +44,17 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
+                //Size(640, 1136),
+                Size(768, 1136),
+                "resources-iphonehd",
+                1.0f,
+                1136
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
                 Size(1536, 2048),
+                //Size(1536, 2272),
                 "resources-ipadhd",
                 2.0f,
                 2048
@@ -51,7 +64,8 @@ namespace oreore
         /* Android */
         resolutions.push_back(
             ResolutionConfig(
-                Size(360, 640),
+                //Size(360, 640),
+                Size(384, 568),
                 "resources-small",
                 0.5f,
                 640
@@ -59,7 +73,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                Size(540, 960),
+                //Size(540, 960),
+                Size(576, 852),
                 "resources-medium",
                 1.0f,
                 960
@@ -67,7 +82,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                Size(720, 1280),
+                //Size(720, 1280),
+                Size(768, 1136),
                 "resources-large",
                 2.0f,
                 1280
@@ -75,7 +91,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                Size(1080, 1920),
+                //Size(1080, 1920),
+                Size(1536, 2272),
                 "resources-xlarge",
                 3.0f,
                 1920
@@ -98,12 +115,23 @@ namespace oreore
         const Size size = swap(fsize, fsize.height / fsize.width < 1.0f);
 
         std::vector<std::string> order;
-
         ApplicationProtocol::Platform platform = Application::getInstance()->getTargetPlatform();
-        const int offset = (platform == ApplicationProtocol::Platform::OS_IPHONE || platform == ApplicationProtocol::Platform::OS_IPAD) ? 0 : 4;
+
+        int offset = 0;
+        int len = 0;
+        if(platform == ApplicationProtocol::Platform::OS_IPHONE || platform == ApplicationProtocol::Platform::OS_IPAD)
+        {
+            offset = 0;
+            len = 3;
+        }
+        else
+        {
+            offset = 5;
+            len = 7;
+        }
         bool set = false;
         float factor = 1.0f;
-        for(int i = 2 + offset; i >= offset; i--)
+        for(int i = len; i >= offset; i--)
         {
             if(size.height > resolutions[i].size.height)
             {
@@ -122,9 +150,10 @@ namespace oreore
             rsize = config.size;
             factor = config.scaleFactor;
         }
+        
 
+        realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
         Director::getInstance()->setContentScaleFactor(std::min(rsize.width / designSize.width, rsize.height / designSize.height));
-        //Director::getInstance()->setContentScaleFactor(factor);
         eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
