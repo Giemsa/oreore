@@ -19,6 +19,7 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(320, 480),
+                //CCSizeMake(384, 568),
                 "resources-iphone",
                 0.5f,
                 480
@@ -27,6 +28,7 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(640, 960),
+                //CCSizeMake(768, 1136),
                 "resources-iphonehd",
                 1.0f,
                 960
@@ -34,7 +36,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                CCSizeMake(768, 1024),
+                //CCSizeMake(768, 1024),
+                CCSizeMake(768, 1136),
                 "resources-ipad",
                 1.0f,
                 1024
@@ -42,7 +45,17 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
+                //CCSizeMake(640, 1136),
+                CCSizeMake(768, 1136),
+                "resources-iphonehd",
+                1.0f,
+                1136
+            )
+        );
+        resolutions.push_back(
+            ResolutionConfig(
                 CCSizeMake(1536, 2048),
+                //CCSizeMake(1536, 2272),
                 "resources-ipadhd",
                 2.0f,
                 2048
@@ -52,7 +65,8 @@ namespace oreore
         /* Android */
         resolutions.push_back(
             ResolutionConfig(
-                CCSizeMake(360, 640),
+                //CCSizeMake(360, 640),
+                CCSizeMake(384, 568),
                 "resources-small",
                 0.5f,
                 640
@@ -60,7 +74,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                CCSizeMake(540, 960),
+                //CCSizeMake(540, 960),
+                CCSizeMake(576, 852),
                 "resources-medium",
                 1.0f,
                 960
@@ -68,7 +83,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                CCSizeMake(720, 1280),
+                //CCSizeMake(720, 1280),
+                CCSizeMake(768, 1136),
                 "resources-large",
                 2.0f,
                 1280
@@ -76,7 +92,8 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                CCSizeMake(1080, 1920),
+                //CCSizeMake(1080, 1920),
+                CCSizeMake(1536, 2272),
                 "resources-xlarge",
                 3.0f,
                 1920
@@ -102,10 +119,21 @@ namespace oreore
 
         TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
 
-        const int offset = (platform == kTargetIphone || platform == kTargetIpad) ? 0 : 4;
+        int offset = 0;
+        int len = 0;
+        if(platform == kTargetIpad || platform == kTargetIphone)
+        {
+            offset = 0;
+            len = 3;
+        }
+        else
+        {
+            offset = 5;
+            len = 7;
+        }
         bool set = false;
         float factor = 1.0f;
-        for(int i = 2 + offset; i >= offset; i--)
+        for(int i = len; i >= offset; i--)
         {
             if(size.height > resolutions[i].size.height)
             {
@@ -123,10 +151,10 @@ namespace oreore
             order.push_back(config.dirname);
             rsize = config.size;
             factor = config.scaleFactor;
-        }
+        
 
+        realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
         CCDirector::sharedDirector()->setContentScaleFactor(std::min(rsize.width / designSize.width, rsize.height / designSize.height));
-        //CCDirector::sharedDirector()->setContentScaleFactor(factor);
         eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
