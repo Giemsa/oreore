@@ -18,7 +18,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 Size(320, 480),
-                //Size(384, 568),
                 "resources-iphone",
                 0.5f,
                 480
@@ -27,7 +26,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 Size(640, 960),
-                //Size(768, 1136),
                 "resources-iphonehd",
                 1.0f,
                 960
@@ -35,8 +33,7 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                //Size(768, 1024),
-                Size(768, 1136),
+                Size(768, 1024),
                 "resources-ipad",
                 1.0f,
                 1024
@@ -44,8 +41,7 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                //Size(640, 1136),
-                Size(768, 1136),
+                Size(640, 1136),
                 "resources-iphonehd",
                 1.0f,
                 1136
@@ -54,7 +50,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 Size(1536, 2048),
-                //Size(1536, 2272),
                 "resources-ipadhd",
                 2.0f,
                 2048
@@ -133,7 +128,7 @@ namespace oreore
         float factor = 1.0f;
         for(int i = len; i >= offset; i--)
         {
-            if(size.height > resolutions[i].size.height)
+            if(size.height > resolutions[i].height)
             {
                 const ResolutionConfig &config = resolutions[i + 1];
                 order.push_back(config.dirname);
@@ -151,10 +146,18 @@ namespace oreore
             factor = config.scaleFactor;
         }
         
-
+        scaleH = rsize.height / designSize.height;
+        scaleW = rsize.width / designSize.width;
         realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
-        Director::getInstance()->setContentScaleFactor(std::min(rsize.width / designSize.width, rsize.height / designSize.height));
-        eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+        Director::getInstance()->setContentScaleFactor(std::min(scaleW, scaleH));
+       
+        if(policy == ResolutionPolicy::UNKNOWN)
+        {
+            const ResolutionPolicy rp = scaleW > scaleH ? ResolutionPolicy::FIXED_HEIGHT : ResolutionPolicy::FIXED_WIDTH;
+            eglView->setDesignResolutionSize(designSize.width, designSize.height, rp);
+        }
+        else
+            eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
 
