@@ -50,7 +50,7 @@ namespace oreore
         cocos2d::CCSize designSize;
         ResolutionPolicy policy;
         static ResolutionList resolutions;
-        float realScale;
+        float realScale, scaleH, scaleW;
 
         cocos2d::CCSize swap(const cocos2d::CCSize &size, const bool doSwap);
         void initNames();
@@ -61,8 +61,8 @@ namespace oreore
             return r;
         }
 
-        MultiResolution() : designSize(960, 640), policy(kResolutionShowAll) { initNames(); }
-        //MultiResolution(const cocos2d::CCSize &designSize) : designSize(designSize), policy(kResolutionShowAll) { initNames(); }
+        MultiResolution() : designSize(960, 640), policy(kResolutionUnKnown) { initNames(); }
+        //MultiResolution(const cocos2d::CCSize &designSize) : designSize(designSize), policy(kResolutionUnKnown) { initNames(); }
         ~MultiResolution() { }
 
         void resolve();
@@ -73,6 +73,8 @@ namespace oreore
         inline void setResolutionPolicy(const ResolutionPolicy policy) { this->policy = policy; }
         inline ResolutionPolicy getResolutionPolicy() const { return policy; }
         inline float getRealScaleFactor() const { return realScale; }
+        inline float getScaleWidth() const { return scaleW; }
+        inline float getScaleHeight() const { return scaleH; }
     };
 }
 

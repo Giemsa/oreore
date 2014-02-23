@@ -19,7 +19,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(320, 480),
-                //CCSizeMake(384, 568),
                 "resources-iphone",
                 0.5f,
                 480
@@ -28,7 +27,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(640, 960),
-                //CCSizeMake(768, 1136),
                 "resources-iphonehd",
                 1.0f,
                 960
@@ -36,8 +34,7 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                //CCSizeMake(768, 1024),
-                CCSizeMake(768, 1136),
+                CCSizeMake(768, 1024),
                 "resources-ipad",
                 1.0f,
                 1024
@@ -45,8 +42,7 @@ namespace oreore
         );
         resolutions.push_back(
             ResolutionConfig(
-                //CCSizeMake(640, 1136),
-                CCSizeMake(768, 1136),
+                CCSizeMake(640, 1136),
                 "resources-iphonehd",
                 1.0f,
                 1136
@@ -55,7 +51,6 @@ namespace oreore
         resolutions.push_back(
             ResolutionConfig(
                 CCSizeMake(1536, 2048),
-                //CCSizeMake(1536, 2272),
                 "resources-ipadhd",
                 2.0f,
                 2048
@@ -135,7 +130,7 @@ namespace oreore
         float factor = 1.0f;
         for(int i = len; i >= offset; i--)
         {
-            if(size.height > resolutions[i].size.height)
+            if(size.height > resolutions[i].height)
             {
                 const ResolutionConfig &config = resolutions[i + 1];
                 order.push_back(config.dirname);
@@ -151,11 +146,21 @@ namespace oreore
             order.push_back(config.dirname);
             rsize = config.size;
             factor = config.scaleFactor;
-        
+        }
 
+        scaleH = rsize.height / designSize.height;
+        scaleW = rsize.width / designSize.width;
         realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
-        CCDirector::sharedDirector()->setContentScaleFactor(std::min(rsize.width / designSize.width, rsize.height / designSize.height));
-        eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+        CCDirector::sharedDirector()->setContentScaleFactor(std::min(scaleW, scaleH));
+
+        if(policy == kResolutionUnKnown)
+        {
+            const ResolutionPolicy rp = scaleW > scaleH ? kResolutionFixedHeight : kResolutionFixedWidth;
+            eglView->setDesignResolutionSize(designSize.width, designSize.height, rp);
+        }
+        else
+            eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(order);
     }
 
