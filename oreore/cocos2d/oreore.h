@@ -22,5 +22,6 @@
 #include "utils/CommonGameBase.h"
 #include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
+#include "utils/AssetLoader.h"
 
 #endif
