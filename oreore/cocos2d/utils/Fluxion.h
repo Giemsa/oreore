@@ -18,6 +18,9 @@ namespace oreore
         class Repeat;
         class Ease;
 
+        template<typename T, typename S>
+        struct ResultType { typedef T type; };
+
         typedef cocos2d::Vector<cocos2d::FiniteTimeAction *> ActionList;
 
         class Action
@@ -36,15 +39,6 @@ namespace oreore
 
         class ActionInterval : public Action
         {
-        private:
-            template<typename T>
-            inline T __mul(const T &op, typename std::enable_if<std::is_base_of<Ease, T>::value>::type* = nullptr)
-            {
-                return op.apply(this);
-            }
-
-            template<typename T>
-            inline Repeat __mul(const T &op, typename std::enable_if<std::numeric_limits<T>::is_integer>::type* = nullptr);
         public:
             ActionInterval() { }
             virtual ~ActionInterval() { }
@@ -52,7 +46,13 @@ namespace oreore
             virtual operator cocos2d::ActionInterval *() const = 0;
 
             template<typename T>
-            inline auto operator*(const T &op) -> decltype(__mul(op)) { return __mul(op); }
+            inline typename ResultType<T, typename std::enable_if<std::is_base_of<Ease, T>::value>::type>::type operator*(const T &op)
+            {
+                return op.apply(this);
+            }
+
+            template<typename T>
+            inline typename ResultType<Repeat, typename std::enable_if<std::numeric_limits<T>::is_integer>::type>::type operator*(const T &op);
         };
 
         template<typename T>
@@ -273,7 +273,7 @@ namespace oreore
 
         /* ActionInterval impl */
         template<typename T>
-        inline Repeat ActionInterval::__mul(const T &op, typename std::enable_if<std::numeric_limits<T>::is_integer>::type*)
+        inline typename ResultType<Repeat, typename std::enable_if<std::numeric_limits<T>::is_integer>::type>::type ActionInterval::operator*(const T &op)
         {
             return Repeat(*this, op);
         }
