@@ -17,8 +17,7 @@
 
 /* utils */
 #include "utils/Utils.h"
-// oreore for cocos2dx 2x does not support Fluxion
-// #include "utils/Fluxion.h"
+#include "utils/Fluxion.h"
 #include "utils/CommonGameBase.h"
 #include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
