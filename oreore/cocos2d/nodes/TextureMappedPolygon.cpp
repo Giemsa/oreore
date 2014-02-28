@@ -14,15 +14,13 @@ namespace oreore
         texture = null;
         setAnchorPoint(ccp(0.5f, 0.5f));
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTexture));
-        //setTexture(GameManager::texture(SpriteIndex::Debug));
-        //setContentSize(getTexture()->getContentSize());
 
         return true;
     }
 
     void CCTextureMappedPolygon::calcTexCoord()
     {
-        const float r = /*CCDirector::sharedDirector()->getContentScaleFactor()*/ 1.0f / texture->getPixelsWide();
+        const float r =  1.0f / texture->getPixelsWide();
         texCoord.clear();
         for(Points::iterator it = coord.begin(); it != coord.end(); ++it)
         {

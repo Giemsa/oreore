@@ -55,19 +55,14 @@ namespace oreore
 
         SceneBase()
         {
-            scene = new cocos2d::CCScene();
-            if(!(scene && scene->init()))
-            {
-                CC_SAFE_DELETE(scene);
-                scene = null;
-            }
-
+            scene = cocos2d::CCScene::create();
+            scene->retain();
             scene->addChild(this);
         }
 
-
         virtual ~SceneBase()
         {
+            scene->release();
         }
     };
 
