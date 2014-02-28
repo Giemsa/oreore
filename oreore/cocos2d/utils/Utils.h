@@ -72,9 +72,10 @@ namespace oreore
         return cocos2d::Point(s.width * x / 100, s.height * y / 100);
     }
 
-    inline int cut(const int v, const int n)
+    template<typename T>
+    inline int cut(const T v, const int n)
     {
-        return v / n * n;
+        return static_cast<int>(v / n) * n;
     }
 
     inline cocos2d::Point cut(const cocos2d::Point &p, const int n)
