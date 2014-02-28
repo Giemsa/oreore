@@ -15,6 +15,11 @@ namespace oreore
         return cocos2d::CCRect(point.x, point.y, size, size);
     }
 
+    inline cocos2d::CCRect makeRect(const cocos2d::CCPoint &a, const cocos2d::CCPoint &b)
+    {
+        return cocos2d::CCRect(a.x, a.y, b.x - a.x, b.y - a.y);
+    }
+
     // Color4F -> Color3B
     inline cocos2d::ccColor3B toColor3B(const cocos2d::ccColor4F &color)
     {
