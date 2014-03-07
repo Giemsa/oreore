@@ -20,6 +20,16 @@ namespace oreore
         return cocos2d::CCRect(a.x, a.y, b.x - a.x, b.y - a.y);
     }
 
+    inline cocos2d::CCRect incRect(const cocos2d::CCRect &rect, const float size)
+    {
+        return cocos2d::CCRect(
+            rect.origin.x - size / 2,
+            rect.origin.y - size / 2,
+            rect.size.width + size,
+            rect.size.height + size
+        );
+    }
+
     // Color4F -> Color3B
     inline cocos2d::ccColor3B toColor3B(const cocos2d::ccColor4F &color)
     {
