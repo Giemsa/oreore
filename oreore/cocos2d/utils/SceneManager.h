@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include <vector>
 #include "../../null.h"
+#include "Debug.h"
 
 namespace oreore
 {
@@ -112,6 +113,8 @@ namespace oreore
     private:
         SceneList scenes;
         LoadingScene *loadingScene;
+        DebugLayer *debugLayer;
+        bool showDebugLayer;
 
         cocos2d::CCObject *getCurrentScene();
     public:
@@ -140,6 +143,9 @@ namespace oreore
 
         template<typename T>
         T *getScene();
+
+        void setDebugMode(const bool debugMode);
+        inline bool isDebugMode() const { return showDebugLayer; }
     };
 
     /* SceneManager impl */

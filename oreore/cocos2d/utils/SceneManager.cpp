@@ -113,19 +113,29 @@ namespace oreore
     }
 
     /* SceneManager */
-    SceneManager::SceneManager() : loadingScene(null)
+    SceneManager::SceneManager()
+        : loadingScene(null), debugLayer(nullptr),
+#ifdef COCOS2D_DEBUG
+        showDebugLayer(true)
+#else
+        showDebugLayer(false)
+#endif
     {
-    
+        init();
     }
 
     SceneManager::~SceneManager()
     {
-    
+        if(debugLayer)
+            debugLayer->release();
     }
 
     void SceneManager::init()
     {
-    
+#ifdef COCOS2D_DEBUG
+        debugLayer = DebugLayer::create();
+        Director::getInstance()->setNotificationNode(debugLayer);
+#endif
     }
 
     CCObject *SceneManager::getCurrentScene()
@@ -198,5 +208,26 @@ namespace oreore
         }
         loadingScene = scene;
         return tmp;
+    }
+
+    void SceneManager::setDebugMode(const bool debugMode)
+    {
+        if(showDebugLayer == debugMode)
+            return;
+
+        if(debugMode)
+        {
+            if(!debugLayer)
+                debugLayer = DebugLayer::create();
+            Director::getInstance()->setNotificationNode(debugLayer);
+            debugLayer->release();
+        }
+        else
+        {
+            if(debugLayer)
+                debugLayer->retain();
+            Director::getInstance()->setNotificationNode(nullptr);
+        }
+        showDebugLayer = debugMode;
     }
 }
