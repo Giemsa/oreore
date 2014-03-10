@@ -146,6 +146,9 @@ namespace oreore
 
     bool CCSimpleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
     {
+        if(!touchEnabled)
+            return false;
+
         const CCPoint &p = getParent()->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
         if(boundingBox().containsPoint(p))
         {
@@ -181,6 +184,16 @@ namespace oreore
     CCAction *CCSimpleButton::unTouchAction()
     {
         return CCScaleTo::create(0.1f, 1.0f);
+    }
+
+    void CCSimpleButton::setTouchEnabled(const bool enable)
+    {
+        touchEnabled = enable;
+    }
+
+    bool CCSimpleButton::getTouchEnabled() const
+    {
+        return touchEnabled;
     }
 
     void CCSimpleButton::onEnter()

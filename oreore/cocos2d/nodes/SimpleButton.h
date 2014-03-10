@@ -14,6 +14,7 @@ namespace oreore
         cocos2d::SEL_MenuHandler selector;
         cocos2d::CCObject *target;
         cocos2d::CCPoint bpos;
+        bool touchEnabled;
 
         virtual bool ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
         virtual void ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
@@ -48,6 +49,9 @@ namespace oreore
 
         virtual cocos2d::CCAction *touchAction();
         virtual cocos2d::CCAction *unTouchAction();
+
+        virtual void setTouchEnabled(const bool enable);
+        virtual bool getTouchEnabled() const;
 
         virtual void onEnter(); // override
         virtual void onExit(); // override
