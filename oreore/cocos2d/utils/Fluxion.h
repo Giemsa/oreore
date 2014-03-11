@@ -6,6 +6,7 @@
  */
 
 #include <limits>
+#include <memory>
 #include "cocos2d.h"
 #include "../../null.h"
 
@@ -96,7 +97,8 @@ namespace oreore
         private:
             std::auto_ptr<cocos2d::CCArray> actions;
         public:
-            inline SequentialAction(SequentialAction && rhs) : actions(rhs.actions) { }
+            // 仕方ないよなーこれ
+            inline SequentialAction(const SequentialAction &rhs) : actions(const_cast<SequentialAction &>(rhs).actions) { }
             inline SequentialAction() : actions(new cocos2d::CCArray())
             {
                 actions->initWithCapacity(4);
@@ -140,7 +142,7 @@ namespace oreore
         private:
             std::auto_ptr<cocos2d::CCArray> actions;
         public:
-            inline ParallelAction(ParallelAction && rhs) : actions(rhs.actions) { }
+            inline ParallelAction(const ParallelAction &rhs) : actions(const_cast<ParallelAction &>(rhs).actions) { }
             inline ParallelAction() : actions(new cocos2d::CCArray())
             {
                 actions->initWithCapacity(2);
