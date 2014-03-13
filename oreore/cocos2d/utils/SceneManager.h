@@ -40,6 +40,9 @@ namespace oreore
 
         virtual void onEnter(const TransitionArguments &args) { }
         virtual void onExit(const TransitionArguments &args) { }
+        
+        virtual void onEnter() { cocos2d::CCLayer::onEnter(); } // override
+        virtual void onExit() { cocos2d::CCLayer::onExit(); } // override
     };
 
     typedef std::vector<ManagedSceneBase *> SceneList;
