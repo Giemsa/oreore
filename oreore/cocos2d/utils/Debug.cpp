@@ -8,7 +8,7 @@ namespace oreore
     /* DebugLayer */
     bool DebugLayer::init()
     {
-        if(!Layer::init())
+        if(!CCLayer::init())
             return false;
 
         LabelTTF *label = LabelTTF::create("debug!!!!", "", 80.0f);
@@ -20,6 +20,6 @@ namespace oreore
 
     void DebugLayer::visit()
     {
-        Layer::visit();
+        CCLayer::visit();
     }
 }

@@ -33,6 +33,7 @@ namespace oreore
         virtual bool init() override;
 
         virtual cocos2d::TransitionScene *transition(cocos2d::Scene *nextScene);
+        virtual bool isLazy() const = 0;
 
         inline float getTransitionTime() const { return transitionTime; }
         inline void setTransitionTime(const float t) { transitionTime = t; }
@@ -49,10 +50,12 @@ namespace oreore
         friend class SceneManager;
     private:
         static unsigned int _uid;
+        static bool _isLazy;
         cocos2d::Scene *scene;
     public:
         inline unsigned int getID() const { return _uid; }
         inline cocos2d::Scene *getScene() const { return scene; }
+        bool isLazy() const { return _isLazy; } // override
 
         SceneBase()
         {
@@ -61,14 +64,14 @@ namespace oreore
             scene->addChild(this);
         }
 
-        virtual ~SceneBase()
-        {
-            scene->release();
-        }
+        virtual ~SceneBase() { }
     };
 
     template<typename T>
     unsigned int SceneBase<T>::_uid = 0;
+
+    template<typename T>
+    bool SceneBase<T>::_isLazy = false;
 
 
     /* Scene group */
@@ -81,38 +84,11 @@ namespace oreore
         virtual ~SceneGroup() { }
     };
 
-    /* loading... */
-    class LoadingScene : public cocos2d::LayerColor
-    {
-        friend class SceneManager;
-    private:
-        float maxDuration, duration;
-        cocos2d::Scene *scene, *nextScene;
-
-        SceneManager *manager;
-        ManagedSceneBase *currentScene;
-        bool disposeNext;
-    public:
-        static LoadingScene *create(const cocos2d::Color4B &color);
-        static LoadingScene *create(const cocos2d::Color4B &color, const float maxDuration);
-
-        LoadingScene();
-        virtual ~LoadingScene();
-        virtual void update(float dt);
-
-        bool init(const cocos2d::Color4B &color, const float maxDuration);
-        inline bool init(const cocos2d::Color4B &color) { return init(color, 0.0f); }
-        inline cocos2d::Scene *getScene() const { return scene; }
-
-        void onEnter(); // override
-    };
-
     class SceneManager
     {
         friend class LoadingScene;
     private:
         SceneList scenes;
-        LoadingScene *loadingScene;
         DebugLayer *debugLayer;
         bool showDebugLayer;
 
@@ -131,7 +107,6 @@ namespace oreore
 
         template<typename T>
         void addScene(const bool lazy = true);
-        LoadingScene *setLoadingScene(LoadingScene *scene);
 
         template<typename T>
         void switchScene(const bool disposeScene = false);
@@ -155,10 +130,15 @@ namespace oreore
         if(T::_uid > 0)
             return;
         T::_uid = static_cast<unsigned int>(scenes.size());
+        T::_isLazy = lazy;
         if(lazy)
             scenes.push_back(null);
         else
-            scenes.push_back(T::create());
+        {
+            T *t = T::create();
+            t->getScene()->retain();
+            scenes.push_back(t);
+        }
     }
 
     template<typename T>
@@ -180,7 +160,8 @@ namespace oreore
 
         if(disposeScene)
         {
-            current->getScene()->autorelease();
+            if(!current->isLazy())
+                current->getScene()->release();
             scenes[current->getID()] = null;
         }
 
@@ -196,28 +177,11 @@ namespace oreore
         ManagedSceneBase *current = dynamic_cast<ManagedSceneBase *>(getCurrentScene());
         cocos2d::Scene *next = null;
 
-        if(loadingScene)
-        {
-            loadingScene->nextScene = getScene<T>()->getScene();
-            loadingScene->disposeNext = false;
-            if(current)
-            {
-                loadingScene->currentScene = current;
-                next = current->transition(loadingScene->getScene());
-            }
-            else
-            {
-                loadingScene->currentScene = null;
-                next = loadingScene->getScene();
-            }
-        }
+        if(current)
+            next = current->transition(getScene<T>()->getScene());
         else
-        {
-            if(current)
-                next = current->transition(getScene<T>()->getScene());
-            else
-                next = getScene<T>()->getScene();
-        }
+            next = getScene<T>()->getScene();
+
         cocos2d::Director::getInstance()->pushScene(next);
     }
 }
