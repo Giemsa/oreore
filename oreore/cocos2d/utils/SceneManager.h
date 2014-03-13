@@ -93,6 +93,7 @@ namespace oreore
     private:
         SceneList scenes;
         DebugLayer *debugLayer;
+        Debugger *debugger;
         bool showDebugLayer;
 
         cocos2d::Object *getCurrentScene();
@@ -124,6 +125,7 @@ namespace oreore
 
         void setDebugMode(const bool debugMode);
         inline bool isDebugMode() const { return showDebugLayer; }
+        inline Debugger *getDebugger() { return debugger; }
     };
 
     /* SceneManager impl */

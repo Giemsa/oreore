@@ -43,7 +43,7 @@ namespace oreore
 
 
     /* SceneManager */
-    SceneManager::SceneManager() : debugLayer(null),
+    SceneManager::SceneManager() : debugLayer(null), debugger(null),
 #ifdef COCOS2D_DEBUG
         showDebugLayer(true)
 #else
@@ -56,7 +56,10 @@ namespace oreore
     SceneManager::~SceneManager()
     {
         if(debugLayer)
+        {
             debugLayer->release();
+            delete debugger;
+        }
     }
 
     void SceneManager::init()
@@ -64,6 +67,7 @@ namespace oreore
 #ifdef COCOS2D_DEBUG
         debugLayer = DebugLayer::create();
         Director::getInstance()->setNotificationNode(debugLayer);
+        debugger = new Debugger(debugLayer);
 #endif
     }
 
@@ -114,7 +118,10 @@ namespace oreore
         if(debugMode)
         {
             if(!debugLayer)
+            {
                 debugLayer = DebugLayer::create();
+                debugger = new Debugger(debugLayer);
+            }
             Director::getInstance()->setNotificationNode(debugLayer);
             debugLayer->release();
         }
