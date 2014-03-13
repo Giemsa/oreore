@@ -7,18 +7,14 @@
 
 namespace oreore
 {
-    class DebugLayer final : public cocos2d::Layer
+    class DebugLayer : public cocos2d::CCLayer
     {
     private:
-    protected:
-        DebugLayer() { }
-        ~DebugLayer() { }
-
-        bool init() override;
     public:
         CREATE_FUNC(DebugLayer);
+        bool init(); // override
 
-        void visit() override;
+        void visit(); // override
     };
 }
 

@@ -41,80 +41,8 @@ namespace oreore
         return CCTransitionFade::create(transitionTime, nextScene, ccBLACK);
     }
 
-
-    /* LoadingScene */
-    LoadingScene *LoadingScene::create(const ccColor4B &color)
-    {
-        LoadingScene *r = new LoadingScene();
-        if(r && r->init(color))
-        {
-            r->autorelease();
-            return r;
-        }
-        delete r;
-        return null;
-    }
-
-    LoadingScene *LoadingScene::create(const ccColor4B &color, const float maxDuration)
-    {
-        LoadingScene *r = new LoadingScene();
-        if(r && r->init(color, maxDuration))
-        {
-            r->autorelease();
-            return r;
-        }
-        delete r;
-        return null;
-    }
-
-    LoadingScene::LoadingScene() : disposeNext(false)
-    {
-        scene = cocos2d::CCScene::create();
-        scene->retain();
-        scene->addChild(this);
-    }
-
-    LoadingScene::~LoadingScene()
-    {
-        scene->release();
-    }
-
-    bool LoadingScene::init(const ccColor4B &color, const float maxDuration)
-    {
-        if(!CCLayerColor::initWithColor(color))
-            return false;
-
-        this->maxDuration = maxDuration;
-
-        return true;
-    }
-
-    void LoadingScene::onEnter()
-    {
-        CCLayerColor::onEnter();
-        duration = 0.0f;
-        scheduleUpdate();
-    }
-
-    void LoadingScene::update(float dt)
-    {
-        duration += dt;
-        if(duration > maxDuration)
-        {
-            unscheduleUpdate();
-      
-            if(currentScene)
-                CCDirector::sharedDirector()->replaceScene(currentScene->transition(nextScene));
-            else
-                CCDirector::sharedDirector()->replaceScene(nextScene);
-            if(disposeNext)
-                currentScene->getScene()->release();
-        }
-    }
-
     /* SceneManager */
-    SceneManager::SceneManager()
-        : loadingScene(null), debugLayer(nullptr),
+    SceneManager::SceneManager() : debugLayer(null),
 #ifdef COCOS2D_DEBUG
         showDebugLayer(true)
 #else
@@ -134,7 +62,7 @@ namespace oreore
     {
 #ifdef COCOS2D_DEBUG
         debugLayer = DebugLayer::create();
-        Director::getInstance()->setNotificationNode(debugLayer);
+        CCDirector::sharedDirector()->setNotificationNode(debugLayer);
 #endif
     }
 
@@ -163,51 +91,19 @@ namespace oreore
 
         if(disposeScene)
         {
-            current->getScene()->autorelease();
+            if(!current->isLazy())
+                current->getScene()->release();
             scenes[current->getID()] = null;
         }
 
         dir->setSendCleanupToScene(true);
 
-        if(loadingScene)
-        {
-            loadingScene->nextScene = scene;
-            loadingScene->disposeNext = disposeScene;
-            if(disposeScene)
-                current->getScene()->retain();
-            if(current)
-            {
-                loadingScene->currentScene = current;
-                next = current->transition(loadingScene->getScene());
-            }
-            else
-            {
-                loadingScene->currentScene = null;
-                next = loadingScene->getScene();
-            }
-        }
+        if(current)
+            next = current->transition(scene);
         else
-        {
-            if(current)
-                next = current->transition(scene);
-            else
-                next = scene;
-        }
-        cocos2d::CCDirector::sharedDirector()->replaceScene(next);
-    }
+            next = scene;
 
-    LoadingScene *SceneManager::setLoadingScene(LoadingScene *scene)
-    {
-        LoadingScene *tmp = loadingScene;
-        if(tmp)
-            tmp->release();
-        if(scene)
-        {
-            scene->retain();
-            scene->manager = this;
-        }
-        loadingScene = scene;
-        return tmp;
+        cocos2d::CCDirector::sharedDirector()->replaceScene(next);
     }
 
     void SceneManager::setDebugMode(const bool debugMode)
@@ -219,14 +115,14 @@ namespace oreore
         {
             if(!debugLayer)
                 debugLayer = DebugLayer::create();
-            Director::getInstance()->setNotificationNode(debugLayer);
+            CCDirector::sharedDirector()->setNotificationNode(debugLayer);
             debugLayer->release();
         }
         else
         {
             if(debugLayer)
                 debugLayer->retain();
-            Director::getInstance()->setNotificationNode(nullptr);
+            CCDirector::sharedDirector()->setNotificationNode(null);
         }
         showDebugLayer = debugMode;
     }
