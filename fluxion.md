@@ -4,7 +4,8 @@ layout: default
 # Fluxion (cocos2dx Action Generator)
 
 ## 概要
-　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。
+　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。  
+cocos2dx 2.2.2、cocos2dx 3.0 betaの両方で利用可能ですが、一部APIに違いがあります。
 
 ## 使い方
 
@@ -44,6 +45,8 @@ layout: default
 	    )
 	);
 
+　[2.2.2] C++03では可変長引数の都合から、x::seq及びx::sに渡せるアクションの数は**8個まで**に制限されています。
+
 ### 並列アクション
 　同時に複数のアクションを実行したい場合は、「+」演算子を利用します。
 
@@ -59,6 +62,8 @@ layout: default
 	        x::fadeOut(1.0f)
 	    )
 	);
+
+　[2.2.2] C++03では可変長引数の都合から、x::par及びx::pに渡せるアクションの数は**8個まで**に制限されています。
 
 ### Ease
 　Easingを行う場合は、「*」演算子を利用します。
@@ -84,7 +89,8 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 　このように記述することで、移動が5回繰り返されます。
 
 ### 関数呼び出し
-　cocos2dxにおけるCallFuncを登録するには、ラムダ関数をそのまま追加します。
+　CallFuncに相当するアクションを追加します。  
+　[3.0] cocos2dxにおけるCallFuncを登録するには、ラムダ関数をそのまま追加します。
 
 	sprite->runAction(
 	    x::moveTo(1.0f, 100.0f, 100.0f) >>
@@ -92,6 +98,21 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 	        log("complete!");
 	    }
 	);
+
+　[2.2.2] x::callを利用します。
+
+	void Sample::callback()
+	{
+		CCLOG("complete!");
+	}
+
+	...
+
+	sprite->runAction(
+	    x::moveTo(1.0f, 100.0f, 100.0f) >>
+	    x::call(this, &Sample::callback)
+	);
+
 
 ### cocos2dxのアクションを混ぜる
 　Fluxionでは、cocos2dxのアクションを同時に扱うことが可能です。

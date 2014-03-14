@@ -49,6 +49,10 @@ cocos2dx 3.0 beta 及び 2.2.2 向けの汎用的な処理群をまとめまし�
 ## common utility
 cocos2dxにかかわらず利用できるユーティリティです。
 
+## SceneManager
+cocos2dxでシーン管理を行うクラスです。  
+[SceneManager](./scenemanager.html) を参照してください。
+
 ## cocos2dx Action library
 cocos2dxで利用できるアクションのライブラリです。
 
@@ -58,6 +62,10 @@ cocos2dxで利用できるノードやレイヤのライブラリです。
 ## Fluxion (cocos2dx Action Generator)
 アクションを簡潔に記述、生成するためのDSLを提供します。  
 [Fluxion Reference](./fluxion.html) を参照してください。
+
+## Simple Debug Menu
+シンプルなデバッグメニューを提供します。  
+[Simple Debug Menu](./sdm.html) を参照してください。
 
 #ライセンス
 This software is released under the zlib License, see LICENSE.txt.
