@@ -19,7 +19,7 @@ namespace oreore
             ResolutionConfig(
                 Size(320, 480),
                 "resources-iphone",
-                0.5f,
+                1.0f,
                 480
             )
         );
@@ -27,7 +27,7 @@ namespace oreore
             ResolutionConfig(
                 Size(640, 960),
                 "resources-iphonehd",
-                1.0f,
+                2.0f,
                 960
             )
         );
@@ -35,7 +35,7 @@ namespace oreore
             ResolutionConfig(
                 Size(768, 1024),
                 "resources-ipad",
-                1.0f,
+                2.0f,
                 1024
             )
         );
@@ -43,7 +43,7 @@ namespace oreore
             ResolutionConfig(
                 Size(640, 1136),
                 "resources-iphonehd",
-                1.0f,
+                2.0f,
                 1136
             )
         );
@@ -51,7 +51,7 @@ namespace oreore
             ResolutionConfig(
                 Size(1536, 2048),
                 "resources-ipadhd",
-                2.0f,
+                4.0f,
                 2048
             )
         );
