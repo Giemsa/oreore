@@ -8,6 +8,8 @@
 #include "actions/ShakeFadeOut.h"
 #include "actions/Move.h"
 #include "actions/AttractMove.h"
+#include "actions/MusicFadeTo.h"
+#include "actions/PlaySE.h"
 
 /* nodes */
 #include "nodes/GlowLine.h"
@@ -22,5 +24,6 @@
 #include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
 #include "utils/AssetLoader.h"
+#include "Sound.h"
 
 #endif
