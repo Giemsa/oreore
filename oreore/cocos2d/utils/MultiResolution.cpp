@@ -132,20 +132,20 @@ namespace oreore
         {
             if(size.height > resolutions[i].height)
             {
-                const ResolutionConfig &config = resolutions[i + 1];
-                order.push_back(config.dirname);
-                rsize = config.size;
-                factor = config.scaleFactor;
+                currentConfig = resolutions[i + 1];
+                order.push_back(currentConfig.dirname);
+                rsize = currentConfig.size;
+                factor = currentConfig.scaleFactor;
                 set = true;
                 break;
             }
         }
         if(!set)
         {
-            const ResolutionConfig &config = resolutions[offset];
-            order.push_back(config.dirname);
-            rsize = config.size;
-            factor = config.scaleFactor;
+            currentConfig = resolutions[offset];
+            order.push_back(currentConfig.dirname);
+            rsize = currentConfig.size;
+            factor = currentConfig.scaleFactor;
         }
 
         scaleH = rsize.height / designSize.height;
