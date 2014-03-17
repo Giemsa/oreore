@@ -24,6 +24,6 @@
 #include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
 #include "utils/AssetLoader.h"
-#include "Sound.h"
+#include "utils/Sound.h"
 
 #endif

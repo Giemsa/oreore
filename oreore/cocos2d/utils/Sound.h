@@ -1,6 +1,7 @@
 #ifndef __OREORE_COCOS2D_SOUND_H__
 #define __OREORE_COCOS2D_SOUND_H__
 
+#include <memory>
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "../../null.h"
