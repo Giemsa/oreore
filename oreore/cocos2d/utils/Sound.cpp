@@ -17,7 +17,9 @@ namespace oreore
 
         bgmVolume = 1.0f;
         seVolume = 1.0f;
+        enabled = true;
         reservedMusicFile.clear();
+        currentlyPlaying.clear();
 
         return true;
     }
@@ -35,6 +37,11 @@ namespace oreore
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
+        currentlyPlaying = filename;
+
+        if(!enabled)
+            return;
+
         if(duration == 0.0f)
             SimpleAudioEngine::sharedEngine()->playBackgroundMusic(filename.c_str(), loop);
         else
@@ -45,16 +52,31 @@ namespace oreore
         }
     }
 
+    void SoundManager::completeFadeOut()
+    {
+        SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+        currentlyPlaying.clear();
+    }
+
     void SoundManager::stopBGM(const float duration)
     {
         if(duration == 0.0f)
-            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            completeFadeOut();
         else
-            fadeOut(duration);
+            runAction(
+                CCSequence::create(
+                    CCMusicFadeTo::create(duration, 0.0f, false),
+                    CCCallFunc::create(this, callfunc_selector(SoundManager::completeFadeOut)),
+                    NULL
+                )
+            );
     }
 
     unsigned int SoundManager::playSE(const std::string &filename)
     {
+        if(!enabled)
+            return 0;
+
         return SimpleAudioEngine::sharedEngine()->playEffect(filename.c_str(), false);
     }
 
@@ -97,6 +119,12 @@ namespace oreore
 
     void SoundManager::fadeIn(const float duration)
     {
+        if(!enabled)
+        {
+            setBGMVolume(1.0f);
+            return;
+        }
+
         runAction(
             CCMusicFadeTo::create(duration, bgmVolume)
         );
@@ -111,6 +139,12 @@ namespace oreore
 
     void SoundManager::fadeTo(const float volume, const float duration)
     {
+        if(!enabled)
+        {
+            setBGMVolume(volume);
+            return;
+        }
+
         runAction(
             CCMusicFadeTo::create(duration, volume * bgmVolume)
         );
@@ -118,6 +152,7 @@ namespace oreore
 
     void SoundManager::completeFading()
     {
+        currentlyPlaying = reservedMusicFile;
         setBGMVolume(0.0f);
         playBGM(reservedMusicFile);
         reservedMusicFile.clear();
@@ -125,6 +160,13 @@ namespace oreore
 
     bool SoundManager::playWithFading(const std::string &filename, const float duration)
     {
+        if(!enabled)
+        {
+            currentlyPlaying = filename;
+            setBGMVolume(1.0f);
+            return true;
+        }
+
         if(!reservedMusicFile.empty())
         {
             CCAssert(reservedMusicFile.empty(), "reservedMusicFile is not empty.");
@@ -141,5 +183,24 @@ namespace oreore
         );
 
         return true;
+    }
+
+    void SoundManager::setEnabled(const bool enabled)
+    {
+        if(this->enabled == enabled)
+            return;
+
+        if(enabled)
+        {
+            if(!currentlyPlaying.empty())
+                playBGM(currentlyPlaying);
+            this->enabled = true;
+        }
+        else
+        {
+            SimpleAudioEngine::sharedEngine()->stopAllEffects();
+            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            this->enabled = false;
+        }
     }
 }

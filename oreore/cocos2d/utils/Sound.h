@@ -10,13 +10,15 @@ namespace oreore
     class SoundManager : public cocos2d::CCNode
     {
     private:
+        bool enabled;
         float bgmVolume, seVolume;
-        std::string reservedMusicFile;
+        std::string reservedMusicFile, currentlyPlaying;
 
         static std::auto_ptr<SoundManager> manager;
         CREATE_FUNC(SoundManager);
 
         void completeFading();
+        void completeFadeOut();
     public:
         static SoundManager &getInstance();
 
@@ -41,6 +43,9 @@ namespace oreore
         void fadeOut(const float duration, const bool pauseOnComplete = false);
         void fadeTo(const float volume, const float duration);
         bool playWithFading(const std::string &filename, const float duration);
+
+        void setEnabled(const bool enabled);
+        inline bool isEnabled() const { return enabled; }
     };
 }
 
