@@ -1,6 +1,6 @@
 #include "Sound.h"
 #include "../../Utils.h"
-#include "MusicFadeTo.h"
+#include "../actions/MusicFadeTo.h"
 
 namespace oreore
 {
