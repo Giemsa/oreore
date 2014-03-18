@@ -11,7 +11,7 @@ namespace oreore
     class SoundManager : public cocos2d::CCNode
     {
     private:
-        bool enabled;
+        bool enabled, bgmMute, seMute;
         float bgmVolume, seVolume;
         std::string reservedMusicFile, currentlyPlaying;
 
@@ -47,6 +47,10 @@ namespace oreore
 
         void setEnabled(const bool enabled);
         inline bool isEnabled() const { return enabled; }
+        void setBGMMute(const bool mute);
+        inline bool isBGMMute() const { return bgmMute; }
+        void setSEMute(const bool mute);
+        inline bool isSEMute() const { return seMute; }
     };
 }
 

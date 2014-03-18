@@ -48,6 +48,7 @@ namespace oreore
         void toggleOn();
         void toggleOff();
         void toggle();
+        void toggle(const bool v);
         inline bool isToggled() const { return toggled; }
         void setTappedEvent(cocos2d::CCObject *target, cocos2d::SEL_MenuHandler callback);
 

@@ -37,11 +37,11 @@ namespace oreore
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
-        if(currentlyPlaying == filename)
+        if(currentlyPlaying == filename && SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
             return;
         currentlyPlaying = filename;
 
-        if(!enabled)
+        if(!enabled || bgmMute)
             return;
 
         if(duration == 0.0f)
@@ -76,7 +76,7 @@ namespace oreore
 
     unsigned int SoundManager::playSE(const std::string &filename, const bool loop)
     {
-        if(!enabled)
+        if(!enabled || seMute)
             return 0;
 
         return SimpleAudioEngine::sharedEngine()->playEffect(filename.c_str(), loop);
@@ -121,7 +121,7 @@ namespace oreore
 
     void SoundManager::fadeIn(const float duration)
     {
-        if(!enabled)
+        if(!enabled || bgmMute)
         {
             setBGMVolume(1.0f);
             return;
@@ -141,7 +141,7 @@ namespace oreore
 
     void SoundManager::fadeTo(const float volume, const float duration)
     {
-        if(!enabled)
+        if(!enabled || bgmMute)
         {
             setBGMVolume(volume);
             return;
@@ -161,7 +161,7 @@ namespace oreore
 
     bool SoundManager::playWithFading(const std::string &filename, const float duration)
     {
-        if(!enabled)
+        if(!enabled || bgmMute)
         {
             currentlyPlaying = filename;
             setBGMVolume(1.0f);
@@ -203,5 +203,41 @@ namespace oreore
             SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
             this->enabled = false;
         }
+    }
+
+    void SoundManager::setBGMMute(const bool mute)
+    {
+        if(bgmMute == mute)
+            return;
+
+        if(mute)
+        {
+            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            bgmMute = true;
+        }
+        else
+        {
+            bgmMute = false;
+            if(!currentlyPlaying.empty())
+                playBGM(currentlyPlaying);
+        }
+    }
+
+    void SoundManager::setSEMute(const bool mute)
+    {
+        if(seMute == mute)
+            return;
+
+        seMute = mute;
+
+        /*
+        if(mute)
+        {
+            SimpleAudioEngine::sharedEngine()->stopAllEffects();
+            seMute = true;
+        }
+        else
+            seMute = false;
+        */
     }
 }

@@ -199,6 +199,14 @@ namespace oreore
             toggleOn();
     }
 
+    void CCToggleButton::toggle(const bool v)
+    {
+        if(v)
+            toggleOn();
+        else
+            toggleOff();
+    }
+
     void CCToggleButton::setTappedEvent(cocos2d::CCObject *target, cocos2d::SEL_MenuHandler callback)
     {
         this->target = target;
