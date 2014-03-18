@@ -5,10 +5,10 @@ namespace oreore
     using namespace cocos2d;
 
     /* CCSimpleButton */
-    CCSimpleButton* CCSimpleButton::createWithTexture(CCTexture2D *pTexture, CCObject* target, SEL_MenuHandler selector)
+    CCSimpleButton* CCSimpleButton::createWithTexture(CCTexture2D *pTexture)
     {
         CCSimpleButton *pobSprite = new CCSimpleButton();
-        if (pobSprite && pobSprite->initWithTexture(pTexture, target, selector))
+        if(pobSprite && pobSprite->initWithTexture(pTexture))
         {
             pobSprite->autorelease();
             return pobSprite;
@@ -17,10 +17,10 @@ namespace oreore
         return NULL;
     }
 
-    CCSimpleButton* CCSimpleButton::createWithTexture(CCTexture2D *pTexture, const CCRect& rect, CCObject* target, SEL_MenuHandler selector)
+    CCSimpleButton* CCSimpleButton::createWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     {
         CCSimpleButton *pobSprite = new CCSimpleButton();
-        if (pobSprite && pobSprite->initWithTexture(pTexture, rect, target, selector))
+        if(pobSprite && pobSprite->initWithTexture(pTexture, rect))
         {
             pobSprite->autorelease();
             return pobSprite;
@@ -29,10 +29,10 @@ namespace oreore
         return NULL;
     }
 
-    CCSimpleButton* CCSimpleButton::create(const char *pszFileName, CCObject* target, SEL_MenuHandler selector)
+    CCSimpleButton* CCSimpleButton::create(const char *pszFileName)
     {
         CCSimpleButton *pobSprite = new CCSimpleButton();
-        if (pobSprite && pobSprite->initWithFile(pszFileName, target, selector))
+        if(pobSprite && pobSprite->initWithFile(pszFileName))
         {
             pobSprite->autorelease();
             return pobSprite;
@@ -41,10 +41,10 @@ namespace oreore
         return NULL;
     }
 
-    CCSimpleButton* CCSimpleButton::create(const char *pszFileName, const CCRect& rect, CCObject* target, SEL_MenuHandler selector)
+    CCSimpleButton* CCSimpleButton::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     {
         CCSimpleButton *pobSprite = new CCSimpleButton();
-        if (pobSprite && pobSprite->initWithFile(pszFileName, rect, target, selector))
+        if(pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
         {
             pobSprite->autorelease();
             return pobSprite;
@@ -53,19 +53,7 @@ namespace oreore
         return NULL;
     }
 
-    CCSimpleButton* CCSimpleButton::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame, CCObject* target, SEL_MenuHandler selector)
-    {
-        CCSimpleButton *pobSprite = new CCSimpleButton();
-        if (pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame, target, selector))
-        {
-            pobSprite->autorelease();
-            return pobSprite;
-        }
-        CC_SAFE_DELETE(pobSprite);
-        return NULL;
-    }
-
-    CCSimpleButton* CCSimpleButton::createWithSpriteFrameName(const char *pszSpriteFrameName, CCObject* target, SEL_MenuHandler selector)
+    CCSimpleButton* CCSimpleButton::createWithSpriteFrameName(const char *pszSpriteFrameName)
     {
         CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
 
@@ -75,72 +63,55 @@ namespace oreore
         CCAssert(pFrame != NULL, msg);
     #endif
 
-        return createWithSpriteFrame(pFrame, target, selector);
+        return createWithSpriteFrame(pFrame);
     }
 
-    CCSimpleButton* CCSimpleButton::create(CCObject* target, SEL_MenuHandler selector)
+    void CCSimpleButton::_init()
     {
-        CCSimpleButton *pSprite = new CCSimpleButton();
-        if (pSprite && pSprite->init(target, selector))
-        {
-            pSprite->autorelease();
-            return pSprite;
-        }
-        CC_SAFE_DELETE(pSprite);
-        return NULL;
+        this->target = null;
+        this->selector = null;
+        touchEnabled = true;
     }
 
-    void CCSimpleButton::_init(CCObject *target, SEL_MenuHandler selector)
+    bool CCSimpleButton::init()
     {
-        this->target = target;
-        this->selector = selector;
-    }
-
-    bool CCSimpleButton::init(CCObject* target, SEL_MenuHandler selector)
-    {
-        _init(target, selector);
+        _init();
         return CCSprite::init();
     }
 
-    bool CCSimpleButton::initWithTexture(CCTexture2D *pTexture, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithTexture(CCTexture2D *pTexture)
     {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithTexture(pTexture);
     }
 
-    bool CCSimpleButton::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithTexture(CCTexture2D *pTexture, const CCRect& rect)
     {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithTexture(pTexture, rect);
     }
 
-    bool CCSimpleButton::initWithTexture(CCTexture2D *pTexture, const CCRect& rect, bool rotated, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
     {
-        _init(target, selector);
-        return CCSprite::initWithTexture(pTexture, rect, rotated);
-    }
-
-    bool CCSimpleButton::initWithSpriteFrame(CCSpriteFrame *pSpriteFrame, CCObject* target, SEL_MenuHandler selector)
-    {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithSpriteFrame(pSpriteFrame);
     }
 
-    bool CCSimpleButton::initWithSpriteFrameName(const char *pszSpriteFrameName, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithSpriteFrameName(const char *pszSpriteFrameName)
     {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
     }
 
-    bool CCSimpleButton::initWithFile(const char *pszFilename, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithFile(const char *pszFilename)
     {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithFile(pszFilename);
     }
 
-    bool CCSimpleButton::initWithFile(const char *pszFilename, const CCRect& rect, CCObject* target, SEL_MenuHandler selector)
+    bool CCSimpleButton::initWithFile(const char *pszFilename, const CCRect& rect)
     {
-        _init(target, selector);
+        _init();
         return CCSprite::initWithFile(pszFilename, rect);
     }
 
@@ -149,11 +120,13 @@ namespace oreore
         if(!touchEnabled)
             return false;
 
-        const CCPoint &p = getParent()->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
+        const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
             bpos = p;
-            runAction(touchAction());
+            CCAction *action = touchAction();
+            if(action)
+                runAction(action);
             return true;
         }
         return false;
@@ -166,13 +139,16 @@ namespace oreore
 
     void CCSimpleButton::ccTouchEnded(CCTouch *touch, CCEvent *event)
     {
-        const CCPoint &p = getParent()->convertToNodeSpace(CCDirector::sharedDirector()->convertToGL(touch->getLocationInView()));
+        const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
             const float d = p.getDistance(bpos);
             if(d < 30.0f && selector)
                 (target->*selector)(this);
-            runAction(unTouchAction());
+
+            CCAction *action = unTouchAction();
+            if(action)
+                runAction(action);
         }
     }
 
@@ -206,5 +182,11 @@ namespace oreore
     {
         CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
         CCSprite::onExit();
+    }
+
+    void CCSimpleButton::setTappedEvent(CCObject *target, SEL_MenuHandler callback)
+    {
+        this->target = target;
+        selector = callback;
     }
 }
