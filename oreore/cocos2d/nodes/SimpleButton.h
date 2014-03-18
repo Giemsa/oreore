@@ -12,43 +12,114 @@ namespace oreore
         cocos2d::ccMenuCallback selector;
         cocos2d::Point bpos;
         cocos2d::EventListenerTouchOneByOne *listener;
-
-        bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-        void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
-
-        void _init(const cocos2d::ccMenuCallback &selector);
-    public:
-        static SimpleButton* create(const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* create(const char *pszFileName, const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* create(const char *pszFileName, const cocos2d::Rect& rect, const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect, const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* createWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame, const cocos2d::ccMenuCallback &selector);
-        static SimpleButton* createWithSpriteFrameName(const char *pszSpriteFrameName, const cocos2d::ccMenuCallback &selector);
-
-        inline static SimpleButton* create() { return create(null); }
-        inline static SimpleButton* create(const char *pszFileName) { return create(pszFileName, null); }
-        inline static SimpleButton* create(const char *pszFileName, const cocos2d::Rect& rect) { return create(pszFileName, rect, null); }
-        inline static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture) { return createWithTexture(pTexture, null); }
-        inline static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect &rect) { return createWithTexture(pTexture, rect, null); }
-        inline static SimpleButton* createWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame) { return createWithSpriteFrame(pSpriteFrame, null); }
-        inline static SimpleButton* createWithSpriteFrameName(const char *pszSpriteFrameName) { return createWithSpriteFrameName(pszSpriteFrameName, null); }
-
-        virtual bool init(const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect, bool rotated, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithFile(const char *pszFilename, const cocos2d::ccMenuCallback &selector);
-        virtual bool initWithFile(const char *pszFilename, const cocos2d::Rect& rect, const cocos2d::ccMenuCallback &selector);
+        bool touchEnabled;
 
         virtual cocos2d::Action *touchAction();
         virtual cocos2d::Action *unTouchAction();
 
+        bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+        void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+
+        void _init();
+    protected:
+        virtual ~SimpleButton() { }
+
+        virtual bool init();
+        virtual bool initWithTexture(cocos2d::Texture2D *pTexture);
+        virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect);
+        virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect, bool rotated);
+        virtual bool initWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame);
+        virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+        virtual bool initWithFile(const char *pszFilename);
+        virtual bool initWithFile(const char *pszFilename, const cocos2d::Rect& rect);
+
+    public:
+        CREATE_FUNC(SimpleButton);
+        static SimpleButton* create(const char *pszFileName);
+        static SimpleButton* create(const char *pszFileName, const cocos2d::Rect& rect);
+        static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture);
+        static SimpleButton* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect);
+        static SimpleButton* createWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame);
+        static SimpleButton* createWithSpriteFrameName(const char *pszSpriteFrameName);
+
+        virtual void setTouchEnabled(const bool enable);
+        virtual bool getTouchEnabled() const;
 
         virtual void onEnter() override;
         virtual void onExit() override;
+
+        void setTappedEvent(const cocos2d::ccMenuCallback &callback);
+    };
+
+    template<typename T>
+    class ExtendableSimpleButton : public SimpleButton
+    {
+    private:
+    protected:
+        virtual ~ExtendableSimpleButton() { }
+    public:
+        CREATE_FUNC(T);
+
+        T* createWithTexture(cocos2d::Texture2D *pTexture)
+        {
+            T *pobSprite = new T();
+            if(pobSprite && pobSprite->initWithTexture(pTexture))
+            {
+                pobSprite->autorelease();
+                return pobSprite;
+            }
+            CC_SAFE_DELETE(pobSprite);
+            return NULL;
+        }
+
+        static T* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect)
+        {
+            T *pobSprite = new T();
+            if(pobSprite && pobSprite->initWithTexture(pTexture, rect))
+            {
+                pobSprite->autorelease();
+                return pobSprite;
+            }
+            CC_SAFE_DELETE(pobSprite);
+            return NULL;
+        }
+
+        static T* create(const char *pszFileName)
+        {
+            T *pobSprite = new T();
+            if(pobSprite && pobSprite->initWithFile(pszFileName))
+            {
+                pobSprite->autorelease();
+                return pobSprite;
+            }
+            CC_SAFE_DELETE(pobSprite);
+            return NULL;
+        }
+
+        static T* createWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame)
+        {
+            T *pobSprite = new T();
+            if(pSpriteFrame && pobSprite && pobSprite->initWithSpriteFrame(pSpriteFrame))
+            {
+                pobSprite->autorelease();
+                return pobSprite;
+            }
+            CC_SAFE_DELETE(pobSprite);
+            return NULL;
+        }
+
+        static T* createWithSpriteFrameName(const char *pszSpriteFrameName)
+        {
+            cocos2d::SpriteFrame *pFrame = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
+
+        #if COCOS2D_DEBUG > 0
+            char msg[256] = {0};
+            sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
+            CCAssert(pFrame != NULL, msg);
+        #endif
+
+            return createWithSpriteFrame(pFrame);
+        }
     };
 }
 
