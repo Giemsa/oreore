@@ -16,6 +16,7 @@
 #include "nodes/Overlay.h"
 #include "nodes/SimpleButton.h"
 #include "nodes/TextureMappedPolygon.h"
+#include "nodes/ToggleButton.h"
 
 /* utils */
 #include "utils/Utils.h"
