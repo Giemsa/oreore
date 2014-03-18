@@ -193,6 +193,14 @@ namespace oreore
             toggleOn();
     }
 
+    void ToggleButton::toggle(const bool v)
+    {
+        if(v)
+            toggleOn();
+        else
+            toggleOff();
+    }
+
     void ToggleButton::setTappedEvent(const ccMenuCallback &callback)
     {
         this->callback = callback;

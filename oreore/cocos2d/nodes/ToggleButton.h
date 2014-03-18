@@ -37,7 +37,6 @@ namespace oreore
         static ToggleButton *create(const std::string &offBtn, const std::string &onBtn);
         static ToggleButton *createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn);
 
-
         virtual void setTouchEnabled(const bool enable);
         virtual bool isTouchEnabled() const;
 
@@ -47,6 +46,7 @@ namespace oreore
         void toggleOn();
         void toggleOff();
         void toggle();
+        void toggle(const bool v);
         inline bool isToggled() const { return toggled; }
         void setTappedEvent(const cocos2d::ccMenuCallback &callback);
 
