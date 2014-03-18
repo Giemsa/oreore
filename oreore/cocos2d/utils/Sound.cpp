@@ -37,6 +37,8 @@ namespace oreore
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
+        if(currentlyPlaying == filename)
+            return;
         currentlyPlaying = filename;
 
         if(!enabled)
@@ -72,12 +74,12 @@ namespace oreore
             );
     }
 
-    unsigned int SoundManager::playSE(const std::string &filename)
+    unsigned int SoundManager::playSE(const std::string &filename, const bool loop)
     {
         if(!enabled)
             return 0;
 
-        return SimpleAudioEngine::getInstance()->playEffect(filename.c_str(), false);
+        return SimpleAudioEngine::getInstance()->playEffect(filename.c_str(), loop);
     }
 
     void SoundManager::stopSE(const unsigned int id)
@@ -169,7 +171,6 @@ namespace oreore
             CCSequence::create(
                 MusicFadeTo::create(duration / 2.0f, 0.0f),
                 CallFunc::create([this]() {
-                    currentlyPlaying = reservedMusicFile;
                     setBGMVolume(0.0f);
                     playBGM(reservedMusicFile);
                     reservedMusicFile.clear();

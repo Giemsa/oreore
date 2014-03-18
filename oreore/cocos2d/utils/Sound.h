@@ -27,7 +27,7 @@ namespace oreore
 
         void playBGM(const std::string &filename, const float duration = 0.0f, const bool loop = true);
         void stopBGM(const float duration = 0.0f);
-        unsigned int playSE(const std::string &filename);
+        unsigned int playSE(const std::string &filename, const bool loop = false);
         void stopSE(const unsigned int id);
 
         float getBGMVolume() const;
