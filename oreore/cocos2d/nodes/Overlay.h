@@ -12,7 +12,17 @@ namespace oreore
         GLubyte opacity;
         float displaySpeed;
         bool shown, syncChild;
+        cocos2d::ccMenuCallback callbackOnShow, callbackOnClose;
+
+        void onCompleteShow();
+        void onCompleteClose();
     protected:
+        OverlayLayer();
+        virtual ~OverlayLayer();
+
+        bool init() override { return init(cocos2d::Color4B(), 0x90, 0.4f); }
+        bool init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
+
         virtual void onShow() { }
         virtual void onClose() { }
 
@@ -35,12 +45,6 @@ namespace oreore
 
         static OverlayLayer *create(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
 
-        OverlayLayer();
-        virtual ~OverlayLayer();
-
-        bool init() override { return init(cocos2d::Color4B(), 0x90, 0.4f); }
-        bool init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed);
-
         inline bool isShown() const { return shown; }
 
         virtual void show(const bool anime = true);
@@ -48,6 +52,9 @@ namespace oreore
 
         void setOpacity(GLubyte opacity) override;
         void setSyncOpecityChild(const bool sync);
+
+        void setOnShowCallback(const cocos2d::ccMenuCallback &callback);
+        void setOnCloseCallback(const cocos2d::ccMenuCallback &callback);
     };
 }
 

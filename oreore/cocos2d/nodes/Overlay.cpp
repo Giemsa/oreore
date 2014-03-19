@@ -5,9 +5,10 @@ namespace oreore
     using namespace cocos2d;
 
     /* OverlayLayer */
-    OverlayLayer::OverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
+    OverlayLayer::OverlayLayer() :
+        opacity(0x90), displaySpeed(0.4f), shown(false),
+        callbackOnShow(null), callbackOnClose(null)
     {
-
     }
 
     OverlayLayer::~OverlayLayer()
@@ -44,6 +45,15 @@ namespace oreore
         return true;
     }
 
+    void OverlayLayer::onCompleteShow()
+    {
+        shown = true;
+        if(callbackOnShow)
+            callbackOnShow(this);
+
+        onShow();
+    }
+
     void OverlayLayer::show(const bool anime)
     {
         stopAllActions();
@@ -66,8 +76,18 @@ namespace oreore
         {
             LayerColor::setOpacity(opacity);
             shown = true;
+            if(callbackOnShow)
+                callbackOnShow(this);
             onShow();
         }
+    }
+
+    void OverlayLayer::onCompleteClose()
+    {
+        shown = false;
+        if(callbackOnClose)
+            callbackOnClose(this);
+        onClose();
     }
 
     void OverlayLayer::close(const bool anime)
@@ -118,5 +138,15 @@ namespace oreore
     void OverlayLayer::setSyncOpecityChild(const bool sync)
     {
         syncChild = sync;
+    }
+
+    void OverlayLayer::setOnShowCallback(const ccMenuCallback &callback)
+    {
+        callbackOnShow = callback;
+    }
+
+    void OverlayLayer::setOnCloseCallback(const ccMenuCallback &callback)
+    {
+        callbackOnClose = callback;
     }
 }

@@ -14,8 +14,8 @@ namespace oreore
         cocos2d::EventListenerTouchOneByOne *listener;
         bool touchEnabled;
 
-        virtual cocos2d::Action *touchAction();
-        virtual cocos2d::Action *unTouchAction();
+        virtual cocos2d::FiniteTimeAction *touchAction();
+        virtual cocos2d::FiniteTimeAction *unTouchAction();
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
         void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
