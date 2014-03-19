@@ -238,9 +238,10 @@ namespace oreore
     bool DebugLayer::onTouchBegan(Touch* touch, Event* event)
     {
         const Point &p = convertTouchToNodeSpace(touch);
-        if(frame->boundingBox().containsPoint(p))
+        if(frame->getBoundingBox().containsPoint(p))
         {
-            if(!scrollView->boundingBox().containsPoint(p))
+            const Point &ip = frame->convertToNodeSpace(touch->getLocation());
+            if(!scrollView->getBoundingBox().containsPoint(ip) || !scrollView->isVisible())
             {
                 if(opened)
                 {

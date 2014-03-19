@@ -12,19 +12,16 @@ namespace oreore
         std::string filename;
         if(data.type == AssetData::SpriteFrame)
         {
-            CCObject *info = CCDictionary::createWithContentsOfFile(data.filename.c_str())->objectForKey("metadata");
-            info = static_cast<CCDictionary *>(info)->objectForKey("textureFileName");
-            filename = static_cast<CCString *>(info)->getCString();
+            const ValueMap &dic = FileUtils::getInstance()->getValueMapFromFile(data.filename.c_str());
+            filename = dic.at("metadata").asValueMap().at("textureFileName").asString();
         }
         else
             filename = data.filename;
-        CCTextureCache::sharedTextureCache()->addImageAsync(filename.c_str(), this, callfuncO_selector(AssetLoaderWorkerChild::assetLoaded));
-    }
-    
-    void AssetLoaderWorkerChild::assetLoaded(cocos2d::CCObject *object)
-    {
-        worker->assetLoaded(data, object);
-        delete this;
+
+        Director::getInstance()->getTextureCache()->addImageAsync(filename.c_str(), [this](Texture2D *tex) {
+            this->worker->assetLoaded(this->data, tex);
+            delete this;
+        });
     }
 
     /* AssetLoaderWorker */
@@ -33,28 +30,27 @@ namespace oreore
         assets.push_back(data);
     }
 
-    void AssetLoaderWorker::load(CCObject *target, const SEL_CallFunc callback, const SEL_AssetLoaded assetLoadedCallback)
+    void AssetLoaderWorker::load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback)
     {
-        this->target = target;
         this->callback = callback;
         this->assetLoadedCallback = assetLoadedCallback;
 
-        for(AssetList::iterator it = assets.begin(); it != assets.end(); ++it)
-            new AssetLoaderWorkerChild(this, *it);
+        for(AssetData &data : assets)
+            new AssetLoaderWorkerChild(this, data);
     }
 
-    void AssetLoaderWorker::assetLoaded(const AssetData &data, CCObject *object)
+    void AssetLoaderWorker::assetLoaded(const AssetData &data, Texture2D *tex)
     {
         if(data.type == AssetData::SpriteFrame)
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(data.filename.c_str());
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(data.filename.c_str());
     
         if(assetLoadedCallback)
-            (target->*assetLoadedCallback)(data.filename, count, assets.size());
+            assetLoadedCallback(data.filename, count, assets.size());
 
         count++;
         if(count == assets.size())
         {
-            (target->*callback)();
+            callback();
             delete this;
         }
     }
@@ -73,8 +69,8 @@ namespace oreore
         worker->addAsset(AssetData(filename, AssetData::SpriteFrame));
     }
 
-    void AssetLoader::load(CCObject *target, const SEL_CallFunc callback, const SEL_AssetLoaded assetLoadedCallback)
+    void AssetLoader::load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback)
     {
-        worker->load(target, callback, assetLoadedCallback);
+        worker->load(callback, assetLoadedCallback);
     }
 }
