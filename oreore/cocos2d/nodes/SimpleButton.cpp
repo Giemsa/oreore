@@ -144,20 +144,35 @@ namespace oreore
         {
             const float d = p.getDistance(bpos);
             if(d < 30.0f && selector)
-                (target->*selector)(this);
+            {
+                CCFiniteTimeAction *action = unTouchAction();
+                if(action)
+                    runAction(
+                        CCSequence::create(
+                            action,
+                            CCCallFunc::create(this, callfunc_selector(CCSimpleButton::callCallback)),
+                            NULL
+                        )
+                    );
+            }
 
-            CCAction *action = unTouchAction();
+            CCFiniteTimeAction *action = unTouchAction();
             if(action)
                 runAction(action);
         }
     }
 
-    CCAction *CCSimpleButton::touchAction()
+    void CCSimpleButton::callCallback()
+    {
+        (target->*selector)(this);
+    }
+
+    CCFiniteTimeAction *CCSimpleButton::touchAction()
     {
         return CCScaleTo::create(0.1f, 0.9f);
     }
 
-    CCAction *CCSimpleButton::unTouchAction()
+    CCFiniteTimeAction *CCSimpleButton::unTouchAction()
     {
         return CCScaleTo::create(0.1f, 1.0f);
     }

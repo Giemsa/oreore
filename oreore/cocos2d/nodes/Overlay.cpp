@@ -5,9 +5,11 @@ namespace oreore
     using namespace cocos2d;
 
     /* CCOverlayLayer */
-    CCOverlayLayer::CCOverlayLayer() : opacity(0x90), displaySpeed(0.4f), shown(false)
+    CCOverlayLayer::CCOverlayLayer() :
+        opacity(0x90), displaySpeed(0.4f), shown(false),
+        targetOnShow(null), targetOnClose(null),
+        callbackOnShow(null), callbackOnClose(null)
     {
-
     }
 
     CCOverlayLayer::~CCOverlayLayer()
@@ -47,6 +49,8 @@ namespace oreore
     void CCOverlayLayer::onCompleteShow()
     {
         shown = true;
+        if(targetOnShow && callbackOnShow)
+            (targetOnShow->*callbackOnShow)(this);
         onShow();
     }
 
@@ -69,6 +73,8 @@ namespace oreore
         {
             CCLayerColor::setOpacity(opacity);
             shown = true;
+            if(targetOnShow && callbackOnShow)
+                (targetOnShow->*callbackOnShow)(this);
             onShow();
         }
     }
@@ -76,6 +82,8 @@ namespace oreore
     void CCOverlayLayer::onCompleteClose()
     {
         shown = false;
+        if(targetOnClose && callbackOnClose)
+            (targetOnClose->*callbackOnClose)(this);
         onClose();
     }
 
@@ -130,5 +138,17 @@ namespace oreore
     void CCOverlayLayer::setSyncOpecityChild(const bool sync)
     {
         syncChild = sync;
+    }
+
+    void CCOverlayLayer::setOnShowCallback(cocos2d::CCObject *target, const cocos2d::SEL_MenuHandler callback)
+    {
+        targetOnShow = target;
+        callbackOnShow = callback;
+    }
+
+    void CCOverlayLayer::setOnCloseCallback(cocos2d::CCObject *target, const cocos2d::SEL_MenuHandler callback)
+    {
+        targetOnClose = target;
+        callbackOnClose = callback;
     }
 }

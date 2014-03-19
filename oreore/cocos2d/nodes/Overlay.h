@@ -12,12 +12,15 @@ namespace oreore
         GLubyte opacity;
         float displaySpeed;
         bool shown, syncChild;
-    protected:
-        virtual void onShow() { }
-        virtual void onClose() { }
+
+        cocos2d::CCObject *targetOnShow, *targetOnClose;
+        cocos2d::SEL_MenuHandler callbackOnShow, callbackOnClose;
 
         void onCompleteShow();
         void onCompleteClose();
+    protected:
+        virtual void onShow() { }
+        virtual void onClose() { }
 
         void setChildrenVisible(const bool visible);
     public:
@@ -51,6 +54,9 @@ namespace oreore
 
         void setOpacity(GLubyte opacity); // override
         void setSyncOpecityChild(const bool sync);
+
+        void setOnShowCallback(cocos2d::CCObject *target, const cocos2d::SEL_MenuHandler callback);
+        void setOnCloseCallback(cocos2d::CCObject *target, const cocos2d::SEL_MenuHandler callback);
     };
 }
 

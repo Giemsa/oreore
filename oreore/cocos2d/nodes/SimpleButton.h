@@ -16,8 +16,10 @@ namespace oreore
         cocos2d::CCPoint bpos;
         bool touchEnabled;
 
-        virtual cocos2d::CCAction *touchAction();
-        virtual cocos2d::CCAction *unTouchAction();
+        virtual cocos2d::CCFiniteTimeAction *touchAction();
+        virtual cocos2d::CCFiniteTimeAction *unTouchAction();
+
+        void callCallback();
 
         virtual bool ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
         virtual void ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
