@@ -7,9 +7,9 @@ namespace oreore
     using namespace cocos2d;
     using namespace CocosDenshion;
 
-    CCPlaySE *CCPlaySE::create(const std::string &filename)
+    PlaySE *PlaySE::create(const std::string &filename)
     {
-        CCPlaySE *action = new CCPlaySE();
+        PlaySE *action = new PlaySE();
         if(action && action->init(filename))
         {
             action->autorelease();
@@ -19,25 +19,25 @@ namespace oreore
         return null;
     }
 
-    bool CCPlaySE::init(const std::string &filename)
+    bool PlaySE::init(const std::string &filename)
     {
         this->filename = filename;
         return true;
     }
 
-    void CCPlaySE::update(float time)
+    void PlaySE::update(float time)
     {
         SoundManager::getInstance().playSE(filename);
     }
 
-    CCPlaySE *CCPlaySE::reverse()
+    PlaySE *PlaySE::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CCPlaySE *CCPlaySE::clone()
+    PlaySE *PlaySE::clone() const
     {
-        return CCPlaySE::create(filename);
+        return PlaySE::create(filename);
     }
 }

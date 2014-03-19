@@ -7,9 +7,9 @@ namespace oreore
     using namespace cocos2d;
     using namespace CocosDenshion;
 
-    CCMusicFadeTo *CCMusicFadeTo::create(const float duration, const float volume, const bool pauseOnComplete)
+    MusicFadeTo *MusicFadeTo::create(const float duration, const float volume, const bool pauseOnComplete)
     {
-        CCMusicFadeTo *action = new CCMusicFadeTo();
+        MusicFadeTo *action = new MusicFadeTo();
         if(action && action->initWithDuration(duration, volume, pauseOnComplete))
         {
             action->autorelease();
@@ -19,9 +19,9 @@ namespace oreore
         return null;
     }
 
-    bool CCMusicFadeTo::initWithDuration(const float duration, const float volume, const bool pauseOnComplete)
+    bool MusicFadeTo::initWithDuration(const float duration, const float volume, const bool pauseOnComplete)
     {
-        if(!CCActionInterval::initWithDuration(duration))
+        if(!ActionInterval::initWithDuration(duration))
             return false;
 
         pause = pauseOnComplete;
@@ -30,33 +30,33 @@ namespace oreore
         return true;
     }
 
-    void CCMusicFadeTo::update(float time)
+    void MusicFadeTo::update(float time)
     {
         const float vol = baseValue + (volume - baseValue) * time;
-        SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(vol);
+        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(vol);
     }
 
-    void CCMusicFadeTo::startWithTarget(CCNode *target)
+    void MusicFadeTo::startWithTarget(Node *target)
     {
-        CCActionInterval::startWithTarget(target);
-        baseValue = SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
+        ActionInterval::startWithTarget(target);
+        baseValue = SimpleAudioEngine::getInstance()->getBackgroundMusicVolume();
     }
 
-    void CCMusicFadeTo::stop(void)
+    void MusicFadeTo::stop(void)
     {
         if(pause)
-            SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-        CCActionInterval::stop();
+            SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+        ActionInterval::stop();
     }
 
-    CCMusicFadeTo *CCMusicFadeTo::reverse()
+    MusicFadeTo *MusicFadeTo::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CCMusicFadeTo *CCMusicFadeTo::clone()
+    MusicFadeTo *MusicFadeTo::clone() const
     {
-        return CCMusicFadeTo::create(getDuration(), volume, pause);
+        return MusicFadeTo::create(getDuration(), volume, pause);
     }
 }

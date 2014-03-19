@@ -8,7 +8,7 @@ namespace oreore
     using namespace CocosDenshion;
 
     /* SoundManager */
-    std::auto_ptr<SoundManager> SoundManager::manager;
+    std::unique_ptr<SoundManager> SoundManager::manager;
 
     bool SoundManager::init()
     {
@@ -36,11 +36,11 @@ namespace oreore
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
         if(duration == 0.0f)
-            SimpleAudioEngine::sharedEngine()->playBackgroundMusic(filename.c_str(), loop);
+            SimpleAudioEngine::getInstance()->playBackgroundMusic(filename.c_str(), loop);
         else
         {
             setBGMVolume(0.0f);
-            SimpleAudioEngine::sharedEngine()->playBackgroundMusic(filename.c_str(), loop);
+            SimpleAudioEngine::getInstance()->playBackgroundMusic(filename.c_str(), loop);
             fadeIn(duration);
         }
     }
@@ -48,79 +48,72 @@ namespace oreore
     void SoundManager::stopBGM(const float duration)
     {
         if(duration == 0.0f)
-            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         else
             fadeOut(duration);
     }
 
     unsigned int SoundManager::playSE(const std::string &filename)
     {
-        return SimpleAudioEngine::sharedEngine()->playEffect(filename.c_str(), false);
+        return SimpleAudioEngine::getInstance()->playEffect(filename.c_str(), false);
     }
 
     void SoundManager::stopSE(const unsigned int id)
     {
-        SimpleAudioEngine::sharedEngine()->stopEffect(id);
+        SimpleAudioEngine::getInstance()->stopEffect(id);
     }
 
     float SoundManager::getBGMVolume() const
     {
-        return SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume() / bgmVolume;
+        return SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / bgmVolume;
     }
 
     void SoundManager::setBGMVolume(const float volume)
     {
-        SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume * bgmVolume);
+        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume * bgmVolume);
     }
 
     float SoundManager::getSEVolume() const
     {
-        return SimpleAudioEngine::sharedEngine()->getEffectsVolume() / seVolume;
+        return SimpleAudioEngine::getInstance()->getEffectsVolume() / seVolume;
     }
 
     void SoundManager::setSEVolume(const float volume)
     {
-        SimpleAudioEngine::sharedEngine()->setEffectsVolume(volume * seVolume);
+        SimpleAudioEngine::getInstance()->setEffectsVolume(volume * seVolume);
     }
 
     void SoundManager::setMaxBGMVolume(const float volume)
     {
         bgmVolume = range(0.0f, volume, 1.0f);
-        setBGMVolume(SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume());
+        setBGMVolume(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
     }
 
     void SoundManager::setMaxSEVolume(const float volume)
     {
         seVolume = range(0.0f, volume, 1.0f);
-        setSEVolume(SimpleAudioEngine::sharedEngine()->getEffectsVolume());
+        setSEVolume(SimpleAudioEngine::getInstance()->getEffectsVolume());
     }
 
     void SoundManager::fadeIn(const float duration)
     {
         runAction(
-            CCMusicFadeTo::create(duration, bgmVolume)
+            MusicFadeTo::create(duration, bgmVolume)
         );
     }
 
     void SoundManager::fadeOut(const float duration, const bool pauseOnComplete)
     {
         runAction(
-            CCMusicFadeTo::create(duration, 0.0f, pauseOnComplete)
+            MusicFadeTo::create(duration, 0.0f, pauseOnComplete)
         );
     }
 
     void SoundManager::fadeTo(const float volume, const float duration)
     {
         runAction(
-            CCMusicFadeTo::create(duration, volume * bgmVolume)
+            MusicFadeTo::create(duration, volume * bgmVolume)
         );
-    }
-
-    void SoundManager::completeFading()
-    {
-        setBGMVolume(0.0f);
-        playBGM(reservedMusicFile);
-        reservedMusicFile.clear();
     }
 
     bool SoundManager::playWithFading(const std::string &filename, const float duration)
@@ -133,9 +126,13 @@ namespace oreore
         reservedMusicFile = filename;
         runAction(
             CCSequence::create(
-                CCMusicFadeTo::create(duration / 2.0f, 0.0f),
-                CCCallFunc::create(this, callfunc_selector(SoundManager::completeFading)),
-                CCMusicFadeTo::create(duration / 2.0f, bgmVolume),
+                MusicFadeTo::create(duration / 2.0f, 0.0f),
+                CallFunc::create([this]() {
+                    setBGMVolume(0.0f);
+                    playBGM(reservedMusicFile);
+                    reservedMusicFile.clear();
+                }),
+                MusicFadeTo::create(duration / 2.0f, bgmVolume),
                 NULL
             )
         );

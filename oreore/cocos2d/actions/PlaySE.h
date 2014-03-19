@@ -5,21 +5,21 @@
 
 namespace oreore
 {
-    class CCPlaySE : public cocos2d::CCActionInstant
+    class PlaySE : public cocos2d::ActionInstant
     {
     private:
         std::string filename;
     public:
-        CCPlaySE() { }
-        virtual ~CCPlaySE() { }
+        PlaySE() { }
+        virtual ~PlaySE() { }
 
-        static CCPlaySE* create(const std::string &filename);
+        static PlaySE* create(const std::string &filename);
         virtual bool init(const std::string &filename);
 
         virtual void update(float time);
 
-        virtual CCPlaySE *reverse(); // override
-        virtual CCPlaySE *clone();
+        virtual PlaySE *reverse() const override;
+        virtual PlaySE *clone() const override;
     };
 }
 

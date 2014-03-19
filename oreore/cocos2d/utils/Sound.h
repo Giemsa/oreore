@@ -7,16 +7,14 @@
 
 namespace oreore
 {
-    class SoundManager : public cocos2d::CCNode
+    class SoundManager : public cocos2d::Node
     {
     private:
         float bgmVolume, seVolume;
         std::string reservedMusicFile;
 
-        static std::auto_ptr<SoundManager> manager;
+        static std::unique_ptr<SoundManager> manager;
         CREATE_FUNC(SoundManager);
-
-        void completeFading();
     public:
         static SoundManager &getInstance();
 
