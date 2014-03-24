@@ -4,10 +4,10 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    /* CCToggleButton */
-    CCToggleButton *CCToggleButton::create(const std::string &offBtn, const std::string &onBtn)
+    /* ToggleButton */
+    ToggleButton *ToggleButton::create(const std::string &offBtn, const std::string &onBtn)
     {
-        CCToggleButton *r = new CCToggleButton();
+        ToggleButton *r = new ToggleButton();
         if(r && r->init(offBtn, onBtn))
         {
             r->autorelease();
@@ -17,9 +17,9 @@ namespace oreore
         return null;
     }
 
-    CCToggleButton *CCToggleButton::createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
+    ToggleButton *ToggleButton::createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
     {
-        CCToggleButton *r = new CCToggleButton();
+        ToggleButton *r = new ToggleButton();
         if(r && r->initWithSpriteFrameName(offBtn, onBtn))
         {
             r->autorelease();
@@ -29,12 +29,12 @@ namespace oreore
         return null;
     }
 
-    bool CCToggleButton::init()
+    bool ToggleButton::init()
     {
         return init("", "");
     }
 
-    bool CCToggleButton::init(const std::string &offBtn, const std::string &onBtn)
+    bool ToggleButton::init(const std::string &offBtn, const std::string &onBtn)
     {
         if(!CCSprite::init())
             return false;
@@ -42,53 +42,52 @@ namespace oreore
         _init();
         if(!offBtn.empty())
         {
-            CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(offBtn.c_str());
-            offFrm = CCSpriteFrame::createWithTexture(tex, CCRect(0, 0, tex->getContentSize().width, tex->getContentSize().height));
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(offFrm, offBtn.c_str());
+            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(offBtn.c_str());
+            offFrm = SpriteFrame::createWithTexture(tex, Rect(0, 0, tex->getContentSize().width, tex->getContentSize().height));
+            SpriteFrameCache::getInstance()->addSpriteFrame(offFrm, offBtn.c_str());
         }
         
         if(!onBtn.empty())
         {
-            CCTexture2D *tex = CCTextureCache::sharedTextureCache()->addImage(onBtn.c_str());
-            onFrm = CCSpriteFrame::createWithTexture(tex, CCRect(0, 0, tex->getContentSize().width, tex->getContentSize().height));
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(onFrm, onBtn.c_str());
+            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(onBtn.c_str());
+            onFrm = SpriteFrame::createWithTexture(tex, Rect(0, 0, tex->getContentSize().width, tex->getContentSize().height));
+            SpriteFrameCache::getInstance()->addSpriteFrame(onFrm, onBtn.c_str());
         }
 
         fixSize();
         return true;
     }
 
-    bool CCToggleButton::initWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
+    bool ToggleButton::initWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
     {
-        if(!CCSprite::init())
+        if(!Sprite::init())
             return false;
 
         _init();
         if(!offBtn.empty())
-            offFrm = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(offBtn.c_str());
+            offFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(offBtn.c_str());
         
         if(!onBtn.empty())
-            onFrm = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(onBtn.c_str());
+            onFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(onBtn.c_str());
 
         fixSize();
         return true;
     }
 
-    void CCToggleButton::_init()
+    void ToggleButton::_init()
     {
         onFrm = null;
         offFrm = null;
-        target = null;
-        selector = null;
+        callback = null;
         touchEnabled = true;
     }
 
-    void CCToggleButton::fixSize()
+    void ToggleButton::fixSize()
     {
         if(!offFrm && !onFrm)
             return;
 
-        CCSize onRect, offRect;
+        Size onRect, offRect;
         bool set = false;
         if(offFrm)
         {
@@ -104,56 +103,51 @@ namespace oreore
                 setDisplayFrame(onFrm);
         }
 
-        setContentSize(CCSize(std::max(offRect.width, onRect.width), std::max(offRect.height, onRect.height)));
+        setContentSize(Size(std::max(offRect.width, onRect.width), std::max(offRect.height, onRect.height)));
     }
 
-    CCFiniteTimeAction *CCToggleButton::action()
+    FiniteTimeAction *ToggleButton::action()
     {
         return null;
     }
 
-    void CCToggleButton::toggleAndAction()
+    void ToggleButton::toggleAndAction()
     {
-        if(target && selector)
-            (target->*selector)(this);
-        
+        if(callback)
+            callback(this);
         toggle();
     }
 
-    bool CCToggleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
+    bool ToggleButton::onTouchBegan(Touch *touch, Event *event)
     {
         if(!touchEnabled)
             return false;
 
 
-        const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
-        if(boundingBox().containsPoint(p))
+        const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
+        if(getBoundingBox().containsPoint(p))
             return true;
 
         return false;
     }
 
-    void CCToggleButton::ccTouchMoved(CCTouch *touch, CCEvent *event)
-    {
 
-    }
-
-    void CCToggleButton::ccTouchEnded(CCTouch *touch, CCEvent *event)
+    void ToggleButton::onTouchEnded(Touch *touch, Event *event)
     {
-        const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
-        if(boundingBox().containsPoint(p))
+        const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
+        if(getBoundingBox().containsPoint(p))
         {
-            CCFiniteTimeAction *a = action();
+            FiniteTimeAction *a = action();
             if(!a)
                 toggleAndAction();
             else
             {
                 runAction(
-                    CCSpawn::create(
+                    Spawn::create(
                         a,
-                        CCSequence::create(
-                            CCDelayTime::create(a->getDuration() / 2.0),
-                            CCCallFunc::create(this, callfunc_selector(CCToggleButton::toggleAndAction)),
+                        Sequence::create(
+                            DelayTime::create(a->getDuration() / 2.0),
+                            CallFunc::create(CC_CALLBACK_0(ToggleButton::toggleAndAction, this)),
                             NULL
                         ),
                         NULL
@@ -163,17 +157,17 @@ namespace oreore
         }
     }
 
-    void CCToggleButton::setTouchEnabled(const bool enable)
+    void ToggleButton::setTouchEnabled(const bool enable)
     {
         touchEnabled = enable;
     }
 
-    bool CCToggleButton::isTouchEnabled() const
+    bool ToggleButton::isTouchEnabled() const
     {
         return touchEnabled;
     }
 
-    void CCToggleButton::toggleOn()
+    void ToggleButton::toggleOn()
     {
         if(!onFrm || !offFrm || toggled)
             return;
@@ -182,7 +176,7 @@ namespace oreore
         toggled = true;
     }
 
-    void CCToggleButton::toggleOff()
+    void ToggleButton::toggleOff()
     {
         if(!onFrm || !offFrm || !toggled)
             return;
@@ -191,7 +185,7 @@ namespace oreore
         toggled = false;
     }
 
-    void CCToggleButton::toggle()
+    void ToggleButton::toggle()
     {
         if(toggled)
             toggleOff();
@@ -199,21 +193,23 @@ namespace oreore
             toggleOn();
     }
 
-    void CCToggleButton::setTappedEvent(cocos2d::CCObject *target, cocos2d::SEL_MenuHandler callback)
+    void ToggleButton::setTappedEvent(const ccMenuCallback &callback)
     {
-        this->target = target;
-        selector = callback;
+        this->callback = callback;
     }
 
-    void CCToggleButton::onEnter()
+    void ToggleButton::onEnter()
     {
-        CCNode::onEnter();
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
+        Node::onEnter();
+        listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(ToggleButton::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(ToggleButton::onTouchEnded, this);
+        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     }
 
-    void CCToggleButton::onExit()
+    void ToggleButton::onExit()
     {
-        CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
-        CCNode::onExit();
+        getEventDispatcher()->removeEventListener(listener);
+        Node::onExit();
     }
 }

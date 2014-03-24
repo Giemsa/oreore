@@ -1,65 +1,64 @@
 #ifndef __OREORE_COCOS2D_TOGGLEBUTTON_H__
 #define __OREORE_COCOS2D_TOGGLEBUTTON_H__
 
+#include <functional>
 #include "cocos2d.h"
 #include "../utils/Utils.h"
 #include "../../null.h"
 
 namespace oreore
 {
-    class CCToggleButton :
-        public cocos2d::CCSprite,
-        public cocos2d::CCTargetedTouchDelegate
+    class ToggleButton : public cocos2d::Sprite
     {
     private:
-        cocos2d::SEL_MenuHandler selector;
-        cocos2d::CCObject *target;
-        cocos2d::CCPoint bpos;
+        cocos2d::ccMenuCallback callback;
+        cocos2d::Point bpos;
         bool touchEnabled, toggled;
-        cocos2d::CCSpriteFrame *onFrm, *offFrm;
+        cocos2d::SpriteFrame *onFrm, *offFrm;
+        cocos2d::EventListenerTouchOneByOne *listener;
 
         void _init();
         void fixSize();
 
-        virtual cocos2d::CCFiniteTimeAction *action();
+        virtual cocos2d::FiniteTimeAction *action();
         void toggleAndAction();
-    public:
-        CREATE_FUNC(CCToggleButton);
 
-        virtual ~CCToggleButton() { }
+        bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+        void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+    protected:
+        virtual ~ToggleButton() { }
 
-        static CCToggleButton *create(const std::string &offBtn, const std::string &onBtn);
-        static CCToggleButton *createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn);
-
-        bool init(); //override
+        bool init() override;
         bool init(const std::string &offBtn, const std::string &onBtn);
         bool initWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn);
+    public:
+        CREATE_FUNC(ToggleButton);
 
-        virtual bool ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event); // override
-        virtual void ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event); // override
-        virtual void ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event); // override
+        static ToggleButton *create(const std::string &offBtn, const std::string &onBtn);
+        static ToggleButton *createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn);
+
 
         virtual void setTouchEnabled(const bool enable);
         virtual bool isTouchEnabled() const;
 
-        virtual void onEnter(); // override
-        virtual void onExit(); // override
+        virtual void onEnter() override;
+        virtual void onExit() override;
 
         void toggleOn();
         void toggleOff();
         void toggle();
         inline bool isToggled() const { return toggled; }
-        void setTappedEvent(cocos2d::CCObject *target, cocos2d::SEL_MenuHandler callback);
+        void setTappedEvent(const cocos2d::ccMenuCallback &callback);
 
     };
 
     template<typename T>
-    class CCExtendableToggleButton : public CCToggleButton
+    class ExtendableToggleButton : public ToggleButton
     {
     public:
         CREATE_FUNC(T);
 
-        virtual ~CCExtendableToggleButton() { }
+        virtual ~ExtendableToggleButton() { }
 
         static T *create(const std::string &offBtn, const std::string &onBtn)
         {
