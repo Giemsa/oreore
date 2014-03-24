@@ -81,6 +81,7 @@ namespace oreore
     void SimpleButton::_init()
     {
         selector = null;
+        touchEnabled = true;
     }
 
     bool SimpleButton::init()
