@@ -107,9 +107,14 @@ namespace oreore
         setContentSize(CCSize(std::max(offRect.width, onRect.width), std::max(offRect.height, onRect.height)));
     }
 
-    CCFiniteTimeAction *CCToggleButton::action()
+    CCFiniteTimeAction *CCToggleButton::touchAction()
     {
-        return null;
+        return CCScaleTo::create(0.1f, 0.9f);
+    }
+
+    CCFiniteTimeAction *CCToggleButton::unTouchAction()
+    {
+        return CCScaleTo::create(0.1f, 1.0f);
     }
 
     void CCToggleButton::toggleAndAction()
@@ -128,7 +133,12 @@ namespace oreore
 
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
+        {
+            CCFiniteTimeAction *action = touchAction();
+            if(action)
+                runAction(action);
             return true;
+        }
 
         return false;
     }
@@ -143,7 +153,7 @@ namespace oreore
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
-            CCFiniteTimeAction *a = action();
+            CCFiniteTimeAction *a = unTouchAction();
             if(!a)
                 toggleAndAction();
             else
@@ -160,7 +170,11 @@ namespace oreore
                     )
                 );
             }
+            return;
         }
+        CCFiniteTimeAction *action = unTouchAction();
+        if(action)
+            runAction(action);
     }
 
     void CCToggleButton::setTouchEnabled(const bool enable)

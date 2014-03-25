@@ -21,7 +21,9 @@ namespace oreore
         void _init();
         void fixSize();
 
-        virtual cocos2d::CCFiniteTimeAction *action();
+        virtual cocos2d::CCFiniteTimeAction *touchAction();
+        virtual cocos2d::CCFiniteTimeAction *unTouchAction();
+
         void toggleAndAction();
     public:
         CREATE_FUNC(CCToggleButton);

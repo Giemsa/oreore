@@ -124,7 +124,7 @@ namespace oreore
         if(boundingBox().containsPoint(p))
         {
             bpos = p;
-            CCAction *action = touchAction();
+            CCFiniteTimeAction *action = touchAction();
             if(action)
                 runAction(action);
             return true;
