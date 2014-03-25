@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "../../null.h"
+#include <limits>
 
 namespace oreore
 {
