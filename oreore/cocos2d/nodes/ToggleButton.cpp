@@ -106,9 +106,14 @@ namespace oreore
         setContentSize(Size(std::max(offRect.width, onRect.width), std::max(offRect.height, onRect.height)));
     }
 
-    FiniteTimeAction *ToggleButton::action()
+    FiniteTimeAction *ToggleButton::touchAction()
     {
-        return null;
+        return ScaleTo::create(0.1f, 0.9f);
+    }
+
+    FiniteTimeAction *ToggleButton::unTouchAction()
+    {
+        return ScaleTo::create(0.1f, 1.0f);
     }
 
     void ToggleButton::toggleAndAction()
@@ -126,7 +131,12 @@ namespace oreore
 
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
+        {
+            FiniteTimeAction *action = touchAction();
+            if(action)
+                runAction(action);
             return true;
+        }
 
         return false;
     }
@@ -137,7 +147,7 @@ namespace oreore
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
         {
-            FiniteTimeAction *a = action();
+            FiniteTimeAction *a = unTouchAction();
             if(!a)
                 toggleAndAction();
             else
@@ -154,7 +164,11 @@ namespace oreore
                     )
                 );
             }
+            return;
         }
+        FiniteTimeAction *action = unTouchAction();
+        if(action)
+            runAction(action);
     }
 
     void ToggleButton::setTouchEnabled(const bool enable)

@@ -20,7 +20,9 @@ namespace oreore
         void _init();
         void fixSize();
 
-        virtual cocos2d::FiniteTimeAction *action();
+        virtual cocos2d::FiniteTimeAction *touchAction();
+        virtual cocos2d::FiniteTimeAction *unTouchAction();
+
         void toggleAndAction();
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
