@@ -28,7 +28,7 @@ namespace oreore
         void _init();
     public:
         CREATE_FUNC(CCSimpleButton);
-        ~CCSimpleButton() { }
+        virtual ~CCSimpleButton() { }
     
         static CCSimpleButton* create(const char *pszFileName);
         static CCSimpleButton* createWithTexture(cocos2d::CCTexture2D *pTexture);
@@ -60,7 +60,7 @@ namespace oreore
     public:
         CREATE_FUNC(T);
 
-        ~CCExtendableSimpleButton() { }
+        virtual ~CCExtendableSimpleButton() { }
 
         T* createWithTexture(cocos2d::CCTexture2D *pTexture)
         {

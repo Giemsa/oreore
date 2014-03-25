@@ -154,12 +154,13 @@ namespace oreore
                             NULL
                         )
                     );
+                return;
             }
-
-            CCFiniteTimeAction *action = unTouchAction();
-            if(action)
-                runAction(action);
         }
+
+        CCFiniteTimeAction *action = unTouchAction();
+        if(action)
+            runAction(action);
     }
 
     void CCSimpleButton::callCallback()
@@ -190,7 +191,20 @@ namespace oreore
     void CCSimpleButton::onEnter()
     {
         CCSprite::onEnter();
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
+        CCNode *parent = getParent();
+        int min = std::numeric_limits<int>::max();
+
+        while(parent != null)
+        {
+            CCTouchDelegate *touch = dynamic_cast<CCTouchDelegate *>(parent);
+            if(touch)
+            {
+                CCTouchHandler *handler = CCDirector::sharedDirector()->getTouchDispatcher()->findHandler(touch);
+                min = std::min(handler->getPriority(), min);
+            }
+            parent = parent->getParent();
+        }
+        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, min - 1, true);
     }
 
     void CCSimpleButton::onExit()
