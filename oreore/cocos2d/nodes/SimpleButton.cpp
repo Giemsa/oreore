@@ -168,12 +168,13 @@ namespace oreore
                             NULL
                         )
                     );
+                return;
             }
-
-            FiniteTimeAction *action = unTouchAction();
-            if(action)
-                runAction(action);
         }
+
+        FiniteTimeAction *action = unTouchAction();
+        if(action)
+            runAction(action);
     }
 
     void SimpleButton::setTouchEnabled(const bool enable)

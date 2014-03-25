@@ -29,10 +29,10 @@ namespace oreore
         virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect);
         virtual bool initWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect, bool rotated);
         virtual bool initWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame);
+
         virtual bool initWithSpriteFrameName(const char *pszSpriteFrameName);
         virtual bool initWithFile(const char *pszFilename);
         virtual bool initWithFile(const char *pszFilename, const cocos2d::Rect& rect);
-
     public:
         CREATE_FUNC(SimpleButton);
         static SimpleButton* create(const char *pszFileName);
