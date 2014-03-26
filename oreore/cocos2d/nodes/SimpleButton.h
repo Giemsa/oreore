@@ -13,10 +13,14 @@ namespace oreore
         cocos2d::ccMenuCallback selector;
         cocos2d::Point bpos;
         cocos2d::EventListenerTouchOneByOne *listener;
-        bool touchEnabled;
+        bool touchEnabled, touched, allowContinuousHit;
+        int priority;
 
         virtual cocos2d::FiniteTimeAction *touchAction();
         virtual cocos2d::FiniteTimeAction *unTouchAction();
+
+        void callCallback();
+        void endTouching();
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
         void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
@@ -50,6 +54,9 @@ namespace oreore
         virtual void onExit() override;
 
         void setTappedEvent(const cocos2d::ccMenuCallback &callback);
+        void setTouchPriority(const int priority);
+        inline void setAllowContinuousHit(const bool allow) { allowContinuousHit = allow; }
+        inline bool isAllowContinuousHit() const { return allowContinuousHit; }
     };
 
     template<typename T>
