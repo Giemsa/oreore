@@ -138,7 +138,6 @@ namespace oreore
     void SimpleButton::endTouching()
     {
         touched = false;
-        CCLOG("touch ended");
     }
 
     bool SimpleButton::onTouchBegan(Touch *touch, Event *event)
@@ -147,10 +146,7 @@ namespace oreore
             return false;
 
         if(!allowContinuousHit && touched)
-        {
-            CCLOG("touch rejected");
             return false;
-        }
 
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
