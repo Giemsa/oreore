@@ -217,7 +217,6 @@ namespace oreore
         t->getScene()->retain();
         scenes[T::_uid] = t;
         current->getScene()->release();
-        CCLOG("%d", current->getScene()->retainCount());
         return current;
     }
 }
