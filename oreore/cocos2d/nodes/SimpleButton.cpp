@@ -71,6 +71,9 @@ namespace oreore
         this->target = null;
         this->selector = null;
         touchEnabled = true;
+        priority = 0;
+        touched = false;
+        allowContinuousHit = false;
     }
 
     bool CCSimpleButton::init()
@@ -115,14 +118,27 @@ namespace oreore
         return CCSprite::initWithFile(pszFilename, rect);
     }
 
+    void CCSimpleButton::endTouching()
+    {
+        touched = false;
+        CCLOG("touch ended");
+    }
+
     bool CCSimpleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
     {
         if(!touchEnabled)
             return false;
 
+        if(!allowContinuousHit && touched)
+        {
+            CCLOG("touch rejected");
+            return false;
+        }
+
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
+            touched = true;
             bpos = p;
             CCFiniteTimeAction *action = touchAction();
             if(action)
@@ -160,11 +176,18 @@ namespace oreore
 
         CCFiniteTimeAction *action = unTouchAction();
         if(action)
-            runAction(action);
+            runAction(
+                CCSequence::create(
+                    action,
+                    CCCallFunc::create(this, callfunc_selector(CCSimpleButton::endTouching)),
+                    NULL
+                )
+            );
     }
 
     void CCSimpleButton::callCallback()
     {
+        endTouching();
         (target->*selector)(this);
     }
 
@@ -191,6 +214,7 @@ namespace oreore
     void CCSimpleButton::onEnter()
     {
         CCSprite::onEnter();
+        /*
         CCNode *parent = getParent();
         int min = std::numeric_limits<int>::max();
 
@@ -200,11 +224,14 @@ namespace oreore
             if(touch)
             {
                 CCTouchHandler *handler = CCDirector::sharedDirector()->getTouchDispatcher()->findHandler(touch);
-                min = std::min(handler->getPriority(), min);
+                if(handler)
+                    min = std::min(handler->getPriority(), min);
             }
             parent = parent->getParent();
         }
         CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, min - 1, true);
+        */
+        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, priority, true);
     }
 
     void CCSimpleButton::onExit()
@@ -217,5 +244,12 @@ namespace oreore
     {
         this->target = target;
         selector = callback;
+    }
+
+    void CCSimpleButton::setTouchPriority(const int priority)
+    {
+        this->priority = priority;
+        if(CCDirector::sharedDirector()->getTouchDispatcher()->findHandler(this))
+            CCDirector::sharedDirector()->getTouchDispatcher()->setPriority(priority, this);
     }
 }

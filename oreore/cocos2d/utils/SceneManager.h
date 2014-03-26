@@ -28,7 +28,7 @@ namespace oreore
         ManagedSceneBase();
         virtual ~ManagedSceneBase();
         virtual cocos2d::CCScene *getScene() const = 0;
-        virtual unsigned int getID() const = 0;
+        virtual int getID() const = 0;
 
         virtual bool init(); // override
 
@@ -52,11 +52,11 @@ namespace oreore
     {
         friend class SceneManager;
     private:
-        static unsigned int _uid;
+        static int _uid;
         static bool _isLazy;
         cocos2d::CCScene *scene;
     public:
-        inline unsigned int getID() const { return _uid; }
+        inline int getID() const { return _uid; }
         inline cocos2d::CCScene *getScene() const { return scene; }
         bool isLazy() const { return _isLazy; } // override
 
@@ -70,7 +70,7 @@ namespace oreore
     };
 
     template<typename T>
-    unsigned int SceneBase<T>::_uid = 0;
+    int SceneBase<T>::_uid = -1;
 
     template<typename T>
     bool SceneBase<T>::_isLazy = false;
@@ -122,6 +122,9 @@ namespace oreore
         template<typename T>
         T *getScene();
 
+        template<typename T>
+        T *cloneAndRegister();
+
         void setDebugMode(const bool debugMode);
         inline bool isDebugMode() const { return showDebugLayer; }
         inline Debugger *getDebugger() { return debugger; }
@@ -131,9 +134,9 @@ namespace oreore
     template<typename T>
     void SceneManager::addScene(const bool lazy)
     {
-        if(T::_uid > 0)
+        if(T::_uid >= 0)
             return;
-        T::_uid = static_cast<unsigned int>(scenes.size());
+        T::_uid = static_cast<int>(scenes.size());
         T::_isLazy = lazy;
         if(lazy)
             scenes.push_back(null);
@@ -148,6 +151,11 @@ namespace oreore
     template<typename T>
     T *SceneManager::getScene()
     {
+        if(T::_uid == -1)
+        {
+            CCAssert(false, "scene is not registered.");
+            return null;
+        }
         ManagedSceneBase *scene = scenes[T::_uid];
         if(scene)
             return static_cast<T *>(scene);
@@ -187,6 +195,30 @@ namespace oreore
             next = getScene<T>()->getScene();
 
         cocos2d::CCDirector::sharedDirector()->pushScene(next);
+    }
+
+    template<typename T>
+    T *SceneManager::cloneAndRegister()
+    {
+        if(T::_uid == -1)
+        {
+            addScene<T>(false);
+            return null;
+        }
+        
+        T *current = dynamic_cast<T *>(getCurrentScene());
+        if(!current)
+        {
+            CCAssert(false, "current running scene is not under SceneManager.");
+            return null;
+        }
+
+        T *t = T::create();
+        t->getScene()->retain();
+        scenes[T::_uid] = t;
+        current->getScene()->release();
+        CCLOG("%d", current->getScene()->retainCount());
+        return current;
     }
 }
 
