@@ -121,7 +121,6 @@ namespace oreore
     void CCSimpleButton::endTouching()
     {
         touched = false;
-        CCLOG("touch ended");
     }
 
     bool CCSimpleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
@@ -130,10 +129,7 @@ namespace oreore
             return false;
 
         if(!allowContinuousHit && touched)
-        {
-            CCLOG("touch rejected");
             return false;
-        }
 
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
@@ -214,23 +210,6 @@ namespace oreore
     void CCSimpleButton::onEnter()
     {
         CCSprite::onEnter();
-        /*
-        CCNode *parent = getParent();
-        int min = std::numeric_limits<int>::max();
-
-        while(parent != null)
-        {
-            CCTouchDelegate *touch = dynamic_cast<CCTouchDelegate *>(parent);
-            if(touch)
-            {
-                CCTouchHandler *handler = CCDirector::sharedDirector()->getTouchDispatcher()->findHandler(touch);
-                if(handler)
-                    min = std::min(handler->getPriority(), min);
-            }
-            parent = parent->getParent();
-        }
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, min - 1, true);
-        */
         CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, priority, true);
     }
 
