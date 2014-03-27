@@ -45,6 +45,17 @@ namespace oreore
         virtual void onExit() { cocos2d::Layer::onExit(); } // override
     };
 
+    class ManagedCCScene : public cocos2d::Scene
+    {
+    private:
+        SceneManager *manager;
+    public:
+        CREATE_FUNC(ManagedCCScene);
+        ~ManagedCCScene();
+
+        inline void setManager(SceneManager *manager) { this->manager = manager; }
+    };
+
     typedef std::vector<ManagedSceneBase *> SceneList;
 
     template<typename T>
@@ -54,7 +65,9 @@ namespace oreore
     private:
         static int _uid;
         static bool _isLazy;
-        cocos2d::Scene *scene;
+        ManagedCCScene *scene;
+
+        inline void setManager(SceneManager *manager) { scene->setManager(manager); }
     public:
         inline int getID() const { return _uid; }
         inline cocos2d::Scene *getScene() const { return scene; }
@@ -63,8 +76,7 @@ namespace oreore
 
         SceneBase()
         {
-            scene = cocos2d::Scene::create();
-            scene->retain();
+            scene = ManagedCCScene::create();
             scene->addChild(this);
         }
 
@@ -90,7 +102,7 @@ namespace oreore
 
     class SceneManager
     {
-        friend class LoadingScene;
+        friend class ManagedCCScene;
     private:
         SceneList scenes;
         DebugLayer *debugLayer;
@@ -98,6 +110,7 @@ namespace oreore
         bool showDebugLayer;
 
         cocos2d::Object *getCurrentScene();
+        void removeScene(const int uid);
     public:
         inline static SceneManager &getInstance()
         {
@@ -146,6 +159,7 @@ namespace oreore
         {
             T *t = T::create();
             t->getScene()->retain();
+            t->setManager(this);
             scenes.push_back(t);
         }
     }
@@ -163,6 +177,7 @@ namespace oreore
             return static_cast<T *>(scene);
 
         T *r = T::create();
+        r->setManager(this);
         scenes[T::_uid] = r;
         return r;
     }
@@ -216,6 +231,7 @@ namespace oreore
         }
 
         T *t = T::create();
+        t->setManager(this);
         t->getScene()->retain();
         scenes[T::_uid] = t;
         current->getScene()->release();

@@ -53,6 +53,15 @@ namespace oreore
         init();
     }
 
+
+    /* ManagedCCSCene */
+    ManagedCCScene::~ManagedCCScene()
+    {
+        CCAssert(getChildrenCount() == 1, "CCScene must have only 1 CCLayer.");
+        manager->removeScene(static_cast<ManagedSceneBase *>(getChildren().front())->getID());
+    }
+
+    /* SceneManager */
     SceneManager::~SceneManager()
     {
         if(debugLayer)
@@ -69,6 +78,11 @@ namespace oreore
         Director::getInstance()->setNotificationNode(debugLayer);
         debugger = new Debugger(debugLayer);
 #endif
+    }
+
+    void SceneManager::removeScene(const int uid)
+    {
+        scenes[uid] = null;
     }
 
     Object *SceneManager::getCurrentScene()
