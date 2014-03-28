@@ -172,9 +172,13 @@ namespace oreore
                 FiniteTimeAction *action = unTouchAction();
                 if(action)
                     runAction(
-                        CCSequence::create(
+                        CCSpawn::create(
                             action,
-                            CallFunc::create(CC_CALLBACK_0(SimpleButton::callCallback, this)),
+                            CCSequence::create(
+                                CCDelayTime::create(action->getDuration() / 2.0),
+                                CallFunc::create(CC_CALLBACK_0(SimpleButton::callCallback, this)),
+                                NULL
+                            ),
                             NULL
                         )
                     );

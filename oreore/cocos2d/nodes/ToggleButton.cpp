@@ -151,7 +151,6 @@ namespace oreore
             if(!a)
                 toggleAndAction();
             else
-            {
                 runAction(
                     Spawn::create(
                         a,
@@ -163,7 +162,6 @@ namespace oreore
                         NULL
                     )
                 );
-            }
             return;
         }
         FiniteTimeAction *action = unTouchAction();
