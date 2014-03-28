@@ -160,15 +160,21 @@ namespace oreore
                 CCFiniteTimeAction *action = unTouchAction();
                 if(action)
                     runAction(
-                        CCSequence::create(
+                        CCSpawn::create(
                             action,
-                            CCCallFunc::create(this, callfunc_selector(CCSimpleButton::callCallback)),
+                            CCSequence::create(
+                                CCDelayTime::create(action->getDuration() / 2.0),
+                                CCCallFunc::create(this, callfunc_selector(CCSimpleButton::callCallback)),
+                                NULL
+                            ),
                             NULL
                         )
                     );
                 return;
             }
         }
+
+
 
         CCFiniteTimeAction *action = unTouchAction();
         if(action)

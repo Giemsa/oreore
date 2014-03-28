@@ -157,7 +157,6 @@ namespace oreore
             if(!a)
                 toggleAndAction();
             else
-            {
                 runAction(
                     CCSpawn::create(
                         a,
@@ -169,7 +168,6 @@ namespace oreore
                         NULL
                     )
                 );
-            }
             return;
         }
         CCFiniteTimeAction *action = unTouchAction();
