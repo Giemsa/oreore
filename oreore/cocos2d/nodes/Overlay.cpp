@@ -6,7 +6,7 @@ namespace oreore
 
     /* CCOverlayLayer */
     CCOverlayLayer::CCOverlayLayer() :
-        opacity(0x90), displaySpeed(0.4f), shown(false),
+        opacity(0x90), displaySpeed(0.4f), shown(false), syncChild(true), animating(false),
         targetOnShow(null), targetOnClose(null),
         callbackOnShow(null), callbackOnClose(null)
     {
@@ -49,6 +49,7 @@ namespace oreore
     void CCOverlayLayer::onCompleteShow()
     {
         shown = true;
+        animating = false;
         if(targetOnShow && callbackOnShow)
             (targetOnShow->*callbackOnShow)(this);
         onShow();
@@ -60,6 +61,7 @@ namespace oreore
 
         if(anime)
         {
+            animating = true;
             CCLayerColor::setOpacity(0);
             runAction(
                 CCSequence::create(
@@ -82,6 +84,7 @@ namespace oreore
     void CCOverlayLayer::onCompleteClose()
     {
         shown = false;
+        animating = false;
         if(targetOnClose && callbackOnClose)
             (targetOnClose->*callbackOnClose)(this);
         onClose();
@@ -94,6 +97,7 @@ namespace oreore
 
         if(anime)
         {
+            animating = true;
             runAction(
                 CCSequence::create(
                     CCFadeTo::create(displaySpeed, 0x00),
