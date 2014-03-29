@@ -11,7 +11,7 @@ namespace oreore
     private:
         GLubyte opacity;
         float displaySpeed;
-        bool shown, syncChild;
+        bool shown, syncChild, animating;
         cocos2d::ccMenuCallback callbackOnShow, callbackOnClose;
 
         void onCompleteShow();
@@ -55,6 +55,7 @@ namespace oreore
 
         void setOnShowCallback(const cocos2d::ccMenuCallback &callback);
         void setOnCloseCallback(const cocos2d::ccMenuCallback &callback);
+        inline bool isAnimating() const { return animating; }
     };
 }
 

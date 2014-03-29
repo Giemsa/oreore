@@ -7,6 +7,7 @@ namespace oreore
     /* OverlayLayer */
     OverlayLayer::OverlayLayer() :
         opacity(0x90), displaySpeed(0.4f), shown(false),
+        syncChild(true), animating(false),
         callbackOnShow(null), callbackOnClose(null)
     {
     }
@@ -48,6 +49,7 @@ namespace oreore
     void OverlayLayer::onCompleteShow()
     {
         shown = true;
+        animating = false;
         if(callbackOnShow)
             callbackOnShow(this);
 
@@ -60,6 +62,7 @@ namespace oreore
 
         if(anime)
         {
+            animating = true;
             LayerColor::setOpacity(0);
             runAction(
                 Sequence::create(
@@ -85,6 +88,7 @@ namespace oreore
     void OverlayLayer::onCompleteClose()
     {
         shown = false;
+        animating = false;
         if(callbackOnClose)
             callbackOnClose(this);
         onClose();
@@ -97,6 +101,7 @@ namespace oreore
 
         if(anime)
         {
+            animating = true;
             runAction(
                 Sequence::create(
                     FadeTo::create(displaySpeed, 0x00),
