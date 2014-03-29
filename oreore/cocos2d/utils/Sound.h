@@ -12,7 +12,7 @@ namespace oreore
     {
     private:
         bool enabled, bgmMute, seMute;
-        float bgmVolume, seVolume;
+        float bgmVolume, seVolume, storedBGMVolume, storedSEVolume;
         std::string reservedMusicFile, currentlyPlaying;
 
         static std::unique_ptr<SoundManager> manager;

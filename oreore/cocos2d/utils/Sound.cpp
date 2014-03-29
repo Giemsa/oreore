@@ -15,8 +15,8 @@ namespace oreore
         if(!CCNode::init())
             return false;
 
-        bgmVolume = 1.0f;
-        seVolume = 1.0f;
+        storedBGMVolume = bgmVolume = 1.0f;
+        storedSEVolume = seVolume = 1.0f;
         enabled = true;
         reservedMusicFile.clear();
         currentlyPlaying.clear();
@@ -37,7 +37,7 @@ namespace oreore
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
-        if(currentlyPlaying == filename && SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+        if(currentlyPlaying == filename && SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
             return;
         currentlyPlaying = filename;
 
@@ -89,22 +89,34 @@ namespace oreore
 
     float SoundManager::getBGMVolume() const
     {
+        if(!enabled || bgmMute)
+            return storedBGMVolume;
+
         return SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / bgmVolume;
     }
 
     void SoundManager::setBGMVolume(const float volume)
     {
-        SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume * bgmVolume);
+        storedBGMVolume = volume * bgmVolume;
+
+        if(enabled && !bgmMute)
+            SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume * bgmVolume);
     }
 
     float SoundManager::getSEVolume() const
     {
+        if(!enabled || seMute)
+            return storedSEVolume;
+
         return SimpleAudioEngine::getInstance()->getEffectsVolume() / seVolume;
     }
 
     void SoundManager::setSEVolume(const float volume)
     {
-        SimpleAudioEngine::getInstance()->setEffectsVolume(volume * seVolume);
+        storedSEVolume = volume * seVolume;
+
+        if(enabled && !seMute)
+            SimpleAudioEngine::getInstance()->setEffectsVolume(volume * seVolume);
     }
 
     void SoundManager::setMaxBGMVolume(const float volume)
@@ -190,6 +202,8 @@ namespace oreore
 
         if(enabled)
         {
+            setBGMVolume(storedBGMVolume);
+            setSEVolume(storedSEVolume);
             if(!currentlyPlaying.empty())
                 playBGM(currentlyPlaying);
             this->enabled = true;
@@ -198,6 +212,8 @@ namespace oreore
         {
             SimpleAudioEngine::getInstance()->stopAllEffects();
             SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+            storedBGMVolume = getBGMVolume();
+            storedSEVolume = getSEVolume();
             this->enabled = false;
         }
     }
@@ -209,12 +225,15 @@ namespace oreore
 
         if(mute)
         {
-            SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+            storedBGMVolume = getBGMVolume();
+            SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+            SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.0f);
             bgmMute = true;
         }
         else
         {
             bgmMute = false;
+            setBGMVolume(storedBGMVolume);
             if(!currentlyPlaying.empty())
                 playBGM(currentlyPlaying);
         }
@@ -225,16 +244,16 @@ namespace oreore
         if(seMute == mute)
             return;
 
-        seMute = mute;
-
-        /*
         if(mute)
         {
-            SimpleAudioEngine::sharedEngine()->stopAllEffects();
+            storedSEVolume = getSEVolume();
+            SimpleAudioEngine::getInstance()->setEffectsVolume(0.0f);
             seMute = true;
         }
         else
+        {
             seMute = false;
-        */
+            setSEVolume(storedSEVolume);
+        }
     }
 }
