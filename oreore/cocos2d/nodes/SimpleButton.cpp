@@ -125,7 +125,7 @@ namespace oreore
 
     bool CCSimpleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
     {
-        if(!touchEnabled)
+        if(!touchEnabled || !isVisible())
             return false;
 
         if(!allowContinuousHit && touched)
