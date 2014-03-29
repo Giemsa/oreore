@@ -142,7 +142,7 @@ namespace oreore
 
     bool SimpleButton::onTouchBegan(Touch *touch, Event *event)
     {
-        if(!touchEnabled)
+        if(!touchEnabled || !isVisible())
             return false;
 
         if(!allowContinuousHit && touched)
