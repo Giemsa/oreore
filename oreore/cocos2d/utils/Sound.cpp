@@ -37,7 +37,7 @@ namespace oreore
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
-        if(currentlyPlaying == filename && SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
+        if(getBGMVolume() > 0.0f && currentlyPlaying == filename && SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying())
             return;
         currentlyPlaying = filename;
 
