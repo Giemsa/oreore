@@ -132,7 +132,6 @@ namespace oreore
         opened = false;
 
         {
-
             CCImage *img = new CCImage();
             img->initWithImageData(images::bg, sizeof(images::bg), CCImage::kFmtPng);
 
@@ -186,10 +185,6 @@ namespace oreore
         scrollView->setContentSize(menuLayer->getContentSize());
         scrollView->setViewSize(getContentSize() * 0.8f - CCSize(20 / CC_CONTENT_SCALE_FACTOR(), 102 / CC_CONTENT_SCALE_FACTOR()));
         scrollView->setVisible(false);
-
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -999, true);
-        scrollView->setTouchEnabled(false);
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(scrollView, -1000, true);
         
         onEnter();
         return true;
@@ -262,7 +257,22 @@ namespace oreore
     {
     }
 
+    void DebugLayer::setTouchEnabled(const bool enable)
+    {
+        if(enable)
+        {
+            CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, -999, true);
+            scrollView->setTouchEnabled(false);
+            CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(scrollView, -1000, true);
+        }
+        else
+        {
+            CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+            CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(scrollView);
+        }
+    }
 
+    
     /* Debugger */
     void Debugger::addMenuItem(const std::string &name, const DebugMenuCallback callback)
     {

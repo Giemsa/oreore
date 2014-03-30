@@ -62,6 +62,8 @@ namespace oreore
 
         void addItem(const std::string &name, const DebugMenuCallback callback);
         void setDebugger(Debugger *debugger) { menuLayer->setDebugger(debugger); }
+
+        void setTouchEnabled(const bool enable);
     };
 
     class Debugger
