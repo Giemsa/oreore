@@ -62,10 +62,22 @@ namespace oreore
     }
 
     /* DebugMenu */
+    DebugMenu::~DebugMenu()
+    {
+        if(listener)
+            listener->release();
+    }
+
     bool DebugMenu::init()
     {
         if(!Layer::init())
             return false;
+
+        listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(DebugMenu::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(DebugMenu::onTouchEnded, this);
+        listener->setSwallowTouches(false);
+        getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1001);
 
         return true;
     }
@@ -104,25 +116,13 @@ namespace oreore
         }
     }
 
-    void DebugMenu::onTouchMoved(Touch *touch, Event* event)
-    {
-    }
-
-    void DebugMenu::show()
-    {
-        listener = EventListenerTouchOneByOne::create();
-        listener->onTouchBegan = CC_CALLBACK_2(DebugMenu::onTouchBegan, this);
-        listener->onTouchEnded = CC_CALLBACK_2(DebugMenu::onTouchEnded, this);
-        listener->setSwallowTouches(false);
-        getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1001);
-    }
-
-    void DebugMenu::hide()
-    {
-        getEventDispatcher()->removeEventListener(listener);
-    }
-
     /* DebugLayer */
+    DebugLayer::~DebugLayer()
+    {
+        layerEventListener->release();
+        scrollViewEventListener->release();
+    }
+
     bool DebugLayer::init()
     {
         using namespace cocos2d::extension;
@@ -185,26 +185,24 @@ namespace oreore
         scrollView->setContentSize(menuLayer->getContentSize());
         scrollView->setViewSize(getContentSize() * 0.8f - Size(20 / CC_CONTENT_SCALE_FACTOR(), 102 / CC_CONTENT_SCALE_FACTOR()));
         scrollView->setVisible(false);
-        
 
-        {
-            EventListenerTouchOneByOne *listener = EventListenerTouchOneByOne::create();
-            listener->onTouchBegan = CC_CALLBACK_2(DebugLayer::onTouchBegan, this);
-            listener->setSwallowTouches(true);
-            getEventDispatcher()->addEventListenerWithFixedPriority(listener, -999);
-        }
+        // this
+        layerEventListener = EventListenerTouchOneByOne::create();
+        layerEventListener->onTouchBegan = CC_CALLBACK_2(DebugLayer::onTouchBegan, this);
+        layerEventListener->setSwallowTouches(true);
+        layerEventListener->retain();
+        getEventDispatcher()->addEventListenerWithFixedPriority(layerEventListener, -999);
 
-
-        {
-            scrollView->setTouchEnabled(false);
-            EventListenerTouchOneByOne *listener = EventListenerTouchOneByOne::create();
-            listener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, scrollView);
-            listener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, scrollView);
-            listener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, scrollView);
-            listener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, scrollView);
-           
-            scrollView->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1000);
-        }
+        // scroll view
+        scrollView->setTouchEnabled(false);
+        scrollViewEventListener = EventListenerTouchOneByOne::create();
+        scrollViewEventListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, scrollView);
+        scrollViewEventListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, scrollView);
+        scrollViewEventListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, scrollView);
+        scrollViewEventListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, scrollView);
+        scrollViewEventListener->retain();
+       
+        scrollView->getEventDispatcher()->addEventListenerWithFixedPriority(scrollViewEventListener, -1000);
         
         onEnter();
         return true;
@@ -249,7 +247,6 @@ namespace oreore
                     frame->setContentSize(Size(102 / CC_CONTENT_SCALE_FACTOR(), 92 / CC_CONTENT_SCALE_FACTOR()));
                     icon->setPosition(Point(10 / CC_CONTENT_SCALE_FACTOR(), 82 / CC_CONTENT_SCALE_FACTOR()));
                     scrollView->setVisible(false);
-                    menuLayer->hide();
                 }
                 else
                 {
@@ -257,7 +254,6 @@ namespace oreore
                     frame->setContentSize(getContentSize() * 0.8f);
                     icon->setPosition(Point(10 / CC_CONTENT_SCALE_FACTOR(), frame->getContentSize().height - 10 / CC_CONTENT_SCALE_FACTOR()));
                     scrollView->setVisible(true);
-                    menuLayer->show();
                 }
                 bPos = p;
             }
@@ -274,7 +270,25 @@ namespace oreore
     {
     }
 
+    void DebugLayer::setTouchEnabled(const bool enable)
+    {
+        if(enable)
+        {
+            if(layerEventListener->getReferenceCount() < 3)
+            {
+                getEventDispatcher()->addEventListenerWithFixedPriority(layerEventListener, -999);
+                scrollView->setTouchEnabled(false);
+                getEventDispatcher()->addEventListenerWithFixedPriority(scrollViewEventListener, -1000);
+            }
+        }
+        else
+        {
+            getEventDispatcher()->removeEventListener(layerEventListener);
+            getEventDispatcher()->removeEventListener(scrollViewEventListener);
+        }
+    }
 
+    
     /* Debugger */
     void Debugger::addMenuItem(const std::string &name, const std::function<void(Debugger *)> &callback)
     {

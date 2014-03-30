@@ -75,8 +75,10 @@ namespace oreore
     {
 #ifdef COCOS2D_DEBUG
         debugLayer = DebugLayer::create();
+        debugLayer->setTouchEnabled(true);
         Director::getInstance()->setNotificationNode(debugLayer);
         debugger = new Debugger(debugLayer);
+        showDebugLayer =  true;
 #endif
     }
 
@@ -138,11 +140,15 @@ namespace oreore
             }
             Director::getInstance()->setNotificationNode(debugLayer);
             debugLayer->release();
+            debugLayer->setTouchEnabled(true);
         }
         else
         {
             if(debugLayer)
+            {
                 debugLayer->retain();
+                debugLayer->setTouchEnabled(false);
+            }
             Director::getInstance()->setNotificationNode(null);
         }
         showDebugLayer = debugMode;

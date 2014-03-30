@@ -36,12 +36,10 @@ namespace oreore
         bool init(); // override
     public:
         CREATE_FUNC(DebugMenu);
+        virtual ~DebugMenu();
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) override;
         void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event) override;
-        void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event) override;
-        void show();
-        void hide();
         void setDebugger(Debugger *debugger) { this->debugger = debugger; }
     };
 
@@ -54,10 +52,14 @@ namespace oreore
         bool opened;
         cocos2d::Point bPos;
         DebugMenu *menuLayer;
+        cocos2d::EventListenerTouchOneByOne *layerEventListener, *scrollViewEventListener;
+
     protected:
         bool init() override;
     public:
         CREATE_FUNC(DebugLayer);
+
+        virtual ~DebugLayer();
 
         void visit() override;
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event) override;
@@ -66,6 +68,8 @@ namespace oreore
 
         void addItem(const std::string &name, const std::function<void(Debugger *)> &callback);
         void setDebugger(Debugger *debugger) { menuLayer->setDebugger(debugger); }
+
+        void setTouchEnabled(const bool enable);
     };
 
     class Debugger
