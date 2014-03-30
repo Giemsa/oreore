@@ -10,6 +10,8 @@
 #include "actions/AttractMove.h"
 #include "actions/MusicFadeTo.h"
 #include "actions/PlaySE.h"
+#include "actions/SwayMoveBy.h"
+#include "actions/SwayMoveTo.h"
 
 /* nodes */
 #include "nodes/GlowLine.h"
