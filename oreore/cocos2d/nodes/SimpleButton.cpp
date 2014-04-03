@@ -154,8 +154,8 @@ namespace oreore
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
-            const float d = p.getDistance(bpos);
-            if(d < 30.0f && selector)
+            //const float d = p.getDistance(bpos);
+            if(/*d < 60.0f / CC_CONTENT_SCALE_FACTOR() && */selector)
             {
                 CCFiniteTimeAction *action = unTouchAction();
                 if(action)
