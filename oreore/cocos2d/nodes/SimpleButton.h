@@ -17,6 +17,7 @@ namespace oreore
         cocos2d::CCPoint bpos;
         bool touchEnabled, touched, allowContinuousHit;
         int priority;
+        static bool forceSingleTouch, singleTouched;
 
         virtual cocos2d::CCFiniteTimeAction *touchAction();
         virtual cocos2d::CCFiniteTimeAction *unTouchAction();
@@ -57,6 +58,8 @@ namespace oreore
         void setTouchPriority(const int priority);
         inline void setAllowContinuousHit(const bool allow) { allowContinuousHit = allow; }
         inline bool isAllowContinuousHit() const { return allowContinuousHit; }
+        inline static void setForceSingleTouchMode(const bool enable) { forceSingleTouch = enable; }
+        inline static bool isForceSingeTouchMode() { return forceSingleTouch; }
     };
 
     template<typename T>

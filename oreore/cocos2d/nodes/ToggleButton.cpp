@@ -5,6 +5,9 @@ namespace oreore
     using namespace cocos2d;
 
     /* CCToggleButton */
+    bool CCToggleButton::forceSingleTouch = false;
+    bool CCToggleButton::singleTouched = false;
+
     CCToggleButton *CCToggleButton::create(const std::string &offBtn, const std::string &onBtn)
     {
         CCToggleButton *r = new CCToggleButton();
@@ -81,6 +84,7 @@ namespace oreore
         target = null;
         selector = null;
         touchEnabled = true;
+        allowContinuousHit = false;
     }
 
     void CCToggleButton::fixSize()
@@ -119,21 +123,36 @@ namespace oreore
 
     void CCToggleButton::toggleAndAction()
     {
+        endTouching();
         if(target && selector)
             (target->*selector)(this);
         
         toggle();
     }
 
+    void CCToggleButton::endTouching()
+    {
+        touched = false;
+        singleTouched = false;
+        CCLOG("singleTouched = false");
+    }
+
     bool CCToggleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
     {
-        if(!touchEnabled)
+        if(forceSingleTouch && singleTouched)
             return false;
 
+        if(!touchEnabled || !isVisible())
+            return false;
+
+        if(!allowContinuousHit && touched)
+            return false;
 
         const CCPoint &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(boundingBox().containsPoint(p))
         {
+            touched = true;
+            singleTouched = true;
             CCFiniteTimeAction *action = touchAction();
             if(action)
                 runAction(action);
@@ -170,9 +189,16 @@ namespace oreore
                 );
             return;
         }
+
         CCFiniteTimeAction *action = unTouchAction();
         if(action)
-            runAction(action);
+            runAction(
+                CCSequence::create(
+                    action,
+                    CCCallFunc::create(this, callfunc_selector(CCToggleButton::endTouching)),
+                    NULL
+                )
+            );
     }
 
     void CCToggleButton::setTouchEnabled(const bool enable)

@@ -15,8 +15,9 @@ namespace oreore
         cocos2d::SEL_MenuHandler selector;
         cocos2d::CCObject *target;
         cocos2d::CCPoint bpos;
-        bool touchEnabled, toggled;
+        bool touchEnabled, toggled, touched, allowContinuousHit;
         cocos2d::CCSpriteFrame *onFrm, *offFrm;
+        static bool forceSingleTouch, singleTouched;
 
         void _init();
         void fixSize();
@@ -25,6 +26,7 @@ namespace oreore
         virtual cocos2d::CCFiniteTimeAction *unTouchAction();
 
         void toggleAndAction();
+        void endTouching();
     public:
         CREATE_FUNC(CCToggleButton);
 
@@ -53,7 +55,10 @@ namespace oreore
         void toggle(const bool v);
         inline bool isToggled() const { return toggled; }
         void setTappedEvent(cocos2d::CCObject *target, cocos2d::SEL_MenuHandler callback);
-
+        inline void setAllowContinuousHit(const bool allow) { allowContinuousHit = allow; }
+        inline bool isAllowContinuousHit() const { return allowContinuousHit; }
+        inline static void setForceSingleTouchMode(const bool enable) { forceSingleTouch = enable; }
+        inline static bool isForceSingeTouchMode() { return forceSingleTouch; }
     };
 
     template<typename T>
