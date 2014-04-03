@@ -134,7 +134,6 @@ namespace oreore
     {
         touched = false;
         singleTouched = false;
-        CCLOG("singleTouched = false");
     }
 
     bool CCToggleButton::ccTouchBegan(CCTouch *touch, CCEvent *event)
