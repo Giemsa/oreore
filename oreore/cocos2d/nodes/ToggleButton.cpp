@@ -5,6 +5,9 @@ namespace oreore
     using namespace cocos2d;
 
     /* ToggleButton */
+    bool ToggleButton::forceSingleTouch = false;
+    bool ToggleButton::singleTouched = false;
+
     ToggleButton *ToggleButton::create(const std::string &offBtn, const std::string &onBtn)
     {
         ToggleButton *r = new ToggleButton();
@@ -80,6 +83,8 @@ namespace oreore
         offFrm = null;
         callback = null;
         touchEnabled = true;
+        touched = false;
+        allowContinuousHit = false;
     }
 
     void ToggleButton::fixSize()
@@ -118,20 +123,35 @@ namespace oreore
 
     void ToggleButton::toggleAndAction()
     {
+        endTouching();
         if(callback)
             callback(this);
         toggle();
     }
 
+    void ToggleButton::endTouching()
+    {
+        touched = false;
+        singleTouched = false;
+        CCLOG("singleTouched = false");
+    }
+
     bool ToggleButton::onTouchBegan(Touch *touch, Event *event)
     {
-        if(!touchEnabled)
+        if(forceSingleTouch && singleTouched)
             return false;
 
+        if(!touchEnabled || !isVisible())
+            return false;
+
+        if(!allowContinuousHit && touched)
+            return false;
 
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
         {
+            touched = true;
+            singleTouched = true;
             FiniteTimeAction *action = touchAction();
             if(action)
                 runAction(action);
@@ -166,7 +186,13 @@ namespace oreore
         }
         FiniteTimeAction *action = unTouchAction();
         if(action)
-            runAction(action);
+            runAction(
+                CCSequence::create(
+                    action,
+                    CCCallFunc::create(CC_CALLBACK_0(ToggleButton::endTouching, this)),
+                    NULL
+                )
+            );
     }
 
     void ToggleButton::setTouchEnabled(const bool enable)

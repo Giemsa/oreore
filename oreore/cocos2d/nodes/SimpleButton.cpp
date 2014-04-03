@@ -5,6 +5,9 @@ namespace oreore
     using namespace cocos2d;
 
     /* SimpleButton */
+    bool SimpleButton::forceSingleTouch = false;
+    bool SimpleButton::singleTouched = false;
+
     SimpleButton* SimpleButton::createWithTexture(Texture2D *pTexture)
     {
         SimpleButton *pobSprite = new SimpleButton();
@@ -138,10 +141,15 @@ namespace oreore
     void SimpleButton::endTouching()
     {
         touched = false;
+        singleTouched = false;
+        CCLOG("singleTouched = false");
     }
 
     bool SimpleButton::onTouchBegan(Touch *touch, Event *event)
     {
+        if(forceSingleTouch && singleTouched)
+            return false;
+
         if(!touchEnabled || !isVisible())
             return false;
 
@@ -152,6 +160,8 @@ namespace oreore
         if(getBoundingBox().containsPoint(p))
         {
             touched = true;
+            singleTouched = true;
+            CCLOG("singleTouched = true");
             bpos = p;
             FiniteTimeAction *action = touchAction();
             if(action)
@@ -166,8 +176,7 @@ namespace oreore
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
         {
-            //const float d = p.getDistance(bpos);
-            if(/*d < 60.0f / CC_CONTENT_SCALE_FACTOR() && */selector)
+            if(selector)
             {
                 FiniteTimeAction *action = unTouchAction();
                 if(action)

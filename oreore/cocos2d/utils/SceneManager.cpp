@@ -84,7 +84,8 @@ namespace oreore
 
     void SceneManager::removeScene(const int uid)
     {
-        scenes[uid] = null;
+        if(static_cast<void *>(this) == scenes[uid])
+            scenes[uid] = null;
     }
 
     Object *SceneManager::getCurrentScene()
