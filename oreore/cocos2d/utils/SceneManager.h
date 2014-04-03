@@ -172,7 +172,6 @@ namespace oreore
             CCAssert(false, "scene is not registered.");
             return null;
         }
-        CCLOG("getScene: %d, %08X", T::_uid, scenes[T::_uid]);
         ManagedSceneBase *scene = scenes[T::_uid];
         if(scene)
             return static_cast<T *>(scene);
@@ -218,7 +217,6 @@ namespace oreore
     template<typename T>
     T *SceneManager::cloneAndRegister()
     {
-        CCLOG("cloneAndRegister %s: %d", typeid(T).name(), T::_uid);
         if(T::_uid == -1)
         {
             addScene<T>(false);

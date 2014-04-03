@@ -142,7 +142,6 @@ namespace oreore
     {
         touched = false;
         singleTouched = false;
-        CCLOG("singleTouched = false");
     }
 
     bool SimpleButton::onTouchBegan(Touch *touch, Event *event)
@@ -161,7 +160,6 @@ namespace oreore
         {
             touched = true;
             singleTouched = true;
-            CCLOG("singleTouched = true");
             bpos = p;
             FiniteTimeAction *action = touchAction();
             if(action)

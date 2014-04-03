@@ -133,7 +133,6 @@ namespace oreore
     {
         touched = false;
         singleTouched = false;
-        CCLOG("singleTouched = false");
     }
 
     bool ToggleButton::onTouchBegan(Touch *touch, Event *event)
