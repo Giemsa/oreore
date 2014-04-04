@@ -58,7 +58,7 @@ namespace oreore
     ManagedCCScene::~ManagedCCScene()
     {
         CCAssert(getChildrenCount() == 1, "CCScene must have only 1 CCLayer.");
-        manager->removeScene(static_cast<ManagedSceneBase *>(getChildren().front())->getID());
+        manager->removeScene(static_cast<ManagedSceneBase *>(getChildren().front()));
     }
 
     /* SceneManager */
@@ -82,10 +82,10 @@ namespace oreore
 #endif
     }
 
-    void SceneManager::removeScene(const int uid)
+    void SceneManager::removeScene(ManagedSceneBase *scene)
     {
-        if(static_cast<void *>(this) == scenes[uid])
-            scenes[uid] = null;
+        if(scene == scenes[scene->getID()])
+            scenes[scene->getID()] = null;
     }
 
     Object *SceneManager::getCurrentScene()
