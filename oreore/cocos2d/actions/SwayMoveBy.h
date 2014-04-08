@@ -5,39 +5,36 @@
 
 namespace oreore
 {
-    namespace SwayDirection
+    enum class SwayDirection
     {
-        enum Type
-        {
-            Vertical,
-            Horizontal
-        };
-    }
+        Vertical,
+        Horizontal
+    };
 
-    class CCSwayMoveBy : public cocos2d::CCActionInterval
+    class SwayMoveBy : public cocos2d::ActionInterval
     {
     protected:
-        cocos2d::CCPoint pos, dpos;
+        cocos2d::Point pos, dpos;
         float amp, freq;
-        SwayDirection::Type dir;
+        SwayDirection dir;
     public:
-        CCSwayMoveBy() { }
-        virtual ~CCSwayMoveBy() { }
+        SwayMoveBy() { }
+        virtual ~SwayMoveBy() { }
 
-        inline static CCSwayMoveBy* create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq)
+        inline static SwayMoveBy* create(const float duration, const cocos2d::Point &pos, const float amp, const float freq)
         {
             return create(duration, pos, amp, freq, SwayDirection::Horizontal);
         }
 
-        static CCSwayMoveBy* create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type);
-        bool initWithDuration(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type);
+        static SwayMoveBy* create(const float duration, const cocos2d::Point &pos, const float amp, const float freq, const SwayDirection type);
+        bool initWithDuration(const float duration, const cocos2d::Point &pos, const float amp, const float freq, const SwayDirection type);
 
-        virtual void startWithTarget(cocos2d::CCNode *pTarget); // override
-        virtual void update(float time); // override
-        virtual void stop(void); // override
+        virtual void startWithTarget(cocos2d::Node *pTarget) override;
+        virtual void update(float time) override;
+        virtual void stop() override;
 
-        virtual CCSwayMoveBy *reverse(); // override
-        virtual CCSwayMoveBy *clone(); // override
+        virtual SwayMoveBy *reverse() const override;
+        virtual SwayMoveBy *clone() const override;
     };
 }
 

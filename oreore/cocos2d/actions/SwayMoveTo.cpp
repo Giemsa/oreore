@@ -6,9 +6,9 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    CCSwayMoveTo *CCSwayMoveTo::create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type)
+    SwayMoveTo *SwayMoveTo::create(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
-        CCSwayMoveTo *action = new CCSwayMoveTo();
+        SwayMoveTo *action = new SwayMoveTo();
         if(action && action->initWithDuration(duration, pos, amp, freq, type))
         {
             action->autorelease();
@@ -18,9 +18,9 @@ namespace oreore
         return null;
     }
 
-    bool CCSwayMoveTo::initWithDuration(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type)
+    bool SwayMoveTo::initWithDuration(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
-        if(!CCActionInterval::initWithDuration(duration))
+        if(!ActionInterval::initWithDuration(duration))
             return false;
 
         this->pos = pos;
@@ -31,20 +31,20 @@ namespace oreore
         return true;
     }
 
-    void CCSwayMoveTo::startWithTarget(CCNode *target)
+    void SwayMoveTo::startWithTarget(Node *target)
     {
-        CCSwayMoveBy::startWithTarget(target);
+        SwayMoveBy::startWithTarget(target);
         pos = pos - dpos;
     }
 
-    CCSwayMoveTo *CCSwayMoveTo::reverse()
+    SwayMoveTo *SwayMoveTo::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CCSwayMoveTo *CCSwayMoveTo::clone()
+    SwayMoveTo *SwayMoveTo::clone() const
     {
-        return CCSwayMoveTo::create(getDuration(), pos, amp, dir);
+        return SwayMoveTo::create(getDuration(), pos, amp, freq, dir);
     }
 }

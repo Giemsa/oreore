@@ -6,24 +6,24 @@
 
 namespace oreore
 {
-    class CCSwayMoveTo : public CCSwayMoveBy
+    class SwayMoveTo : public SwayMoveBy
     {
     public:
-        CCSwayMoveTo() { }
-        virtual ~CCSwayMoveTo() { }
+        SwayMoveTo() { }
+        virtual ~SwayMoveTo() { }
 
-        inline static CCSwayMoveTo* create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq)
+        inline static SwayMoveTo* create(const float duration, const cocos2d::Point &pos, const float amp, const float freq)
         {
             return create(duration, pos, amp, freq, SwayDirection::Horizontal);
         }
 
-        static CCSwayMoveTo* create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type);
-        bool initWithDuration(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type);
+        static SwayMoveTo* create(const float duration, const cocos2d::Point &pos, const float amp, const float freq, const SwayDirection type);
+        bool initWithDuration(const float duration, const cocos2d::Point &pos, const float amp, const float freq, const SwayDirection type);
 
-        virtual void startWithTarget(cocos2d::CCNode *pTarget); // override
+        virtual void startWithTarget(cocos2d::Node *pTarget) override;
 
-        virtual CCSwayMoveTo *reverse(); // override
-        virtual CCSwayMoveTo *clone(); // override
+        virtual SwayMoveTo *reverse() const override;
+        virtual SwayMoveTo *clone() const override;
     };
 }
 

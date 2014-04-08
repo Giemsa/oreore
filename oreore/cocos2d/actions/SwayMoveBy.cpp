@@ -6,9 +6,9 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    CCSwayMoveBy *CCSwayMoveBy::create(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type)
+    SwayMoveBy *SwayMoveBy::create(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
-        CCSwayMoveBy *action = new CCSwayMoveBy();
+        SwayMoveBy *action = new SwayMoveBy();
         if(action && action->initWithDuration(duration, pos, amp, freq, type))
         {
             action->autorelease();
@@ -18,9 +18,9 @@ namespace oreore
         return null;
     }
 
-    bool CCSwayMoveBy::initWithDuration(const float duration, const cocos2d::CCPoint &pos, const float amp, const float freq, const SwayDirection::Type type)
+    bool SwayMoveBy::initWithDuration(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
-        if(!CCActionInterval::initWithDuration(duration))
+        if(!ActionInterval::initWithDuration(duration))
             return false;
 
         this->pos = pos;
@@ -31,37 +31,37 @@ namespace oreore
         return true;
     }
 
-    void CCSwayMoveBy::update(float time)
+    void SwayMoveBy::update(float time)
     {
-        const CCPoint d = pos * time;
+        const Point d = pos * time;
 
         const float s = amp * sinf(M_PI * 2 * freq * time);
 
         if(dir == SwayDirection::Horizontal)
-            getOriginalTarget()->setPosition(dpos + ccp(d.x + s, d.y));
+            getOriginalTarget()->setPosition(dpos + Point(d.x + s, d.y));
         else
-            getOriginalTarget()->setPosition(dpos + ccp(d.x, d.y + s));
+            getOriginalTarget()->setPosition(dpos + Point(d.x, d.y + s));
     }
 
-    void CCSwayMoveBy::startWithTarget(CCNode *target)
+    void SwayMoveBy::startWithTarget(Node *target)
     {
-        CCActionInterval::startWithTarget(target);
+        ActionInterval::startWithTarget(target);
         dpos = target->getPosition();
     }
 
-    void CCSwayMoveBy::stop(void)
+    void SwayMoveBy::stop()
     {
-        CCActionInterval::stop();
+        ActionInterval::stop();
     }
 
-    CCSwayMoveBy *CCSwayMoveBy::reverse()
+    SwayMoveBy *SwayMoveBy::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
         return null;
     }
 
-    CCSwayMoveBy *CCSwayMoveBy::clone()
+    SwayMoveBy *SwayMoveBy::clone() const
     {
-        return CCSwayMoveBy::create(getDuration(), pos, amp, dir);
+        return SwayMoveBy::create(getDuration(), pos, amp, freq, dir);
     }
 }
