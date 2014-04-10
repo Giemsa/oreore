@@ -64,9 +64,9 @@ namespace oreore
         setSegments(points.size());
     }
 
-    void GlowLine::draw()
+    void GlowLine::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
     {
-        Node::draw();
+        Node::draw(renderer, transform, transformUpdated);
 
         Points vecs;
         vecs.reserve(points.size());

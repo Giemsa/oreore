@@ -6,7 +6,7 @@
 
 namespace oreore
 {
-    class GlowLine : public cocos2d::Node
+    class GlowLine final : public cocos2d::Node
     {
         typedef std::vector<cocos2d::Point> Points;
     private:
@@ -31,7 +31,7 @@ namespace oreore
 
         bool init() override;
         bool init(const cocos2d::Point &p, const cocos2d::Point &q, const int segments);
-        void draw() override;
+        void draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) override;
 
 
         void setColor(const cocos2d::Color3B& color) override {  this->color = color; }

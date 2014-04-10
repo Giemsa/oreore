@@ -104,9 +104,10 @@ namespace oreore
 
     void MultiResolution::resolve()
     {
-        EGLView *eglView = EGLView::getInstance();
+        Director *dir = Director::getInstance();
+        GLView *glView = dir->getOpenGLView();
         Size rsize;
-        const Size fsize = eglView->getFrameSize();
+        const Size fsize = glView->getFrameSize();
         const Size size = swap(fsize, fsize.height / fsize.width < 1.0f);
 
         std::vector<std::string> order;
@@ -154,10 +155,10 @@ namespace oreore
         if(policy == ResolutionPolicy::UNKNOWN)
         {
             const ResolutionPolicy rp = scaleW > scaleH ? ResolutionPolicy::FIXED_HEIGHT : ResolutionPolicy::FIXED_WIDTH;
-            eglView->setDesignResolutionSize(designSize.width, designSize.height, rp);
+            glView->setDesignResolutionSize(designSize.width, designSize.height, rp);
         }
         else
-            eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+            glView->setDesignResolutionSize(designSize.width, designSize.height, policy);
         FileUtils::getInstance()->setSearchResolutionsOrder(order);
     }
 

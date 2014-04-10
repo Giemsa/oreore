@@ -73,12 +73,12 @@ namespace oreore
 		Node::cleanup();
 	}
 	
-	void TextureMappedPolygon::draw()
+	void TextureMappedPolygon::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
 	{
 		if(texCoord.size() <= 1)
 			return;
 
-		cmd.init(_vertexZ);
+		cmd.init(getVertexZ());
 		cmd.func = [this]() {
 			CC_NODE_DRAW_SETUP();
 
@@ -95,6 +95,6 @@ namespace oreore
 			glDrawArrays(GL_TRIANGLE_FAN, 0, static_cast<GLsizei>(texCoord.size()));
 			CC_INCREMENT_GL_DRAWS(1);
 		};
-		Director::getInstance()->getRenderer()->addCommand(&cmd);
+		renderer->addCommand(&cmd);
 	}
 }

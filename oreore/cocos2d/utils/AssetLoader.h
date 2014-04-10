@@ -28,7 +28,7 @@ namespace oreore
     };
 
 
-    class AssetLoaderWorkerChild : public cocos2d::Object
+    class AssetLoaderWorkerChild : public cocos2d::Ref
     {
         friend class AssetLoaderWorker;
     private:
@@ -42,7 +42,7 @@ namespace oreore
    };
 
 
-    class AssetLoaderWorker : public cocos2d::Object
+    class AssetLoaderWorker : public cocos2d::Ref
     {
         friend class AssetLoader;
         friend class AssetLoaderWorkerChild;

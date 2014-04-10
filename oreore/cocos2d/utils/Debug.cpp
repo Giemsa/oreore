@@ -29,7 +29,7 @@ namespace oreore
         ignoreAnchorPointForPosition(false);
         setContentSize(Size(width, 100 / CC_CONTENT_SCALE_FACTOR()));
 
-        LabelTTF *label = LabelTTF::create(name.c_str(), "", 40.0f);
+        Label *label = Label::create(name.c_str(), "", 40.0f);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
         label->setPosition(Point(10.0f / CC_CONTENT_SCALE_FACTOR(), getContentSize().height / 2));
         label->setColor(Color3B(0x55, 0x55, 0x55));
@@ -206,11 +206,6 @@ namespace oreore
         
         onEnter();
         return true;
-    }
-
-    void DebugLayer::visit()
-    {
-        Layer::visit();
     }
 
     void DebugLayer::addItem(const std::string &name, const std::function<void(Debugger *)> &callback)

@@ -31,7 +31,7 @@ namespace oreore
 		void updateBlendFunc();
 		void setBlendFunc(cocos2d::BlendFunc blendFunc);
 		virtual void cleanup() override;
-		virtual void draw() override;
+		virtual void draw(cocos2d::Renderer *renderer, const kmMat4& transform, bool transformUpdated) override;
     };
 }
 

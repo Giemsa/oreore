@@ -109,7 +109,7 @@ namespace oreore
         Debugger *debugger;
         bool showDebugLayer;
 
-        cocos2d::Object *getCurrentScene();
+        cocos2d::Ref *getCurrentScene();
         void removeScene(ManagedSceneBase *scene);
     public:
         inline static SceneManager &getInstance()
