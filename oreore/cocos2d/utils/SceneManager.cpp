@@ -88,7 +88,7 @@ namespace oreore
             scenes[scene->getID()] = null;
     }
 
-    Object *SceneManager::getCurrentScene()
+    Ref *SceneManager::getCurrentScene()
     {
         Scene *scene = Director::getInstance()->getRunningScene();
         CCAssert(scene->getChildrenCount() == 1, "CCScene must have only 1 CCLayer.");
