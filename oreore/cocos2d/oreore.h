@@ -17,7 +17,7 @@
 #include "nodes/GlowLine.h"
 #include "nodes/Overlay.h"
 #include "nodes/SimpleButton.h"
-#include "nodes/TextureMappedPolygon.h"
+#include "nodes/ImageMappedPolygon.h"
 #include "nodes/ToggleButton.h"
 
 /* utils */
