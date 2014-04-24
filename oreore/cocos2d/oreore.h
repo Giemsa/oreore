@@ -19,6 +19,7 @@
 #include "nodes/SimpleButton.h"
 #include "nodes/ImageMappedPolygon.h"
 #include "nodes/ToggleButton.h"
+#include "nodes/ShatteredSprite.h"
 
 /* utils */
 #include "utils/Utils.h"

@@ -14,7 +14,7 @@ namespace oreore
 		texture = null;
         mode = GL_TRIANGLE_FAN;
         setAnchorPoint(Point::ANCHOR_MIDDLE);
-		setShaderProgram(CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+		setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 
         return true;
     }
@@ -27,7 +27,7 @@ namespace oreore
 		texture = texture2D;
 		CC_SAFE_RETAIN(texture);
 		
-		Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT };
+		Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 		texture->setTexParameters(texParams);
 		setContentSize(texture->getContentSize());
 		
@@ -96,9 +96,6 @@ namespace oreore
 
 			GL::bindTexture2D(texture->getName());
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 			GL::blendFunc(blendFunc.src, blendFunc.dst);
 
 			GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
@@ -142,7 +139,7 @@ namespace oreore
         grabber = new Grabber();
         grabber->grab(texture);
 
-		const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_REPEAT, GL_REPEAT };
+		const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 		texture->setTexParameters(texParams);
 		setContentSize(texture->getContentSize());
 		
@@ -196,9 +193,6 @@ namespace oreore
         _shaderProgram->setUniformsForBuiltins();
 
         GL::bindTexture2D(texture->getName());
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         GL::blendFunc(blendFunc.src, blendFunc.dst);
 
