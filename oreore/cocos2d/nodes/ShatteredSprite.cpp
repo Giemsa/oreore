@@ -109,6 +109,7 @@ namespace oreore
         setAnchorPoint(Point::ANCHOR_MIDDLE);
 
         RenderTexture *rt = RenderTexture::create(width, height);
+        rt->retain();
         rt->setKeepMatrix(true);
         rt->begin();
         
@@ -123,6 +124,7 @@ namespace oreore
             const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
             texture->setTexParameters(texParams);
             texture->retain();
+            rt->release();
             
             updateBlendFunc();
 
