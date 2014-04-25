@@ -5,7 +5,7 @@
 #include <vector>
 #include <functional>
 #include "../../null.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 namespace oreore
 {
