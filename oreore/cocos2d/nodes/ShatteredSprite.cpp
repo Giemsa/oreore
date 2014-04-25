@@ -43,6 +43,20 @@ namespace oreore
         return Vertex3F(t.u, t.v, z);
     }
 
+    static inline void v3fNormalize(Vertex3F &v)
+    {
+        const float len = sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+        if(len == 0.0f)
+        {
+            v = Vertex3F();
+            return;
+        }
+    
+        v.x /= len;
+        v.y /= len;
+        v.z /= len;
+    }
+
     static Vertex3F v3fCreateNormalizedVerex(const float adelta)
     {
         const float sth = sinf(adelta);
@@ -55,6 +69,15 @@ namespace oreore
         return Vertex3F(x * sth / len, y * sth / len, z * sth / len);
     }
 
+    static inline Vertex3F getDeltaVec(const Tex2F &a, const Tex2F &b, const Tex2F &c, const Vertex3F &center, const float speedVar)
+    {
+        Vertex3F v((a.u + b.u + c.u) / 3 - center.x, (a.v * b.v + c.v) / 3 - center.y, -center.z);
+        v3fNormalize(v);
+        v.x *= randf(0.0, speedVar) + 1.0f;
+        v.y *= randf(0.0, speedVar) + 1.0f;
+        v.z *= randf(0.0, speedVar) + 1.0f;
+        return v;
+    }
 
     /* ShatteredSprite */
     ShatteredSprite *ShatteredSprite::create(Sprite *sprite, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
@@ -105,6 +128,7 @@ namespace oreore
 
             const float pieceXsize = width / piecesX;
             const float pieceYsize = height / piecesY;
+            const Vertex3F tc(getContentSize().width / 2, getContentSize().height / 2, 0.0f);
 
             const float rx = 1.0f / texture->getPixelsWide();
             const float ry = 1.0f / texture->getPixelsHigh();
@@ -129,18 +153,20 @@ namespace oreore
                 {
                     {
                         const float adelta = randf(0.0f, rotVar);
+                        
+                        const Tex2F &p1 = ptArray[getIndex(x, y)];
+                        const Tex2F &p2 = ptArray[getIndex(x + 1, y)];
+                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
+
                         moveInfoVec.push_back(
                             MoveInfo(
                                 v3fCreateNormalizedVerex(adelta),
-                                Vertex3F(randf(0.0, speedVar), randf(0.0, speedVar), randf(0.0, speedVar)),
+                                getDeltaVec(p1, p2, p3, tc, speedVar),
                                 Vertex3F((x * pieceXsize) + (pieceXsize * 0.3), (y * pieceYsize) + (pieceYsize * 0.3), 0),
                                 cosf(adelta)
                             )
                         );
 
-                        const Tex2F &p1 = ptArray[getIndex(x, y)];
-                        const Tex2F &p2 = ptArray[getIndex(x + 1, y)];
-                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
 
                         coord.push_back(t2f2v3f(p1, 0.0f));
                         coord.push_back(t2f2v3f(p2, 0.0f));
@@ -153,19 +179,20 @@ namespace oreore
 
                     {
                         const float adelta = randf(0.0f, rotVar);
+                        
+                        const Tex2F &p1 = ptArray[getIndex(x + 1, y)];
+                        const Tex2F &p2 = ptArray[getIndex(x + 1, y + 1)];
+                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
+                        
                         moveInfoVec.push_back(
                             MoveInfo(
                                 v3fCreateNormalizedVerex(adelta),
-                                Vertex3F(randf(0.0, speedVar), randf(0.0, speedVar), randf(0.0, speedVar)),
+                                getDeltaVec(p1, p2, p3, tc, speedVar),
                                 Vertex3F((x * pieceXsize) + (pieceXsize * 0.7), (y * pieceYsize) + (pieceYsize * 0.7), 0),
                                 cosf(adelta)
                             )
                         );
 
-                        const Tex2F &p1 = ptArray[getIndex(x + 1, y)];
-                        const Tex2F &p2 = ptArray[getIndex(x + 1, y + 1)];
-                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
-                        
                         coord.push_back(t2f2v3f(p1, 0.0f));
                         coord.push_back(t2f2v3f(p2, 0.0f));
                         coord.push_back(t2f2v3f(p3, 0.0f));
