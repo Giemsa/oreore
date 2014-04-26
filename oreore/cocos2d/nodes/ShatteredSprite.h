@@ -45,14 +45,14 @@ namespace oreore
         ShatteredSprite() { }
         virtual ~ShatteredSprite() { }
 
-        bool init(cocos2d::Sprite *sprite, const int piecesX, const int piecesY, const float speedVar, const float rotVar);
+        bool init(cocos2d::Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar);
 
         void updateBlendFunc();
         virtual void updateColor() override;
         virtual void cleanup() override;
         virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     public:
-        static ShatteredSprite *create(cocos2d::Sprite *sprite, const int piecesX, const int piecesY, const float speedVar, const float rotVar);
+        static ShatteredSprite *create(cocos2d::Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar);
         void shatter();
     };
 }

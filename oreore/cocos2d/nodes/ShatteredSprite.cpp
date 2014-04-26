@@ -71,7 +71,7 @@ namespace oreore
 
     static inline Vertex3F getDeltaVec(const Tex2F &a, const Tex2F &b, const Tex2F &c, const Vertex3F &center, const float speedVar)
     {
-        Vertex3F v((a.u + b.u + c.u) / 3 - center.x, (a.v * b.v + c.v) / 3 - center.y, -center.z);
+        Vertex3F v((a.u + b.u + c.u) / 3 - center.x, (a.v + b.v + c.v) / 3 - center.y, -center.z);
         v3fNormalize(v);
         v.x *= randf(0.0, speedVar) + 1.0f;
         v.y *= randf(0.0, speedVar) + 1.0f;
@@ -80,10 +80,10 @@ namespace oreore
     }
 
     /* ShatteredSprite */
-    ShatteredSprite *ShatteredSprite::create(Sprite *sprite, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
+    ShatteredSprite *ShatteredSprite::create(Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
     {
         ShatteredSprite *r = new ShatteredSprite();
-        if(r && r->init(sprite, piecesX, piecesY, speedVar, rotVar))
+        if(r && r->init(node, piecesX, piecesY, speedVar, rotVar))
         {
             r->autorelease();
             return r;
@@ -92,7 +92,7 @@ namespace oreore
         return nullptr;
     }
 
-    bool ShatteredSprite::init(Sprite *sprite, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
+    bool ShatteredSprite::init(Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
     {
         if(!Node::init())
             return false;
@@ -101,10 +101,10 @@ namespace oreore
         this->piecesX = piecesX + 1;
         shattered = false;
 
-        const float width = sprite->getTexture()->getContentSizeInPixels().width;
-        const float height = sprite->getTexture()->getContentSizeInPixels().height;
+        const float width = node->getContentSize().width;
+        const float height = node->getContentSize().height;
 
-        setContentSize(sprite->getContentSize());
+        setContentSize(node->getContentSize());
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         setAnchorPoint(Point::ANCHOR_MIDDLE);
 
@@ -113,8 +113,8 @@ namespace oreore
         rt->setKeepMatrix(true);
         rt->begin();
         
-        sprite->setPosition(center(sprite));
-        sprite->visit();
+        node->setPosition(center(node));
+        node->visit();
 
         rt->end();
         
