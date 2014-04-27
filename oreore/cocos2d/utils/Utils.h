@@ -25,6 +25,13 @@ namespace oreore
         );
     }
 
+    inline cocos2d::Color4B toColor4B(const cocos2d::Color3B &color, const float opacity)
+    {
+        return cocos2d::Color4B(
+            color.r, color.g, color.b, opacity
+        );
+    }
+
     /* 色Aから色Bへのグラデーションを計算する(等比グラデーション) */
     template<
         int Ra, int Ga, int Ba,
