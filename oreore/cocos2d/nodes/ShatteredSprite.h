@@ -46,13 +46,12 @@ namespace oreore
         Vertex3FVec coord;
         Colors colors;
         MoveInfoVec moveInfoVec;
-        cocos2d::Node *node;
         
         int piecesX;
         cocos2d::Texture2D *texture;
         bool shattered;
 
-		cocos2d::CustomCommand cmd, grabCmd;
+		cocos2d::CustomCommand cmd;
 		cocos2d::BlendFunc blendFunc;
 
         inline int getIndex(const int x, const int y) const { return x * piecesX + y; }
