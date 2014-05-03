@@ -57,7 +57,7 @@ namespace oreore
         v.z /= len;
     }
 
-    static Vertex3F v3fCreateNormalizedVerex(const float adelta)
+    static Vertex3F v3fCreateNormalizedVertex(const float adelta)
     {
         const float sth = sinf(adelta);
         const float x = randf(0.0f, 360.0f);
@@ -80,10 +80,10 @@ namespace oreore
     }
 
     /* ShatteredSprite */
-    ShatteredSprite *ShatteredSprite::create(Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
+    ShatteredSprite *ShatteredSprite::create(const ShatteredSpriteParam &param)
     {
         ShatteredSprite *r = new ShatteredSprite();
-        if(r && r->init(node, piecesX, piecesY, speedVar, rotVar))
+        if(r && r->init(param))
         {
             r->autorelease();
             return r;
@@ -92,121 +92,101 @@ namespace oreore
         return nullptr;
     }
 
-    bool ShatteredSprite::init(Node *node, const int piecesX, const int piecesY, const float speedVar, const float rotVar)
+    bool ShatteredSprite::init(const ShatteredSpriteParam &param)
     {
         if(!Node::init())
             return false;
 
-        texture = nullptr;
-        this->piecesX = piecesX + 1;
+        this->piecesX = param.piecesX + 1;
+        texture = param.texture;
+        texture->retain();
         shattered = false;
 
-        const float width = node->getContentSize().width;
-        const float height = node->getContentSize().height;
-
-        setContentSize(node->getContentSize());
+        setContentSize(param.textureRect.size);
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
         setAnchorPoint(Point::ANCHOR_MIDDLE);
 
-        RenderTexture *rt = RenderTexture::create(width, height);
-        rt->retain();
-        rt->setKeepMatrix(true);
-        rt->begin();
-        
-        node->setPosition(center(node));
-        node->visit();
+        updateBlendFunc();
 
-        rt->end();
-        
-        grabCmd.init(getGlobalZOrder());
-        grabCmd.func = [=]() {
-            texture = rt->getSprite()->getTexture();
-            const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-            texture->setTexParameters(texParams);
-            texture->retain();
-            rt->release();
-            
-            updateBlendFunc();
+        const float pieceXsize = param.textureRect.size.width / param.piecesX;
+        const float pieceYsize = param.textureRect.size.height / param.piecesY;
+        const Vertex3F tc(getContentSize().width / 2, getContentSize().height / 2, 0.0f);
 
-            const float pieceXsize = width / piecesX;
-            const float pieceYsize = height / piecesY;
-            const Vertex3F tc(getContentSize().width / 2, getContentSize().height / 2, 0.0f);
+        const float rx = 1.0f / param.texture->getPixelsWide();
+        const float ry = 1.0f / param.texture->getPixelsHigh();
+        const float ox = param.textureRect.origin.x / param.texture->getPixelsWide();
+        const float oy = param.textureRect.origin.y / param.texture->getPixelsHigh();
 
-            const float rx = 1.0f / texture->getPixelsWide();
-            const float ry = 1.0f / texture->getPixelsHigh();
+        const Color4B color(getColor().r, getColor().g, getColor().b, getOpacity());
+        Tex2FVec ptArray((param.piecesX + 1) * (param.piecesY + 1));
 
-            const Color4B color(getColor().r, getColor().g, getColor().b, getOpacity());
-            Tex2FVec ptArray((piecesX + 1) * (piecesY + 1));
+        for(int x = 0; x <= param.piecesX; x++)
+            for(int y = 0; y <= param.piecesY; y++)
+            {
+                Tex2F pt(x * pieceXsize, y * pieceYsize);
+                if(x > 0 && x < param.piecesX && y > 0 && y < param.piecesY)
+                    t2fAdd(pt, Tex2F(roundf(randf(0.0f, pieceXsize * 0.45f)), roundf(randf(0.0f, pieceYsize * 0.45f))));
+                ptArray[getIndex(x, y)] = pt;
+            }
 
-            for(int x = 0; x <= piecesX; x++)
-                for(int y = 0; y <= piecesY; y++)
+        colors.resize(param.piecesX * param.piecesY * 6, color);
+
+        for(int x = 0; x < param.piecesX; x++)
+        {
+            for(int y = 0; y < param.piecesY; y++)
+            {
                 {
-                    Tex2F pt(x * pieceXsize, y * pieceYsize);
-                    if(x > 0 && x < piecesX && y > 0 && y < piecesY)
-                        t2fAdd(pt, Tex2F(roundf(randf(0.0f, pieceXsize * 0.45f)), roundf(randf(0.0f, pieceYsize * 0.45f))));
-                    ptArray[getIndex(x, y)] = pt;
+                    const float adelta = randf(0.0f, param.rotVar);
+                    
+                    const Tex2F &p1 = ptArray[getIndex(x, y)];
+                    const Tex2F &p2 = ptArray[getIndex(x + 1, y)];
+                    const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
+
+                    moveInfoVec.push_back(
+                        MoveInfo(
+                            v3fCreateNormalizedVertex(adelta),
+                            getDeltaVec(p1, p2, p3, tc, param.speedVar),
+                            Vertex3F((x * pieceXsize) + (pieceXsize * 0.3), (y * pieceYsize) + (pieceYsize * 0.3), 0),
+                            cosf(adelta)
+                        )
+                    );
+
+
+                    coord.push_back(t2f2v3f(p1, 0.0f));
+                    coord.push_back(t2f2v3f(p2, 0.0f));
+                    coord.push_back(t2f2v3f(p3, 0.0f));
+
+                    texCoord.push_back(Tex2F(p1.u * rx + ox, p1.v * ry + oy));
+                    texCoord.push_back(Tex2F(p2.u * rx + ox, p2.v * ry + oy));
+                    texCoord.push_back(Tex2F(p3.u * rx + ox, p3.v * ry + oy));
                 }
 
-            colors.resize(piecesX * piecesY * 6, color);
-
-            for(int x = 0; x < piecesX; x++)
-            {
-                for(int y = 0; y < piecesY; y++)
                 {
-                    {
-                        const float adelta = randf(0.0f, rotVar);
-                        
-                        const Tex2F &p1 = ptArray[getIndex(x, y)];
-                        const Tex2F &p2 = ptArray[getIndex(x + 1, y)];
-                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
+                    const float adelta = randf(0.0f, param.rotVar);
+                    
+                    const Tex2F &p1 = ptArray[getIndex(x + 1, y)];
+                    const Tex2F &p2 = ptArray[getIndex(x + 1, y + 1)];
+                    const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
+                    
+                    moveInfoVec.push_back(
+                        MoveInfo(
+                            v3fCreateNormalizedVertex(adelta),
+                            getDeltaVec(p1, p2, p3, tc, param.speedVar),
+                            Vertex3F((x * pieceXsize) + (pieceXsize * 0.7), (y * pieceYsize) + (pieceYsize * 0.7), 0),
+                            cosf(adelta)
+                        )
+                    );
 
-                        moveInfoVec.push_back(
-                            MoveInfo(
-                                v3fCreateNormalizedVerex(adelta),
-                                getDeltaVec(p1, p2, p3, tc, speedVar),
-                                Vertex3F((x * pieceXsize) + (pieceXsize * 0.3), (y * pieceYsize) + (pieceYsize * 0.3), 0),
-                                cosf(adelta)
-                            )
-                        );
+                    coord.push_back(t2f2v3f(p1, 0.0f));
+                    coord.push_back(t2f2v3f(p2, 0.0f));
+                    coord.push_back(t2f2v3f(p3, 0.0f));
 
-
-                        coord.push_back(t2f2v3f(p1, 0.0f));
-                        coord.push_back(t2f2v3f(p2, 0.0f));
-                        coord.push_back(t2f2v3f(p3, 0.0f));
-
-                        texCoord.push_back(Tex2F(p1.u * rx, p1.v * ry));
-                        texCoord.push_back(Tex2F(p2.u * rx, p2.v * ry));
-                        texCoord.push_back(Tex2F(p3.u * rx, p3.v * ry));
-                    }
-
-                    {
-                        const float adelta = randf(0.0f, rotVar);
-                        
-                        const Tex2F &p1 = ptArray[getIndex(x + 1, y)];
-                        const Tex2F &p2 = ptArray[getIndex(x + 1, y + 1)];
-                        const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
-                        
-                        moveInfoVec.push_back(
-                            MoveInfo(
-                                v3fCreateNormalizedVerex(adelta),
-                                getDeltaVec(p1, p2, p3, tc, speedVar),
-                                Vertex3F((x * pieceXsize) + (pieceXsize * 0.7), (y * pieceYsize) + (pieceYsize * 0.7), 0),
-                                cosf(adelta)
-                            )
-                        );
-
-                        coord.push_back(t2f2v3f(p1, 0.0f));
-                        coord.push_back(t2f2v3f(p2, 0.0f));
-                        coord.push_back(t2f2v3f(p3, 0.0f));
-
-                        texCoord.push_back(Tex2F(p1.u * rx, p1.v * ry));
-                        texCoord.push_back(Tex2F(p2.u * rx, p2.v * ry));
-                        texCoord.push_back(Tex2F(p3.u * rx, p3.v * ry));
-                    }
+                    texCoord.push_back(Tex2F(p1.u * rx + ox, p1.v * ry + oy));
+                    texCoord.push_back(Tex2F(p2.u * rx + ox, p2.v * ry + oy));
+                    texCoord.push_back(Tex2F(p3.u * rx + ox, p3.v * ry + oy));
                 }
             }
-        };
-        Director::getInstance()->getRenderer()->addCommand(&grabCmd);
+        }
 
         return true;
     }
