@@ -374,6 +374,16 @@ namespace oreore
 
             typedef Fluxion::WrapEase<cocos2d::EaseBounceInOut> BounceInOut;
             inline BounceInOut bounceInOut() { return BounceInOut(); }
+
+            /* back */
+            typedef Fluxion::WrapEase<cocos2d::EaseBackIn> BackIn;
+            inline BackIn backIn() { return BackIn(); }
+
+            typedef Fluxion::WrapEase<cocos2d::EaseBackOut> BackOut;
+            inline BackOut backOut() { return BackOut(); }
+
+            typedef Fluxion::WrapEase<cocos2d::EaseBackInOut> BackInOut;
+            inline BackInOut backInOut() { return BackInOut(); }
             
             /* exp */
             typedef Fluxion::WrapEase<cocos2d::EaseExponentialIn> ExpIn;
