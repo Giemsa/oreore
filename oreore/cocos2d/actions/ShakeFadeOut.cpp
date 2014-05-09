@@ -25,8 +25,8 @@ namespace oreore
 
     void ShakeFadeOut::update(float time)
     {
-        const float x = random<float>(-strength_x, strength_x) * (1.0f - time);
-        const float y = random<float>(-strength_y, strength_y) * (1.0f - time);
+        const float x = (random<float>(strength_x * 2) - strength_x) * (1.0f - time);
+        const float y = (random<float>(strength_y * 2) - strength_y) * (1.0f - time);
 
         getOriginalTarget()->setPosition(dpos + Point(x, y));
     }

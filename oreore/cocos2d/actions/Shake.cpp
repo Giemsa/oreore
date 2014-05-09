@@ -41,8 +41,8 @@ namespace oreore
 
     void Shake::update(float time)
     {
-        const float x = random<float>(-strength_x, strength_x);
-        const float y = random<float>(-strength_y, strength_y);
+        const float x = random<float>(strength_x * 2) -strength_x;
+        const float y = random<float>(strength_y * 2) -strength_y;
 
         getOriginalTarget()->setPosition(dpos + Point(x, y));
     }
