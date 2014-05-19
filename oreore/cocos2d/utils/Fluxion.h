@@ -16,7 +16,7 @@ namespace oreore
         class SequentialAction;
         class ParallelAction;
         class Repeat;
-        class Ease;
+        class ActionModifier;
 
         template<typename T, typename S>
         struct ResultType { typedef T type; };
@@ -46,7 +46,7 @@ namespace oreore
             virtual operator cocos2d::ActionInterval *() const = 0;
 
             template<typename T>
-            inline typename ResultType<T, typename std::enable_if<std::is_base_of<Ease, T>::value>::type>::type operator*(const T &op)
+            inline typename ResultType<T, typename std::enable_if<std::is_base_of<ActionModifier, T>::value>::type>::type operator*(const T &op)
             {
                 return op.apply(this);
             }
@@ -187,31 +187,32 @@ namespace oreore
             cocos2d::Repeat *action;
         private:
         public:
-            Repeat(const Action &action, const int times) : action(cocos2d::Repeat::create(action, times)) { }
+            Repeat(const Action &action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
+            Repeat(cocos2d::ActionInterval *action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
             inline operator cocos2d::ActionInterval *() const override { return action; }
         };
 
-        class Ease : public ActionInterval
+        class ActionModifier : public ActionInterval
         {
         private:
-            cocos2d::ActionInterval *ease;
+            cocos2d::ActionInterval *action;
         protected:
-            inline cocos2d::ActionInterval *get() const { return ease; }
+            inline cocos2d::ActionInterval *get() const { return action; }
         public:
-            Ease() : ease(nullptr) { }
-            Ease(cocos2d::ActionInterval *ease) : ease(ease) { }
-            virtual ~Ease() { }
+            ActionModifier() : action(nullptr) { }
+            ActionModifier(cocos2d::ActionInterval *action) : action(action) { }
+            virtual ~ActionModifier() { }
 
             inline operator cocos2d::ActionInterval *() const override { return get(); }
         };
 
         template<typename T>
-        class WrapEase : public Ease
+        class WrapEase : public ActionModifier
         {
         public:
-            WrapEase() : Ease(nullptr) { }
-            WrapEase(T *ease) : Ease(ease) { }
+            WrapEase() : ActionModifier(nullptr) { }
+            WrapEase(T *ease) : ActionModifier(ease) { }
             ~WrapEase() { }
 
             inline operator cocos2d::FiniteTimeAction *() const { return get(); }
@@ -222,21 +223,35 @@ namespace oreore
         };
 
         template<typename T, typename P>
-        class WrapEase1 : public Ease
+        class WrapEase1 : public ActionModifier
         {
         private:
             P param;
         public:
-            WrapEase1() : Ease(nullptr), param() { }
-            WrapEase1(T *ease) : Ease(ease), param() { }
-            WrapEase1(const P param) : Ease(nullptr), param(param) { }
-            WrapEase1(T *ease, const P param) : Ease(ease), param(param) { }
+            WrapEase1() : ActionModifier(nullptr), param() { }
+            WrapEase1(T *ease) : ActionModifier(ease), param() { }
+            WrapEase1(const P param) : ActionModifier(nullptr), param(param) { }
+            WrapEase1(T *ease, const P param) : ActionModifier(ease), param(param) { }
             ~WrapEase1() { }
 
             inline operator cocos2d::FiniteTimeAction *() const { return get(); }
             inline WrapEase1<T, P> apply(const ActionInterval *action) const
             {
                 return WrapEase1<T, P>(T::create(static_cast<cocos2d::ActionInterval *>(*action), param), param);
+            }
+        };
+
+        class RepeatForever : public ActionModifier
+        {
+        public:
+            RepeatForever() : ActionModifier(nullptr) { }
+            RepeatForever(cocos2d::Repeat *action) : ActionModifier(action) { }
+            ~RepeatForever() { }
+
+            inline operator cocos2d::FiniteTimeAction *() const { return get(); }
+            inline RepeatForever apply(const ActionInterval *action) const
+            {
+                return RepeatForever(cocos2d::Repeat::create(static_cast<cocos2d::ActionInterval *>(*action), -1));
             }
         };
 
@@ -352,6 +367,11 @@ namespace oreore
         inline Fluxion::SequentialAction s(const Args... args) { return Fluxion::SequentialAction::createFromActions(args...); }
         template<typename... Args>
         inline Fluxion::SequentialAction seq(const Args... args) { return s(args...); }
+
+        /* repeat */
+        inline Fluxion::RepeatForever infinite() { return Fluxion::RepeatForever(); }
+        inline Fluxion::RepeatForever inf() { return Fluxion::RepeatForever(); }
+    
 
         namespace Ease
         {
