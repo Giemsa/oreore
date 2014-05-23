@@ -40,7 +40,7 @@ cocos2dx 3.0系及び 2.2.2 向けの汎用的な処理群をまとめました�
 	RC1への移行により、今後開発が停止します。
 
 * cocos2dx 3.0 RC1
-	　cocos2dx 3.0 RC1向けのブランチです。betaとほぼ同じ実装ですが、RC1で変更された部分への対応が組み込まれています。
+	　cocos2dx 3.0安定版及びcocos2dx 3.0 RC1向けのブランチです。betaとほぼ同じ実装ですが、RC1で変更された部分への対応が組み込まれています。
 
 * master  
 	　cocos2dx 3.0 alpha0〜1用のブランチです。俺々ライブラリは、元々alpha1向けのライブラリでしたが、作者がalphaを利用しなくなったため、このブランチの更新は停止しています。
@@ -54,7 +54,8 @@ cocos2dx 3.0系及び 2.2.2 向けの汎用的な処理群をまとめました�
 * Fluxion (cocos2dx Action Generator)
 
 ## common utility
-cocos2dxにかかわらず利用できるユーティリティです。
+cocos2dxにかかわらず利用できるユーティリティです。  
+[common utility](./commonutility.html) を参照してください。
 
 ## SceneManager
 cocos2dxでシーン管理を行うクラスです。  
