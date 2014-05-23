@@ -60,7 +60,10 @@ namespace oreore
         >
         void notify(const E key, const Ts &...args);
 
-        template<typename E>
+        template<
+            typename E,
+            typename = typename std::enable_if<std::is_enum<E>::value, void>::type
+        >
         void removeSubject(const E key);
     };
 
@@ -99,7 +102,7 @@ namespace oreore
     }
 
 
-    template<typename E>
+    template<typename E, typename>
     void Observer::removeSubject(const E key)
     {
         const auto it = subjectList.find(static_cast<int>(key));
