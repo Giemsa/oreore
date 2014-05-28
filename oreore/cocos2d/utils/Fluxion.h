@@ -18,10 +18,7 @@ namespace oreore
         class Repeat;
         class ActionModifier;
 
-        template<typename T, typename S>
-        struct ResultType { typedef T type; };
-
-        typedef cocos2d::Vector<cocos2d::FiniteTimeAction *> ActionList;
+        using ActionList = cocos2d::Vector<cocos2d::FiniteTimeAction *>;
 
         class Action
         {
@@ -45,14 +42,17 @@ namespace oreore
 
             virtual operator cocos2d::ActionInterval *() const = 0;
 
-            template<typename T>
-            inline typename ResultType<T, typename std::enable_if<std::is_base_of<ActionModifier, T>::value>::type>::type operator*(const T &op)
-            {
-                return op.apply(this);
-            }
+            template<
+                typename T,
+                typename = typename std::enable_if<std::is_base_of<ActionModifier, T>::value>::type
+            >
+            inline T operator*(const T &op) { return op.apply(this); }
 
-            template<typename T>
-            inline typename ResultType<Repeat, typename std::enable_if<std::numeric_limits<T>::is_integer>::type>::type operator*(const T &op);
+            template<
+                typename T,
+                typename = typename std::enable_if<std::numeric_limits<T>::is_integer>::type
+            >
+            inline Repeat operator*(const T &op);
         };
 
         template<typename T>
@@ -62,7 +62,7 @@ namespace oreore
             T *action;
         public:
             template<typename... Args>
-            inline WrapAction(const Args... args) : action(T::create(args...)) { }
+            inline WrapAction(const Args &...args) : action(T::create(args...)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
         };
 
@@ -73,7 +73,7 @@ namespace oreore
             T *action;
         public:
             template<typename... Args>
-            inline WrapIntervalAction(const Args... args) : action(T::create(args...)) { }
+            inline WrapIntervalAction(const Args &...args) : action(T::create(args...)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
             inline operator cocos2d::ActionInterval *() const override { return action; }
         };
@@ -287,8 +287,8 @@ namespace oreore
         }
 
         /* ActionInterval impl */
-        template<typename T>
-        inline typename ResultType<Repeat, typename std::enable_if<std::numeric_limits<T>::is_integer>::type>::type ActionInterval::operator*(const T &op)
+        template<typename T, typename>
+        inline Repeat ActionInterval::operator*(const T &op)
         {
             return Repeat(*this, op);
         }
@@ -347,7 +347,6 @@ namespace oreore
         inline RotateBy rotateBy(const float duration, const float angle) { return RotateBy(duration, angle); }
         inline RotateBy rotateBy(const float duration, const float angleX, const float angleY) { return RotateBy(duration, angleX, angleY); }
 
-
         /* action */
         typedef Fluxion::WrapAction<cocos2d::Show> Show;
         inline Show show() { return Show(); }
@@ -359,19 +358,35 @@ namespace oreore
         inline CallFunc call(const std::function<void()> &func) { return CallFunc(func); }
 
         template<typename... Args>
-        inline Fluxion::ParallelAction p(const Args... args) { return Fluxion::ParallelAction::createFromActions(args...); }
+        inline Fluxion::ParallelAction p(const Args &...args) { return Fluxion::ParallelAction::createFromActions(args...); }
         template<typename... Args>
-        inline Fluxion::ParallelAction par(const Args... args) { return p(args...); }
+        inline Fluxion::ParallelAction par(const Args &...args) { return p(args...); }
         
         template<typename... Args>
-        inline Fluxion::SequentialAction s(const Args... args) { return Fluxion::SequentialAction::createFromActions(args...); }
+        inline Fluxion::SequentialAction s(const Args &...args) { return Fluxion::SequentialAction::createFromActions(args...); }
         template<typename... Args>
-        inline Fluxion::SequentialAction seq(const Args... args) { return s(args...); }
+        inline Fluxion::SequentialAction seq(const Args &...args) { return s(args...); }
 
         /* repeat */
         inline Fluxion::RepeatForever infinite() { return Fluxion::RepeatForever(); }
         inline Fluxion::RepeatForever inf() { return Fluxion::RepeatForever(); }
-    
+
+        /* action convert */
+        template<
+            typename T, typename... Args,
+            typename = typename std::enable_if<std::is_base_of<cocos2d::ActionInterval, T>::value, void>::type
+        >
+        inline Fluxion::WrapIntervalAction<T> flux(const Args &...args) { return Fluxion::WrapIntervalAction<T>(args...); }
+
+        template<
+            typename T, typename... Args,
+            typename = typename std::enable_if<
+                !std::is_base_of<cocos2d::ActionInterval, T>::value &&
+                std::is_base_of<cocos2d::Action, T>::value,
+                void
+            >::type
+        >
+        inline Fluxion::WrapAction<T> flux(const Args &...args) { return Fluxion::WrapAction<T>(args...); }
 
         namespace Ease
         {
