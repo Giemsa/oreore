@@ -12,6 +12,7 @@
 #include "actions/PlaySE.h"
 #include "actions/SwayMoveBy.h"
 #include "actions/SwayMoveTo.h"
+#include "actions/CallInterval.h"
 
 /* nodes */
 #include "nodes/GlowLine.h"
