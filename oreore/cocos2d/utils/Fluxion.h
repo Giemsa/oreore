@@ -36,6 +36,14 @@ namespace oreore
 
         class ActionInterval : public Action
         {
+        protected:
+            template<typename T>
+            inline static void addAction(const std::unique_ptr<ActionList> &actions, const T &a)
+            {
+                cocos2d::FiniteTimeAction *action = static_cast<cocos2d::FiniteTimeAction *>(a);
+                if(action)
+                    actions->pushBack(action);
+            }
         public:
             ActionInterval() { }
             virtual ~ActionInterval() { }
@@ -78,6 +86,15 @@ namespace oreore
             inline operator cocos2d::ActionInterval *() const override { return action; }
         };
 
+        class EmptyAction : public Action
+        {
+        private:
+        public:
+            EmptyAction() { }
+            ~EmptyAction() { }
+            inline operator cocos2d::FiniteTimeAction *() const override { return nullptr; }
+        };
+
         class SequentialAction : public ActionInterval
         {
         private:
@@ -92,21 +109,22 @@ namespace oreore
             template<typename S, typename T>
             inline SequentialAction(const S &a, const T &b) : actions(new ActionList())
             {
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(a));
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(b));
+                addAction(actions, a);
+                addAction(actions, b);
             }
 
             inline SequentialAction(ActionList *array) : actions(array) { }
 
             inline SequentialAction &operator>>(const Action &action)
             {
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(action));
+                addAction(actions, action);
                 return *this;
             }
 
             inline SequentialAction &operator>>(cocos2d::FiniteTimeAction *action)
             {
-                actions->pushBack(action);
+                if(action)
+                    actions->pushBack(action);
                 return *this;
             }
 
@@ -149,19 +167,20 @@ namespace oreore
             template<typename S, typename T>
             inline ParallelAction(const S &a, const T &b) : actions(new ActionList())
             {
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(a));
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(b));
+                addAction(actions, a);
+                addAction(actions, b);
             }
 
             inline ParallelAction &operator+(const Action &action)
             {
-                actions->pushBack(static_cast<cocos2d::FiniteTimeAction *>(action));
+                addAction(actions, action);
                 return *this;
             }
 
             inline ParallelAction &operator+(cocos2d::FiniteTimeAction *action)
             {
-                actions->pushBack(action);
+                if(action)
+                    actions->pushBack(action);
                 return *this;
             }
 
@@ -370,6 +389,9 @@ namespace oreore
         /* repeat */
         inline Fluxion::RepeatForever infinite() { return Fluxion::RepeatForever(); }
         inline Fluxion::RepeatForever inf() { return Fluxion::RepeatForever(); }
+
+        /* noop */
+        inline Fluxion::EmptyAction noop() { return Fluxion::EmptyAction(); }
 
         /* action convert */
         template<
