@@ -8,7 +8,7 @@ layout: default
 ## リファレンス
 **cocos2dx-2.2.2ブランチでは、全てのアクション名の先頭に“CC”が付加されています。またcocos2dx-2.2.2ブランチには存在しないアクションもあります。**
 
-### AttactMove
+### AttractMove
 　指定された一点に収束するように移動するアクションです。
 
 	static AttractMove* create(
