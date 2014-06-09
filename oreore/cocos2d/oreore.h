@@ -29,6 +29,7 @@
 #include "utils/MultiResolution.h"
 #include "utils/AssetLoader.h"
 #include "utils/Sound.h"
+#include "utils/Persistent.h"
 
 #ifndef OREORE_RELEASE
 #   include "utils/Formatter.h"
