@@ -196,3 +196,34 @@ layout: default
 	void clear();
 
 　登録されている全てのSubjectを削除します。
+
+### Persistent
+　cocos2dxの参照カウントを管理するクラスです。**cocos2dx-3.0RC1リポジトリのみで実装されています。**
+
+	Persistent<Sprite> sprite = Sprite::create("image.png");
+	
+	// 以降Spriteとして利用可能
+	sprite->setPosition(Point(50.0f, 50.0f));
+
+ 上記の使い方だけでは意味をなしません。cocos2dxのノードをメンバ変数として永続的に所持したい場合に有効です。
+
+	class Hoge
+	{
+	private:
+		// ここで宣言
+		Persistent<Sprite> sprite;
+	public:
+		...
+	};
+
+	// あとは普通に初期化
+	bool Hoge::init()
+	{
+		// 代入
+		sprite = Sprite::create("image.png");
+	}
+
+　cocos2dxでは参照カウントを用いてメモリの管理が行われています。したがって、シーングラフに追加されていないノードは、そのフレーム終了時に破棄されてしまいます。そのため、retainを用いて参照カウントを手動で管理しなければならないのですが、retainしたノードはreleaseを用いて解放する必要があり、管理が煩雑になります。  
+　このPersistentは、ノードの参照カウントの管理を自動で行うためのラッパークラスです。Persistent同士での代入等では、この参照カウントが正しく計算されます。
+
+
