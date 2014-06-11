@@ -7,6 +7,17 @@ namespace oreore
 {
     class DLog final
     {
+    public:
+        enum class LogType : int
+        {
+            Info     = 0x01,
+            Debug    = 0x02,
+            Warning  = 0x04,
+            Error    = 0x08,
+            All      = Info | Debug | Warning | Error
+        };
+
+    private:
         enum class TextAlign
         {
             Left,
@@ -43,20 +54,22 @@ namespace oreore
         std::ostream *os;
         PrintFormat currentFormat;
         std::ios::fmtflags dfmt;
+        bool showTime;
 
         DLog(const DLog &rhs) { }
         DLog(DLog &&rhs) { }
-        DLog() : os(&std::cout), dfmt(os->flags()) { }
+        DLog() : os(&std::cout), dfmt(os->flags()), showTime(false) { }
         ~DLog() { }
 
         void setFlags();
         void resetFlags();
         void parseArg(const char *&str);
+        void outputTime();
 
-        void dlog(const char *s);
+        void output(const char *s);
 
         template<typename T, typename ...Args>
-        void dlog(const char *s, const T &v, const Args&... args);
+        void output(const char *s, const T &v, const Args&... args);
 
         template<typename T>
         inline void _outputFormat(const T &v)
@@ -80,11 +93,35 @@ namespace oreore
         }
 
         template<typename ...Args>
-        inline static void out(const char *format, const Args&... args)
+        inline static void out(const LogType type, const char *format, const Args&... args)
         {
-            getInstance().dlog(format, args...);
+            getInstance().outputTime();
+            getInstance().output(format, args...);
         }
 
+        template<typename ...Args>
+        inline static void info(const char *format, const Args&... args)
+        {
+            out(LogType::Info, format, args...);
+        }
+
+        template<typename ...Args>
+        inline static void debug(const char *format, const Args&... args)
+        {
+            out(LogType::Debug, format, args...);
+        }
+
+        template<typename ...Args>
+        inline static void warn(const char *format, const Args&... args)
+        {
+            out(LogType::Warning, format, args...);
+        }
+
+        template<typename ...Args>
+        inline static void error(const char *format, const Args&... args)
+        {
+            out(LogType::Error, format, args...);
+        }
 
         template<typename T>
         inline static void outputFormat(const T &v)
@@ -93,10 +130,12 @@ namespace oreore
         }
 
         inline static void initFlags() { getInstance().resetFlags(); }
+        inline static void setShowTime(const bool st) { getInstance().showTime = st; }
+        inline static bool isShowTime() { return getInstance().showTime; }
     };
 
     template<typename T, typename ...Args>
-    void DLog::dlog(const char *s, const T &v, const Args&... args)
+    void DLog::output(const char *s, const T &v, const Args&... args)
     {
         while(*s)
         {
@@ -108,15 +147,22 @@ namespace oreore
                 case '{':
                     parseArg(s);
                     outputFormat(v);
-                    return dlog(++s, args...);
+                    return output(++s, args...);
                 case '#':
                     (*os) << v;
-                    return dlog(++s, args...);
+                    return output(++s, args...);
             }
 
             (*os) << *s++;
         }
         throw std::runtime_error("parameters mismatch.");
+    }
+
+    // shortcut
+    template<typename ...Args>
+    inline void dlog(const char *format, const Args&... args)
+    {
+        DLog::debug(format, args...);
     }
 }
 

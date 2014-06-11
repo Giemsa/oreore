@@ -1,5 +1,8 @@
 #include "DLog.h"
 #include <iomanip>
+#include <ctime>
+#include <cstdio>
+#include <sys/time.h>
 
 namespace oreore
 {
@@ -146,7 +149,7 @@ namespace oreore
         os->flags(dfmt);
     }
 
-    void DLog::dlog(const char *s)
+    void DLog::output(const char *s)
     {
         while(*s)
         {
@@ -165,5 +168,19 @@ namespace oreore
         }
 
         (*os) << std::endl;
+    }
+
+    void DLog::outputTime()
+    {
+        if(!showTime)
+        {
+            return;
+        }
+
+        timeval tv;
+        gettimeofday(&tv, nullptr);
+        
+        tm *l = localtime(&tv.tv_sec);
+        printf("%02d:%02d:%02d.%03d\t", l->tm_hour, l->tm_min, l->tm_sec, tv.tv_usec / 1000);
     }
 }
