@@ -1,4 +1,6 @@
 #include "DLog.h"
+
+#ifndef OREORE_RELEASE
 #include <iomanip>
 #include <ctime>
 #include <cstdio>
@@ -184,3 +186,5 @@ namespace oreore
         printf("%02d:%02d:%02d.%03d\t", l->tm_hour, l->tm_min, l->tm_sec, tv.tv_usec / 1000);
     }
 }
+
+#endif

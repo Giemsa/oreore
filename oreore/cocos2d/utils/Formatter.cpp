@@ -1,4 +1,6 @@
 #include "Formatter.h"
+#ifndef OREORE_RELEASE
+
 #include "../../dlog.h"
 #include <iomanip>
 
@@ -11,7 +13,7 @@ namespace oreore
         DLog::initFlags();
         os << "(";
         DLog::outputFormat(point.x);
-        os << ",";
+        os << ", ";
         DLog::outputFormat(point.y);
         os << ")";
         return os;
@@ -22,7 +24,7 @@ namespace oreore
         DLog::initFlags();
         os << "(";
         DLog::outputFormat(size.width);
-        os << ",";
+        os << ", ";
         DLog::outputFormat(size.height);
         os << ")";
         return os;
@@ -33,13 +35,15 @@ namespace oreore
         DLog::initFlags();
         os << "(";
         DLog::outputFormat(rect.getMinX());
-        os << ",";
+        os << ", ";
         DLog::outputFormat(rect.getMinY());
-        os << ",";
+        os << ", ";
         DLog::outputFormat(rect.getMaxX());
-        os << ",";
+        os << ", ";
         DLog::outputFormat(rect.getMaxY());
         os << ")";
         return os;
     }
 }
+
+#endif
