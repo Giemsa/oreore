@@ -10,4 +10,5 @@
 #   include "./cocos2d/oreore.h"
 #endif
 
+#include "DLog.h"
 #endif

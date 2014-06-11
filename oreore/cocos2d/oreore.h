@@ -29,5 +29,6 @@
 #include "utils/MultiResolution.h"
 #include "utils/AssetLoader.h"
 #include "utils/Sound.h"
+#include "utils/Formatter.h"
 
 #endif
