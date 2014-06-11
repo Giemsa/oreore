@@ -2,6 +2,7 @@
 #define __OREORE_DLOG_H__
 
 #include <iostream>
+#include <stdexcept>
 
 namespace oreore
 {

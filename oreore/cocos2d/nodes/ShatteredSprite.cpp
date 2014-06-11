@@ -127,7 +127,6 @@ namespace oreore
                 Tex2F pt(x * pieceXsize, y * pieceYsize);
                 if(x > 0 && x < param.piecesX && y > 0 && y < param.piecesY)
                     t2fAdd(pt, Tex2F(roundf(randf(0.0f, pieceXsize * 0.45f)), roundf(randf(0.0f, pieceYsize * 0.45f))));
-                pt.v = param.textureRect.size.height - pt.v; // reverse Y
                 ptArray[getIndex(x, y)] = pt;
             }
 
