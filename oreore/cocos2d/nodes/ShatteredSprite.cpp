@@ -108,8 +108,9 @@ namespace oreore
 
         updateBlendFunc();
 
+        const float height = param.textureRect.size.height;
         const float pieceXsize = param.textureRect.size.width / param.piecesX;
-        const float pieceYsize = param.textureRect.size.height / param.piecesY;
+        const float pieceYsize = height / param.piecesY;
         const Vertex3F tc(getContentSize().width / 2, getContentSize().height / 2, 0.0f);
 
         const float rx = 1.0f / param.texture->getPixelsWide();
@@ -126,6 +127,7 @@ namespace oreore
                 Tex2F pt(x * pieceXsize, y * pieceYsize);
                 if(x > 0 && x < param.piecesX && y > 0 && y < param.piecesY)
                     t2fAdd(pt, Tex2F(roundf(randf(0.0f, pieceXsize * 0.45f)), roundf(randf(0.0f, pieceYsize * 0.45f))));
+                pt.v = param.textureRect.size.height - pt.v; // reverse Y
                 ptArray[getIndex(x, y)] = pt;
             }
 
@@ -156,9 +158,9 @@ namespace oreore
                     coord.push_back(t2f2v3f(p2, 0.0f));
                     coord.push_back(t2f2v3f(p3, 0.0f));
 
-                    texCoord.push_back(Tex2F(p1.u * rx + ox, p1.v * ry + oy));
-                    texCoord.push_back(Tex2F(p2.u * rx + ox, p2.v * ry + oy));
-                    texCoord.push_back(Tex2F(p3.u * rx + ox, p3.v * ry + oy));
+                    texCoord.push_back(Tex2F(p1.u * rx + ox, (height - p1.v) * ry + oy));
+                    texCoord.push_back(Tex2F(p2.u * rx + ox, (height - p2.v) * ry + oy));
+                    texCoord.push_back(Tex2F(p3.u * rx + ox, (height - p3.v) * ry + oy));
                 }
 
                 {
@@ -181,9 +183,9 @@ namespace oreore
                     coord.push_back(t2f2v3f(p2, 0.0f));
                     coord.push_back(t2f2v3f(p3, 0.0f));
 
-                    texCoord.push_back(Tex2F(p1.u * rx + ox, p1.v * ry + oy));
-                    texCoord.push_back(Tex2F(p2.u * rx + ox, p2.v * ry + oy));
-                    texCoord.push_back(Tex2F(p3.u * rx + ox, p3.v * ry + oy));
+                    texCoord.push_back(Tex2F(p1.u * rx + ox, (height - p1.v) * ry + oy));
+                    texCoord.push_back(Tex2F(p2.u * rx + ox, (height - p2.v) * ry + oy));
+                    texCoord.push_back(Tex2F(p3.u * rx + ox, (height - p3.v) * ry + oy));
                 }
             }
         }
