@@ -133,7 +133,8 @@ namespace oreore
             {
                 currentConfig = resolutions[i + 1];
                 order.push_back(currentConfig.dirname);
-                rsize = currentConfig.size;
+                //rsize = currentConfig.size;
+                rsize = size;
                 factor = currentConfig.scaleFactor;
                 set = true;
                 break;
@@ -143,14 +144,15 @@ namespace oreore
         {
             currentConfig = resolutions[offset];
             order.push_back(currentConfig.dirname);
-            rsize = currentConfig.size;
+            //rsize = currentConfig.size;
+            rsize = size;
             factor = currentConfig.scaleFactor;
         }
         
         scaleH = rsize.height / designSize.height;
         scaleW = rsize.width / designSize.width;
         realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
-        Director::getInstance()->setContentScaleFactor(std::min(scaleW, scaleH));
+        //Director::getInstance()->setContentScaleFactor(std::min(scaleW, scaleH));
        
         if(policy == ResolutionPolicy::UNKNOWN)
         {
