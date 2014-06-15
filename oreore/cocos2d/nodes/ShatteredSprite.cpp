@@ -113,10 +113,10 @@ namespace oreore
         const float pieceYsize = height / param.piecesY;
         const Vertex3F tc(getContentSize().width / 2, getContentSize().height / 2, 0.0f);
 
-        const float rx = 1.0f / param.texture->getPixelsWide();
-        const float ry = 1.0f / param.texture->getPixelsHigh();
-        const float ox = param.textureRect.origin.x / param.texture->getPixelsWide();
-        const float oy = param.textureRect.origin.y / param.texture->getPixelsHigh();
+        const float rx = CC_CONTENT_SCALE_FACTOR() / param.texture->getPixelsWide();
+        const float ry = CC_CONTENT_SCALE_FACTOR() / param.texture->getPixelsHigh();
+        const float ox = param.textureRect.origin.x * CC_CONTENT_SCALE_FACTOR() / param.texture->getPixelsWide();
+        const float oy = param.textureRect.origin.y * CC_CONTENT_SCALE_FACTOR() / param.texture->getPixelsHigh();
 
         const Color4B color(getColor().r, getColor().g, getColor().b, getOpacity());
         Tex2FVec ptArray((param.piecesX + 1) * (param.piecesY + 1));

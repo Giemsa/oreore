@@ -78,8 +78,8 @@ namespace oreore
 
 	void TextureMappedPolygon::calcTexCoord()
 	{
-		const float rx = 1.0f / texture->getPixelsWide();
-		const float ry = 1.0f / texture->getPixelsHigh();
+		const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
+		const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
 		texCoord.clear();
         for(auto p : coord)
 			texCoord.push_back(Vertex2F(p.x * rx, 1.0f - p.y * ry));
@@ -151,8 +151,8 @@ namespace oreore
 
 	void ScreenMappedPolygon::calcTexCoord()
 	{
-		const float rx = 1.0f / texture->getPixelsWide();
-		const float ry = 1.0f / texture->getPixelsHigh();
+		const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
+		const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
 		texCoord.clear();
         for(auto p : coord)
 			texCoord.push_back(Vertex2F(p.x * rx, p.y * ry));
