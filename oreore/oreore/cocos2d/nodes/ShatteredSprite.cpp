@@ -28,16 +28,6 @@ namespace oreore
         v0.z += v1.z;
     }
 
-    static inline void v2fRotateByAngle(Vertex2F &v0, const Vertex2F &c, const float angle)
-    {
-        const GLfloat x = v0.x - c.x;
-        const GLfloat y = v0.y - c.y;
-        const float ca = cosf(angle);
-        const float sa = sinf(angle);
-        v0.x = c.x + (x * ca - y * sa);
-        v0.y = c.y + (x * sa + y * ca);
-    }
-
     static inline Vertex3F t2f2v3f(const Tex2F &t, const GLfloat z)
     {
         return Vertex3F(t.u, t.v, z);
