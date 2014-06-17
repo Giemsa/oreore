@@ -168,6 +168,20 @@
 			remoteGlobalIDString = 7A7FC7C7194ED969006EA6B4;
 			remoteInfo = "oreore Mac";
 		};
+		7A7596B0195050FD004A6CE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A75969919502D42004A6CE8 /* oreore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A759648194FF08A004A6CE8;
+			remoteInfo = "oreore iOS";
+		};
+		7A7596B619505103004A6CE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A75969919502D42004A6CE8 /* oreore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A7FC7C6194ED969006EA6B4;
+			remoteInfo = "oreore Mac";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -438,6 +452,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7A7596B1195050FD004A6CE8 /* PBXTargetDependency */,
 				1AC6FB25180E99E1004C840B /* PBXTargetDependency */,
 				1AC6FB27180E99E1004C840B /* PBXTargetDependency */,
 				1AC6FB2D180E99E1004C840B /* PBXTargetDependency */,
@@ -458,6 +473,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7A7596B719505103004A6CE8 /* PBXTargetDependency */,
 				1AC6FB16180E9959004C840B /* PBXTargetDependency */,
 				1AC6FB18180E9959004C840B /* PBXTargetDependency */,
 				1AC6FB1C180E9959004C840B /* PBXTargetDependency */,
@@ -659,6 +675,16 @@
 			isa = PBXTargetDependency;
 			name = "CocosDenshion iOS";
 			targetProxy = 1AC6FB2C180E99E1004C840B /* PBXContainerItemProxy */;
+		};
+		7A7596B1195050FD004A6CE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "oreore iOS";
+			targetProxy = 7A7596B0195050FD004A6CE8 /* PBXContainerItemProxy */;
+		};
+		7A7596B719505103004A6CE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "oreore Mac";
+			targetProxy = 7A7596B619505103004A6CE8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
