@@ -120,6 +120,8 @@ namespace oreore
             rhs.ptr = nullptr;
             return *this;
         }
+
+        inline T *get() const { return ptr; }
     };
 
     template<typename T>
