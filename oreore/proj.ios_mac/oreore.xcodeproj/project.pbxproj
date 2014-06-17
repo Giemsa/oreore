@@ -1,0 +1,744 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7A75964A194FF08A004A6CE8 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC805194ED99C006EA6B4 /* Sound.cpp */; };
+		7A75964B194FF08A004A6CE8 /* ImageMappedPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */; };
+		7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D3194ED99B006EA6B4 /* CallInterval.cpp */; };
+		7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EE194ED99B006EA6B4 /* ShatteredSprite.cpp */; };
+		7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */; };
+		7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */; };
+		7A759650194FF08A004A6CE8 /* GlowLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */; };
+		7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7FB194ED99C006EA6B4 /* Formatter.cpp */; };
+		7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
+		7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D7194ED99B006EA6B4 /* CircleMoveTo.cpp */; };
+		7A759654194FF08A004A6CE8 /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC803194ED99C006EA6B4 /* SceneManager.cpp */; };
+		7A759655194FF08A004A6CE8 /* ToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F2194ED99B006EA6B4 /* ToggleButton.cpp */; };
+		7A759656194FF08A004A6CE8 /* AttractMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */; };
+		7A759657194FF08A004A6CE8 /* MultiResolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC800194ED99C006EA6B4 /* MultiResolution.cpp */; };
+		7A759658194FF08A004A6CE8 /* SimpleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F0194ED99B006EA6B4 /* SimpleButton.cpp */; };
+		7A759659194FF08A004A6CE8 /* PlaySE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DD194ED99B006EA6B4 /* PlaySE.cpp */; };
+		7A75965A194FF08A004A6CE8 /* SwayMoveBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E3194ED99B006EA6B4 /* SwayMoveBy.cpp */; };
+		7A75965B194FF08A004A6CE8 /* CircleMoveBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D5194ED99B006EA6B4 /* CircleMoveBy.cpp */; };
+		7A75965C194FF08A004A6CE8 /* MusicFadeTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DB194ED99B006EA6B4 /* MusicFadeTo.cpp */; };
+		7A75965D194FF08A004A6CE8 /* SwayMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */; };
+		7A75965E194FF08A004A6CE8 /* Debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F8194ED99C006EA6B4 /* Debug.cpp */; };
+		7A75965F194FF08A004A6CE8 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DF194ED99B006EA6B4 /* Shake.cpp */; };
+		7A759660194FF08A004A6CE8 /* Overlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */; };
+		7A759661194FF08A004A6CE8 /* Move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D9194ED99B006EA6B4 /* Move.cpp */; };
+		7A759662194FF08A004A6CE8 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
+		7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */; };
+		7A759666194FF08A004A6CE8 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
+		7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */; };
+		7A759668194FF08A004A6CE8 /* GlowLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */; };
+		7A759669194FF08A004A6CE8 /* Move.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DA194ED99B006EA6B4 /* Move.h */; };
+		7A75966A194FF08A004A6CE8 /* bg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FE194ED99C006EA6B4 /* bg.h */; };
+		7A75966B194FF08A004A6CE8 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F9194ED99C006EA6B4 /* Debug.h */; };
+		7A75966C194FF08A004A6CE8 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
+		7A75966D194FF08A004A6CE8 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F4194ED99B006EA6B4 /* oreore.h */; };
+		7A75966E194FF08A004A6CE8 /* Observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80B194ED99C006EA6B4 /* Observer.h */; };
+		7A75966F194FF08A004A6CE8 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC807194ED99C006EA6B4 /* Utils.h */; };
+		7A759670194FF08A004A6CE8 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC802194ED99C006EA6B4 /* Persistent.h */; };
+		7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */; };
+		7A759672194FF08A004A6CE8 /* Fluxion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FA194ED99C006EA6B4 /* Fluxion.h */; };
+		7A759673194FF08A004A6CE8 /* Shake.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E0194ED99B006EA6B4 /* Shake.h */; };
+		7A759674194FF08A004A6CE8 /* AssetLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F7194ED99C006EA6B4 /* AssetLoader.h */; };
+		7A759675194FF08A004A6CE8 /* ImageMappedPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */; };
+		7A759676194FF08A004A6CE8 /* MusicFadeTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DC194ED99B006EA6B4 /* MusicFadeTo.h */; };
+		7A759677194FF08A004A6CE8 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80F194ED99C006EA6B4 /* Utils.h */; };
+		7A759678194FF08A004A6CE8 /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC806194ED99C006EA6B4 /* Sound.h */; };
+		7A759679194FF08A004A6CE8 /* CircleMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D8194ED99B006EA6B4 /* CircleMoveTo.h */; };
+		7A75967A194FF08A004A6CE8 /* TimeCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */; };
+		7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */; };
+		7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7ED194ED99B006EA6B4 /* Overlay.h */; };
+		7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F1194ED99B006EA6B4 /* SimpleButton.h */; };
+		7A75967E194FF08A004A6CE8 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
+		7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */; };
+		7A759680194FF08A004A6CE8 /* Formatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FC194ED99C006EA6B4 /* Formatter.h */; };
+		7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D2194ED99B006EA6B4 /* AttractMove.h */; };
+		7A759682194FF08A004A6CE8 /* ShatteredSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7EF194ED99B006EA6B4 /* ShatteredSprite.h */; };
+		7A759683194FF08A004A6CE8 /* MultiResolution.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC801194ED99C006EA6B4 /* MultiResolution.h */; };
+		7A759684194FF08A004A6CE8 /* SceneManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC804194ED99C006EA6B4 /* SceneManager.h */; };
+		7A759685194FF08A004A6CE8 /* icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FF194ED99C006EA6B4 /* icon.h */; };
+		7A759686194FF08A004A6CE8 /* CallInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D4194ED99B006EA6B4 /* CallInterval.h */; };
+		7A759687194FF08A004A6CE8 /* CircleMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D6194ED99B006EA6B4 /* CircleMoveBy.h */; };
+		7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */; };
+		7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D2194ED99B006EA6B4 /* AttractMove.h */; };
+		7A7FC812194ED99C006EA6B4 /* CallInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D3194ED99B006EA6B4 /* CallInterval.cpp */; };
+		7A7FC813194ED99C006EA6B4 /* CallInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D4194ED99B006EA6B4 /* CallInterval.h */; };
+		7A7FC814194ED99C006EA6B4 /* CircleMoveBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D5194ED99B006EA6B4 /* CircleMoveBy.cpp */; };
+		7A7FC815194ED99C006EA6B4 /* CircleMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D6194ED99B006EA6B4 /* CircleMoveBy.h */; };
+		7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D7194ED99B006EA6B4 /* CircleMoveTo.cpp */; };
+		7A7FC817194ED99C006EA6B4 /* CircleMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D8194ED99B006EA6B4 /* CircleMoveTo.h */; };
+		7A7FC818194ED99C006EA6B4 /* Move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D9194ED99B006EA6B4 /* Move.cpp */; };
+		7A7FC819194ED99C006EA6B4 /* Move.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DA194ED99B006EA6B4 /* Move.h */; };
+		7A7FC81A194ED99C006EA6B4 /* MusicFadeTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DB194ED99B006EA6B4 /* MusicFadeTo.cpp */; };
+		7A7FC81B194ED99C006EA6B4 /* MusicFadeTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DC194ED99B006EA6B4 /* MusicFadeTo.h */; };
+		7A7FC81C194ED99C006EA6B4 /* PlaySE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DD194ED99B006EA6B4 /* PlaySE.cpp */; };
+		7A7FC81D194ED99C006EA6B4 /* PlaySE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */; };
+		7A7FC81E194ED99C006EA6B4 /* Shake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7DF194ED99B006EA6B4 /* Shake.cpp */; };
+		7A7FC81F194ED99C006EA6B4 /* Shake.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E0194ED99B006EA6B4 /* Shake.h */; };
+		7A7FC820194ED99C006EA6B4 /* ShakeFadeOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */; };
+		7A7FC821194ED99C006EA6B4 /* ShakeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */; };
+		7A7FC822194ED99C006EA6B4 /* SwayMoveBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E3194ED99B006EA6B4 /* SwayMoveBy.cpp */; };
+		7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */; };
+		7A7FC824194ED99C006EA6B4 /* SwayMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */; };
+		7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */; };
+		7A7FC826194ED99C006EA6B4 /* GlowLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */; };
+		7A7FC827194ED99C006EA6B4 /* GlowLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */; };
+		7A7FC828194ED99C006EA6B4 /* ImageMappedPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */; };
+		7A7FC829194ED99C006EA6B4 /* ImageMappedPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */; };
+		7A7FC82A194ED99C006EA6B4 /* Overlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */; };
+		7A7FC82B194ED99C006EA6B4 /* Overlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7ED194ED99B006EA6B4 /* Overlay.h */; };
+		7A7FC82C194ED99C006EA6B4 /* ShatteredSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EE194ED99B006EA6B4 /* ShatteredSprite.cpp */; };
+		7A7FC82D194ED99C006EA6B4 /* ShatteredSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7EF194ED99B006EA6B4 /* ShatteredSprite.h */; };
+		7A7FC82E194ED99C006EA6B4 /* SimpleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F0194ED99B006EA6B4 /* SimpleButton.cpp */; };
+		7A7FC82F194ED99C006EA6B4 /* SimpleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F1194ED99B006EA6B4 /* SimpleButton.h */; };
+		7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F2194ED99B006EA6B4 /* ToggleButton.cpp */; };
+		7A7FC831194ED99C006EA6B4 /* ToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */; };
+		7A7FC832194ED99C006EA6B4 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F4194ED99B006EA6B4 /* oreore.h */; };
+		7A7FC833194ED99C006EA6B4 /* AssetLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */; };
+		7A7FC834194ED99C006EA6B4 /* AssetLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F7194ED99C006EA6B4 /* AssetLoader.h */; };
+		7A7FC835194ED99C006EA6B4 /* Debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F8194ED99C006EA6B4 /* Debug.cpp */; };
+		7A7FC836194ED99C006EA6B4 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F9194ED99C006EA6B4 /* Debug.h */; };
+		7A7FC837194ED99C006EA6B4 /* Fluxion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FA194ED99C006EA6B4 /* Fluxion.h */; };
+		7A7FC838194ED99C006EA6B4 /* Formatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7FB194ED99C006EA6B4 /* Formatter.cpp */; };
+		7A7FC839194ED99C006EA6B4 /* Formatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FC194ED99C006EA6B4 /* Formatter.h */; };
+		7A7FC83A194ED99C006EA6B4 /* bg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FE194ED99C006EA6B4 /* bg.h */; };
+		7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FF194ED99C006EA6B4 /* icon.h */; };
+		7A7FC83C194ED99C006EA6B4 /* MultiResolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC800194ED99C006EA6B4 /* MultiResolution.cpp */; };
+		7A7FC83D194ED99C006EA6B4 /* MultiResolution.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC801194ED99C006EA6B4 /* MultiResolution.h */; };
+		7A7FC83E194ED99C006EA6B4 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC802194ED99C006EA6B4 /* Persistent.h */; };
+		7A7FC83F194ED99C006EA6B4 /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC803194ED99C006EA6B4 /* SceneManager.cpp */; };
+		7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC804194ED99C006EA6B4 /* SceneManager.h */; };
+		7A7FC841194ED99C006EA6B4 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC805194ED99C006EA6B4 /* Sound.cpp */; };
+		7A7FC842194ED99C006EA6B4 /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC806194ED99C006EA6B4 /* Sound.h */; };
+		7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC807194ED99C006EA6B4 /* Utils.h */; };
+		7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
+		7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
+		7A7FC846194ED99C006EA6B4 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
+		7A7FC847194ED99C006EA6B4 /* Observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80B194ED99C006EA6B4 /* Observer.h */; };
+		7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
+		7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */; };
+		7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
+		7A7FC84B194ED99C006EA6B4 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80F194ED99C006EA6B4 /* Utils.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7A75968B194FF08A004A6CE8 /* liboreore iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A7FC7C7194ED969006EA6B4 /* liboreore Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttractMove.cpp; sourceTree = "<group>"; };
+		7A7FC7D2194ED99B006EA6B4 /* AttractMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttractMove.h; sourceTree = "<group>"; };
+		7A7FC7D3194ED99B006EA6B4 /* CallInterval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CallInterval.cpp; sourceTree = "<group>"; };
+		7A7FC7D4194ED99B006EA6B4 /* CallInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallInterval.h; sourceTree = "<group>"; };
+		7A7FC7D5194ED99B006EA6B4 /* CircleMoveBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircleMoveBy.cpp; sourceTree = "<group>"; };
+		7A7FC7D6194ED99B006EA6B4 /* CircleMoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleMoveBy.h; sourceTree = "<group>"; };
+		7A7FC7D7194ED99B006EA6B4 /* CircleMoveTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircleMoveTo.cpp; sourceTree = "<group>"; };
+		7A7FC7D8194ED99B006EA6B4 /* CircleMoveTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleMoveTo.h; sourceTree = "<group>"; };
+		7A7FC7D9194ED99B006EA6B4 /* Move.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Move.cpp; sourceTree = "<group>"; };
+		7A7FC7DA194ED99B006EA6B4 /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
+		7A7FC7DB194ED99B006EA6B4 /* MusicFadeTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicFadeTo.cpp; sourceTree = "<group>"; };
+		7A7FC7DC194ED99B006EA6B4 /* MusicFadeTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicFadeTo.h; sourceTree = "<group>"; };
+		7A7FC7DD194ED99B006EA6B4 /* PlaySE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlaySE.cpp; sourceTree = "<group>"; };
+		7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaySE.h; sourceTree = "<group>"; };
+		7A7FC7DF194ED99B006EA6B4 /* Shake.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shake.cpp; sourceTree = "<group>"; };
+		7A7FC7E0194ED99B006EA6B4 /* Shake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shake.h; sourceTree = "<group>"; };
+		7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShakeFadeOut.cpp; sourceTree = "<group>"; };
+		7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeFadeOut.h; sourceTree = "<group>"; };
+		7A7FC7E3194ED99B006EA6B4 /* SwayMoveBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwayMoveBy.cpp; sourceTree = "<group>"; };
+		7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwayMoveBy.h; sourceTree = "<group>"; };
+		7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwayMoveTo.cpp; sourceTree = "<group>"; };
+		7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwayMoveTo.h; sourceTree = "<group>"; };
+		7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlowLine.cpp; sourceTree = "<group>"; };
+		7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowLine.h; sourceTree = "<group>"; };
+		7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMappedPolygon.cpp; sourceTree = "<group>"; };
+		7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageMappedPolygon.h; sourceTree = "<group>"; };
+		7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Overlay.cpp; sourceTree = "<group>"; };
+		7A7FC7ED194ED99B006EA6B4 /* Overlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Overlay.h; sourceTree = "<group>"; };
+		7A7FC7EE194ED99B006EA6B4 /* ShatteredSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShatteredSprite.cpp; sourceTree = "<group>"; };
+		7A7FC7EF194ED99B006EA6B4 /* ShatteredSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShatteredSprite.h; sourceTree = "<group>"; };
+		7A7FC7F0194ED99B006EA6B4 /* SimpleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleButton.cpp; sourceTree = "<group>"; };
+		7A7FC7F1194ED99B006EA6B4 /* SimpleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleButton.h; sourceTree = "<group>"; };
+		7A7FC7F2194ED99B006EA6B4 /* ToggleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToggleButton.cpp; sourceTree = "<group>"; };
+		7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleButton.h; sourceTree = "<group>"; };
+		7A7FC7F4194ED99B006EA6B4 /* oreore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oreore.h; sourceTree = "<group>"; };
+		7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetLoader.cpp; sourceTree = "<group>"; };
+		7A7FC7F7194ED99C006EA6B4 /* AssetLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetLoader.h; sourceTree = "<group>"; };
+		7A7FC7F8194ED99C006EA6B4 /* Debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Debug.cpp; sourceTree = "<group>"; };
+		7A7FC7F9194ED99C006EA6B4 /* Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Debug.h; sourceTree = "<group>"; };
+		7A7FC7FA194ED99C006EA6B4 /* Fluxion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fluxion.h; sourceTree = "<group>"; };
+		7A7FC7FB194ED99C006EA6B4 /* Formatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Formatter.cpp; sourceTree = "<group>"; };
+		7A7FC7FC194ED99C006EA6B4 /* Formatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Formatter.h; sourceTree = "<group>"; };
+		7A7FC7FE194ED99C006EA6B4 /* bg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bg.h; sourceTree = "<group>"; };
+		7A7FC7FF194ED99C006EA6B4 /* icon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icon.h; sourceTree = "<group>"; };
+		7A7FC800194ED99C006EA6B4 /* MultiResolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiResolution.cpp; sourceTree = "<group>"; };
+		7A7FC801194ED99C006EA6B4 /* MultiResolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiResolution.h; sourceTree = "<group>"; };
+		7A7FC802194ED99C006EA6B4 /* Persistent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistent.h; sourceTree = "<group>"; };
+		7A7FC803194ED99C006EA6B4 /* SceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneManager.cpp; sourceTree = "<group>"; };
+		7A7FC804194ED99C006EA6B4 /* SceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
+		7A7FC805194ED99C006EA6B4 /* Sound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sound.cpp; sourceTree = "<group>"; };
+		7A7FC806194ED99C006EA6B4 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
+		7A7FC807194ED99C006EA6B4 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		7A7FC808194ED99C006EA6B4 /* dlog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dlog.cpp; sourceTree = "<group>"; };
+		7A7FC809194ED99C006EA6B4 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
+		7A7FC80A194ED99C006EA6B4 /* null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = null.h; sourceTree = "<group>"; };
+		7A7FC80B194ED99C006EA6B4 /* Observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observer.h; sourceTree = "<group>"; };
+		7A7FC80C194ED99C006EA6B4 /* oreore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oreore.h; sourceTree = "<group>"; };
+		7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCounter.h; sourceTree = "<group>"; };
+		7A7FC80E194ED99C006EA6B4 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		7A7FC80F194ED99C006EA6B4 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A759663194FF08A004A6CE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A7FC7C4194ED969006EA6B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A7FC7BE194ED969006EA6B4 = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7CE194ED99B006EA6B4 /* oreore */,
+				7A7FC7C8194ED969006EA6B4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7A7FC7C8194ED969006EA6B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7C7194ED969006EA6B4 /* liboreore Mac.a */,
+				7A75968B194FF08A004A6CE8 /* liboreore iOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A7FC7CE194ED99B006EA6B4 /* oreore */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7CF194ED99B006EA6B4 /* cocos2d */,
+				7A7FC808194ED99C006EA6B4 /* dlog.cpp */,
+				7A7FC809194ED99C006EA6B4 /* DLog.h */,
+				7A7FC80A194ED99C006EA6B4 /* null.h */,
+				7A7FC80B194ED99C006EA6B4 /* Observer.h */,
+				7A7FC80C194ED99C006EA6B4 /* oreore.h */,
+				7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */,
+				7A7FC80E194ED99C006EA6B4 /* Utils.cpp */,
+				7A7FC80F194ED99C006EA6B4 /* Utils.h */,
+			);
+			name = oreore;
+			path = ../oreore;
+			sourceTree = "<group>";
+		};
+		7A7FC7CF194ED99B006EA6B4 /* cocos2d */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7D0194ED99B006EA6B4 /* actions */,
+				7A7FC7E7194ED99B006EA6B4 /* nodes */,
+				7A7FC7F4194ED99B006EA6B4 /* oreore.h */,
+				7A7FC7F5194ED99B006EA6B4 /* utils */,
+			);
+			path = cocos2d;
+			sourceTree = "<group>";
+		};
+		7A7FC7D0194ED99B006EA6B4 /* actions */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */,
+				7A7FC7D2194ED99B006EA6B4 /* AttractMove.h */,
+				7A7FC7D3194ED99B006EA6B4 /* CallInterval.cpp */,
+				7A7FC7D4194ED99B006EA6B4 /* CallInterval.h */,
+				7A7FC7D5194ED99B006EA6B4 /* CircleMoveBy.cpp */,
+				7A7FC7D6194ED99B006EA6B4 /* CircleMoveBy.h */,
+				7A7FC7D7194ED99B006EA6B4 /* CircleMoveTo.cpp */,
+				7A7FC7D8194ED99B006EA6B4 /* CircleMoveTo.h */,
+				7A7FC7D9194ED99B006EA6B4 /* Move.cpp */,
+				7A7FC7DA194ED99B006EA6B4 /* Move.h */,
+				7A7FC7DB194ED99B006EA6B4 /* MusicFadeTo.cpp */,
+				7A7FC7DC194ED99B006EA6B4 /* MusicFadeTo.h */,
+				7A7FC7DD194ED99B006EA6B4 /* PlaySE.cpp */,
+				7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */,
+				7A7FC7DF194ED99B006EA6B4 /* Shake.cpp */,
+				7A7FC7E0194ED99B006EA6B4 /* Shake.h */,
+				7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */,
+				7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */,
+				7A7FC7E3194ED99B006EA6B4 /* SwayMoveBy.cpp */,
+				7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */,
+				7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */,
+				7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */,
+			);
+			path = actions;
+			sourceTree = "<group>";
+		};
+		7A7FC7E7194ED99B006EA6B4 /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */,
+				7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */,
+				7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */,
+				7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */,
+				7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */,
+				7A7FC7ED194ED99B006EA6B4 /* Overlay.h */,
+				7A7FC7EE194ED99B006EA6B4 /* ShatteredSprite.cpp */,
+				7A7FC7EF194ED99B006EA6B4 /* ShatteredSprite.h */,
+				7A7FC7F0194ED99B006EA6B4 /* SimpleButton.cpp */,
+				7A7FC7F1194ED99B006EA6B4 /* SimpleButton.h */,
+				7A7FC7F2194ED99B006EA6B4 /* ToggleButton.cpp */,
+				7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */,
+			);
+			path = nodes;
+			sourceTree = "<group>";
+		};
+		7A7FC7F5194ED99B006EA6B4 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */,
+				7A7FC7F7194ED99C006EA6B4 /* AssetLoader.h */,
+				7A7FC7F8194ED99C006EA6B4 /* Debug.cpp */,
+				7A7FC7F9194ED99C006EA6B4 /* Debug.h */,
+				7A7FC7FA194ED99C006EA6B4 /* Fluxion.h */,
+				7A7FC7FB194ED99C006EA6B4 /* Formatter.cpp */,
+				7A7FC7FC194ED99C006EA6B4 /* Formatter.h */,
+				7A7FC7FD194ED99C006EA6B4 /* images */,
+				7A7FC800194ED99C006EA6B4 /* MultiResolution.cpp */,
+				7A7FC801194ED99C006EA6B4 /* MultiResolution.h */,
+				7A7FC802194ED99C006EA6B4 /* Persistent.h */,
+				7A7FC803194ED99C006EA6B4 /* SceneManager.cpp */,
+				7A7FC804194ED99C006EA6B4 /* SceneManager.h */,
+				7A7FC805194ED99C006EA6B4 /* Sound.cpp */,
+				7A7FC806194ED99C006EA6B4 /* Sound.h */,
+				7A7FC807194ED99C006EA6B4 /* Utils.h */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		7A7FC7FD194ED99C006EA6B4 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				7A7FC7FE194ED99C006EA6B4 /* bg.h */,
+				7A7FC7FF194ED99C006EA6B4 /* icon.h */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7A759664194FF08A004A6CE8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */,
+				7A759666194FF08A004A6CE8 /* null.h in Headers */,
+				7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */,
+				7A759668194FF08A004A6CE8 /* GlowLine.h in Headers */,
+				7A759669194FF08A004A6CE8 /* Move.h in Headers */,
+				7A75966A194FF08A004A6CE8 /* bg.h in Headers */,
+				7A75966B194FF08A004A6CE8 /* Debug.h in Headers */,
+				7A75966C194FF08A004A6CE8 /* oreore.h in Headers */,
+				7A75966D194FF08A004A6CE8 /* oreore.h in Headers */,
+				7A75966E194FF08A004A6CE8 /* Observer.h in Headers */,
+				7A75966F194FF08A004A6CE8 /* Utils.h in Headers */,
+				7A759670194FF08A004A6CE8 /* Persistent.h in Headers */,
+				7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */,
+				7A759672194FF08A004A6CE8 /* Fluxion.h in Headers */,
+				7A759673194FF08A004A6CE8 /* Shake.h in Headers */,
+				7A759674194FF08A004A6CE8 /* AssetLoader.h in Headers */,
+				7A759675194FF08A004A6CE8 /* ImageMappedPolygon.h in Headers */,
+				7A759676194FF08A004A6CE8 /* MusicFadeTo.h in Headers */,
+				7A759677194FF08A004A6CE8 /* Utils.h in Headers */,
+				7A759678194FF08A004A6CE8 /* Sound.h in Headers */,
+				7A759679194FF08A004A6CE8 /* CircleMoveTo.h in Headers */,
+				7A75967A194FF08A004A6CE8 /* TimeCounter.h in Headers */,
+				7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */,
+				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
+				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
+				7A75967E194FF08A004A6CE8 /* DLog.h in Headers */,
+				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
+				7A759680194FF08A004A6CE8 /* Formatter.h in Headers */,
+				7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */,
+				7A759682194FF08A004A6CE8 /* ShatteredSprite.h in Headers */,
+				7A759683194FF08A004A6CE8 /* MultiResolution.h in Headers */,
+				7A759684194FF08A004A6CE8 /* SceneManager.h in Headers */,
+				7A759685194FF08A004A6CE8 /* icon.h in Headers */,
+				7A759686194FF08A004A6CE8 /* CallInterval.h in Headers */,
+				7A759687194FF08A004A6CE8 /* CircleMoveBy.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A7FC7C5194ED969006EA6B4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A7FC821194ED99C006EA6B4 /* ShakeFadeOut.h in Headers */,
+				7A7FC846194ED99C006EA6B4 /* null.h in Headers */,
+				7A7FC831194ED99C006EA6B4 /* ToggleButton.h in Headers */,
+				7A7FC827194ED99C006EA6B4 /* GlowLine.h in Headers */,
+				7A7FC819194ED99C006EA6B4 /* Move.h in Headers */,
+				7A7FC83A194ED99C006EA6B4 /* bg.h in Headers */,
+				7A7FC836194ED99C006EA6B4 /* Debug.h in Headers */,
+				7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */,
+				7A7FC832194ED99C006EA6B4 /* oreore.h in Headers */,
+				7A7FC847194ED99C006EA6B4 /* Observer.h in Headers */,
+				7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */,
+				7A7FC83E194ED99C006EA6B4 /* Persistent.h in Headers */,
+				7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */,
+				7A7FC837194ED99C006EA6B4 /* Fluxion.h in Headers */,
+				7A7FC81F194ED99C006EA6B4 /* Shake.h in Headers */,
+				7A7FC834194ED99C006EA6B4 /* AssetLoader.h in Headers */,
+				7A7FC829194ED99C006EA6B4 /* ImageMappedPolygon.h in Headers */,
+				7A7FC81B194ED99C006EA6B4 /* MusicFadeTo.h in Headers */,
+				7A7FC84B194ED99C006EA6B4 /* Utils.h in Headers */,
+				7A7FC842194ED99C006EA6B4 /* Sound.h in Headers */,
+				7A7FC817194ED99C006EA6B4 /* CircleMoveTo.h in Headers */,
+				7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */,
+				7A7FC81D194ED99C006EA6B4 /* PlaySE.h in Headers */,
+				7A7FC82B194ED99C006EA6B4 /* Overlay.h in Headers */,
+				7A7FC82F194ED99C006EA6B4 /* SimpleButton.h in Headers */,
+				7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */,
+				7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */,
+				7A7FC839194ED99C006EA6B4 /* Formatter.h in Headers */,
+				7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */,
+				7A7FC82D194ED99C006EA6B4 /* ShatteredSprite.h in Headers */,
+				7A7FC83D194ED99C006EA6B4 /* MultiResolution.h in Headers */,
+				7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */,
+				7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */,
+				7A7FC813194ED99C006EA6B4 /* CallInterval.h in Headers */,
+				7A7FC815194ED99C006EA6B4 /* CircleMoveBy.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7A759648194FF08A004A6CE8 /* oreore iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A759688194FF08A004A6CE8 /* Build configuration list for PBXNativeTarget "oreore iOS" */;
+			buildPhases = (
+				7A759649194FF08A004A6CE8 /* Sources */,
+				7A759663194FF08A004A6CE8 /* Frameworks */,
+				7A759664194FF08A004A6CE8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "oreore iOS";
+			productName = oreore;
+			productReference = 7A75968B194FF08A004A6CE8 /* liboreore iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7A7FC7C6194ED969006EA6B4 /* oreore Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A7FC7CB194ED969006EA6B4 /* Build configuration list for PBXNativeTarget "oreore Mac" */;
+			buildPhases = (
+				7A7FC7C3194ED969006EA6B4 /* Sources */,
+				7A7FC7C4194ED969006EA6B4 /* Frameworks */,
+				7A7FC7C5194ED969006EA6B4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "oreore Mac";
+			productName = oreore;
+			productReference = 7A7FC7C7194ED969006EA6B4 /* liboreore Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A7FC7BF194ED969006EA6B4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = MithrilWorks;
+			};
+			buildConfigurationList = 7A7FC7C2194ED969006EA6B4 /* Build configuration list for PBXProject "oreore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7A7FC7BE194ED969006EA6B4;
+			productRefGroup = 7A7FC7C8194ED969006EA6B4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A759648194FF08A004A6CE8 /* oreore iOS */,
+				7A7FC7C6194ED969006EA6B4 /* oreore Mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A759649194FF08A004A6CE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A75964A194FF08A004A6CE8 /* Sound.cpp in Sources */,
+				7A75964B194FF08A004A6CE8 /* ImageMappedPolygon.cpp in Sources */,
+				7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */,
+				7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */,
+				7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */,
+				7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */,
+				7A759650194FF08A004A6CE8 /* GlowLine.cpp in Sources */,
+				7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */,
+				7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */,
+				7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */,
+				7A759654194FF08A004A6CE8 /* SceneManager.cpp in Sources */,
+				7A759655194FF08A004A6CE8 /* ToggleButton.cpp in Sources */,
+				7A759656194FF08A004A6CE8 /* AttractMove.cpp in Sources */,
+				7A759657194FF08A004A6CE8 /* MultiResolution.cpp in Sources */,
+				7A759658194FF08A004A6CE8 /* SimpleButton.cpp in Sources */,
+				7A759659194FF08A004A6CE8 /* PlaySE.cpp in Sources */,
+				7A75965A194FF08A004A6CE8 /* SwayMoveBy.cpp in Sources */,
+				7A75965B194FF08A004A6CE8 /* CircleMoveBy.cpp in Sources */,
+				7A75965C194FF08A004A6CE8 /* MusicFadeTo.cpp in Sources */,
+				7A75965D194FF08A004A6CE8 /* SwayMoveTo.cpp in Sources */,
+				7A75965E194FF08A004A6CE8 /* Debug.cpp in Sources */,
+				7A75965F194FF08A004A6CE8 /* Shake.cpp in Sources */,
+				7A759660194FF08A004A6CE8 /* Overlay.cpp in Sources */,
+				7A759661194FF08A004A6CE8 /* Move.cpp in Sources */,
+				7A759662194FF08A004A6CE8 /* dlog.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A7FC7C3194ED969006EA6B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A7FC841194ED99C006EA6B4 /* Sound.cpp in Sources */,
+				7A7FC828194ED99C006EA6B4 /* ImageMappedPolygon.cpp in Sources */,
+				7A7FC812194ED99C006EA6B4 /* CallInterval.cpp in Sources */,
+				7A7FC82C194ED99C006EA6B4 /* ShatteredSprite.cpp in Sources */,
+				7A7FC833194ED99C006EA6B4 /* AssetLoader.cpp in Sources */,
+				7A7FC820194ED99C006EA6B4 /* ShakeFadeOut.cpp in Sources */,
+				7A7FC826194ED99C006EA6B4 /* GlowLine.cpp in Sources */,
+				7A7FC838194ED99C006EA6B4 /* Formatter.cpp in Sources */,
+				7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */,
+				7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */,
+				7A7FC83F194ED99C006EA6B4 /* SceneManager.cpp in Sources */,
+				7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */,
+				7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */,
+				7A7FC83C194ED99C006EA6B4 /* MultiResolution.cpp in Sources */,
+				7A7FC82E194ED99C006EA6B4 /* SimpleButton.cpp in Sources */,
+				7A7FC81C194ED99C006EA6B4 /* PlaySE.cpp in Sources */,
+				7A7FC822194ED99C006EA6B4 /* SwayMoveBy.cpp in Sources */,
+				7A7FC814194ED99C006EA6B4 /* CircleMoveBy.cpp in Sources */,
+				7A7FC81A194ED99C006EA6B4 /* MusicFadeTo.cpp in Sources */,
+				7A7FC824194ED99C006EA6B4 /* SwayMoveTo.cpp in Sources */,
+				7A7FC835194ED99C006EA6B4 /* Debug.cpp in Sources */,
+				7A7FC81E194ED99C006EA6B4 /* Shake.cpp in Sources */,
+				7A7FC82A194ED99C006EA6B4 /* Overlay.cpp in Sources */,
+				7A7FC818194ED99C006EA6B4 /* Move.cpp in Sources */,
+				7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7A759689194FF08A004A6CE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform/ios",
+				);
+				PRODUCT_NAME = "oreore iOS";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7A75968A194FF08A004A6CE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_IPHONE;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform/ios",
+				);
+				PRODUCT_NAME = "oreore iOS";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		7A7FC7C9194ED969006EA6B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../example/cocos2d",
+					"$(SRCROOT)/../../example/cocos2d/cocos",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform",
+					"$(SRCROOT)/../../example/cocos2d/cocos/base",
+					"$(SRCROOT)/../../example/cocos2d/cocos/math/kazmath",
+					"$(SRCROOT)/../../example/cocos2d/cocos/audio/include",
+					"$(SRCROOT)/../../example/cocos2d/extensions",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7A7FC7CA194ED969006EA6B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../example/cocos2d",
+					"$(SRCROOT)/../../example/cocos2d/cocos",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform",
+					"$(SRCROOT)/../../example/cocos2d/cocos/base",
+					"$(SRCROOT)/../../example/cocos2d/cocos/math/kazmath",
+					"$(SRCROOT)/../../example/cocos2d/cocos/audio/include",
+					"$(SRCROOT)/../../example/cocos2d/extensions",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7A7FC7CC194ED969006EA6B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform/mac",
+					"$(SRCROOT)/../../example/cocos2d/external/glfw3/include/mac",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7A7FC7CD194ED969006EA6B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_MAC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../example/cocos2d/cocos/2d/platform/mac",
+					"$(SRCROOT)/../../example/cocos2d/external/glfw3/include/mac",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A759688194FF08A004A6CE8 /* Build configuration list for PBXNativeTarget "oreore iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A759689194FF08A004A6CE8 /* Debug */,
+				7A75968A194FF08A004A6CE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A7FC7C2194ED969006EA6B4 /* Build configuration list for PBXProject "oreore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A7FC7C9194ED969006EA6B4 /* Debug */,
+				7A7FC7CA194ED969006EA6B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A7FC7CB194ED969006EA6B4 /* Build configuration list for PBXNativeTarget "oreore Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A7FC7CC194ED969006EA6B4 /* Debug */,
+				7A7FC7CD194ED969006EA6B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7A7FC7BF194ED969006EA6B4 /* Project object */;
+}
