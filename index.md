@@ -3,18 +3,16 @@ layout: default
 ---
 # 概要
 　"Oreore/俺々"は、俺がゲームを開発するときに得するユーティリティライブラリです。  
-cocos2dx 3.0系及び 2.2.2 向けの汎用的な処理群をまとめました。
+cocos2dx 3.0向けの汎用的な処理群をまとめました。
 
 # 動作環境
-* **俺々 for cocos2dx 3.0 beta**
-	* C++11がビルドできる環境
-	* cocos2dx 3.0 beta
 * **俺々 for cocos2dx 2.2.2**
 	* C++コンパイラ
 	* cocos2dx 2.2.2
+	* **現在メンテナンスされていません。**
 * **俺々 for cocos2dx 3.0**
 	* C++11がビルドできる環境
-	* cocos2dx 3.0 RC1 または cocos2dx 3.0安定版
+	* cocos2dx 3.0安定版
 
 # 使い方
 
@@ -23,11 +21,20 @@ cocos2dx 3.0系及び 2.2.2 向けの汎用的な処理群をまとめました�
 
 	git clone https://github.com/Giemsa/oreore.git
 
-　oreoreフォルダ内の"oreore.h"をincludeしてください。  
-また、oreoreフォルダ内の*.cppファイルをビルド対象に加えてください。
+　iOSの場合、`oreore/proj.ios/oreore.xcodeproj`をサブプロジェクトとして追加してください (exampleフォルダ内にサンプルがあります)。
+
+　Androidの場合、ゲームプロジェクトの`proj.android/jni/Android.mk`に、`oreore/proj.android/Android.mk`をインポートするように記述します。
+
+	LOCAL_WHOLE_STATIC_LIBRARIES += oreore_static
+	$(call import-module,../../../oreore/proj.android)
+
+　上記の2行が必要です。import-moduleでは、ゲームプロジェクトの`proj.andorid`から`oreore/proj.android/Android.mk`への相対パスを指定します。詳しくは`example/proj.android`を参照してください。
 
 ## cocos2dxを利用しない場合
 　マクロ「NOT_USE_COCOS2DX」が有効になっている場合、cocos2dxに関連する機能の読み込みが無効化されます。が、殆どの機能が無効化されるのであまり意味は無いです。
+
+## サンプルのビルド
+　`example`フォルダにAndroidとiOSのサンプルがそれぞれ入っています。サンプルと言ってもビルドが通るだけのシンプルなものです。これらのプロジェクトを参考に、oreoreプロジェクトを導入してください。
 
 ## ブランチ
 　俺々は複数のバージョンのcocos2dxに対応するため、cocos2dxのバージョンごとに異なるブランチを利用しています。
@@ -35,15 +42,10 @@ cocos2dx 3.0系及び 2.2.2 向けの汎用的な処理群をまとめました�
 * ococos2dx-2.2.2  
 	　cocos2dx 2.2.2向けのブランチです。作者が2.x系を利用しなくなったため、このブランチの更新は停止しています。
 
-* cocos2dx3.0-beta  
-	　cocos2dx 3.0beta向けのブランチです。C++11の機能を利用します。  
-	RC1への移行により、今後開発が停止します。
-
-* cocos2dx 3.0 RC1
-	　cocos2dx 3.0安定版及びcocos2dx 3.0 RC1向けのブランチです。betaとほぼ同じ実装ですが、RC1で変更された部分への対応が組み込まれています。このブランチが最新です。
-
-* master  
-	　cocos2dx 3.0 alpha0〜1用のブランチです。俺々ライブラリは、元々alpha1向けのライブラリでしたが、作者がalphaを利用しなくなったため、このブランチの更新は停止しています。
+* cocos2dx 3.0  
+	　cocos2dx 3.0安定版向けのブランチです。このブランチが最新です。
+* その他のブランチ
+	　cocos2dxの過去のバージョンで利用されたoreoreのブランチです。更新は停止しています。
 
 # 構成
 　俺々は、以下のライブラリ群を含んでいます。

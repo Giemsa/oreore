@@ -198,7 +198,7 @@ layout: default
 　登録されている全てのSubjectを削除します。
 
 ### Persistent
-　cocos2dxの参照カウントを管理するクラスです。**cocos2dx-3.0RC1リポジトリのみで実装されています。**
+　cocos2dxの参照カウントを管理するクラスです。**cocos2dx-3.0リポジトリのみで実装されています。**
 
 	Persistent<Sprite> sprite = Sprite::create("image.png");
 	
@@ -227,7 +227,7 @@ layout: default
 　このPersistentは、ノードの参照カウントの管理を自動で行うためのラッパークラスです。Persistent同士での代入等では、この参照カウントが正しく計算されます。
 
 ### DLog
-　DLogは、デバッグログを出力するクラスです。**cocos2dx-3.0RC1リポジトリのみで実装されています。**
+　DLogは、デバッグログを出力するクラスです。**cocos2dx-3.0リポジトリのみで実装されています。**
 cocos2dxのlog関数を拡張したデバッグログ出力を提供します。
 
 	const int num = 28;

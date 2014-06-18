@@ -5,7 +5,7 @@ layout: default
 
 ## 概要
 　Fluxionは、cocos2dxの面倒なアクション構築を簡潔に記述するためのライブラリです。  
-cocos2dx 2.2.2、cocos2dx 3.0 betaの両方で利用可能ですが、一部APIに違いがあります。
+一部APIはcocos2dx 2.x系でも利用できます。
 
 ## 使い方
 
@@ -88,6 +88,13 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 
 　このように記述することで、移動が5回繰り返されます。
 
+### 無限繰り返し
+　アクションを無限に繰り返すには、-1を掛けるか、`x::inf()`を利用します。同様の動作をする`x::infinite()`も用意されています。
+
+	sprite->runAction(
+	    (x::moveTo(1.0f, 500.0f, 500.0f) >> x::moveTo(1.0f, 100.0f, 100.0f)) * x::inf()
+	);
+
 ### 関数呼び出し
 　CallFuncに相当するアクションを追加します。  
 　[3.0] cocos2dxにおけるCallFuncを登録するには、ラムダ関数をそのまま追加します。
@@ -113,6 +120,8 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 	    x::call(this, &Sample::callback)
 	);
 
+　3.0系でも、明示的に`x::call`を利用することができます。
+
 
 ### cocos2dxのアクションを混ぜる
 　Fluxionでは、cocos2dxのアクションを同時に扱うことが可能です。
@@ -128,6 +137,19 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
 	    MoveTo::create(1.0f, Point(100.0f, 100.0f)) >>
 	    MoveBy::create(1.0f, Point(100.0f, 100.0f)) // 両方ともcocos2dxのアクション
 	);
+
+### アクションをFluxionアクションに変換する
+ `x::flux`を利用することで、cocos2dxのアクションをFluxionアクションに変換できます。
+
+	sprite->runAction(
+	    x::fluc<CallInterval>(1.0f, [](float dt) {
+	    	dlog("#", dt);
+	    }) >>
+	    []() {
+	    	log("complete!");
+	    }
+	);
+
 
 ## 複雑なアクション
 
