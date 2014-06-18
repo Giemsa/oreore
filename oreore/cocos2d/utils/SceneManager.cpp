@@ -137,6 +137,7 @@ namespace oreore
             if(!debugLayer)
             {
                 debugLayer = DebugLayer::create();
+                debugLayer->retain();
                 debugger = new Debugger(debugLayer);
             }
             Director::getInstance()->setNotificationNode(debugLayer);
