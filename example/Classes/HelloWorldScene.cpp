@@ -30,7 +30,7 @@ bool HelloWorld::init()
     menu->setPosition(Point::ZERO);
     addChild(menu, 1);
 
-    auto label = LabelTTF::create("Hello World", "Arial", 24);
+    auto label = Label::createWithSystemFont("Hello World", "Arial", 20);
     label->setPosition(
         Point(
             origin.x + visibleSize.width / 2,
