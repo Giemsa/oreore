@@ -6,7 +6,7 @@
 
 namespace oreore
 {
-    class GlowLine final : public cocos2d::Node
+    class CC_DEPRECATED_ATTRIBUTE GlowLine final : public cocos2d::Node
     {
         typedef std::vector<cocos2d::Point> Points;
     private:
