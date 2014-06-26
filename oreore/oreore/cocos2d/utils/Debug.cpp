@@ -54,7 +54,7 @@ namespace oreore
             setColor(Color3B(0x70, 0x70, 0x70));
         }
     }
-    
+
     void DebugMenuItem::unselect()
     {
         setOpacity(0x80);
@@ -104,7 +104,7 @@ namespace oreore
             if(item)
                 item->unselect();
         }
-        
+
         if(getParent()->convertTouchToNodeSpace(touch).getDistance(bPos) < 40.0f)
         {
             for(Node *obj : getChildren())
@@ -137,7 +137,7 @@ namespace oreore
 
             Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(img, "_oreore_debugger_icon");
             delete img;
-            
+
             SpriteFrame *frm = SpriteFrame::createWithTexture(
                 tex,
                 Rect(
@@ -201,9 +201,9 @@ namespace oreore
         scrollViewEventListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, scrollView);
         scrollViewEventListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, scrollView);
         scrollViewEventListener->retain();
-       
+
         scrollView->getEventDispatcher()->addEventListenerWithFixedPriority(scrollViewEventListener, -1000);
-        
+
         onEnter();
         return true;
     }
@@ -222,7 +222,7 @@ namespace oreore
             line->drawSegment(Point(0.0f, item->getContentSize().height), Point(item->getContentSize()), 0.5f, Color4F(0.3f, 0.3f, 0.3f, 0.9f));
             item->addChild(line);
         }
-        
+
         scrollView->getContainer()->addChild(item);
         scrollView->setContentSize(scrollView->getContentSize() + Size(0.0f, item->getContentSize().height));
     }
@@ -283,10 +283,11 @@ namespace oreore
         }
     }
 
-    
+
     /* Debugger */
     void Debugger::addMenuItem(const std::string &name, const std::function<void(Debugger *)> &callback)
     {
         layer->addItem(name, callback);
     }
 }
+

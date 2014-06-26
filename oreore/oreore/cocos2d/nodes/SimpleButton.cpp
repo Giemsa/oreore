@@ -260,3 +260,4 @@ namespace oreore
         getEventDispatcher()->setPriority(listener, priority);
     }
 }
+

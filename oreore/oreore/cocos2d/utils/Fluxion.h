@@ -161,7 +161,7 @@ namespace oreore
             {
                 actions->reserve(2);
             }
-            
+
             inline ParallelAction(ActionList *array) : actions(array) { }
 
             template<typename S, typename T>
@@ -279,7 +279,7 @@ namespace oreore
         {
             return SequentialAction(*this, action);
         }
-    
+
         inline SequentialAction Action::operator>>(cocos2d::FiniteTimeAction *action)
         {
             return SequentialAction(*this, action);
@@ -289,12 +289,12 @@ namespace oreore
         {
             return SequentialAction(*this, cocos2d::CallFunc::create(action));
         }
-        
+
         inline ParallelAction Action::operator+(const Action &action)
         {
             return ParallelAction(*this, action);
         }
-    
+
         inline ParallelAction Action::operator+(cocos2d::FiniteTimeAction *action)
         {
             return ParallelAction(*this, action);
@@ -329,7 +329,7 @@ namespace oreore
         typedef Fluxion::WrapIntervalAction<cocos2d::MoveTo> MoveTo;
         inline MoveTo moveTo(const float duration, const cocos2d::Point &pos) { return MoveTo(duration, pos); }
         inline MoveTo moveTo(const float duration, const float x, const float y) { return moveTo(duration, cocos2d::Point(x, y)); }
-        
+
         typedef Fluxion::WrapIntervalAction<cocos2d::MoveBy> MoveBy;
         inline MoveBy moveBy(const float duration, const cocos2d::Point &delta) { return MoveBy(duration, delta); }
         inline MoveBy moveBy(const float duration, const float dx, const float dy) { return moveBy(duration, cocos2d::Point(dx, dy)); }
@@ -380,7 +380,7 @@ namespace oreore
         inline Fluxion::ParallelAction p(const Args &...args) { return Fluxion::ParallelAction::createFromActions(args...); }
         template<typename... Args>
         inline Fluxion::ParallelAction par(const Args &...args) { return p(args...); }
-        
+
         template<typename... Args>
         inline Fluxion::SequentialAction s(const Args &...args) { return Fluxion::SequentialAction::createFromActions(args...); }
         template<typename... Args>
@@ -441,7 +441,7 @@ namespace oreore
 
             typedef Fluxion::WrapEase<cocos2d::EaseBackInOut> BackInOut;
             inline BackInOut backInOut() { return BackInOut(); }
-            
+
             /* exp */
             typedef Fluxion::WrapEase<cocos2d::EaseExponentialIn> ExpIn;
             inline ExpIn expIn() { return ExpIn(); }
@@ -466,3 +466,4 @@ namespace oreore
 }
 
 #endif
+

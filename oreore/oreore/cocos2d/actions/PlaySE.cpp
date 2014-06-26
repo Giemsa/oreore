@@ -41,3 +41,4 @@ namespace oreore
         return PlaySE::create(filename);
     }
 }
+

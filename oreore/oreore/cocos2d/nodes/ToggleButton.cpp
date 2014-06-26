@@ -49,7 +49,7 @@ namespace oreore
             offFrm = SpriteFrame::createWithTexture(tex, Rect(0, 0, tex->getContentSize().width, tex->getContentSize().height));
             SpriteFrameCache::getInstance()->addSpriteFrame(offFrm, offBtn.c_str());
         }
-        
+
         if(!onBtn.empty())
         {
             Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(onBtn.c_str());
@@ -69,7 +69,7 @@ namespace oreore
         _init();
         if(!offBtn.empty())
             offFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(offBtn.c_str());
-        
+
         if(!onBtn.empty())
             onFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(onBtn.c_str());
 
@@ -258,3 +258,4 @@ namespace oreore
         Node::onExit();
     }
 }
+

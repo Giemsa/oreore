@@ -41,3 +41,4 @@ namespace oreore
         return ShakeFadeOut::create(getDuration(), strength_x, strength_y);
     }
 }
+

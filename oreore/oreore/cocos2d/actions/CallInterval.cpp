@@ -21,7 +21,7 @@ namespace oreore
     {
         if(!ActionInterval::initWithDuration(duration))
             return false;
-        
+
         this->func = func;
         return true;
     }
@@ -42,3 +42,4 @@ namespace oreore
         return CallInterval::create(getDuration(), func);
     }
 }
+

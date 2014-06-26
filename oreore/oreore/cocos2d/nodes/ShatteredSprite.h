@@ -10,7 +10,7 @@ namespace oreore
      *
      * original post: http://www.cocos2d-iphone.org/forums/topic/breaking-glass-shatteredsprite/
      */
-    
+
     struct MoveInfo
     {
         cocos2d::Vertex3F axis, vdelta, center;
@@ -34,7 +34,7 @@ namespace oreore
         ShatteredSpriteParam(const int piecesX, const int piecesY, const float speedVar, const float rotVar, cocos2d::Texture2D *texture, const cocos2d::Rect &textureRect) :
             piecesX(piecesX), piecesY(piecesY), speedVar(speedVar), rotVar(rotVar), texture(texture), textureRect(textureRect) { }
     };
-    
+
     class ShatteredSprite : public cocos2d::Node
     {
         using Tex2FVec = std::vector<cocos2d::Tex2F>;
@@ -46,13 +46,13 @@ namespace oreore
         Vertex3FVec coord;
         Colors colors;
         MoveInfoVec moveInfoVec;
-        
+
         int piecesX;
         cocos2d::Texture2D *texture;
         bool shattered;
 
-		cocos2d::CustomCommand cmd;
-		cocos2d::BlendFunc blendFunc;
+        cocos2d::CustomCommand cmd;
+        cocos2d::BlendFunc blendFunc;
 
         inline int getIndex(const int x, const int y) const { return x * piecesX + y; }
     protected:
@@ -72,3 +72,4 @@ namespace oreore
 }
 
 #endif
+

@@ -9,3 +9,4 @@ namespace oreore
         return rnd.next();
     }
 }
+

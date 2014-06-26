@@ -69,3 +69,4 @@ namespace oreore
         return Shake::create(getDuration(), strength_x, strength_y);
     }
 }
+

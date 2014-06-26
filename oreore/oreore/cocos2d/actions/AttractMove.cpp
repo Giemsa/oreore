@@ -57,3 +57,4 @@ namespace oreore
         return AttractMove::create(getDuration(), target, v0);
     }
 }
+

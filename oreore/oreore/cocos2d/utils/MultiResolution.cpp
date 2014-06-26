@@ -148,12 +148,12 @@ namespace oreore
             rsize = size;
             factor = currentConfig.scaleFactor;
         }
-        
+
         scaleH = rsize.height / designSize.height;
         scaleW = rsize.width / designSize.width;
         realScale = std::max(fsize.width / designSize.width, fsize.height / designSize.height);
         //Director::getInstance()->setContentScaleFactor(std::min(scaleW, scaleH));
-       
+
         if(policy == ResolutionPolicy::UNKNOWN)
         {
             const ResolutionPolicy rp = scaleW > scaleH ? ResolutionPolicy::FIXED_HEIGHT : ResolutionPolicy::FIXED_WIDTH;
@@ -188,3 +188,4 @@ namespace oreore
             FileUtils::getInstance()->addSearchPath(name);
     }
 }
+

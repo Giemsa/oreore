@@ -54,3 +54,4 @@ namespace oreore
         return Move::create(getDuration(), vec);
     }
 }
+

@@ -12,7 +12,7 @@ namespace oreore
     {
         const long lRange = random(static_cast<unsigned long int>(range * 2 * 10000));
         const float fRange = static_cast<float>(lRange) / 10000.0 - range;
-        return	base + fRange;
+        return  base + fRange;
     }
 
     static inline void t2fAdd(Tex2F &v0, const Tex2F &v1)
@@ -41,7 +41,7 @@ namespace oreore
             v = Vertex3F();
             return;
         }
-    
+
         v.x /= len;
         v.y /= len;
         v.z /= len;
@@ -128,7 +128,7 @@ namespace oreore
             {
                 {
                     const float adelta = randf(0.0f, param.rotVar);
-                    
+
                     const Tex2F &p1 = ptArray[getIndex(x, y)];
                     const Tex2F &p2 = ptArray[getIndex(x + 1, y)];
                     const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
@@ -154,11 +154,11 @@ namespace oreore
 
                 {
                     const float adelta = randf(0.0f, param.rotVar);
-                    
+
                     const Tex2F &p1 = ptArray[getIndex(x + 1, y)];
                     const Tex2F &p2 = ptArray[getIndex(x + 1, y + 1)];
                     const Tex2F &p3 = ptArray[getIndex(x, y + 1)];
-                    
+
                     moveInfoVec.push_back(
                         MoveInfo(
                             v3fCreateNormalizedVertex(adelta),
@@ -182,25 +182,25 @@ namespace oreore
         return true;
     }
 
-	void ShatteredSprite::updateBlendFunc()
-	{
-		if(!texture || !texture->hasPremultipliedAlpha())
-		{
-			blendFunc.src = GL_SRC_ALPHA;
-			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		}
-		else
-		{
-			blendFunc.src = CC_BLEND_SRC;
-			blendFunc.dst = CC_BLEND_DST;
-		}
-	}
-	
-	void ShatteredSprite::cleanup()
-	{
-		CC_SAFE_RELEASE_NULL(texture);
-		Node::cleanup();
-	}
+    void ShatteredSprite::updateBlendFunc()
+    {
+        if(!texture || !texture->hasPremultipliedAlpha())
+        {
+            blendFunc.src = GL_SRC_ALPHA;
+            blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        }
+        else
+        {
+            blendFunc.src = CC_BLEND_SRC;
+            blendFunc.dst = CC_BLEND_DST;
+        }
+    }
+
+    void ShatteredSprite::cleanup()
+    {
+        CC_SAFE_RELEASE_NULL(texture);
+        Node::cleanup();
+    }
 
     void ShatteredSprite::updateColor()
     {
@@ -250,17 +250,17 @@ namespace oreore
         cmd.init(getGlobalZOrder());
         cmd.func = [this]() {
             CC_NODE_DRAW_SETUP();
-			GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+            GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
-			GL::blendFunc(blendFunc.src, blendFunc.dst);
+            GL::blendFunc(blendFunc.src, blendFunc.dst);
 
-			GL::bindTexture2D(texture->getName());
+            GL::bindTexture2D(texture->getName());
 
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, &coord[0]);
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
+            glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, &coord[0]);
+            glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
             glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, &colors[0]);
-			glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(coord.size()));
-			CC_INCREMENT_GL_DRAWS(1);
+            glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(coord.size()));
+            CC_INCREMENT_GL_DRAWS(1);
         };
         renderer->addCommand(&cmd);
     }
@@ -270,3 +270,4 @@ namespace oreore
         shattered = true;
     }
 }
+

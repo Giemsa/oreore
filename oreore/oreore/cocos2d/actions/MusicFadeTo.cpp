@@ -60,3 +60,4 @@ namespace oreore
         return MusicFadeTo::create(getDuration(), volume, pause);
     }
 }
+

@@ -155,3 +155,4 @@ namespace oreore
         callbackOnClose = callback;
     }
 }
+

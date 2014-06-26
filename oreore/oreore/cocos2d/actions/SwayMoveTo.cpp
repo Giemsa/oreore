@@ -48,3 +48,4 @@ namespace oreore
         return SwayMoveTo::create(getDuration(), pos, amp, freq, dir);
     }
 }
+

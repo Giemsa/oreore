@@ -181,10 +181,11 @@ namespace oreore
 
         timeval tv;
         gettimeofday(&tv, nullptr);
-        
+
         tm *l = localtime(&tv.tv_sec);
         printf("%02d:%02d:%02d.%03d\t", l->tm_hour, l->tm_min, l->tm_sec, static_cast<int>(tv.tv_usec / 1000));
     }
 }
 
 #endif
+

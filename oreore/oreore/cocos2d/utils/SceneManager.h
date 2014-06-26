@@ -40,7 +40,7 @@ namespace oreore
 
         virtual void onEnter(const TransitionArguments &args) { }
         virtual void onExit(const TransitionArguments &args) { }
-        
+
         virtual void onEnter() { cocos2d::Layer::onEnter(); } // override
         virtual void onExit() { cocos2d::Layer::onExit(); } // override
     };
@@ -222,7 +222,7 @@ namespace oreore
             addScene<T>(false);
             return null;
         }
-        
+
         T *current = dynamic_cast<T *>(getCurrentScene());
         if(!current)
         {
@@ -240,3 +240,4 @@ namespace oreore
 }
 
 #endif
+

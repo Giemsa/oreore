@@ -11,54 +11,54 @@ namespace oreore
         if(!Node::init())
             return false;
 
-		texture = null;
+        texture = null;
         mode = GL_TRIANGLE_FAN;
         setAnchorPoint(Point::ANCHOR_MIDDLE);
-		setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
 
         return true;
     }
 
-	void ImageMappedPolygonBase::setTexture(Texture2D *texture2D)
-	{
-		CCAssert(texture2D, "texture is null");
-		CC_SAFE_RELEASE(texture);
-		
-		texture = texture2D;
-		CC_SAFE_RETAIN(texture);
-		
-		Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-		texture->setTexParameters(texParams);
-		setContentSize(texture->getContentSize());
-		
-		updateBlendFunc();
-		calcTexCoord();
-	}
+    void ImageMappedPolygonBase::setTexture(Texture2D *texture2D)
+    {
+        CCAssert(texture2D, "texture is null");
+        CC_SAFE_RELEASE(texture);
 
-	void ImageMappedPolygonBase::updateBlendFunc()
-	{
-		if(!texture || !texture->hasPremultipliedAlpha())
-		{
-			blendFunc.src = GL_SRC_ALPHA;
-			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		}
-		else
-		{
-			blendFunc.src = CC_BLEND_SRC;
-			blendFunc.dst = CC_BLEND_DST;
-		}
-	}
-	
-	void ImageMappedPolygonBase::cleanup()
-	{
-		CC_SAFE_RELEASE_NULL(texture);
-		Node::cleanup();
-	}
+        texture = texture2D;
+        CC_SAFE_RETAIN(texture);
 
-	void ImageMappedPolygonBase::setBlendFunc(BlendFunc blendFunc)
-	{
-		this->blendFunc = blendFunc;
-	}
+        Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+        texture->setTexParameters(texParams);
+        setContentSize(texture->getContentSize());
+
+        updateBlendFunc();
+        calcTexCoord();
+    }
+
+    void ImageMappedPolygonBase::updateBlendFunc()
+    {
+        if(!texture || !texture->hasPremultipliedAlpha())
+        {
+            blendFunc.src = GL_SRC_ALPHA;
+            blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+        }
+        else
+        {
+            blendFunc.src = CC_BLEND_SRC;
+            blendFunc.dst = CC_BLEND_DST;
+        }
+    }
+
+    void ImageMappedPolygonBase::cleanup()
+    {
+        CC_SAFE_RELEASE_NULL(texture);
+        Node::cleanup();
+    }
+
+    void ImageMappedPolygonBase::setBlendFunc(BlendFunc blendFunc)
+    {
+        this->blendFunc = blendFunc;
+    }
 
     void ImageMappedPolygonBase::setTextureCoord(const Points &points)
     {
@@ -67,45 +67,45 @@ namespace oreore
     }
 
 
-	/* TextureMappedPolygon */
-	bool TextureMappedPolygon::init()
-	{
-		if(!ImageMappedPolygonBase::init())
-			return false;
+    /* TextureMappedPolygon */
+    bool TextureMappedPolygon::init()
+    {
+        if(!ImageMappedPolygonBase::init())
+            return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	void TextureMappedPolygon::calcTexCoord()
-	{
-		const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
-		const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
-		texCoord.clear();
+    void TextureMappedPolygon::calcTexCoord()
+    {
+        const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
+        const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
+        texCoord.clear();
         for(auto p : coord)
-			texCoord.push_back(Vertex2F(p.x * rx, 1.0f - p.y * ry));
-	}
+            texCoord.push_back(Vertex2F(p.x * rx, 1.0f - p.y * ry));
+    }
 
-	void TextureMappedPolygon::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
-	{
-		if(texCoord.size() <= 1)
-			return;
+    void TextureMappedPolygon::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
+    {
+        if(texCoord.size() <= 1)
+            return;
 
-		cmd.init(getVertexZ());
-		cmd.func = [this]() {
-			CC_NODE_DRAW_SETUP();
+        cmd.init(getVertexZ());
+        cmd.func = [this]() {
+            CC_NODE_DRAW_SETUP();
 
-			GL::bindTexture2D(texture->getName());
+            GL::bindTexture2D(texture->getName());
 
-			GL::blendFunc(blendFunc.src, blendFunc.dst);
+            GL::blendFunc(blendFunc.src, blendFunc.dst);
 
-			GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &coord[0]);
-			glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
-			glDrawArrays(mode, 0, static_cast<GLsizei>(texCoord.size()));
-			CC_INCREMENT_GL_DRAWS(1);
-		};
-		renderer->addCommand(&cmd);
-	}
+            GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
+            glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &coord[0]);
+            glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
+            glDrawArrays(mode, 0, static_cast<GLsizei>(texCoord.size()));
+            CC_INCREMENT_GL_DRAWS(1);
+        };
+        renderer->addCommand(&cmd);
+    }
 
 
     /* ScreenMappedPolygon */
@@ -121,7 +121,7 @@ namespace oreore
             return false;
 
         Size s = Director::getInstance()->getWinSizeInPixels();
-        
+
         const int width = ccNextPOT(static_cast<unsigned int>(s.width));
         const int height = ccNextPOT(static_cast<unsigned int>(s.height));
 
@@ -139,24 +139,24 @@ namespace oreore
         grabber = new Grabber();
         grabber->grab(texture);
 
-		const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-		texture->setTexParameters(texParams);
-		setContentSize(texture->getContentSize());
-		
-		updateBlendFunc();
-		calcTexCoord();
+        const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+        texture->setTexParameters(texParams);
+        setContentSize(texture->getContentSize());
+
+        updateBlendFunc();
+        calcTexCoord();
 
         return true;
     }
 
-	void ScreenMappedPolygon::calcTexCoord()
-	{
-		const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
-		const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
-		texCoord.clear();
+    void ScreenMappedPolygon::calcTexCoord()
+    {
+        const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
+        const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
+        texCoord.clear();
         for(auto p : coord)
-			texCoord.push_back(Vertex2F(p.x * rx, p.y * ry));
-	}
+            texCoord.push_back(Vertex2F(p.x * rx, p.y * ry));
+    }
 
     void ScreenMappedPolygon::set2DProjection()
     {
@@ -210,7 +210,7 @@ namespace oreore
 
         if(parentTransformUpdated || _transformUpdated)
             _modelViewTransform = transform(parentTransform);
-            
+
         _transformUpdated = false;
 
         kmGLPushMatrix();
@@ -227,7 +227,8 @@ namespace oreore
         renderer->addCommand(&_gridEndCommand);
 
         renderer->popGroup();
-     
+
         kmGLPopMatrix();
     }
 }
+

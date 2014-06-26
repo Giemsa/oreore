@@ -43,7 +43,7 @@ namespace oreore
     {
         if(data.type == AssetData::SpriteFrame)
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(data.filename.c_str());
-    
+
         if(assetLoadedCallback)
             assetLoadedCallback(data.filename, count, assets.size());
 
@@ -74,3 +74,4 @@ namespace oreore
         worker->load(callback, assetLoadedCallback);
     }
 }
+

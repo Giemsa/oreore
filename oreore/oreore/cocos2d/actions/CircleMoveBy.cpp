@@ -66,3 +66,4 @@ namespace oreore
         return CircleMoveBy::create(getDuration(), center, deg);
     }
 }
+

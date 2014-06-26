@@ -21,12 +21,12 @@ namespace oreore
     /* ManagedSceneBase */
     ManagedSceneBase::ManagedSceneBase() : transitionTime(0.5f)
     {
-    
+
     }
 
     ManagedSceneBase::~ManagedSceneBase()
     {
-    
+
     }
 
     bool ManagedSceneBase::init()
@@ -156,3 +156,4 @@ namespace oreore
         showDebugLayer = debugMode;
     }
 }
+
