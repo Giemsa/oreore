@@ -9,7 +9,6 @@
 #include <limits>
 #include <random>
 #include <type_traits>
-#include "is_constexpr.h"
 
 namespace oreore
 {
