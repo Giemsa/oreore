@@ -8,6 +8,8 @@
 #include <cmath>
 #include <limits>
 #include <random>
+#include <type_traits>
+#include "is_constexpr.h"
 
 namespace oreore
 {
@@ -70,12 +72,12 @@ namespace oreore
 
         inline result_type next(const result_type max)
         {
-            return dist(engine, dist_t::param_type(0, max));
+            return dist(engine, dist_t::param_type(0, max - 1));
         }
 
         inline result_type next(const result_type min, const result_type max)
         {
-            return dist(engine, dist_t::param_type(min, max));
+            return dist(engine, dist_t::param_type(min, max - 1));
         }
 
         inline result_type operator()(const result_type max) { return next(max); }
@@ -109,7 +111,18 @@ namespace oreore
     }
 
     template<typename T>
-    constexpr T digits(const T n) { return _digits<T>(n / 10) + 1;  }
+    constexpr T digits_const(const T n) { return _digits<T>(n / 10) + 1;  }
+
+    template<
+        typename T,
+        typename = typename std::enable_if<std::is_integral<T>::value>::type
+    >
+    inline int digits(const T n)
+    {
+        int r = 1;
+        for(int i = n / 10; i > 0; i /= 10, ++r);
+        return r;
+    }
 
     template<typename T>
     constexpr int digits() { return std::numeric_limits<T>::digits10 + 1; }
