@@ -69,14 +69,14 @@ layout: default
 　Easingを行う場合は、「*」演算子を利用します。
 
 	sprite->runAction(
-	    x::moveTo(1.0f, 100.0f, 100.0f) * x::Ease::bounceOut()
+	    x::moveTo(1.0f, 100.0f, 100.0f) * x::ease::bounceOut()
 	);
 
-　Easeアクションは、「x::Ease」という名前空間に定義されています。
-Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
+　Easeアクションは、「x::ease」という名前空間に定義されています。
+Ease/Sine/Exp/Bounce/ElasticのIn/Out/InOutがが利用可能です。
 
-	x::Ease::EaseInOut
-	x::Ease::ExpIn
+	x::ease::EaseInOut
+	x::ease::ExpIn
 	...
 
 ### 繰り返し
@@ -142,7 +142,7 @@ Ease/Sine/Exp/BounceのIn/Out/InOutがが利用可能です。
  `x::flux`を利用することで、cocos2dxのアクションをFluxionアクションに変換できます。
 
 	sprite->runAction(
-	    x::fluc<CallInterval>(1.0f, [](float dt) {
+	    x::flux<CallInterval>(1.0f, [](float dt) {
 	    	dlog("#", dt);
 	    }) >>
 	    []() {

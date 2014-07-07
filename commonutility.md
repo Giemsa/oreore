@@ -51,7 +51,7 @@ layout: default
 	template<typename T>
 	unsigned long random<T>(const unsigned long min, const unsigned long max);
 
-　xorshiftを利用して乱数を生成します。引数にmin、maxが指定された場合、その範囲で乱数を生成します。乱数生成ルーチンはとてもシンプルなので、ある程度偏りが発生します(モジュロバイアス)。xorshiftは、周期が2^128-1ですが他の乱数生成ルーチンよりも高速に動作します。  
+　xorshiftを利用して乱数を生成します。引数にmin、maxが指定された場合、その範囲で乱数を生成します。xorshiftは、周期が2^128-1ですが他の乱数生成ルーチンよりも高速に動作します。  
 　テンプレート関数となっているrandomは、戻り値の型が指定された型にキャストされます。以下のコードを同等です。
 
 	random<float>(10, 20);
@@ -151,7 +151,7 @@ layout: default
 
 	Observer &Observer::getInstance();
 
-　Observerインスタンスを返します。Observerオブジェクトははシングルトンです。
+　Observerインスタンスを返します。Observerオブジェクトはシングルトンです。
 
 #### addSubject
 
