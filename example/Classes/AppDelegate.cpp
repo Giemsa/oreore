@@ -34,6 +34,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set show number
     DLog::setShowTime(true);
 
+    // multiresolution config
+    MultiResolution &mr = MultiResolution::getInstance();
+    mr.setResolutionList({
+        { "resources-iphone",   1.0f, Application::Platform::OS_IPHONE,  Size(320, 480) },
+        { "resources-iphonehd", 2.0f, Application::Platform::OS_IPHONE,  Size(640, 960) },
+
+        { "resources-small",    1.0f, Application::Platform::OS_ANDROID, Size(384, 568) },
+        { "resources-large",    2.0f, Application::Platform::OS_ANDROID, Size(768, 1136) },
+    });
+    mr.resolve();
 
     // register scene manager
     // if call addScene<>(false), the scene is created on application start and
