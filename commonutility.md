@@ -27,8 +27,11 @@ layout: default
 * TimeCounter.h (非推奨)
 	* 時間を計測するときに利用していたクラスです。メンテナンスされていません。
 
-* Observer [cocos2dx-3.0RC1のみ]
+* Observer [cocos2dx-3.0Rのみ]
 	* cocos2dxで言うところのNotificationCenter(CCNotificationCenter)と同等の機能を持つクラスです。
+
+* MultiResolution [cocos2dx-3.0のみ]
+	* 多解像度対応を行います。詳しくは[MultiResolution](./mr.html)を参照してください。
 
 ### null.h
 　「null」が定義されています。C++11が使える環境ではnullptrと同等です。そうでない場合は、Effective C++に掲載されているテンプレートクラスを利用します。
