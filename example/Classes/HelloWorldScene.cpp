@@ -11,7 +11,6 @@ bool HelloWorld::init()
     }
 
     const Size &visibleSize = Director::getInstance()->getVisibleSize();
-    const Point &origin = Director::getInstance()->getVisibleOrigin();
 
     auto closeItem = MenuItemImage::create(
         "CloseNormal.png",
@@ -21,8 +20,8 @@ bool HelloWorld::init()
 
     closeItem->setPosition(
         Point(
-            origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
-            origin.y + closeItem->getContentSize().height / 2
+            visibleSize.width - closeItem->getContentSize().width / 2,
+            closeItem->getContentSize().height / 2
         )
     );
 
@@ -33,26 +32,32 @@ bool HelloWorld::init()
     auto label = Label::createWithSystemFont("Hello World", "Arial", 20);
     label->setPosition(
         Point(
-            origin.x + visibleSize.width / 2,
-            origin.y + visibleSize.height - label->getContentSize().height
+            visibleSize.width / 2,
+            visibleSize.height - label->getContentSize().height
         )
     );
 
     addChild(label, 1);
 
     auto sprite = Sprite::create("HelloWorld.png");
-    sprite->setPosition(
-        Point(
-            visibleSize.width / 2 + origin.x,
-            visibleSize.height / 2 + origin.y
-        )
-    );
+    sprite->setPosition(center(this));
 
     addChild(sprite, 0);
 
+    // generate action sequence with fluxion
+    sprite->runAction(
+        (
+            x::moveBy(0.5f, -200, -200) >>
+            x::moveBy(1.0f, 0, 400) * x::ease::elasticOut(0.5f) >>
+            x::moveBy(1.0f, 400, -400) >>
+            x::moveBy(1.0f, 0, 400) * x::ease::elasticOut(0.5f) >>
+            x::moveBy(0.5f, -200, -200)
+        ) * x::inf()
+    );
+
+
     return true;
 }
-
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {

@@ -5,13 +5,11 @@
  * Fluxion -FLUently aCTION Generator-
  */
 
-#include <type_traits>
-#include <limits>
 #include "cocos2d.h"
 
 namespace oreore
 {
-    namespace Fluxion
+    namespace fluxion
     {
         class SequentialAction;
         class ParallelAction;
@@ -20,21 +18,21 @@ namespace oreore
 
         using ActionList = cocos2d::Vector<cocos2d::FiniteTimeAction *>;
 
-        class Action
+        class ActionBase
         {
         public:
-            Action() { }
-            virtual ~Action() { }
-            inline SequentialAction operator>>(const Action &action);
+            ActionBase() { }
+            virtual ~ActionBase() { }
+            inline SequentialAction operator>>(const ActionBase &action);
             inline SequentialAction operator>>(cocos2d::FiniteTimeAction *action);
             inline SequentialAction operator>>(const std::function<void()> &action);
-            inline ParallelAction operator+(const Action &action);
+            inline ParallelAction operator+(const ActionBase &action);
             inline ParallelAction operator+(cocos2d::FiniteTimeAction *action);
             inline Repeat operator*(const int count);
             virtual operator cocos2d::FiniteTimeAction *() const = 0;
         };
 
-        class ActionInterval : public Action
+        class ActionIntervalBase : public ActionBase
         {
         protected:
             template<typename T>
@@ -45,8 +43,8 @@ namespace oreore
                     actions->pushBack(action);
             }
         public:
-            ActionInterval() { }
-            virtual ~ActionInterval() { }
+            ActionIntervalBase() { }
+            virtual ~ActionIntervalBase() { }
 
             virtual operator cocos2d::ActionInterval *() const = 0;
 
@@ -64,29 +62,29 @@ namespace oreore
         };
 
         template<typename T>
-        class WrapAction : public Action
+        class Action : public ActionBase
         {
         private:
             T *action;
         public:
             template<typename... Args>
-            inline WrapAction(const Args &...args) : action(T::create(args...)) { }
+            inline Action(const Args &...args) : action(T::create(args...)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
         };
 
         template<typename T>
-        class WrapIntervalAction : public ActionInterval
+        class ActionInterval : public ActionIntervalBase
         {
         private:
             T *action;
         public:
             template<typename... Args>
-            inline WrapIntervalAction(const Args &...args) : action(T::create(args...)) { }
+            inline ActionInterval(const Args &...args) : action(T::create(args...)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
             inline operator cocos2d::ActionInterval *() const override { return action; }
         };
 
-        class EmptyAction : public Action
+        class EmptyAction : public ActionBase
         {
         private:
         public:
@@ -95,7 +93,7 @@ namespace oreore
             inline operator cocos2d::FiniteTimeAction *() const override { return nullptr; }
         };
 
-        class SequentialAction : public ActionInterval
+        class SequentialAction : public ActionIntervalBase
         {
         private:
             std::unique_ptr<ActionList> actions;
@@ -115,7 +113,7 @@ namespace oreore
 
             inline SequentialAction(ActionList *array) : actions(array) { }
 
-            inline SequentialAction &operator>>(const Action &action)
+            inline SequentialAction &operator>>(const ActionBase &action)
             {
                 addAction(actions, action);
                 return *this;
@@ -151,7 +149,7 @@ namespace oreore
             }
         };
 
-        class ParallelAction : public ActionInterval
+        class ParallelAction : public ActionIntervalBase
         {
         private:
             std::unique_ptr<ActionList> actions;
@@ -171,7 +169,7 @@ namespace oreore
                 addAction(actions, b);
             }
 
-            inline ParallelAction &operator+(const Action &action)
+            inline ParallelAction &operator+(const ActionBase &action)
             {
                 addAction(actions, action);
                 return *this;
@@ -201,18 +199,18 @@ namespace oreore
             }
         };
 
-        class Repeat : public ActionInterval
+        class Repeat : public ActionIntervalBase
         {
             cocos2d::Repeat *action;
         private:
         public:
-            Repeat(const Action &action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
+            Repeat(const ActionBase &action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
             Repeat(cocos2d::ActionInterval *action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
             inline operator cocos2d::FiniteTimeAction *() const override { return action; }
             inline operator cocos2d::ActionInterval *() const override { return action; }
         };
 
-        class ActionModifier : public ActionInterval
+        class ActionModifier : public ActionIntervalBase
         {
         private:
             cocos2d::ActionInterval *action;
@@ -227,36 +225,36 @@ namespace oreore
         };
 
         template<typename T>
-        class WrapEase : public ActionModifier
+        class Ease : public ActionModifier
         {
         public:
-            WrapEase() : ActionModifier(nullptr) { }
-            WrapEase(T *ease) : ActionModifier(ease) { }
-            ~WrapEase() { }
+            Ease() : ActionModifier(nullptr) { }
+            Ease(T *ease) : ActionModifier(ease) { }
+            ~Ease() { }
 
             inline operator cocos2d::FiniteTimeAction *() const { return get(); }
-            inline WrapEase<T> apply(const ActionInterval *action) const
+            inline Ease<T> apply(const ActionIntervalBase *action) const
             {
-                return WrapEase<T>(T::create(static_cast<cocos2d::ActionInterval *>(*action)));
+                return Ease<T>(T::create(static_cast<cocos2d::ActionInterval *>(*action)));
             }
         };
 
         template<typename T, typename P>
-        class WrapEase1 : public ActionModifier
+        class Ease1 : public ActionModifier
         {
         private:
             P param;
         public:
-            WrapEase1() : ActionModifier(nullptr), param() { }
-            WrapEase1(T *ease) : ActionModifier(ease), param() { }
-            WrapEase1(const P param) : ActionModifier(nullptr), param(param) { }
-            WrapEase1(T *ease, const P param) : ActionModifier(ease), param(param) { }
-            ~WrapEase1() { }
+            Ease1() : ActionModifier(nullptr), param() { }
+            Ease1(T *ease) : ActionModifier(ease), param() { }
+            Ease1(const P param) : ActionModifier(nullptr), param(param) { }
+            Ease1(T *ease, const P param) : ActionModifier(ease), param(param) { }
+            ~Ease1() { }
 
             inline operator cocos2d::FiniteTimeAction *() const { return get(); }
-            inline WrapEase1<T, P> apply(const ActionInterval *action) const
+            inline Ease1<T, P> apply(const ActionIntervalBase *action) const
             {
-                return WrapEase1<T, P>(T::create(static_cast<cocos2d::ActionInterval *>(*action), param), param);
+                return Ease1<T, P>(T::create(static_cast<cocos2d::ActionInterval *>(*action), param), param);
             }
         };
 
@@ -268,137 +266,176 @@ namespace oreore
             ~RepeatForever() { }
 
             inline operator cocos2d::FiniteTimeAction *() const { return get(); }
-            inline RepeatForever apply(const ActionInterval *action) const
+            inline RepeatForever apply(const ActionIntervalBase *action) const
             {
                 return RepeatForever(cocos2d::Repeat::create(static_cast<cocos2d::ActionInterval *>(*action), -1));
             }
         };
 
         /* Action impl */
-        inline SequentialAction Action::operator>>(const Action &action)
+        inline SequentialAction ActionBase::operator>>(const ActionBase &action)
         {
             return SequentialAction(*this, action);
         }
 
-        inline SequentialAction Action::operator>>(cocos2d::FiniteTimeAction *action)
+        inline SequentialAction ActionBase::operator>>(cocos2d::FiniteTimeAction *action)
         {
             return SequentialAction(*this, action);
         }
 
-        inline SequentialAction Action::operator>>(const std::function<void()> &action)
+        inline SequentialAction ActionBase::operator>>(const std::function<void()> &action)
         {
             return SequentialAction(*this, cocos2d::CallFunc::create(action));
         }
 
-        inline ParallelAction Action::operator+(const Action &action)
+        inline ParallelAction ActionBase::operator+(const ActionBase &action)
         {
             return ParallelAction(*this, action);
         }
 
-        inline ParallelAction Action::operator+(cocos2d::FiniteTimeAction *action)
+        inline ParallelAction ActionBase::operator+(cocos2d::FiniteTimeAction *action)
         {
             return ParallelAction(*this, action);
         }
 
-        inline Repeat Action::operator *(const int count)
+        inline Repeat ActionBase::operator *(const int count)
         {
             return Repeat(*this, count);
         }
 
         /* ActionInterval impl */
         template<typename T, typename>
-        inline Repeat ActionInterval::operator*(const T &op)
+        inline Repeat ActionIntervalBase::operator*(const T &op)
         {
             return Repeat(*this, op);
         }
+
+        /* action defines */
+        /* finite time action */
+        using MoveTo = ActionInterval<cocos2d::MoveTo>;
+        using MoveBy = ActionInterval<cocos2d::MoveBy>;
+
+        using FadeOut = ActionInterval<cocos2d::FadeOut>;
+        using FadeIn  = ActionInterval<cocos2d::FadeIn>;
+        using FadeTo  = ActionInterval<cocos2d::FadeTo>;
+
+        using ScaleTo = ActionInterval<cocos2d::ScaleTo>;
+        using ScaleBy = ActionInterval<cocos2d::ScaleBy>;
+
+        using Blink = ActionInterval<cocos2d::Blink>;
+        using Wait  = ActionInterval<cocos2d::DelayTime>;
+
+        using RotateTo = ActionInterval<cocos2d::RotateTo>;
+        using RotateBy = ActionInterval<cocos2d::RotateBy>;
+
+        /* action */
+        using Show = Action<cocos2d::Show>;
+        using Hide = Action<cocos2d::Hide>;
+
+        using CallFunc = Action<cocos2d::CallFunc>;
+
+        /* ease */
+        namespace ease
+        {
+            /* ease */
+            using EaseIn    = fluxion::Ease1<cocos2d::EaseIn, float>;
+            using EaseOut   = fluxion::Ease1<cocos2d::EaseOut, float>;
+            using EaseInOut = fluxion::Ease1<cocos2d::EaseInOut, float>;
+
+            /* bounce */
+            using BounceIn    = fluxion::Ease<cocos2d::EaseBounceIn>;
+            using BounceOut   = fluxion::Ease<cocos2d::EaseBounceOut>;
+            using BounceInOut = fluxion::Ease<cocos2d::EaseBounceInOut>;
+
+            /* back */
+            using BackIn    = fluxion::Ease<cocos2d::EaseBackIn>;
+            using BackOut   = fluxion::Ease<cocos2d::EaseBackOut>;
+            using BackInOut = fluxion::Ease<cocos2d::EaseBackInOut>;
+
+            /* exp */
+            using ExpIn    = fluxion::Ease<cocos2d::EaseExponentialIn>;
+            using ExpOut   = fluxion::Ease<cocos2d::EaseExponentialOut>;
+            using ExpInOut = fluxion::Ease<cocos2d::EaseExponentialInOut>;
+
+            /* sine */
+            using SineIn    = fluxion::Ease<cocos2d::EaseSineIn>;
+            using SineOut   = fluxion::Ease<cocos2d::EaseSineOut>;
+            using SineInOut = fluxion::Ease<cocos2d::EaseSineInOut>;
+
+            /* elastic */
+            using ElasticIn    = fluxion::Ease1<cocos2d::EaseElasticIn, float>;
+            using ElasticOut   = fluxion::Ease1<cocos2d::EaseElasticOut, float>;
+            using ElasticInOut = fluxion::Ease1<cocos2d::EaseElasticInOut, float>;
+        }
     }
 
-    inline Fluxion::SequentialAction operator>>(cocos2d::Action *a, const Fluxion::Action &b)
+    inline fluxion::SequentialAction operator>>(cocos2d::Action *a, const fluxion::ActionBase &b)
     {
-        return Fluxion::SequentialAction(a, b);
+        return fluxion::SequentialAction(a, b);
     }
 
-    inline Fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const Fluxion::Action &b)
+    inline fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const fluxion::ActionBase &b)
     {
-        return Fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
+        return fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
     }
 
     namespace x
     {
         /* finite time action */
-        typedef Fluxion::WrapIntervalAction<cocos2d::MoveTo> MoveTo;
-        inline MoveTo moveTo(const float duration, const cocos2d::Point &pos) { return MoveTo(duration, pos); }
-        inline MoveTo moveTo(const float duration, const float x, const float y) { return moveTo(duration, cocos2d::Point(x, y)); }
+        inline fluxion::MoveTo moveTo(const float duration, const cocos2d::Point &pos) { return fluxion::MoveTo(duration, pos); }
+        inline fluxion::MoveTo moveTo(const float duration, const float x, const float y) { return moveTo(duration, cocos2d::Point(x, y)); }
+        inline fluxion::MoveBy moveBy(const float duration, const cocos2d::Point &delta) { return fluxion::MoveBy(duration, delta); }
+        inline fluxion::MoveBy moveBy(const float duration, const float dx, const float dy) { return moveBy(duration, cocos2d::Point(dx, dy)); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::MoveBy> MoveBy;
-        inline MoveBy moveBy(const float duration, const cocos2d::Point &delta) { return MoveBy(duration, delta); }
-        inline MoveBy moveBy(const float duration, const float dx, const float dy) { return moveBy(duration, cocos2d::Point(dx, dy)); }
+        inline fluxion::FadeOut fadeOut(const float duration) { return fluxion::FadeOut(duration); }
+        inline fluxion::FadeIn fadeIn(const float duration) { return fluxion::FadeIn(duration); }
+        inline fluxion::FadeTo fadeTo(const float duration, const GLubyte opacity) { return fluxion::FadeTo(duration, opacity); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::FadeOut> FadeOut;
-        inline FadeOut fadeOut(const float duration) { return FadeOut(duration); }
+        inline fluxion::ScaleTo scaleTo(const float duration, const float s) { return fluxion::ScaleTo(duration, s); }
+        inline fluxion::ScaleTo scaleTo(const float duration, const float sx, const float sy) { return fluxion::ScaleTo(duration, sx, sy); }
+        inline fluxion::ScaleBy scaleBy(const float duration, const float s) { return fluxion::ScaleBy(duration, s); }
+        inline fluxion::ScaleBy scaleBy(const float duration, const float sx, const float sy) { return fluxion::ScaleBy(duration, sx, sy); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::FadeIn> FadeIn;
-        inline FadeIn fadeIn(const float duration) { return FadeIn(duration); }
+        inline fluxion::Blink blink(const float duration, const int blinks) { return fluxion::Blink(duration, blinks); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::FadeTo> FadeTo;
-        inline FadeTo fadeTo(const float duration, const GLubyte opacity) { return FadeTo(duration, opacity); }
+        inline fluxion::Wait wait(const float duration) { return fluxion::Wait(duration); }
+        inline fluxion::Wait delayTime(const float duration) { return wait(duration); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::ScaleTo> ScaleTo;
-        inline ScaleTo scaleTo(const float duration, const float s) { return ScaleTo(duration, s); }
-        inline ScaleTo scaleTo(const float duration, const float sx, const float sy) { return ScaleTo(duration, sx, sy); }
+        inline fluxion::RotateTo rotateTo(const float duration, const float angle) { return fluxion::RotateTo(duration, angle); }
+        inline fluxion::RotateTo rotateTo(const float duration, const float angleX, const float angleY) { return fluxion::RotateTo(duration, angleX, angleY); }
 
-        typedef Fluxion::WrapIntervalAction<cocos2d::ScaleBy> ScaleBy;
-        inline ScaleBy scaleBy(const float duration, const float s) { return ScaleBy(duration, s); }
-        inline ScaleBy scaleBy(const float duration, const float sx, const float sy) { return ScaleBy(duration, sx, sy); }
-
-        typedef Fluxion::WrapIntervalAction<cocos2d::Blink> Blink;
-        inline Blink blink(const float duration, const int blinks) { return Blink(duration, blinks); }
-
-        typedef Fluxion::WrapIntervalAction<cocos2d::DelayTime> Wait;
-        inline Wait wait(const float duration) { return Wait(duration); }
-        inline Wait delayTime(const float duration) { return Wait(duration); }
-
-        typedef Fluxion::WrapIntervalAction<cocos2d::RotateTo> RotateTo;
-        inline RotateTo rotateTo(const float duration, const float angle) { return RotateTo(duration, angle); }
-        inline RotateTo rotateTo(const float duration, const float angleX, const float angleY) { return RotateTo(duration, angleX, angleY); }
-
-        typedef Fluxion::WrapIntervalAction<cocos2d::RotateBy> RotateBy;
-        inline RotateBy rotateBy(const float duration, const float angle) { return RotateBy(duration, angle); }
-        inline RotateBy rotateBy(const float duration, const float angleX, const float angleY) { return RotateBy(duration, angleX, angleY); }
+        inline fluxion::RotateBy rotateBy(const float duration, const float angle) { return fluxion::RotateBy(duration, angle); }
+        inline fluxion::RotateBy rotateBy(const float duration, const float angleX, const float angleY) { return fluxion::RotateBy(duration, angleX, angleY); }
 
         /* action */
-        typedef Fluxion::WrapAction<cocos2d::Show> Show;
-        inline Show show() { return Show(); }
+        inline fluxion::Show show() { return fluxion::Show(); }
+        inline fluxion::Hide hide() { return fluxion::Hide(); }
 
-        typedef Fluxion::WrapAction<cocos2d::Hide> Hide;
-        inline Hide hide() { return Hide(); }
-
-        typedef Fluxion::WrapAction<cocos2d::CallFunc> CallFunc;
-        inline CallFunc call(const std::function<void()> &func) { return CallFunc(func); }
+        inline fluxion::CallFunc call(const std::function<void()> &func) { return fluxion::CallFunc(func); }
 
         template<typename... Args>
-        inline Fluxion::ParallelAction p(const Args &...args) { return Fluxion::ParallelAction::createFromActions(args...); }
+        inline fluxion::ParallelAction p(const Args &...args) { return fluxion::ParallelAction::createFromActions(args...); }
         template<typename... Args>
-        inline Fluxion::ParallelAction par(const Args &...args) { return p(args...); }
+        inline fluxion::ParallelAction par(const Args &...args) { return p(args...); }
 
         template<typename... Args>
-        inline Fluxion::SequentialAction s(const Args &...args) { return Fluxion::SequentialAction::createFromActions(args...); }
+        inline fluxion::SequentialAction s(const Args &...args) { return fluxion::SequentialAction::createFromActions(args...); }
         template<typename... Args>
-        inline Fluxion::SequentialAction seq(const Args &...args) { return s(args...); }
+        inline fluxion::SequentialAction seq(const Args &...args) { return s(args...); }
 
         /* repeat */
-        inline Fluxion::RepeatForever infinite() { return Fluxion::RepeatForever(); }
-        inline Fluxion::RepeatForever inf() { return Fluxion::RepeatForever(); }
+        inline fluxion::RepeatForever infinite() { return fluxion::RepeatForever(); }
+        inline fluxion::RepeatForever inf() { return fluxion::RepeatForever(); }
 
         /* noop */
-        inline Fluxion::EmptyAction noop() { return Fluxion::EmptyAction(); }
+        inline fluxion::EmptyAction noop() { return fluxion::EmptyAction(); }
 
         /* action convert */
         template<
             typename T, typename... Args,
             typename = typename std::enable_if<std::is_base_of<cocos2d::ActionInterval, T>::value, void>::type
         >
-        inline Fluxion::WrapIntervalAction<T> flux(const Args &...args) { return Fluxion::WrapIntervalAction<T>(args...); }
+        inline fluxion::ActionInterval<T> flux(const Args &...args) { return fluxion::ActionInterval<T>(args...); }
 
         template<
             typename T, typename... Args,
@@ -408,60 +445,43 @@ namespace oreore
                 void
             >::type
         >
-        inline Fluxion::WrapAction<T> flux(const Args &...args) { return Fluxion::WrapAction<T>(args...); }
+        inline fluxion::Action<T> flux(const Args &...args) { return fluxion::Action<T>(args...); }
 
-        namespace Ease
+        namespace ease
         {
             /* ease */
-            typedef Fluxion::WrapEase1<cocos2d::EaseIn, float> EaseIn;
-            inline EaseIn easeIn(const float rate) { return EaseIn(rate); }
-
-            typedef Fluxion::WrapEase1<cocos2d::EaseOut, float> EaseOut;
-            inline EaseOut easeOut(const float rate) { return EaseOut(rate); }
-
-            typedef Fluxion::WrapEase1<cocos2d::EaseInOut, float> EaseInOut;
-            inline EaseInOut easeInOut(const float rate) { return EaseInOut(rate); }
+            inline fluxion::ease::EaseIn easeIn(const float rate) { return fluxion::ease::EaseIn(rate); }
+            inline fluxion::ease::EaseOut easeOut(const float rate) { return fluxion::ease::EaseOut(rate); }
+            inline fluxion::ease::EaseInOut easeInOut(const float rate) { return fluxion::ease::EaseInOut(rate); }
 
             /* bounce */
-            typedef Fluxion::WrapEase<cocos2d::EaseBounceIn> BounceIn;
-            inline BounceIn bounceIn() { return BounceIn(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseBounceOut> BounceOut;
-            inline BounceOut bounceOut() { return BounceOut(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseBounceInOut> BounceInOut;
-            inline BounceInOut bounceInOut() { return BounceInOut(); }
+            inline fluxion::ease::BounceIn bounceIn() { return fluxion::ease::BounceIn(); }
+            inline fluxion::ease::BounceOut bounceOut() { return fluxion::ease::BounceOut(); }
+            inline fluxion::ease::BounceInOut bounceInOut() { return fluxion::ease::BounceInOut(); }
 
             /* back */
-            typedef Fluxion::WrapEase<cocos2d::EaseBackIn> BackIn;
-            inline BackIn backIn() { return BackIn(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseBackOut> BackOut;
-            inline BackOut backOut() { return BackOut(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseBackInOut> BackInOut;
-            inline BackInOut backInOut() { return BackInOut(); }
+            inline fluxion::ease::BackIn backIn() { return fluxion::ease::BackIn(); }
+            inline fluxion::ease::BackOut backOut() { return fluxion::ease::BackOut(); }
+            inline fluxion::ease::BackInOut backInOut() { return fluxion::ease::BackInOut(); }
 
             /* exp */
-            typedef Fluxion::WrapEase<cocos2d::EaseExponentialIn> ExpIn;
-            inline ExpIn expIn() { return ExpIn(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseExponentialOut> ExpOut;
-            inline ExpOut expOut() { return ExpOut(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseExponentialInOut> ExpInOut;
-            inline ExpInOut expInOut() { return ExpInOut(); }
+            inline fluxion::ease::ExpIn expIn() { return fluxion::ease::ExpIn(); }
+            inline fluxion::ease::ExpOut expOut() { return fluxion::ease::ExpOut(); }
+            inline fluxion::ease::ExpInOut expInOut() { return fluxion::ease::ExpInOut(); }
 
             /* sign */
-            typedef Fluxion::WrapEase<cocos2d::EaseSineIn> SineIn;
-            inline SineIn sineIn() { return SineIn(); }
+            inline fluxion::ease::SineIn sineIn() { return fluxion::ease::SineIn(); }
+            inline fluxion::ease::SineOut sineOut() { return fluxion::ease::SineOut(); }
+            inline fluxion::ease::SineInOut sineInOut() { return fluxion::ease::SineInOut(); }
 
-            typedef Fluxion::WrapEase<cocos2d::EaseSineOut> SineOut;
-            inline SineOut sineOut() { return SineOut(); }
-
-            typedef Fluxion::WrapEase<cocos2d::EaseSineInOut> SineInOut;
-            inline SineInOut sineInOut() { return SineInOut(); }
+            /* ease */
+            inline fluxion::ease::ElasticIn elasticIn(const float period) { return fluxion::ease::ElasticIn(period); }
+            inline fluxion::ease::ElasticOut elasticOut(const float period) { return fluxion::ease::ElasticOut(period); }
+            inline fluxion::ease::ElasticInOut elasticInOut(const float period) { return fluxion::ease::ElasticInOut(period); }
         }
+
+        // for old oreore compatibility
+        namespace Ease = ease;
     }
 }
 
