@@ -2,6 +2,7 @@
 #define __OREORE_COCOS2D_SHATTEREDSPRITE_H__
 
 #include "cocos2d.h"
+#include "../utils/Persistent.h"
 
 namespace oreore
 {
@@ -27,15 +28,21 @@ namespace oreore
         float speedVar, rotVar;
         cocos2d::Rect textureRect;
         cocos2d::Texture2D *texture;
+        cocos2d::GLProgram *shader;
 
         ShatteredSpriteParam() :
             piecesX(0), piecesY(0), speedVar(0.0f), rotVar(0.0f),
-            textureRect(), texture(nullptr) { }
-        ShatteredSpriteParam(const int piecesX, const int piecesY, const float speedVar, const float rotVar, cocos2d::Texture2D *texture, const cocos2d::Rect &textureRect) :
-            piecesX(piecesX), piecesY(piecesY), speedVar(speedVar), rotVar(rotVar), texture(texture), textureRect(textureRect) { }
+            textureRect(), texture(nullptr), shader(nullptr) { }
+        ShatteredSpriteParam(
+            const int piecesX, const int piecesY, const float speedVar, const float rotVar,
+            cocos2d::Texture2D *texture, const cocos2d::Rect &textureRect, cocos2d::GLProgram *shader
+        )
+         : piecesX(piecesX), piecesY(piecesY), speedVar(speedVar), rotVar(rotVar),
+           texture(texture), textureRect(textureRect), shader(shader)
+        { }
     };
 
-    class ShatteredSprite : public cocos2d::Node
+    class ShatteredSprite : public cocos2d::Sprite
     {
         using Tex2FVec = std::vector<cocos2d::Tex2F>;
         using Vertex3FVec = std::vector<cocos2d::Vertex3F>;
@@ -46,30 +53,31 @@ namespace oreore
         Vertex3FVec coord;
         Colors colors;
         MoveInfoVec moveInfoVec;
+        Persistent<cocos2d::GLProgram> shader;
 
         int piecesX;
-        cocos2d::Texture2D *texture;
         bool shattered;
 
         cocos2d::CustomCommand cmd;
-        cocos2d::BlendFunc blendFunc;
 
         inline int getIndex(const int x, const int y) const { return x * piecesX + y; }
+        void initShatterData(const ShatteredSpriteParam &param);
     protected:
         ShatteredSprite() { }
         virtual ~ShatteredSprite() { }
 
         bool init(const ShatteredSpriteParam &param);
+        bool init() override;
 
-        void updateBlendFunc();
         virtual void updateColor() override;
-        virtual void cleanup() override;
         virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
     public:
         static ShatteredSprite *create(const ShatteredSpriteParam &param);
+        CREATE_FUNC(ShatteredSprite);
+
+        void setParams(const ShatteredSpriteParam &param);
         void shatter();
     };
 }
 
 #endif
-

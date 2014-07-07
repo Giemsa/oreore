@@ -54,7 +54,10 @@ namespace oreore
         const float y = randf(0.0f, 360.0f);
         const float z = randf(0.0f, 360.0f);
         if(x == 0.0f && y == 0.0f && z == 0.0f)
+        {
             return Vertex3F();
+        }
+
         const float len = sqrtf(x * x + y * y + z * z);
         return Vertex3F(x * sth / len, y * sth / len, z * sth / len);
     }
@@ -82,19 +85,47 @@ namespace oreore
         return nullptr;
     }
 
+    bool ShatteredSprite::init()
+    {
+        if(!Sprite::init())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     bool ShatteredSprite::init(const ShatteredSpriteParam &param)
     {
-        if(!Node::init())
+        if(!Sprite::initWithTexture(param.texture, param.textureRect))
+        {
             return false;
+        }
 
+        initShatterData(param);
+        return true;
+    }
+
+    void ShatteredSprite::setParams(const ShatteredSpriteParam &param)
+    {
+        setTexture(param.texture);
+        setTextureRect(param.textureRect);
+        initShatterData(param);
+    }
+    
+    void ShatteredSprite::initShatterData(const ShatteredSpriteParam &param)
+    {
         this->piecesX = param.piecesX + 1;
-        texture = param.texture;
-        texture->retain();
         shattered = false;
 
-        setContentSize(param.textureRect.size);
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        if(!param.shader)
+        {
+            shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        }
+        else
+        {
+            shader = param.shader;
+        }
 
         updateBlendFunc();
 
@@ -112,6 +143,7 @@ namespace oreore
         Tex2FVec ptArray((param.piecesX + 1) * (param.piecesY + 1));
 
         for(int x = 0; x <= param.piecesX; x++)
+        {
             for(int y = 0; y <= param.piecesY; y++)
             {
                 Tex2F pt(x * pieceXsize, y * pieceYsize);
@@ -119,7 +151,11 @@ namespace oreore
                     t2fAdd(pt, Tex2F(roundf(randf(0.0f, pieceXsize * 0.45f)), roundf(randf(0.0f, pieceYsize * 0.45f))));
                 ptArray[getIndex(x, y)] = pt;
             }
+        }
 
+        coord.clear();
+        texCoord.clear();
+        moveInfoVec.clear();
         colors.resize(param.piecesX * param.piecesY * 6, color);
 
         for(int x = 0; x < param.piecesX; x++)
@@ -178,84 +214,66 @@ namespace oreore
                 }
             }
         }
-
-        return true;
-    }
-
-    void ShatteredSprite::updateBlendFunc()
-    {
-        if(!texture || !texture->hasPremultipliedAlpha())
-        {
-            blendFunc.src = GL_SRC_ALPHA;
-            blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-        }
-        else
-        {
-            blendFunc.src = CC_BLEND_SRC;
-            blendFunc.dst = CC_BLEND_DST;
-        }
-    }
-
-    void ShatteredSprite::cleanup()
-    {
-        CC_SAFE_RELEASE_NULL(texture);
-        Node::cleanup();
     }
 
     void ShatteredSprite::updateColor()
     {
-        Node::updateColor();
-        const Color4B color(getColor().r, getColor().g, getColor().b, getOpacity());
-        for(auto &c : colors)
-            c = color;
+        Sprite::updateColor();
+        if(shattered)
+        {
+            std::fill(
+                colors.begin(), colors.end(),
+                Color4B(getColor().r, getColor().g, getColor().b, getOpacity())
+            );
+        }
     }
 
     void ShatteredSprite::draw(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)
     {
-        Node::draw(renderer, parentTransform, parentTransformUpdated);
-        if(!texture)
+        if(!shattered)
+        {
+            Sprite::draw(renderer, parentTransform, parentTransformUpdated);
             return;
+        }
 
+        Node::draw(renderer, parentTransform, parentTransformUpdated);
         CCASSERT(coord.size() == texCoord.size() && coord.size() == colors.size(), "coord.size() != texCoord.size() != colors.size()");
 
-        if(shattered)
+        kmQuaternion p, q, r;
+
+        for(int i = 0; i < moveInfoVec.size(); i++)
         {
-            kmQuaternion p, q, r;
+            Vertex3F *c = &coord[i * 3];
+            MoveInfo &info = moveInfoVec[i];
 
-            for(int i = 0; i < moveInfoVec.size(); i++)
+            v3fAdd(info.center, info.vdelta);
+
+            kmQuaternionFill(&p, -info.axis.x, -info.axis.y, -info.axis.z, info.adelta);
+            kmQuaternionFill(&r, info.axis.x, info.axis.y, info.axis.z, info.adelta);
+
+            for(int j = 0; j < 3; j++, c++)
             {
-                Vertex3F *c = &coord[i * 3];
-                MoveInfo &info = moveInfoVec[i];
+                v3fAdd(*c, info.vdelta);
 
-                v3fAdd(info.center, info.vdelta);
+                kmQuaternionFill(&q, c->x - info.center.x, c->y - info.center.y, c->z - info.center.z, 0);
+                kmQuaternionMultiply(&q, &p, &q);
+                kmQuaternionMultiply(&q, &q, &r);
 
-                kmQuaternionFill(&p, -info.axis.x, -info.axis.y, -info.axis.z, info.adelta);
-                kmQuaternionFill(&r, info.axis.x, info.axis.y, info.axis.z, info.adelta);
-
-                for(int j = 0; j < 3; j++, c++)
-                {
-                    v3fAdd(*c, info.vdelta);
-
-                    kmQuaternionFill(&q, c->x - info.center.x, c->y - info.center.y, c->z - info.center.z, 0);
-                    kmQuaternionMultiply(&q, &p, &q);
-                    kmQuaternionMultiply(&q, &q, &r);
-
-                    c->x = q.x + info.center.x;
-                    c->y = q.y + info.center.y;
-                    c->z = q.z + info.center.z;
-                }
+                c->x = q.x + info.center.x;
+                c->y = q.y + info.center.y;
+                c->z = q.z + info.center.z;
             }
         }
 
         cmd.init(getGlobalZOrder());
         cmd.func = [this]() {
-            CC_NODE_DRAW_SETUP();
+            shader->use();
+            shader->setUniformsForBuiltins(_modelViewTransform);
+
+            GL::blendFunc(getBlendFunc().src, getBlendFunc().dst);
+            GL::bindTexture2D(getTexture()->getName());
+
             GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-
-            GL::blendFunc(blendFunc.src, blendFunc.dst);
-
-            GL::bindTexture2D(texture->getName());
-
             glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, &coord[0]);
             glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
             glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, &colors[0]);
