@@ -55,7 +55,6 @@ bool HelloWorld::init()
         ) * x::inf()
     );
 
-
     return true;
 }
 

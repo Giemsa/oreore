@@ -73,7 +73,7 @@ namespace oreore
 
         inline operator T *() const
         {
-            return *ptr;
+            return ptr;
         }
 
         inline bool operator==(T *p) const
@@ -123,12 +123,6 @@ namespace oreore
 
         inline T *get() const { return ptr; }
     };
-
-    template<typename T>
-    Persistent<T> persist(T *ptr)
-    {
-        return Persistent<T>(ptr);
-    }
 }
 
 #endif
