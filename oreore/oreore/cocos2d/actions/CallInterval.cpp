@@ -1,5 +1,4 @@
 #include "CallInterval.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -14,13 +13,15 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool CallInterval::initWithDuration(const float duration, const std::function<void (float)> &func)
     {
         if(!ActionInterval::initWithDuration(duration))
+        {
             return false;
+        }
 
         this->func = func;
         return true;
@@ -34,7 +35,7 @@ namespace oreore
     CallInterval *CallInterval::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     CallInterval *CallInterval::clone() const

@@ -1,5 +1,4 @@
 #include "PlaySE.h"
-#include "../../null.h"
 #include "../utils/Sound.h"
 
 namespace oreore
@@ -16,7 +15,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool PlaySE::init(const std::string &filename)
@@ -33,7 +32,7 @@ namespace oreore
     PlaySE *PlaySE::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     PlaySE *PlaySE::clone() const

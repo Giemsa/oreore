@@ -3,7 +3,6 @@
 
 #include <functional>
 #include "cocos2d.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -73,7 +72,7 @@ namespace oreore
         AssetLoader();
         void addTexture(const std::string &filename);
         void addSpriteFrame(const std::string &filename);
-        void load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback = null);
+        void load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback = nullptr);
     };
 }
 

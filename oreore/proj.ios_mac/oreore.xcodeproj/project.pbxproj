@@ -32,7 +32,6 @@
 		7A759661194FF08A004A6CE8 /* Move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D9194ED99B006EA6B4 /* Move.cpp */; };
 		7A759662194FF08A004A6CE8 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
 		7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */; };
-		7A759666194FF08A004A6CE8 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
 		7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */; };
 		7A759669194FF08A004A6CE8 /* Move.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DA194ED99B006EA6B4 /* Move.h */; };
 		7A75966A194FF08A004A6CE8 /* bg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FE194ED99C006EA6B4 /* bg.h */; };
@@ -116,7 +115,6 @@
 		7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC807194ED99C006EA6B4 /* Utils.h */; };
 		7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
 		7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
-		7A7FC846194ED99C006EA6B4 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
 		7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
 		7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */; };
 		7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
@@ -178,7 +176,6 @@
 		7A7FC807194ED99C006EA6B4 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		7A7FC808194ED99C006EA6B4 /* dlog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dlog.cpp; sourceTree = "<group>"; };
 		7A7FC809194ED99C006EA6B4 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
-		7A7FC80A194ED99C006EA6B4 /* null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = null.h; sourceTree = "<group>"; };
 		7A7FC80C194ED99C006EA6B4 /* oreore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oreore.h; sourceTree = "<group>"; };
 		7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCounter.h; sourceTree = "<group>"; };
 		7A7FC80E194ED99C006EA6B4 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
@@ -226,7 +223,6 @@
 				7A7FC7CF194ED99B006EA6B4 /* cocos2d */,
 				7A7FC808194ED99C006EA6B4 /* dlog.cpp */,
 				7A7FC809194ED99C006EA6B4 /* DLog.h */,
-				7A7FC80A194ED99C006EA6B4 /* null.h */,
 				7A7FC80C194ED99C006EA6B4 /* oreore.h */,
 				7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */,
 				7A7FC80E194ED99C006EA6B4 /* Utils.cpp */,
@@ -333,7 +329,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */,
-				7A759666194FF08A004A6CE8 /* null.h in Headers */,
 				7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */,
 				7A759669194FF08A004A6CE8 /* Move.h in Headers */,
 				7A75966A194FF08A004A6CE8 /* bg.h in Headers */,
@@ -373,7 +368,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A7FC821194ED99C006EA6B4 /* ShakeFadeOut.h in Headers */,
-				7A7FC846194ED99C006EA6B4 /* null.h in Headers */,
 				7A7FC831194ED99C006EA6B4 /* ToggleButton.h in Headers */,
 				7A7FC819194ED99C006EA6B4 /* Move.h in Headers */,
 				7A7FC83A194ED99C006EA6B4 /* bg.h in Headers */,

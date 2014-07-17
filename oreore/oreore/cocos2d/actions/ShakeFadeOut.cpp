@@ -1,6 +1,5 @@
 #include "ShakeFadeOut.h"
 #include "../../Utils.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -20,7 +19,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     void ShakeFadeOut::update(float time)

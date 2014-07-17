@@ -17,7 +17,7 @@ namespace oreore
             return r;
         }
         delete r;
-        return null;
+        return nullptr;
     }
 
     ToggleButton *ToggleButton::createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
@@ -29,7 +29,7 @@ namespace oreore
             return r;
         }
         delete r;
-        return null;
+        return nullptr;
     }
 
     bool ToggleButton::init()
@@ -40,9 +40,12 @@ namespace oreore
     bool ToggleButton::init(const std::string &offBtn, const std::string &onBtn)
     {
         if(!CCSprite::init())
+        {
             return false;
+        }
 
         _init();
+
         if(!offBtn.empty())
         {
             Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(offBtn.c_str());
@@ -64,14 +67,21 @@ namespace oreore
     bool ToggleButton::initWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
     {
         if(!Sprite::init())
+        {
             return false;
+        }
 
         _init();
+
         if(!offBtn.empty())
+        {
             offFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(offBtn.c_str());
+        }
 
         if(!onBtn.empty())
+        {
             onFrm = SpriteFrameCache::getInstance()->getSpriteFrameByName(onBtn.c_str());
+        }
 
         fixSize();
         return true;
@@ -79,9 +89,9 @@ namespace oreore
 
     void ToggleButton::_init()
     {
-        onFrm = null;
-        offFrm = null;
-        callback = null;
+        onFrm = nullptr;
+        offFrm = nullptr;
+        callback = nullptr;
         touchEnabled = true;
         touched = false;
         allowContinuousHit = false;
@@ -90,7 +100,9 @@ namespace oreore
     void ToggleButton::fixSize()
     {
         if(!offFrm && !onFrm)
+        {
             return;
+        }
 
         Size onRect, offRect;
         bool set = false;
@@ -105,7 +117,9 @@ namespace oreore
         {
             onRect = onFrm->getRect().size;
             if(!set)
+            {
                 setDisplayFrame(onFrm);
+            }
         }
 
         setContentSize(Size(std::max(offRect.width, onRect.width), std::max(offRect.height, onRect.height)));
@@ -125,7 +139,9 @@ namespace oreore
     {
         endTouching();
         if(callback)
+        {
             callback(this);
+        }
         toggle();
     }
 
@@ -138,13 +154,19 @@ namespace oreore
     bool ToggleButton::onTouchBegan(Touch *touch, Event *event)
     {
         if(forceSingleTouch && singleTouched)
+        {
             return false;
+        }
 
         if(!touchEnabled || !isVisible())
+        {
             return false;
+        }
 
         if(!allowContinuousHit && touched)
+        {
             return false;
+        }
 
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
@@ -153,7 +175,10 @@ namespace oreore
             singleTouched = true;
             FiniteTimeAction *action = touchAction();
             if(action)
+            {
                 runAction(action);
+            }
+
             return true;
         }
 
@@ -168,30 +193,37 @@ namespace oreore
         {
             FiniteTimeAction *a = unTouchAction();
             if(!a)
+            {
                 toggleAndAction();
+            }
             else
+            {
                 runAction(
                     Spawn::create(
                         a,
                         Sequence::create(
                             DelayTime::create(a->getDuration() / 2.0),
                             CallFunc::create(CC_CALLBACK_0(ToggleButton::toggleAndAction, this)),
-                            NULL
+                            nullptr
                         ),
-                        NULL
+                        nullptr
                     )
                 );
+            }
             return;
         }
+
         FiniteTimeAction *action = unTouchAction();
         if(action)
+        {
             runAction(
                 CCSequence::create(
                     action,
                     CCCallFunc::create(CC_CALLBACK_0(ToggleButton::endTouching, this)),
-                    NULL
+                    nullptr
                 )
             );
+        }
     }
 
     void ToggleButton::setTouchEnabled(const bool enable)
@@ -207,7 +239,9 @@ namespace oreore
     void ToggleButton::toggleOn()
     {
         if(!onFrm || !offFrm || toggled)
+        {
             return;
+        }
 
         setDisplayFrame(onFrm);
         toggled = true;
@@ -216,7 +250,9 @@ namespace oreore
     void ToggleButton::toggleOff()
     {
         if(!onFrm || !offFrm || !toggled)
+        {
             return;
+        }
 
         setDisplayFrame(offFrm);
         toggled = false;
@@ -225,17 +261,25 @@ namespace oreore
     void ToggleButton::toggle()
     {
         if(toggled)
+        {
             toggleOff();
+        }
         else
+        {
             toggleOn();
+        }
     }
 
     void ToggleButton::toggle(const bool v)
     {
         if(v)
+        {
             toggleOn();
+        }
         else
+        {
             toggleOff();
+        }
     }
 
     void ToggleButton::setTappedEvent(const ccMenuCallback &callback)

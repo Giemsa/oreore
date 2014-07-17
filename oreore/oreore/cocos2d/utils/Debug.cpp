@@ -17,13 +17,15 @@ namespace oreore
             return r;
         }
         delete r;
-        return null;
+        return nullptr;
     }
 
     bool DebugMenuItem::init(const std::string &name, const std::function<void(Debugger *)> &callback, const float width)
     {
         if(!LayerColor::initWithColor(Color4B(0xCC, 0xCC, 0xCC, 0x80)))
+        {
             return false;
+        }
 
         setAnchorPoint(Point::ZERO);
         ignoreAnchorPointForPosition(false);
@@ -43,7 +45,9 @@ namespace oreore
     void DebugMenuItem::event(const Point &p, Debugger *debugger)
     {
         if(callback && getBoundingBox().containsPoint(p))
+        {
             callback(debugger);
+        }
     }
 
     void DebugMenuItem::select(const cocos2d::Point &p)
@@ -65,13 +69,17 @@ namespace oreore
     DebugMenu::~DebugMenu()
     {
         if(listener)
+        {
             listener->release();
+        }
     }
 
     bool DebugMenu::init()
     {
         if(!Layer::init())
+        {
             return false;
+        }
 
         listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = CC_CALLBACK_2(DebugMenu::onTouchBegan, this);
@@ -90,8 +98,11 @@ namespace oreore
         {
             DebugMenuItem *item = dynamic_cast<DebugMenuItem *>(obj);
             if(item)
+            {
                 item->select(p);
+            }
         }
+
         return true;
     }
 
@@ -102,7 +113,9 @@ namespace oreore
         {
             DebugMenuItem *item = dynamic_cast<DebugMenuItem *>(obj);
             if(item)
+            {
                 item->unselect();
+            }
         }
 
         if(getParent()->convertTouchToNodeSpace(touch).getDistance(bPos) < 40.0f)
@@ -111,7 +124,9 @@ namespace oreore
             {
                 DebugMenuItem *item = dynamic_cast<DebugMenuItem *>(obj);
                 if(item)
+                {
                     item->event(p, debugger);
+                }
             }
         }
     }
@@ -128,7 +143,9 @@ namespace oreore
         using namespace cocos2d::extension;
 
         if(!Layer::init())
+        {
             return false;
+        }
 
         opened = false;
         {
@@ -211,7 +228,9 @@ namespace oreore
     void DebugLayer::addItem(const std::string &name, const std::function<void(Debugger *)> &callback)
     {
         for(Node *item : menuLayer->getChildren())
+        {
             item->setPositionY(item->getPositionY() + item->getContentSize().height);
+        }
 
         DebugMenuItem *item = DebugMenuItem::create(name, callback, scrollView->getContentSize().width);
 

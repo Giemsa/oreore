@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include <vector>
 #include <functional>
-#include "../../null.h"
 #include "extensions/cocos-ext.h"
 
 namespace oreore
@@ -16,7 +15,7 @@ namespace oreore
     private:
         std::function<void(Debugger *)> callback;
     protected:
-        DebugMenuItem() : callback(null) { }
+        DebugMenuItem() : callback(nullptr) { }
         bool init(const std::string &name, const std::function<void(Debugger *)> &callback, const float width);
     public:
         static DebugMenuItem *create(const std::string &name, const std::function<void(Debugger *)> &callback, const float width);

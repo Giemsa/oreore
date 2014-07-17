@@ -1,5 +1,4 @@
 #include "CircleMoveTo.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -14,7 +13,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool CircleMoveTo::initWithDuration(const float duration, const Point &center, const float deg)
@@ -34,7 +33,7 @@ namespace oreore
     CircleMoveTo *CircleMoveTo::reverse() const
     {
         CCASSERT(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     CircleMoveTo *CircleMoveTo::clone() const

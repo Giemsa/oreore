@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include <vector>
-#include "../../null.h"
 #include "Debug.h"
 
 namespace oreore
@@ -150,11 +149,16 @@ namespace oreore
     void SceneManager::addScene(const bool lazy)
     {
         if(T::_uid >= 0)
+        {
             return;
+        }
+
         T::_uid = static_cast<int>(scenes.size());
         T::_isLazy = lazy;
         if(lazy)
-            scenes.push_back(null);
+        {
+            scenes.push_back(nullptr);
+        }
         else
         {
             T *t = T::create();
@@ -170,11 +174,14 @@ namespace oreore
         if(T::_uid == -1)
         {
             CCAssert(false, "scene is not registered.");
-            return null;
+            return nullptr;
         }
+
         ManagedSceneBase *scene = scenes[T::_uid];
         if(scene)
+        {
             return static_cast<T *>(scene);
+        }
 
         T *r = T::create();
         r->setManager(this);
@@ -190,26 +197,37 @@ namespace oreore
         if(disposeScene)
         {
             if(!current->isLazy())
+            {
                 current->getScene()->release();
-            scenes[current->getID()] = null;
+            }
+
+            scenes[current->getID()] = nullptr;
         }
 
         if(current)
+        {
             cocos2d::Director::getInstance()->replaceScene(current->transition(getScene<T>()->getScene()));
+        }
         else
+        {
             cocos2d::Director::getInstance()->replaceScene(getScene<T>()->getScene());
+        }
     }
 
     template<typename T>
     void SceneManager::forwardScene()
     {
         ManagedSceneBase *current = dynamic_cast<ManagedSceneBase *>(getCurrentScene());
-        cocos2d::Scene *next = null;
+        cocos2d::Scene *next = nullptr;
 
         if(current)
+        {
             next = current->transition(getScene<T>()->getScene());
+        }
         else
+        {
             next = getScene<T>()->getScene();
+        }
 
         cocos2d::Director::getInstance()->pushScene(next);
     }
@@ -220,14 +238,14 @@ namespace oreore
         if(T::_uid == -1)
         {
             addScene<T>(false);
-            return null;
+            return nullptr;
         }
 
         T *current = dynamic_cast<T *>(getCurrentScene());
         if(!current)
         {
             CCAssert(false, "current running scene is not under SceneManager.");
-            return null;
+            return nullptr;
         }
 
         T *t = T::create();

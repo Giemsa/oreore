@@ -2,7 +2,6 @@
 #define __OREORE_COCOS2D_OVERLAY__
 
 #include "cocos2d.h"
-#include "../../null.h"
 
 namespace oreore
 {

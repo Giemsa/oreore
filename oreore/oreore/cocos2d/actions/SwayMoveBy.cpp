@@ -1,6 +1,5 @@
 #include "SwayMoveBy.h"
 #include "../../Utils.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -15,13 +14,15 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool SwayMoveBy::initWithDuration(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
         if(!ActionInterval::initWithDuration(duration))
+        {
             return false;
+        }
 
         this->pos = pos;
         this->amp = amp;
@@ -38,9 +39,13 @@ namespace oreore
         const float s = amp * sinf(M_PI * 2 * freq * time);
 
         if(dir == SwayDirection::Horizontal)
+        {
             getOriginalTarget()->setPosition(dpos + Point(d.x + s, d.y));
+        }
         else
+        {
             getOriginalTarget()->setPosition(dpos + Point(d.x, d.y + s));
+        }
     }
 
     void SwayMoveBy::startWithTarget(Node *target)
@@ -57,7 +62,7 @@ namespace oreore
     SwayMoveBy *SwayMoveBy::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     SwayMoveBy *SwayMoveBy::clone() const

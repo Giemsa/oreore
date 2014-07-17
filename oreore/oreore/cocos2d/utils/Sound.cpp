@@ -13,7 +13,9 @@ namespace oreore
     bool SoundManager::init()
     {
         if(!CCNode::init())
+        {
             return false;
+        }
 
         storedBGMVolume = bgmVolume = 1.0f;
         storedSEVolume = seVolume = 1.0f;
@@ -32,20 +34,28 @@ namespace oreore
             manager->retain();
             manager->onEnter();
         }
+
         return *manager;
     }
 
     void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
     {
         if(getBGMVolume() > 0.0f && currentlyPlaying == filename && SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+        {
             return;
+        }
+
         currentlyPlaying = filename;
 
         if(!enabled || bgmMute)
+        {
             return;
+        }
 
         if(duration == 0.0f)
+        {
             SimpleAudioEngine::getInstance()->playBackgroundMusic(filename.c_str(), loop);
+        }
         else
         {
             setBGMVolume(0.0f);
@@ -63,8 +73,11 @@ namespace oreore
     void SoundManager::stopBGM(const float duration)
     {
         if(duration == 0.0f)
+        {
             completeFadeOut();
+        }
         else
+        {
             runAction(
                 CCSequence::create(
                     MusicFadeTo::create(duration, 0.0f, false),
@@ -72,12 +85,15 @@ namespace oreore
                     NULL
                 )
             );
+        }
     }
 
     unsigned int SoundManager::playSE(const std::string &filename, const bool loop)
     {
         if(!enabled || seMute)
+        {
             return 0;
+        }
 
         return SimpleAudioEngine::getInstance()->playEffect(filename.c_str(), loop);
     }
@@ -90,7 +106,9 @@ namespace oreore
     float SoundManager::getBGMVolume() const
     {
         if(!enabled || bgmMute)
+        {
             return storedBGMVolume;
+        }
 
         return SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / bgmVolume;
     }
@@ -100,13 +118,17 @@ namespace oreore
         storedBGMVolume = volume * bgmVolume;
 
         if(enabled && !bgmMute)
+        {
             SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume * bgmVolume);
+        }
     }
 
     float SoundManager::getSEVolume() const
     {
         if(!enabled || seMute)
+        {
             return storedSEVolume;
+        }
 
         return SimpleAudioEngine::getInstance()->getEffectsVolume() / seVolume;
     }
@@ -116,7 +138,9 @@ namespace oreore
         storedSEVolume = volume * seVolume;
 
         if(enabled && !seMute)
+        {
             SimpleAudioEngine::getInstance()->setEffectsVolume(volume * seVolume);
+        }
     }
 
     void SoundManager::setMaxBGMVolume(const float volume)
@@ -198,14 +222,19 @@ namespace oreore
     void SoundManager::setEnabled(const bool enabled)
     {
         if(this->enabled == enabled)
+        {
             return;
+        }
 
         if(enabled)
         {
             setBGMVolume(storedBGMVolume);
             setSEVolume(storedSEVolume);
             if(!currentlyPlaying.empty())
+            {
                 playBGM(currentlyPlaying);
+            }
+
             this->enabled = true;
         }
         else
@@ -221,7 +250,9 @@ namespace oreore
     void SoundManager::setBGMMute(const bool mute)
     {
         if(bgmMute == mute)
+        {
             return;
+        }
 
         if(mute)
         {
@@ -235,14 +266,18 @@ namespace oreore
             bgmMute = false;
             setBGMVolume(storedBGMVolume);
             if(!currentlyPlaying.empty())
+            {
                 playBGM(currentlyPlaying);
+            }
         }
     }
 
     void SoundManager::setSEMute(const bool mute)
     {
         if(seMute == mute)
+        {
             return;
+        }
 
         if(mute)
         {

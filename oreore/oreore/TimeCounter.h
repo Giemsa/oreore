@@ -4,7 +4,6 @@
 // 時間を測るクラス
 // 必要になったらプラットフォームごとに精度高い関数使う
 #include <ctime>
-#include "null.h"
 #include <sys/time.h>
 
 namespace oreore
@@ -23,7 +22,7 @@ namespace oreore
         {
             typedef time_t type;
             typedef time_t span_t;
-            inline static type time() { return std::time(null); }
+            inline static type time() { return std::time(nullptr); }
             inline static double getClockPerMSec() { return 1; }
         };
 

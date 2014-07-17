@@ -8,7 +8,7 @@ namespace oreore
     OverlayLayer::OverlayLayer() :
         opacity(0x90), displaySpeed(0.4f), shown(false),
         syncChild(true), animating(false),
-        callbackOnShow(null), callbackOnClose(null)
+        callbackOnShow(nullptr), callbackOnClose(nullptr)
     {
     }
 
@@ -26,13 +26,15 @@ namespace oreore
             return r;
         }
         delete r;
-        return null;
+        return nullptr;
     }
 
     bool OverlayLayer::init(const cocos2d::Color4B &color, const GLubyte opacity, const float speed)
     {
         if(!LayerColor::initWithColor(color))
+        {
             return false;
+        }
 
         this->opacity = opacity;
         displaySpeed = speed;
@@ -71,7 +73,7 @@ namespace oreore
                         shown = true;
                         onShow();
                     }),
-                    NULL
+                    nullptr
                 )
             );
         }
@@ -80,7 +82,9 @@ namespace oreore
             LayerColor::setOpacity(opacity);
             shown = true;
             if(callbackOnShow)
+            {
                 callbackOnShow(this);
+            }
             onShow();
         }
     }
@@ -90,14 +94,19 @@ namespace oreore
         shown = false;
         animating = false;
         if(callbackOnClose)
+        {
             callbackOnClose(this);
+        }
+    
         onClose();
     }
 
     void OverlayLayer::close(const bool anime)
     {
         if(!shown)
+        {
             return;
+        }
 
         if(anime)
         {
@@ -128,16 +137,22 @@ namespace oreore
             setCascadeOpacityEnabled(true);
             const float r = std::min(static_cast<float>(opacity) / this->opacity, 1.0f);
             for(Node *child : getChildren())
+            {
                 child->updateDisplayedOpacity(static_cast<GLubyte>(child->getOpacity() * r));
+            }
+
             setCascadeOpacityEnabled(false);
         }
+
         LayerColor::setOpacity(opacity);
     }
 
     void OverlayLayer::setChildrenVisible(const bool visible)
     {
         for(Node *child : getChildren())
-            static_cast<Node *>(child)->setVisible(visible);
+        {
+            child->setVisible(visible);
+        }
     }
 
     void OverlayLayer::setSyncOpecityChild(const bool sync)

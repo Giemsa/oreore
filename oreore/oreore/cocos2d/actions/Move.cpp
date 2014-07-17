@@ -1,5 +1,4 @@
 #include "Move.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -14,7 +13,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool Move::initWithDuration(const float duration, const Point &vec)
@@ -46,7 +45,7 @@ namespace oreore
     Move *Move::reverse() const
     {
         CCASSERT(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     Move *Move::clone() const

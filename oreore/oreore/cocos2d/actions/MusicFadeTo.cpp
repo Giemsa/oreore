@@ -1,5 +1,4 @@
 #include "MusicFadeTo.h"
-#include "../../null.h"
 #include "SimpleAudioEngine.h"
 
 namespace oreore
@@ -16,13 +15,15 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool MusicFadeTo::initWithDuration(const float duration, const float volume, const bool pauseOnComplete)
     {
         if(!ActionInterval::initWithDuration(duration))
+        {
             return false;
+        }
 
         pause = pauseOnComplete;
         this->volume = volume;
@@ -45,14 +46,17 @@ namespace oreore
     void MusicFadeTo::stop(void)
     {
         if(pause)
+        {
             SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+        }
+
         ActionInterval::stop();
     }
 
     MusicFadeTo *MusicFadeTo::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     MusicFadeTo *MusicFadeTo::clone() const

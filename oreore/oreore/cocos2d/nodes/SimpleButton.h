@@ -2,7 +2,6 @@
 #define __OREORE_COCOS2D_SIMPLEBUTTON_H__
 
 #include "cocos2d.h"
-#include "../../null.h"
 #include <limits>
 
 namespace oreore
@@ -80,7 +79,7 @@ namespace oreore
                 return pobSprite;
             }
             CC_SAFE_DELETE(pobSprite);
-            return NULL;
+            return nullptr;
         }
 
         static T* createWithTexture(cocos2d::Texture2D *pTexture, const cocos2d::Rect& rect)
@@ -92,7 +91,7 @@ namespace oreore
                 return pobSprite;
             }
             CC_SAFE_DELETE(pobSprite);
-            return NULL;
+            return nullptr;
         }
 
         static T* create(const char *pszFileName)
@@ -104,7 +103,7 @@ namespace oreore
                 return pobSprite;
             }
             CC_SAFE_DELETE(pobSprite);
-            return NULL;
+            return nullptr;
         }
 
         static T* createWithSpriteFrame(cocos2d::SpriteFrame *pSpriteFrame)
@@ -116,18 +115,18 @@ namespace oreore
                 return pobSprite;
             }
             CC_SAFE_DELETE(pobSprite);
-            return NULL;
+            return nullptr;
         }
 
         static T* createWithSpriteFrameName(const char *pszSpriteFrameName)
         {
             cocos2d::SpriteFrame *pFrame = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(pszSpriteFrameName);
 
-        #if COCOS2D_DEBUG > 0
+#if COCOS2D_DEBUG > 0
             char msg[256] = {0};
             sprintf(msg, "Invalid spriteFrameName: %s", pszSpriteFrameName);
-            CCAssert(pFrame != NULL, msg);
-        #endif
+            CCAssert(pFrame != nullptr, msg);
+#endif
 
             return createWithSpriteFrame(pFrame);
         }

@@ -4,7 +4,6 @@
 #include <functional>
 #include "cocos2d.h"
 #include "../utils/Utils.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -77,7 +76,7 @@ namespace oreore
                 return r;
             }
             delete r;
-            return null;
+            return nullptr;
         }
 
         static T *createWithSpriteFrameName(const std::string &offBtn, const std::string &onBtn)
@@ -89,7 +88,7 @@ namespace oreore
                 return r;
             }
             delete r;
-            return null;
+            return nullptr;
         }
     };
 }

@@ -16,7 +16,9 @@ namespace oreore
             filename = dic.at("metadata").asValueMap().at("textureFileName").asString();
         }
         else
+        {
             filename = data.filename;
+        }
 
         Director::getInstance()->getTextureCache()->addImageAsync(filename.c_str(), [this](Texture2D *tex) {
             this->worker->assetLoaded(this->data, tex);
@@ -36,16 +38,22 @@ namespace oreore
         this->assetLoadedCallback = assetLoadedCallback;
 
         for(AssetData &data : assets)
+        {
             new AssetLoaderWorkerChild(this, data);
+        }
     }
 
     void AssetLoaderWorker::assetLoaded(const AssetData &data, Texture2D *tex)
     {
         if(data.type == AssetData::SpriteFrame)
+        {
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(data.filename.c_str());
+        }
 
         if(assetLoadedCallback)
+        {
             assetLoadedCallback(data.filename, count, assets.size());
+        }
 
         count++;
         if(count == assets.size())

@@ -9,9 +9,11 @@ namespace oreore
     bool ImageMappedPolygonBase::init()
     {
         if(!Node::init())
+        {
             return false;
+        }
 
-        texture = null;
+        texture = nullptr;
         mode = GL_TRIANGLE_FAN;
         setAnchorPoint(Point::ANCHOR_MIDDLE);
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
@@ -71,7 +73,9 @@ namespace oreore
     bool TextureMappedPolygon::init()
     {
         if(!ImageMappedPolygonBase::init())
+        {
             return false;
+        }
 
         return true;
     }
@@ -81,16 +85,21 @@ namespace oreore
         const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
         const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
         texCoord.clear();
+
         for(auto p : coord)
+        {
             texCoord.push_back(Vertex2F(p.x * rx, 1.0f - p.y * ry));
+        }
     }
 
     void TextureMappedPolygon::draw(Renderer *renderer, const kmMat4& transform, bool transformUpdated)
     {
         if(texCoord.size() <= 1)
+        {
             return;
+        }
 
-        cmd.init(getVertexZ());
+        cmd.init(getGlobalZOrder());
         cmd.func = [this]() {
             CC_NODE_DRAW_SETUP();
 
@@ -118,7 +127,9 @@ namespace oreore
     bool ScreenMappedPolygon::init()
     {
         if(!ImageMappedPolygonBase::init())
+        {
             return false;
+        }
 
         Size s = Director::getInstance()->getWinSizeInPixels();
 
@@ -154,8 +165,11 @@ namespace oreore
         const float rx = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsWide();
         const float ry = CC_CONTENT_SCALE_FACTOR() / texture->getPixelsHigh();
         texCoord.clear();
+
         for(auto p : coord)
+        {
             texCoord.push_back(Vertex2F(p.x * rx, p.y * ry));
+        }
     }
 
     void ScreenMappedPolygon::set2DProjection()
@@ -209,7 +223,9 @@ namespace oreore
         renderer->pushGroup(_groupCommand.getRenderQueueID());
 
         if(parentTransformUpdated || _transformUpdated)
+        {
             _modelViewTransform = transform(parentTransform);
+        }
 
         _transformUpdated = false;
 

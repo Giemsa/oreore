@@ -4,7 +4,6 @@
 #include <memory>
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "../../null.h"
 
 namespace oreore
 {

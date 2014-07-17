@@ -13,7 +13,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool AttractMove::initWithDuration(const float duration, const Point &target, const Point &v0)

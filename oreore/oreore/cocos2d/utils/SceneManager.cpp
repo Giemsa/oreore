@@ -43,7 +43,7 @@ namespace oreore
 
 
     /* SceneManager */
-    SceneManager::SceneManager() : debugLayer(null), debugger(null),
+    SceneManager::SceneManager() : debugLayer(nullptr), debugger(nullptr),
 #ifdef COCOS2D_DEBUG
         showDebugLayer(true)
 #else
@@ -85,7 +85,9 @@ namespace oreore
     void SceneManager::removeScene(ManagedSceneBase *scene)
     {
         if(scene == scenes[scene->getID()])
-            scenes[scene->getID()] = null;
+        {
+            scenes[scene->getID()] = nullptr;
+        }
     }
 
     Ref *SceneManager::getCurrentScene()
@@ -97,7 +99,7 @@ namespace oreore
 
     void SceneManager::backScene(const bool disposeScene)
     {
-        Scene *next = null;
+        Scene *next = nullptr;
         DirectorWrapper *dir = static_cast<DirectorWrapper *>(Director::getInstance());
         Vector<Scene *> &stack = dir->getSceneStack();
         stack.erase(stack.size() - 1);
@@ -113,16 +115,22 @@ namespace oreore
         if(disposeScene)
         {
             if(!current->isLazy())
+            {
                 current->getScene()->release();
-            scenes[current->getID()] = null;
+            }
+            scenes[current->getID()] = nullptr;
         }
 
         dir->setSendCleanupToScene(true);
 
         if(current)
+        {
             next = current->transition(scene);
+        }
         else
+        {
             next = scene;
+        }
 
         Director::getInstance()->replaceScene(next);
     }
@@ -130,7 +138,9 @@ namespace oreore
     void SceneManager::setDebugMode(const bool debugMode)
     {
         if(showDebugLayer == debugMode)
+        {
             return;
+        }
 
         if(debugMode)
         {
@@ -151,7 +161,7 @@ namespace oreore
                 debugLayer->retain();
                 debugLayer->setTouchEnabled(false);
             }
-            Director::getInstance()->setNotificationNode(null);
+            Director::getInstance()->setNotificationNode(nullptr);
         }
         showDebugLayer = debugMode;
     }

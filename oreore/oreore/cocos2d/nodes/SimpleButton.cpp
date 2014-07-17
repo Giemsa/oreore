@@ -83,7 +83,7 @@ namespace oreore
 
     void SimpleButton::_init()
     {
-        selector = null;
+        selector = nullptr;
         touchEnabled = true;
         priority = 0;
         touched = false;
@@ -147,13 +147,19 @@ namespace oreore
     bool SimpleButton::onTouchBegan(Touch *touch, Event *event)
     {
         if(forceSingleTouch && singleTouched)
+        {
             return false;
+        }
 
         if(!touchEnabled || !isVisible())
+        {
             return false;
+        }
 
         if(!allowContinuousHit && touched)
+        {
             return false;
+        }
 
         const Point &p = getParent()->convertToNodeSpace(touch->getLocation());
         if(getBoundingBox().containsPoint(p))
@@ -162,8 +168,12 @@ namespace oreore
             singleTouched = true;
             bpos = p;
             FiniteTimeAction *action = touchAction();
+
             if(action)
+            {
                 runAction(action);
+            }
+
             return true;
         }
         return false;
@@ -178,30 +188,34 @@ namespace oreore
             {
                 FiniteTimeAction *action = unTouchAction();
                 if(action)
+                {
                     runAction(
                         CCSpawn::create(
                             action,
                             CCSequence::create(
                                 CCDelayTime::create(action->getDuration() / 2.0),
                                 CallFunc::create(CC_CALLBACK_0(SimpleButton::callCallback, this)),
-                                NULL
+                                nullptr
                             ),
-                            NULL
+                            nullptr
                         )
                     );
+                }
                 return;
             }
         }
 
         FiniteTimeAction *action = unTouchAction();
         if(action)
+        {
             runAction(
                 CCSequence::create(
                     action,
                     CallFunc::create(CC_CALLBACK_0(SimpleButton::endTouching, this)),
-                    NULL
+                    nullptr
                 )
             );
+        }
     }
 
     void SimpleButton::callCallback()
@@ -238,9 +252,13 @@ namespace oreore
         listener->onTouchBegan = CC_CALLBACK_2(SimpleButton::onTouchBegan, this);
         listener->onTouchEnded = CC_CALLBACK_2(SimpleButton::onTouchEnded, this);
         if(priority == 0)
+        {
             getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+        }
         else
+        {
             getEventDispatcher()->addEventListenerWithFixedPriority(listener, priority);
+        }
     }
 
     void SimpleButton::onExit()
