@@ -15,7 +15,6 @@
 #include "actions/CallInterval.h"
 
 /* nodes */
-#include "nodes/GlowLine.h"
 #include "nodes/Overlay.h"
 #include "nodes/SimpleButton.h"
 #include "nodes/ImageMappedPolygon.h"
