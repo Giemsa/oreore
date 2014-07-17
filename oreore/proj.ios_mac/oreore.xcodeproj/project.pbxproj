@@ -13,7 +13,6 @@
 		7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EE194ED99B006EA6B4 /* ShatteredSprite.cpp */; };
 		7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */; };
 		7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */; };
-		7A759650194FF08A004A6CE8 /* GlowLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */; };
 		7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7FB194ED99C006EA6B4 /* Formatter.cpp */; };
 		7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
 		7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D7194ED99B006EA6B4 /* CircleMoveTo.cpp */; };
@@ -35,13 +34,11 @@
 		7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E2194ED99B006EA6B4 /* ShakeFadeOut.h */; };
 		7A759666194FF08A004A6CE8 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
 		7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F3194ED99B006EA6B4 /* ToggleButton.h */; };
-		7A759668194FF08A004A6CE8 /* GlowLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */; };
 		7A759669194FF08A004A6CE8 /* Move.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DA194ED99B006EA6B4 /* Move.h */; };
 		7A75966A194FF08A004A6CE8 /* bg.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FE194ED99C006EA6B4 /* bg.h */; };
 		7A75966B194FF08A004A6CE8 /* Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F9194ED99C006EA6B4 /* Debug.h */; };
 		7A75966C194FF08A004A6CE8 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
 		7A75966D194FF08A004A6CE8 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F4194ED99B006EA6B4 /* oreore.h */; };
-		7A75966E194FF08A004A6CE8 /* Observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80B194ED99C006EA6B4 /* Observer.h */; };
 		7A75966F194FF08A004A6CE8 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC807194ED99C006EA6B4 /* Utils.h */; };
 		7A759670194FF08A004A6CE8 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC802194ED99C006EA6B4 /* Persistent.h */; };
 		7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */; };
@@ -89,8 +86,6 @@
 		7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */; };
 		7A7FC824194ED99C006EA6B4 /* SwayMoveTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */; };
 		7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */; };
-		7A7FC826194ED99C006EA6B4 /* GlowLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */; };
-		7A7FC827194ED99C006EA6B4 /* GlowLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */; };
 		7A7FC828194ED99C006EA6B4 /* ImageMappedPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */; };
 		7A7FC829194ED99C006EA6B4 /* ImageMappedPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */; };
 		7A7FC82A194ED99C006EA6B4 /* Overlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */; };
@@ -122,7 +117,6 @@
 		7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
 		7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
 		7A7FC846194ED99C006EA6B4 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80A194ED99C006EA6B4 /* null.h */; };
-		7A7FC847194ED99C006EA6B4 /* Observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80B194ED99C006EA6B4 /* Observer.h */; };
 		7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
 		7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */; };
 		7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
@@ -154,8 +148,6 @@
 		7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwayMoveBy.h; sourceTree = "<group>"; };
 		7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SwayMoveTo.cpp; sourceTree = "<group>"; };
 		7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwayMoveTo.h; sourceTree = "<group>"; };
-		7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlowLine.cpp; sourceTree = "<group>"; };
-		7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlowLine.h; sourceTree = "<group>"; };
 		7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMappedPolygon.cpp; sourceTree = "<group>"; };
 		7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageMappedPolygon.h; sourceTree = "<group>"; };
 		7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Overlay.cpp; sourceTree = "<group>"; };
@@ -187,7 +179,6 @@
 		7A7FC808194ED99C006EA6B4 /* dlog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dlog.cpp; sourceTree = "<group>"; };
 		7A7FC809194ED99C006EA6B4 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
 		7A7FC80A194ED99C006EA6B4 /* null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = null.h; sourceTree = "<group>"; };
-		7A7FC80B194ED99C006EA6B4 /* Observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observer.h; sourceTree = "<group>"; };
 		7A7FC80C194ED99C006EA6B4 /* oreore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oreore.h; sourceTree = "<group>"; };
 		7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCounter.h; sourceTree = "<group>"; };
 		7A7FC80E194ED99C006EA6B4 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
@@ -236,7 +227,6 @@
 				7A7FC808194ED99C006EA6B4 /* dlog.cpp */,
 				7A7FC809194ED99C006EA6B4 /* DLog.h */,
 				7A7FC80A194ED99C006EA6B4 /* null.h */,
-				7A7FC80B194ED99C006EA6B4 /* Observer.h */,
 				7A7FC80C194ED99C006EA6B4 /* oreore.h */,
 				7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */,
 				7A7FC80E194ED99C006EA6B4 /* Utils.cpp */,
@@ -289,8 +279,6 @@
 		7A7FC7E7194ED99B006EA6B4 /* nodes */ = {
 			isa = PBXGroup;
 			children = (
-				7A7FC7E8194ED99B006EA6B4 /* GlowLine.cpp */,
-				7A7FC7E9194ED99B006EA6B4 /* GlowLine.h */,
 				7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */,
 				7A7FC7EB194ED99B006EA6B4 /* ImageMappedPolygon.h */,
 				7A7FC7EC194ED99B006EA6B4 /* Overlay.cpp */,
@@ -347,13 +335,11 @@
 				7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */,
 				7A759666194FF08A004A6CE8 /* null.h in Headers */,
 				7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */,
-				7A759668194FF08A004A6CE8 /* GlowLine.h in Headers */,
 				7A759669194FF08A004A6CE8 /* Move.h in Headers */,
 				7A75966A194FF08A004A6CE8 /* bg.h in Headers */,
 				7A75966B194FF08A004A6CE8 /* Debug.h in Headers */,
 				7A75966C194FF08A004A6CE8 /* oreore.h in Headers */,
 				7A75966D194FF08A004A6CE8 /* oreore.h in Headers */,
-				7A75966E194FF08A004A6CE8 /* Observer.h in Headers */,
 				7A75966F194FF08A004A6CE8 /* Utils.h in Headers */,
 				7A759670194FF08A004A6CE8 /* Persistent.h in Headers */,
 				7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */,
@@ -389,13 +375,11 @@
 				7A7FC821194ED99C006EA6B4 /* ShakeFadeOut.h in Headers */,
 				7A7FC846194ED99C006EA6B4 /* null.h in Headers */,
 				7A7FC831194ED99C006EA6B4 /* ToggleButton.h in Headers */,
-				7A7FC827194ED99C006EA6B4 /* GlowLine.h in Headers */,
 				7A7FC819194ED99C006EA6B4 /* Move.h in Headers */,
 				7A7FC83A194ED99C006EA6B4 /* bg.h in Headers */,
 				7A7FC836194ED99C006EA6B4 /* Debug.h in Headers */,
 				7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */,
 				7A7FC832194ED99C006EA6B4 /* oreore.h in Headers */,
-				7A7FC847194ED99C006EA6B4 /* Observer.h in Headers */,
 				7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */,
 				7A7FC83E194ED99C006EA6B4 /* Persistent.h in Headers */,
 				7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */,
@@ -499,7 +483,6 @@
 				7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */,
 				7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */,
 				7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */,
-				7A759650194FF08A004A6CE8 /* GlowLine.cpp in Sources */,
 				7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */,
 				7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */,
 				7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */,
@@ -531,7 +514,6 @@
 				7A7FC82C194ED99C006EA6B4 /* ShatteredSprite.cpp in Sources */,
 				7A7FC833194ED99C006EA6B4 /* AssetLoader.cpp in Sources */,
 				7A7FC820194ED99C006EA6B4 /* ShakeFadeOut.cpp in Sources */,
-				7A7FC826194ED99C006EA6B4 /* GlowLine.cpp in Sources */,
 				7A7FC838194ED99C006EA6B4 /* Formatter.cpp in Sources */,
 				7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */,
 				7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */,
