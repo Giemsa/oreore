@@ -1,4 +1,4 @@
-#include "DLog.h"
+#include "dlog.h"
 
 #ifndef OREORE_RELEASE
 #include <iomanip>

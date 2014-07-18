@@ -53,7 +53,7 @@
 		7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */; };
 		7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7ED194ED99B006EA6B4 /* Overlay.h */; };
 		7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7F1194ED99B006EA6B4 /* SimpleButton.h */; };
-		7A75967E194FF08A004A6CE8 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
+		7A75967E194FF08A004A6CE8 /* dlog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* dlog.h */; };
 		7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */; };
 		7A759680194FF08A004A6CE8 /* Formatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7FC194ED99C006EA6B4 /* Formatter.h */; };
 		7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC7D2194ED99B006EA6B4 /* AttractMove.h */; };
@@ -114,7 +114,7 @@
 		7A7FC842194ED99C006EA6B4 /* Sound.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC806194ED99C006EA6B4 /* Sound.h */; };
 		7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC807194ED99C006EA6B4 /* Utils.h */; };
 		7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC808194ED99C006EA6B4 /* dlog.cpp */; };
-		7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* DLog.h */; };
+		7A7FC845194ED99C006EA6B4 /* dlog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC809194ED99C006EA6B4 /* dlog.h */; };
 		7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80C194ED99C006EA6B4 /* oreore.h */; };
 		7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */; };
 		7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC80E194ED99C006EA6B4 /* Utils.cpp */; };
@@ -175,7 +175,7 @@
 		7A7FC806194ED99C006EA6B4 /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
 		7A7FC807194ED99C006EA6B4 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		7A7FC808194ED99C006EA6B4 /* dlog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dlog.cpp; sourceTree = "<group>"; };
-		7A7FC809194ED99C006EA6B4 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
+		7A7FC809194ED99C006EA6B4 /* dlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dlog.h; sourceTree = "<group>"; };
 		7A7FC80C194ED99C006EA6B4 /* oreore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oreore.h; sourceTree = "<group>"; };
 		7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeCounter.h; sourceTree = "<group>"; };
 		7A7FC80E194ED99C006EA6B4 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 			children = (
 				7A7FC7CF194ED99B006EA6B4 /* cocos2d */,
 				7A7FC808194ED99C006EA6B4 /* dlog.cpp */,
-				7A7FC809194ED99C006EA6B4 /* DLog.h */,
+				7A7FC809194ED99C006EA6B4 /* dlog.h */,
 				7A7FC80C194ED99C006EA6B4 /* oreore.h */,
 				7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */,
 				7A7FC80E194ED99C006EA6B4 /* Utils.cpp */,
@@ -350,7 +350,7 @@
 				7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */,
 				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
-				7A75967E194FF08A004A6CE8 /* DLog.h in Headers */,
+				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
 				7A759680194FF08A004A6CE8 /* Formatter.h in Headers */,
 				7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */,
@@ -389,7 +389,7 @@
 				7A7FC81D194ED99C006EA6B4 /* PlaySE.h in Headers */,
 				7A7FC82B194ED99C006EA6B4 /* Overlay.h in Headers */,
 				7A7FC82F194ED99C006EA6B4 /* SimpleButton.h in Headers */,
-				7A7FC845194ED99C006EA6B4 /* DLog.h in Headers */,
+				7A7FC845194ED99C006EA6B4 /* dlog.h in Headers */,
 				7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */,
 				7A7FC839194ED99C006EA6B4 /* Formatter.h in Headers */,
 				7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */,
