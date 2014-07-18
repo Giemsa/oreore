@@ -29,11 +29,11 @@ namespace oreore
 
         setAnchorPoint(Point::ZERO);
         ignoreAnchorPointForPosition(false);
-        setContentSize(Size(width, 100 / CC_CONTENT_SCALE_FACTOR()));
+        setContentSize(Size(width, 100.0f));
 
         Label *label = Label::createWithSystemFont(name, "", 40.0f);
         label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-        label->setPosition(Point(10.0f / CC_CONTENT_SCALE_FACTOR(), getContentSize().height / 2));
+        label->setPosition(Point(10.0f, getContentSize().height / 2));
         label->setColor(Color3B(0x55, 0x55, 0x55));
         addChild(label);
 
@@ -147,52 +147,54 @@ namespace oreore
             return false;
         }
 
+        const float storedSF = CC_CONTENT_SCALE_FACTOR();
+        Director::getInstance()->setContentScaleFactor(1.0f);
         opened = false;
-        {
-            Image *img = new Image();
-            img->initWithImageData(images::bg, sizeof(images::bg));
 
-            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(img, "_oreore_debugger_icon");
-            delete img;
+        {
+            Image img;
+            img.initWithImageData(images::bg, sizeof(images::bg));
+
+            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(&img, "_oreore_debugger_icon");
 
             SpriteFrame *frm = SpriteFrame::createWithTexture(
                 tex,
                 Rect(
                     0, 0,
-                    tex->getPixelsWide() / CC_CONTENT_SCALE_FACTOR(), tex->getPixelsHigh() / CC_CONTENT_SCALE_FACTOR()
+                    tex->getPixelsWide(), tex->getPixelsHigh()
                 )
             );
+
             frame = Scale9Sprite::createWithSpriteFrame(
                 frm,
-                Rect(
-                    10 / CC_CONTENT_SCALE_FACTOR(),
-                    10 / CC_CONTENT_SCALE_FACTOR(),
-                    300 / CC_CONTENT_SCALE_FACTOR(),
-                    460 / CC_CONTENT_SCALE_FACTOR()
-                )
+                Rect(10.0f, 10.0f, 300.0f, 460.0f)
             );
             frame->setAnchorPoint(Point(1.0f, 1.0f));
-            frame->setPosition(oreore::percent(this, 100.0f, 90.0f) + Point(10.0f / CC_CONTENT_SCALE_FACTOR(), 0.0f));
-            frame->setContentSize(Size(102 / CC_CONTENT_SCALE_FACTOR(), 92 / CC_CONTENT_SCALE_FACTOR()));
+            frame->setPosition(oreore::percent(this, 100.0f, 90.0f) + Point(10.0f, 0.0f));
+            frame->setContentSize(Size(102.0f, 92.0f));
             addChild(frame);
         }
 
         {
-            Image *img = new Image();
-            img->initWithImageData(images::icon, sizeof(images::icon));
+            Image img;
+            img.initWithImageData(images::icon, sizeof(images::icon));
 
-            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(img, "_oreore_debugger_bg");
-            delete img;
+            Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(&img, "_oreore_debugger_bg");
 
-            icon = Sprite::createWithTexture(tex);
+            Rect rect = Rect::ZERO;
+            rect.size = tex->getContentSizeInPixels();
+
+            icon = Sprite::createWithTexture(tex, rect);
             icon->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
-            icon->setPosition(Point(10 / CC_CONTENT_SCALE_FACTOR(), 82 / CC_CONTENT_SCALE_FACTOR()));
+            icon->setPosition(Point(10.0f, 82.0f));
             frame->addChild(icon);
         }
 
+        Director::getInstance()->setContentScaleFactor(storedSF);
+
         scrollView = ScrollView::create();
         scrollView->setAnchorPoint(Point::ZERO);
-        scrollView->setPosition(Point(10.0f / CC_CONTENT_SCALE_FACTOR(), 10.0f / CC_CONTENT_SCALE_FACTOR()));
+        scrollView->setPosition(Point(10.0f, 10.0f));
         scrollView->setDirection(ScrollView::Direction::VERTICAL);
         frame->addChild(scrollView);
 
@@ -200,7 +202,7 @@ namespace oreore
         menuLayer->setContentSize(Size(getContentSize().width * 0.8f, 0));
         scrollView->setContainer(menuLayer);
         scrollView->setContentSize(menuLayer->getContentSize());
-        scrollView->setViewSize(getContentSize() * 0.8f - Size(20 / CC_CONTENT_SCALE_FACTOR(), 102 / CC_CONTENT_SCALE_FACTOR()));
+        scrollView->setViewSize(getContentSize() * 0.8f - Size(20.0f, 102.0f));
         scrollView->setVisible(false);
 
         // this
@@ -258,15 +260,15 @@ namespace oreore
                 if(opened)
                 {
                     opened = false;
-                    frame->setContentSize(Size(102 / CC_CONTENT_SCALE_FACTOR(), 92 / CC_CONTENT_SCALE_FACTOR()));
-                    icon->setPosition(Point(10 / CC_CONTENT_SCALE_FACTOR(), 82 / CC_CONTENT_SCALE_FACTOR()));
+                    frame->setContentSize(Size(102.0f, 92.0f));
+                    icon->setPosition(Point(10.0f, 82.0f));
                     scrollView->setVisible(false);
                 }
                 else
                 {
                     opened = true;
                     frame->setContentSize(getContentSize() * 0.8f);
-                    icon->setPosition(Point(10 / CC_CONTENT_SCALE_FACTOR(), frame->getContentSize().height - 10 / CC_CONTENT_SCALE_FACTOR()));
+                    icon->setPosition(Point(10.0f, frame->getContentSize().height - 10.0f));
                     scrollView->setVisible(true);
                 }
                 bPos = p;
