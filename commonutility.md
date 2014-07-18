@@ -114,91 +114,6 @@ layout: default
 
 　それぞれラジアンを度数に、度数をラジアンに変換します。
 
-### TimeCounter.h
-　時間計測に使用していたクラスですが、使う機会が全くないのでメンテナンスしていません。ので、使いたい場合はソースを参照してください。
-
-### Observer
-　cocos2dxでいうところのNotificationCenter(CCNotificationCenter)と同等の機能を提供するクラスです。いわゆるObserverパターンです。cocos2dx 3.0ではNotificationCenterが非推奨になっているようなので、代替するクラスとして実装しました。**C++11の機能を使用しているので、cocos2dx-2.x系のブランチでは動作しません。**
-
-#### 使い方
-　基本的にはNotificationCenterと同じです。ただし、キーに指定するのは文字列ではなく、列挙型です。  
-　また、任意の引数を渡すことが可能です。
-
-
-	enum class NotificationID
-	{
-		CHANGE_SCENE,
-		RETURN_MENU
-	};
-
-	// Subjectの登録
-	Observer::getInstance().addSubject<void(int, int)>(
-		NotificationID::CHANGE_SCENE,
-		[](int x, int y) {
-			printf("receive: %d, %d", x, y);
-		}
-	);
-
-	Observer::getInstance().addSubject<void(double, std::string &msg)>(
-		NotificationID::RETURN_MENU,
-		[](double n, std::string &msg) {
-			printf("receive: %f, %s", n, msg.c_str());
-		}
-	);
-
-	// 通知
-	Observer::getInstance().notify(NotificationID::CHANGE_SCENE, 10, 20);
-
-
-#### getInstance
-
-	Observer &Observer::getInstance();
-
-　Observerインスタンスを返します。Observerオブジェクトはシングルトンです。
-
-#### addSubject
-
-	template<typename T, typename E>
-	void Observer::addSubject(const E key, const std::function<T> &callback);
-
-　Subjectを登録します。C++11ではラムダ式の型(戻り値と引数の型)が取得できないので、Tは省略できません(ただし、callbackにstd::function&lt;T&gt;を指定する場合は省略可能)。Eは省略可能です。
-
-	Observer::getInstance().addSubject<void(int, int)>(
-		NotificationID::CHANGE_SCENE,
-		[](int x, int y) {
-			printf("receive: %d, %d", x, y);
-		}
-	);
-
-	// または
-	const std:function<void(int, int)> callback = [](int x, int y) {
-		printf("receive: %d, %d", x, y);
-	};
-	Observer::getInstance().addSubject(
-		NotificationID::CHANGE_SCENE, callback
-	);
-
-　指定するラムダ式や関数は任意の引数を取ることができますが、戻り値はvoidである必要があります。
-
-#### removeSubject
-
-	template<typename E, typename>
-	void Observer::removeSubject(const E key);
-
-　指定されたキーのSubjectを削除します。
-
-#### notify
-
-	template<typename E, typename ...Ts>
-	void Observer::notify(const E key, const Ts &...args);
-
-　Subjectに通知を送信します。任意の引数を指定可能です。
-
-#### clear
-
-	void clear();
-
-　登録されている全てのSubjectを削除します。
 
 ### Persistent
 　cocos2dxの参照カウントを管理するクラスです。**cocos2dx-3.0リポジトリのみで実装されています。**
@@ -257,6 +172,7 @@ cocos2dxのlog関数を拡張したデバッグログ出力を提供します。
 | f | {f} | 出力対象が数値の場合、実数形式で出力します。 |
 | s | {s} | 出力対象を文字列で出力します。通常出力形式は自動で判定されるため、この値が使用されることはありません。 |
 | \\ | {\\d} | 次の文字をエスケープします。余ったスペースを埋める文字として使用されます。 |
+| ' | {'d} | "\\"同様、次の文字をエスケープします。 |
 | 文字 | {c} | 出力桁数を指定した場合に、余ったスペースに表示する文字を指定します。デフォルトで`' '`(スペース)です。 |
 
 　これらのフォーマット指定子は、組み合わせて使用します。同一カテゴリに所属するフォーマット指定子を複数指定した場合、あとに指定したものが適用されます。
@@ -320,19 +236,19 @@ cocos2dxのlog関数を拡張したデバッグログ出力を提供します。
 　DLogｎ出力にはstd::ostreamの`<<`演算子が利用されています。したがって、任意のクラスのデバッグ出力を行うフォーマッタを作成することが可能です。
 
 	// 以下はcocos2d::Rectを出力するカスタムフォーマッタ
-    std::ostream& operator <<(std::ostream& os, const Rect &rect)
-    {
-        DLog::initFlags();
-        os << "(";
-        DLog::outputFormat(rect.getMinX());
-        os << ", ";
-        DLog::outputFormat(rect.getMinY());
-        os << ", ";
-        DLog::outputFormat(rect.getMaxX());
-        os << ", ";
-        DLog::outputFormat(rect.getMaxY());
-        os << ")";
-        return os;
-    }
+	std::ostream& operator <<(std::ostream& os, const Rect &rect)
+	{
+		DLog::initFlags();
+		os << "(";
+		DLog::outputFormat(rect.getMinX());
+		os << ", ";
+		DLog::outputFormat(rect.getMinY());
+		os << ", ";
+		DLog::outputFormat(rect.getMaxX());
+		os << ", ";
+		DLog::outputFormat(rect.getMaxY());
+		os << ")";
+		return os;
+	}
 
 　`DLog::initFlags`を必ず最初に呼び出してください。その後、`os`に出力したい値を書き込みます。書き込む値にフォーマットを適用したい場合、`os`に書き込むのではなく、`DLog::outputFormat`を使って出力します。
