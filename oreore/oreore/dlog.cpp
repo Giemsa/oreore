@@ -69,6 +69,7 @@ namespace oreore
                     currentFormat.format = FormatType::_STRING;
                     break;
                 case '\\':
+                case '\'':
                     ++str;
                     /* fall through */
                 default:
@@ -158,6 +159,7 @@ namespace oreore
             switch(*s)
             {
                 case '\\':
+                case '\'':
                     ++s;
                     break;
                 case '{':
