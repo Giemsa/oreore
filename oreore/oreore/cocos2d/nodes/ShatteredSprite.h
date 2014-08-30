@@ -77,6 +77,7 @@ namespace oreore
 
         void setParams(const ShatteredSpriteParam &param);
         void shatter();
+        void reset(cocos2d::SpriteFrame *frame);
     };
 }
 

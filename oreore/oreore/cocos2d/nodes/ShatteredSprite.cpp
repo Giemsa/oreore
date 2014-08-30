@@ -112,7 +112,26 @@ namespace oreore
         setTextureRect(param.textureRect);
         initShatterData(param);
     }
-    
+
+    void ShatteredSprite::reset(SpriteFrame *frame)
+    {
+        setSpriteFrame(frame);
+
+        // UVを再構築
+        const float height = getTextureRect().size.height;
+
+        const float rx = CC_CONTENT_SCALE_FACTOR() / getTexture()->getPixelsWide();
+        const float ry = CC_CONTENT_SCALE_FACTOR() / getTexture()->getPixelsHigh();
+        const float ox = getTextureRect().origin.x * CC_CONTENT_SCALE_FACTOR() / getTexture()->getPixelsWide();
+        const float oy = getTextureRect().origin.y * CC_CONTENT_SCALE_FACTOR() / getTexture()->getPixelsHigh();
+
+        texCoord.clear();
+        for(Vertex3F &vtx : coord)
+        {
+            texCoord.push_back(Tex2F(vtx.x * rx + ox, (height - vtx.y) * ry + oy));
+        }
+    }
+
     void ShatteredSprite::initShatterData(const ShatteredSpriteParam &param)
     {
         this->piecesX = param.piecesX + 1;

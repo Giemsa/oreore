@@ -113,6 +113,7 @@ namespace oreore
             glDrawArrays(mode, 0, static_cast<GLsizei>(texCoord.size()));
             CC_INCREMENT_GL_DRAWS(1);
         };
+
         renderer->addCommand(&cmd);
     }
 
@@ -120,8 +121,8 @@ namespace oreore
     /* ScreenMappedPolygon */
     ScreenMappedPolygon::~ScreenMappedPolygon()
     {
-        //delete _texture;
-        delete  grabber;
+        delete texture;
+        delete grabber;
     }
 
     bool ScreenMappedPolygon::init()
@@ -133,8 +134,19 @@ namespace oreore
 
         Size s = Director::getInstance()->getWinSizeInPixels();
 
-        const int width = ccNextPOT(static_cast<unsigned int>(s.width));
-        const int height = ccNextPOT(static_cast<unsigned int>(s.height));
+        int width = 0;
+        int height = 0;
+
+        if(Configuration::getInstance()->supportsNPOT())
+        {
+            width = s.width;
+            height = s.height;
+        }
+        else
+        {
+            width = ccNextPOT(s.width);
+            height = ccNextPOT(s.height);
+        }
 
         const int dataLen = width * height * 4;
         void *data = calloc(dataLen, 1);
@@ -146,13 +158,16 @@ namespace oreore
 
         texture = new Texture2D();
         texture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, s);
+        free(data);
 
         grabber = new Grabber();
         grabber->grab(texture);
 
         const Texture2D::TexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
         texture->setTexParameters(texParams);
-        setContentSize(texture->getContentSize());
+        setContentSize(s);
+        setAnchorPoint(Point::ANCHOR_MIDDLE);
+        setPosition(Point(s / 2));
 
         updateBlendFunc();
         calcTexCoord();
@@ -176,13 +191,13 @@ namespace oreore
     {
         const Size &size = Director::getInstance()->getWinSizeInPixels();
 
-        glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
+        glViewport(0, 0, static_cast<GLsizei>(size.width), static_cast<GLsizei>(size.height));
         kmGLMatrixMode(KM_GL_PROJECTION);
         kmGLLoadIdentity();
 
         kmMat4 orthoMatrix;
         kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
-        kmGLMultMatrix( &orthoMatrix );
+        kmGLMultMatrix(&orthoMatrix);
 
         kmGLMatrixMode(KM_GL_MODELVIEW);
         kmGLLoadIdentity();
@@ -208,12 +223,12 @@ namespace oreore
 
         GL::bindTexture2D(texture->getName());
 
-        GL::blendFunc(blendFunc.src, blendFunc.dst);
-
+        GL::blendFunc(getBlendFunc().src, getBlendFunc().dst);
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, &coord[0]);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, &texCoord[0]);
         glDrawArrays(mode, 0, static_cast<GLsizei>(texCoord.size()));
+        CC_INCREMENT_GL_DRAWS(1);
     }
 
     void ScreenMappedPolygon::visit(cocos2d::Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated)

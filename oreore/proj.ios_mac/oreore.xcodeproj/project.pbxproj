@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
+		30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */ = {isa = PBXBuildFile; fileRef = 30EFBFC51987E1DE007AF580 /* RepeatWith.h */; };
+		30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
 		7A75964A194FF08A004A6CE8 /* Sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC805194ED99C006EA6B4 /* Sound.cpp */; };
 		7A75964B194FF08A004A6CE8 /* ImageMappedPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7EA194ED99B006EA6B4 /* ImageMappedPolygon.cpp */; };
 		7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A7FC7D3194ED99B006EA6B4 /* CallInterval.cpp */; };
@@ -122,6 +125,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RepeatWith.cpp; sourceTree = "<group>"; };
+		30EFBFC51987E1DE007AF580 /* RepeatWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatWith.h; sourceTree = "<group>"; };
 		7A75968B194FF08A004A6CE8 /* liboreore iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7FC7C7194ED969006EA6B4 /* liboreore Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttractMove.cpp; sourceTree = "<group>"; };
@@ -268,6 +273,8 @@
 				7A7FC7E4194ED99B006EA6B4 /* SwayMoveBy.h */,
 				7A7FC7E5194ED99B006EA6B4 /* SwayMoveTo.cpp */,
 				7A7FC7E6194ED99B006EA6B4 /* SwayMoveTo.h */,
+				30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */,
+				30EFBFC51987E1DE007AF580 /* RepeatWith.h */,
 			);
 			path = actions;
 			sourceTree = "<group>";
@@ -340,6 +347,7 @@
 				7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */,
 				7A759672194FF08A004A6CE8 /* Fluxion.h in Headers */,
 				7A759673194FF08A004A6CE8 /* Shake.h in Headers */,
+				30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */,
 				7A759674194FF08A004A6CE8 /* AssetLoader.h in Headers */,
 				7A759675194FF08A004A6CE8 /* ImageMappedPolygon.h in Headers */,
 				7A759676194FF08A004A6CE8 /* MusicFadeTo.h in Headers */,
@@ -473,6 +481,7 @@
 			files = (
 				7A75964A194FF08A004A6CE8 /* Sound.cpp in Sources */,
 				7A75964B194FF08A004A6CE8 /* ImageMappedPolygon.cpp in Sources */,
+				30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */,
 				7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */,
 				7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */,
 				7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */,
@@ -514,6 +523,7 @@
 				7A7FC83F194ED99C006EA6B4 /* SceneManager.cpp in Sources */,
 				7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */,
 				7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */,
+				30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */,
 				7A7FC83C194ED99C006EA6B4 /* MultiResolution.cpp in Sources */,
 				7A7FC82E194ED99C006EA6B4 /* SimpleButton.cpp in Sources */,
 				7A7FC81C194ED99C006EA6B4 /* PlaySE.cpp in Sources */,

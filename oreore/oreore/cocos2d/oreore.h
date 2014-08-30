@@ -13,6 +13,7 @@
 #include "actions/SwayMoveBy.h"
 #include "actions/SwayMoveTo.h"
 #include "actions/CallInterval.h"
+#include "actions/RepeatWith.h"
 
 /* nodes */
 #include "nodes/Overlay.h"
