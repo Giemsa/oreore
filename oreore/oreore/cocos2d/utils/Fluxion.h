@@ -40,7 +40,9 @@ namespace oreore
             {
                 cocos2d::FiniteTimeAction *action = static_cast<cocos2d::FiniteTimeAction *>(a);
                 if(action)
+                {
                     actions->pushBack(action);
+                }
             }
         public:
             ActionIntervalBase() { }
@@ -122,7 +124,10 @@ namespace oreore
             inline SequentialAction &operator>>(cocos2d::FiniteTimeAction *action)
             {
                 if(action)
+                {
                     actions->pushBack(action);
+                }
+
                 return *this;
             }
 
@@ -178,7 +183,10 @@ namespace oreore
             inline ParallelAction &operator+(cocos2d::FiniteTimeAction *action)
             {
                 if(action)
+                {
                     actions->pushBack(action);
+                }
+
                 return *this;
             }
 
@@ -376,17 +384,12 @@ namespace oreore
 
     inline fluxion::SequentialAction operator>>(const std::function<void()> &func, const fluxion::ActionBase &b)
     {
-        return fluxion::SequentialAction(func, b);
+        return fluxion::SequentialAction(cocos2d::CallFunc::create(func), b);
     }
 
     inline fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const fluxion::ActionBase &b)
     {
         return fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
-    }
-
-    inline fluxion::ParallelAction operator+(const std::function<void()> &func, const fluxion::ActionBase &b)
-    {
-        return fluxion::ParallelAction(func, static_cast<cocos2d::FiniteTimeAction *>(b));
     }
 
     namespace x
