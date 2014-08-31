@@ -374,9 +374,19 @@ namespace oreore
         return fluxion::SequentialAction(a, b);
     }
 
+    inline fluxion::SequentialAction operator>>(const std::function<void()> &func, const fluxion::ActionBase &b)
+    {
+        return fluxion::SequentialAction(func, b);
+    }
+
     inline fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const fluxion::ActionBase &b)
     {
         return fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
+    }
+
+    inline fluxion::ParallelAction operator+(const std::function<void()> &func, const fluxion::ActionBase &b)
+    {
+        return fluxion::ParallelAction(func, static_cast<cocos2d::FiniteTimeAction *>(b));
     }
 
     namespace x
