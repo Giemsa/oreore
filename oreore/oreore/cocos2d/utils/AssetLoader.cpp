@@ -32,7 +32,10 @@ namespace oreore
         assets.push_back(data);
     }
 
-    void AssetLoaderWorker::load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback)
+    void AssetLoaderWorker::load(
+        const std::function<void()> &callback,
+        const std::function<void(const std::string &filename, const std::size_t count, const std::size_t total)> &assetLoadedCallback
+    )
     {
         this->callback = callback;
         this->assetLoadedCallback = assetLoadedCallback;
@@ -77,7 +80,10 @@ namespace oreore
         worker->addAsset(AssetData(filename, AssetData::SpriteFrame));
     }
 
-    void AssetLoader::load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback)
+    void AssetLoader::load(
+        const std::function<void()> &callback,
+        const std::function<void(const std::string &filename, const std::size_t count, const std::size_t total)> &assetLoadedCallback
+    )
     {
         worker->load(callback, assetLoadedCallback);
     }

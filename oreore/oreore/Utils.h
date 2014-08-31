@@ -21,15 +21,15 @@ namespace oreore
     class xorshift
     {
     public:
-        using result_type = unsigned int;
+        using result_type = unsigned long;
     private:
         result_type x, y, z, w;
 
-        static constexpr result_type default_seed = 541238617;
+        static constexpr result_type default_seed = 541238617UL;
     public:
         xorshift() : xorshift(default_seed) { }
         explicit xorshift(const result_type seed)
-            : x(123456789), y(362436069), z(521288629), w(88675123)
+            : x(123456789UL), y(362436069UL), z(521288629UL), w(88675123UL)
         {
             x ^= seed;
             y ^= rotl<8>(seed);

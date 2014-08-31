@@ -3,11 +3,12 @@
 
 #include <functional>
 #include "cocos2d.h"
+#include "../../null.h"
 
 namespace oreore
 {
     class AssetLoaderWorker;
-    typedef void (cocos2d::CCObject::*SEL_AssetLoaded)(const std::string &filename, const int count, const int total);
+    typedef void (cocos2d::CCObject::*SEL_AssetLoaded)(const std::string &filename, const std::size_t count, const std::size_t total);
 #define assetloaded_selector(_SELECTOR) (SEL_AssetLoaded)(&_SELECTOR)
 
     struct AssetData
@@ -35,9 +36,9 @@ namespace oreore
         AssetData data;
 
         AssetLoaderWorkerChild(AssetLoaderWorker *worker, const AssetData &data);
-        AssetLoaderWorkerChild(const AssetLoaderWorkerChild& rhs) { }
+        AssetLoaderWorkerChild(const AssetLoaderWorkerChild &rhs) { }
         ~AssetLoaderWorkerChild() { CCLOG("AssetLoaderWorkerChild work finished!"); }
-        void operator=(const AssetLoaderWorkerChild& rhs) { }
+        void operator=(const AssetLoaderWorkerChild &rhs) { }
    };
 
 
@@ -47,18 +48,21 @@ namespace oreore
         friend class AssetLoaderWorkerChild;
         typedef std::vector<AssetData> AssetList;
     private:
-        int count;
-        std::function<void(const std::string &filename, const int count, const int total)> assetLoadedCallback;
+        std::size_t count;
+        std::function<void(const std::string &filename, const std::size_t count, const std::size_t total)> assetLoadedCallback;
         std::function<void()> callback;
         AssetList assets;
 
         AssetLoaderWorker() : count(0) { }
-        AssetLoaderWorker(const AssetLoaderWorker& rhs) { }
+        AssetLoaderWorker(const AssetLoaderWorker &rhs) { }
         ~AssetLoaderWorker() { CCLOG("AssetLoaderWorker work finished!"); }
-        void operator=(const AssetLoaderWorker& rhs) { }
+        void operator=(const AssetLoaderWorker &rhs) { }
 
         void assetLoaded(const AssetData &data, cocos2d::Texture2D *tex);
-        void load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback);
+        void load(
+            const std::function<void()> &callback,
+            const std::function<void(const std::string &filename, const std::size_t count, const std::size_t total)> &assetLoadedCallback
+        );
         void addAsset(const AssetData &data);
     public:
     };
@@ -72,7 +76,10 @@ namespace oreore
         AssetLoader();
         void addTexture(const std::string &filename);
         void addSpriteFrame(const std::string &filename);
-        void load(const std::function<void()> &callback, const std::function<void(const std::string &filename, const int count, const int total)> &assetLoadedCallback = nullptr);
+        void load(
+            const std::function<void()> &callback,
+            const std::function<void(const std::string &filename, const std::size_t count, const std::size_t total)> &assetLoadedCallback = nullptr
+        );
     };
 }
 
