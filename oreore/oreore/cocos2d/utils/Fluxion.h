@@ -382,6 +382,11 @@ namespace oreore
         return fluxion::SequentialAction(a, b);
     }
 
+    inline fluxion::SequentialAction operator>>(cocos2d::Action *a, const std::function<void()> &func)
+    {
+        return fluxion::SequentialAction(a, cocos2d::CallFunc::create(func));
+    }
+
     inline fluxion::SequentialAction operator>>(const std::function<void()> &func, const fluxion::ActionBase &b)
     {
         return fluxion::SequentialAction(cocos2d::CallFunc::create(func), b);

@@ -2,6 +2,7 @@
 #define __OREORE_COCOS2D_CIRCLEMOVEBY_H__
 
 #include "cocos2d.h"
+#include "../utils/Fluxion.h"
 
 namespace oreore
 {
@@ -24,6 +25,24 @@ namespace oreore
         virtual CircleMoveBy *reverse() const override;
         virtual CircleMoveBy *clone() const override;
     };
+
+    // fluxion plugin
+    namespace fluxion
+    {
+        using CircleMoveBy = ActionInterval<oreore::CircleMoveBy>;
+    }
+
+    namespace x
+    {
+        inline fluxion::CircleMoveBy circleMoveBy(
+            const float duration,
+            const cocos2d::Point &center,
+            const float deg
+        )
+        {
+            return fluxion::CircleMoveBy(duration, center, deg);
+        }
+    }
 }
 
 #endif

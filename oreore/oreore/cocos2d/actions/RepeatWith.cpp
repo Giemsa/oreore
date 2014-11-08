@@ -1,5 +1,4 @@
 #include "RepeatWith.h"
-#include "../../null.h"
 
 namespace oreore
 {
@@ -18,7 +17,7 @@ namespace oreore
             return action;
         }
         delete action;
-        return null;
+        return nullptr;
     }
 
     bool RepeatWith::initWithDuration(
@@ -49,7 +48,7 @@ namespace oreore
     RepeatWith *RepeatWith::reverse() const
     {
         CCAssert(0, "reverse is not implemented");
-        return null;
+        return nullptr;
     }
 
     RepeatWith *RepeatWith::clone() const

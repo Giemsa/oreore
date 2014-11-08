@@ -15,6 +15,14 @@ namespace oreore
         return cocos2d::Rect(point.x, point.y, size, size);
     }
 
+    inline cocos2d::Rect enlarge(const cocos2d::Rect &rect, const float margin)
+    {
+        return cocos2d::Rect(
+            rect.origin.x - margin, rect.origin.y - margin,
+            rect.size.width + margin * 2, rect.size.height + margin * 2
+        );
+    }
+
     // Color4F -> Color3B
     inline cocos2d::Color3B toColor3B(const cocos2d::Color4F &color)
     {
@@ -25,7 +33,7 @@ namespace oreore
         );
     }
 
-    inline cocos2d::Color4B toColor4B(const cocos2d::Color3B &color, const float opacity)
+    inline cocos2d::Color4B toColor4B(const cocos2d::Color3B &color, const GLubyte opacity)
     {
         return cocos2d::Color4B(
             color.r, color.g, color.b, opacity
@@ -42,7 +50,7 @@ namespace oreore
         return cocos2d::Color3B(
             static_cast<GLubyte>((Rb - Ra) * count / 100 + Ra),
             static_cast<GLubyte>((Gb - Ga) * count / 100 + Ga),
-            static_cast<GLubyte>((Ba - Ba) * count / 100 + Ba)
+            static_cast<GLubyte>((Bb - Ba) * count / 100 + Ba)
         );
     }
 
