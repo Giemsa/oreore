@@ -336,6 +336,9 @@ namespace oreore
         using RotateTo = ActionInterval<cocos2d::RotateTo>;
         using RotateBy = ActionInterval<cocos2d::RotateBy>;
 
+		using JumpTo = ActionInterval<cocos2d::JumpTo>;
+		using JumpBy = ActionInterval<cocos2d::JumpBy>;
+
         /* action */
         using Show = Action<cocos2d::Show>;
         using Hide = Action<cocos2d::Hide>;
@@ -424,6 +427,9 @@ namespace oreore
 
         inline fluxion::RotateBy rotateBy(const float duration, const float angle) { return fluxion::RotateBy(duration, angle); }
         inline fluxion::RotateBy rotateBy(const float duration, const float angleX, const float angleY) { return fluxion::RotateBy(duration, angleX, angleY); }
+
+		inline fluxion::JumpTo jumpTo(const float duration, const cocos2d::Point &pos, float height, int jumps) { return fluxion::JumpTo(duration, pos, height, jumps); }
+		inline fluxion::JumpBy jumpBy(const float duration, const cocos2d::Point &pos, float height, int jumps) { return fluxion::JumpBy(duration, pos, height, jumps); }
 
         /* action */
         inline fluxion::Show show() { return fluxion::Show(); }
