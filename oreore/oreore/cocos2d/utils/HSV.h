@@ -1,10 +1,7 @@
 #ifndef __OREORE_COCOS2D_HSV_H__
 #define __OREORE_COCOS2D_HSV_H__
 
-#include <cmath>
-#include <algorithm>
 #include "cocos2d.h"
-#include "Utils.h"
 
 /* Color3B/Coplor4BのHSV版 */
 
@@ -165,51 +162,6 @@ namespace oreore
         inline operator cocos2d::Color4B() const { return cocos2d::Color4B(toRGB()); }
         inline operator cocos2d::Color4F() const { return toRGB(); }
     };
-
-#if 0
-    struct ColorHSV4F
-    {
-        GLfloat h;
-        GLfloat s;
-        GLfloat v;
-        GLfloat a;
-
-        constexpr ColorHSV4F();
-        constexpr ColorHSV4F(const float h, const float s, const float v, const float a);
-        explicit constexpr ColorHSV4F(const Color3B &rhs);
-        explicit constexpr ColorHSV4F(const Color4B &rhs);
-        explicit constexpr ColorHSV4F(const Color3F &rhs);
-        explicit constexpr ColorHSV4F(const Color4F &rhs);
-
-        bool operator==(const Color3F &rhs) const;
-        bool operator==(const Color4F &rhs) const;
-        bool operator==(const Color3B &rhs) const;
-        bool operator==(const Color4B &rhs) const;
-        bool operator==(const ColorHSV3B &rhs) const;
-        bool operator==(const ColorHSV4B &rhs) const;
-        bool operator==(const ColorHSV3F &rhs) const;
-        bool operator==(const ColorHSV4F &rhs) const;
-        bool operator!=(const Color4F &rhs) const;
-        bool operator!=(const Color3B &rhs) const;
-        bool operator!=(const Color4B &rhs) const;
-        bool operator!=(const ColorHSV3B &rhs) const;
-        bool operator!=(const ColorHSV4B &rhs) const;
-        bool operator!=(const ColorHSV3F &rhs) const;
-        bool operator!=(const ColorHSV4F &rhs) const;
-
-        /*
-        const static ColorHSV4F WHITE;
-        const static ColorHSV4F YELLOW;
-        const static ColorHSV4F BLUE;
-        const static ColorHSV4F GREEN;
-        const static ColorHSV4F RED;
-        const static ColorHSV4F MAGENTA;
-        const static ColorHSV4F BLACK;
-        const static ColorHSV4F ORANGE;
-        const static ColorHSV4F GRAY;
-        */
-    };
-#endif
 }
 
 #endif
