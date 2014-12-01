@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		306C37EC1A2CB49B00A4EA4F /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306C37EA1A2CB49B00A4EA4F /* SaveData.cpp */; };
+		306C37ED1A2CB49B00A4EA4F /* SaveData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 306C37EA1A2CB49B00A4EA4F /* SaveData.cpp */; };
+		306C37EE1A2CB49B00A4EA4F /* SaveData.h in Headers */ = {isa = PBXBuildFile; fileRef = 306C37EB1A2CB49B00A4EA4F /* SaveData.h */; };
+		306C37EF1A2CB49B00A4EA4F /* SaveData.h in Headers */ = {isa = PBXBuildFile; fileRef = 306C37EB1A2CB49B00A4EA4F /* SaveData.h */; };
 		30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
 		30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */ = {isa = PBXBuildFile; fileRef = 30EFBFC51987E1DE007AF580 /* RepeatWith.h */; };
 		30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
@@ -125,6 +129,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		306C37EA1A2CB49B00A4EA4F /* SaveData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SaveData.cpp; sourceTree = "<group>"; };
+		306C37EB1A2CB49B00A4EA4F /* SaveData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveData.h; sourceTree = "<group>"; };
 		30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RepeatWith.cpp; sourceTree = "<group>"; };
 		30EFBFC51987E1DE007AF580 /* RepeatWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatWith.h; sourceTree = "<group>"; };
 		7A75968B194FF08A004A6CE8 /* liboreore iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +238,8 @@
 				7A7FC80D194ED99C006EA6B4 /* TimeCounter.h */,
 				7A7FC80E194ED99C006EA6B4 /* Utils.cpp */,
 				7A7FC80F194ED99C006EA6B4 /* Utils.h */,
+				306C37EA1A2CB49B00A4EA4F /* SaveData.cpp */,
+				306C37EB1A2CB49B00A4EA4F /* SaveData.h */,
 			);
 			name = oreore;
 			path = ../oreore;
@@ -360,6 +368,7 @@
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
 				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
+				306C37EE1A2CB49B00A4EA4F /* SaveData.h in Headers */,
 				7A759680194FF08A004A6CE8 /* Formatter.h in Headers */,
 				7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */,
 				7A759682194FF08A004A6CE8 /* ShatteredSprite.h in Headers */,
@@ -403,6 +412,7 @@
 				7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */,
 				7A7FC82D194ED99C006EA6B4 /* ShatteredSprite.h in Headers */,
 				7A7FC83D194ED99C006EA6B4 /* MultiResolution.h in Headers */,
+				306C37EF1A2CB49B00A4EA4F /* SaveData.h in Headers */,
 				7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */,
 				7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */,
 				7A7FC813194ED99C006EA6B4 /* CallInterval.h in Headers */,
@@ -485,6 +495,7 @@
 				7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */,
 				7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */,
 				7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */,
+				306C37EC1A2CB49B00A4EA4F /* SaveData.cpp in Sources */,
 				7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */,
 				7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */,
 				7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */,
@@ -517,6 +528,7 @@
 				7A7FC82C194ED99C006EA6B4 /* ShatteredSprite.cpp in Sources */,
 				7A7FC833194ED99C006EA6B4 /* AssetLoader.cpp in Sources */,
 				7A7FC820194ED99C006EA6B4 /* ShakeFadeOut.cpp in Sources */,
+				306C37ED1A2CB49B00A4EA4F /* SaveData.cpp in Sources */,
 				7A7FC838194ED99C006EA6B4 /* Formatter.cpp in Sources */,
 				7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */,
 				7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */,
@@ -616,6 +628,7 @@
 					"$(SRCROOT)/../../example/cocos2d/cocos/math/kazmath",
 					"$(SRCROOT)/../../example/cocos2d/cocos/audio/include",
 					"$(SRCROOT)/../../example/cocos2d/extensions",
+					"$(SRCROOT)/../oreore/libs/msgpack-c/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -660,6 +673,7 @@
 					"$(SRCROOT)/../../example/cocos2d/cocos/math/kazmath",
 					"$(SRCROOT)/../../example/cocos2d/cocos/audio/include",
 					"$(SRCROOT)/../../example/cocos2d/extensions",
+					"$(SRCROOT)/../oreore/libs/msgpack-c/include",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;

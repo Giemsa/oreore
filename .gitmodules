@@ -1,0 +1,3 @@
+[submodule "oreore/oreore/libs/msgpack-c"]
+	path = oreore/oreore/libs/msgpack-c
+	url = https://github.com/msgpack/msgpack-c.git

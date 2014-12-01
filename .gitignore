@@ -13,6 +13,7 @@ _site
 .project
 .cproject
 
+build/
 proj.android/lib/
 proj.android/bin/
 proj.android/assets/
