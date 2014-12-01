@@ -21,13 +21,14 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/core \
                     $(COCOS_PATH)/cocos/math/kazmath \
                     $(COCOS_PATH)/cocos/audio/incude \
                     $(COCOS_PATH)/extensions \
-                    $(COCOS_PATH)/cocos/2d/platform/android \
+                    $(COCOS_PATH)/cocos/2d/platform/android
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../oreore \
                            $(LOCAL_PATH)/../oreore/cocos2d \
                            $(LOCAL_PATH)/../oreore/cocos2d/actions \
                            $(LOCAL_PATH)/../oreore/cocos2d/nodes \
-                           $(LOCAL_PATH)/../oreore/cocos2d/utils
+                           $(LOCAL_PATH)/../oreore/cocos2d/utils \
+                           $(LOCAL_PATH)/../oreore/libs/msgpack-c/include
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_extension_static
 
