@@ -75,7 +75,7 @@ cocos2dxで利用できるノードやレイヤのライブラリです。
 [Fluxion Reference](./fluxion.html) を参照してください。
 
 ## Step (Savedata Serialization Utility)
-簡潔にデータを保存するための機能を提供します。
+簡潔にデータを保存するための機能を提供します。  
 [Step](./step.html) を参照してください。
 
 ## Simple Debug Menu
