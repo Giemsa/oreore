@@ -1,3 +1,6 @@
 [submodule "oreore/oreore/libs/msgpack-c"]
 	path = oreore/oreore/libs/msgpack-c
 	url = https://github.com/msgpack/msgpack-c.git
+[submodule "oreore/oreore/libs/picojson"]
+	path = oreore/oreore/libs/picojson
+	url = https://github.com/kazuho/picojson.git
