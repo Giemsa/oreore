@@ -74,6 +74,10 @@ cocos2dxで利用できるノードやレイヤのライブラリです。
 アクションを簡潔に記述、生成するためのDSLを提供します。  
 [Fluxion Reference](./fluxion.html) を参照してください。
 
+## Step (Savedata Serialization Utility)
+簡潔にデータを保存するための機能を提供します。
+[Step](./step.html) を参照してください。
+
 ## Simple Debug Menu
 シンプルなデバッグメニューを提供します。  
 [Simple Debug Menu](./sdm.html) を参照してください。
