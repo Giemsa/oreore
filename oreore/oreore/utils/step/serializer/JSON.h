@@ -25,7 +25,7 @@ namespace oreore
                     }
 
                     v.serialize(std::ostream_iterator<char>(out));
-                    return out.fail();
+                    return !out.fail();
                 }
 
                 bool deserialize(const std::istream &data) override
