@@ -3,7 +3,6 @@
 
 #include "TimeCounter.h"
 #include "Utils.h"
-#include "./utils/step/Step.h"
 #include "../../../libs/picojson/picojson.h"
 
 #ifndef NOT_USE_COCOS2DX
@@ -11,6 +10,19 @@
 #endif
 
 #include "dlog.h"
+
+/* step */
+#include "./utils/step/Step.h"
+
+// storage
+#include "./utils/step/storage/StringStorage.h"
+
+// serializer
+#include "./utils/step/serializer/JSON.h"
+#include "./utils/step/serializer/msgpack.h"
+
+// process
+#include "./utils/step/process/encrypt/Blowfish.h"
 
 #endif
 

@@ -93,13 +93,10 @@ namespace oreore
                 ProcessKicker() { }
                 ProcessKicker(const ProcessQueue *queue)
                 : queue(queue)
-                {
-                    std::cout << "created" << std::endl;
-                }
+                { }
 
                 bool kick()
                 {
-                    std::cout << "kick" << std::endl;
                     const bool r = queue->process();
                     delete queue;
                     return r;
@@ -107,7 +104,6 @@ namespace oreore
 
                 bool kick(const std::function<void(bool)> &callback)
                 {
-                    std::cout << "kick with callback" << std::endl;
                     const bool r = queue->process();
                     delete queue;
                     return r;
@@ -115,7 +111,6 @@ namespace oreore
 
                 bool kickAsync(const std::function<void(bool)> &callback)
                 {
-                    std::cout << "async kick with callback" << std::endl;
                     const bool r = queue->process();
                     delete queue;
                     return r;
@@ -322,61 +317,6 @@ namespace oreore
 
         template<typename T>
         using Storage = Terminal<T>;
-
-        /* test */
-        class JSON final : public Serializable<JSON>
-        {
-        private:
-            bool start(Stream &stream) override
-            {
-                std::cout << "JSON start" << std::endl;
-                return true;
-            }
-
-            bool end(Stream &stream) override
-            {
-                std::cout << "JSON end" << std::endl;
-                return true;
-            }
-
-        public:
-            JSON() = default;
-            ~JSON() = default;
-        };
-
-        class StringStorage final : public Storage<StringStorage>
-        {
-        private:
-            bool start(Stream &stream) override
-            {
-                std::cout << "StringStorage start" << std::endl;
-                return true;
-            }
-
-            bool end(Stream &stream) override
-            {
-                std::cout << "StringStorage end" << std::endl;
-                return true;
-            }
-
-        public:
-            StringStorage() = default;
-            ~StringStorage() = default;
-        };
-
-        class Blowfish final : public Encrypter<Blowfish>
-        {
-        private:
-            bool process(Stream &stream) override
-            {
-                std::cout << "Blowfish process" << std::endl;
-                return true;
-            }
-
-        public:
-            Blowfish() = default;
-            ~Blowfish() = default;
-        };
     }
 }
 

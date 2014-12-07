@@ -55,7 +55,7 @@ bool HelloWorld::init()
         ) * x::inf()
     );
 
-    Step::JSON() >>  Step::Blowfish() >> Step::Blowfish() >> Step::StringStorage();
+    Step::JSON() >>  Step::Encrypt::Blowfish() >> Step::Encrypt::Blowfish() >> Step::StringStorage();
 
     std::cout << "process" << std::endl;
 
