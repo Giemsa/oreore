@@ -119,12 +119,13 @@ bool HelloWorld::init()
     );
 
     // Step example
+    Step::Encrypt::Blowfish bf("sample key");
     SaveData data("oreore", 123456);
     SaveData rd;
     std::string json;
 
     {
-        Step::ProcessHolder h = Step::Serializer(data) >> Step::StringStorage(json);
+        Step::ProcessHolder h = Step::Serializer(data) >> Step::Encrypter(bf) >> Step::StringStorage(json);
         const bool r = h.start();
 
         std::cout << "convert to json: " << std::boolalpha << r << std::endl;
@@ -132,7 +133,7 @@ bool HelloWorld::init()
     }
 
     {
-        const bool r = Step::StringStorage(json) >> Step::Serializer(rd);
+        const bool r = Step::StringStorage(json) >> Step::Decrypter(bf) >> Step::Serializer(rd);
 
         std::cout << "convert from json: " << std::boolalpha << r << std::endl;
         std::cout << "name: " << rd.name << ", score: " << rd.score << std::endl;

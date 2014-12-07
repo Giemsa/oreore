@@ -3,6 +3,16 @@
 
 #include "../Step.h"
 
+#ifdef nil
+#   undef nil
+#endif
+
+#include "msgpack.hpp"
+
+#undef nil
+#define nil NULL
+
+
 namespace oreore
 {
     namespace Step

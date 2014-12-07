@@ -1,5 +1,6 @@
 #include "blowfish.h"
 #include <cstring>
+#include <string>
 #include <algorithm>
 
 #if !defined(OREORE_LITTLE_ENDIAN) and !defined(OREORE_BIG_ENDIAN)
@@ -233,37 +234,18 @@ namespace oreore
             return gcd;
         }
 
-        size_t PKCS5PaddingLength(const std::vector<char> &data)
-        {
-            if(data.empty())
-            {
-                return 0;
-            }
 
-            const char length = data[data.size() - 1];
-            if(length > 0 && length <= 8)
-            {
-                for (size_t i = 0; i < length; ++i)
-                {
-                    if(length != data[data.size() - i - 1])
-                    {
-                        return 0;
-                    }
-                }
-            }
-            else
-            {
-                return 0;
-            }
-
-            return length;
-        }
     }
 
 
     Blowfish::Blowfish(const std::vector<char> &key)
     {
         setKey(key.data(), key.size());
+    }
+
+    Blowfish::Blowfish(const std::string &key)
+    {
+        setKey(key.c_str(), key.size());
     }
 
     void Blowfish::setKey(const char *key, const size_t byte_length)
@@ -315,52 +297,6 @@ namespace oreore
         }
     }
 
-    std::vector<char> Blowfish::encrypt(const std::vector<char> &src) const
-    {
-        std::vector<char> dst = src;
-
-        size_t padding_length = dst.size() % sizeof(uint64_t);
-        if(padding_length == 0)
-        {
-            padding_length = sizeof(uint64_t);
-        }
-        else
-        {
-            padding_length = sizeof(uint64_t) - padding_length;
-        }
-
-        for(size_t i = 0; i < padding_length; ++i)
-        {
-            dst.push_back(static_cast<char>(padding_length));
-        }
-
-        for(int i = 0; i < dst.size() / sizeof(uint64_t); ++i)
-        {
-            encryptBlock(
-                &reinterpret_cast<uint32_t *>(dst.data())[i * 2],
-                &reinterpret_cast<uint32_t *>(dst.data())[i * 2 + 1]
-            );
-        }
-
-        return dst;
-    }
-
-    std::vector<char> Blowfish::decrypt(const std::vector<char> &src) const
-    {
-        std::vector<char> dst = src;
-
-        for(int i = 0; i < dst.size() / sizeof(uint64_t); ++i){
-            decryptBlock(
-                &reinterpret_cast<uint32_t *>(dst.data())[i * 2],
-                &reinterpret_cast<uint32_t *>(dst.data())[i * 2 + 1]
-            );
-        }
-
-        const size_t padding_length = PKCS5PaddingLength(dst);
-        dst.resize(dst.size() - padding_length);
-        return dst;
-    }
-
     void Blowfish::encryptBlock(uint32_t *left, uint32_t *right) const
     {
         for(int i = 0; i < 16; ++i)
@@ -402,5 +338,31 @@ namespace oreore
         const uint8_t d = converter.bit_8.byte3;
 
         return ((sbox_[0][a] + sbox_[1][b]) ^ sbox_[2][c]) + sbox_[3][d];
+    }
+
+    size_t Blowfish::PKCS5PaddingLength(const std::vector<char> &data) const
+    {
+        if(data.empty())
+        {
+            return 0;
+        }
+
+        const char length = data[data.size() - 1];
+        if(length > 0 && length <= 8)
+        {
+            for (size_t i = 0; i < length; ++i)
+            {
+                if(length != data[data.size() - i - 1])
+                {
+                    return 0;
+                }
+            }
+        }
+        else
+        {
+            return 0;
+        }
+
+        return length;
     }
 }

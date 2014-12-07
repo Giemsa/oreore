@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3029814F1A34707300F80987 /* Blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 3029814E1A34707300F80987 /* Blowfish.h */; };
-		302981501A34707300F80987 /* Blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 3029814E1A34707300F80987 /* Blowfish.h */; };
 		30DC7B701A30B5CD00214270 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7AB01A30B5CC00214270 /* blowfish.cpp */; };
 		30DC7B711A30B5CD00214270 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7AB01A30B5CC00214270 /* blowfish.cpp */; };
 		30DC7B721A30B5CD00214270 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7AB11A30B5CC00214270 /* blowfish.h */; };
@@ -135,8 +133,8 @@
 /* Begin PBXFileReference section */
 		301775921A346E3A0001644F /* StringStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringStorage.h; sourceTree = "<group>"; };
 		3029814D1A346F7C00F80987 /* JSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		3029814E1A34707300F80987 /* Blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Blowfish.h; path = ../process/encrypt/Blowfish.h; sourceTree = "<group>"; };
 		302981511A34712200F80987 /* msgpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = msgpack.h; sourceTree = "<group>"; };
+		303C13C51A349A5000A1BD9A /* Blowfish.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blowfish.h; sourceTree = "<group>"; };
 		30DC7AB01A30B5CC00214270 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
 		30DC7AB11A30B5CC00214270 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
@@ -220,12 +218,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30B8E99A1A346D8500F6D395 /* encrypt */ = {
+		303C13C41A349A5000A1BD9A /* encrypt */ = {
 			isa = PBXGroup;
 			children = (
-				3029814E1A34707300F80987 /* Blowfish.h */,
+				303C13C51A349A5000A1BD9A /* Blowfish.h */,
 			);
-			name = encrypt;
+			path = encrypt;
 			sourceTree = "<group>";
 		};
 		30DC7AAE1A30B5CC00214270 /* libs */ = {
@@ -267,10 +265,9 @@
 		30DC7C801A30B60200214270 /* process */ = {
 			isa = PBXGroup;
 			children = (
-				30B8E99A1A346D8500F6D395 /* encrypt */,
+				303C13C41A349A5000A1BD9A /* encrypt */,
 			);
-			name = process;
-			path = encrypter;
+			path = process;
 			sourceTree = "<group>";
 		};
 		30DC7C831A30B60200214270 /* serializer */ = {
@@ -444,7 +441,6 @@
 				7A75967A194FF08A004A6CE8 /* TimeCounter.h in Headers */,
 				7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */,
 				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
-				3029814F1A34707300F80987 /* Blowfish.h in Headers */,
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
 				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
@@ -497,7 +493,6 @@
 				30DC7B731A30B5CD00214270 /* blowfish.h in Headers */,
 				7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */,
 				7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */,
-				302981501A34707300F80987 /* Blowfish.h in Headers */,
 				7A7FC813194ED99C006EA6B4 /* CallInterval.h in Headers */,
 				7A7FC815194ED99C006EA6B4 /* CircleMoveBy.h in Headers */,
 			);

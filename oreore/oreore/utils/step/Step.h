@@ -1,15 +1,6 @@
 #ifndef __OREORE_UTILS_STEP_H__
 #define __OREORE_UTILS_STEP_H__
 
-#ifdef nil
-#   undef nil
-#endif
-
-#include "msgpack.hpp"
-
-#undef nil
-#define nil NULL
-
 #include <iostream>
 #include <functional>
 
@@ -140,7 +131,7 @@ namespace oreore
                     }
                 }
 
-                inline ProcessQueueContainer &operator>>(ProcessBase &process)
+                inline ProcessQueueContainer &operator>>(const ProcessBase &process)
                 {
                     queue->push(process.clone());
                     return *this;
@@ -267,6 +258,10 @@ namespace oreore
             }
         };
 
+        /**
+         * プロセス
+         * Stepに置けるフェーズを表すクラス。
+         */
         template<typename T>
         class Process : public ProcessBase
         {
@@ -282,6 +277,11 @@ namespace oreore
 
         };
 
+        /**
+         * 終端フェーズの基底クラス
+         * 開始フェーズ、終了フェーズに呼ぶことの出来るプロセスを定義します。
+         * 中間フェーズにこのプロセスを配置することは出来ません。
+         */
         template<typename T>
         class Terminal : public Process<T>
         {
@@ -305,6 +305,11 @@ namespace oreore
             virtual ~Terminal() = default;
         };
 
+        /**
+         * 非終端フェーズの基底クラス
+         * 中間フェーズに呼ぶことの出来るプロセスを定義します。
+         * 開始フェーズ、終了フェーズこのプロセスを配置することは出来ません。
+         */
         template<typename T>
         class Nonterminal : public Process<T>
         {
@@ -326,10 +331,14 @@ namespace oreore
             virtual ~Nonterminal() = default;
         };
 
+        /**
+         * シリアライズ可能クラス
+         * このクラスを継承したクラスは、Serializerによって
+         * シリアライズ/デシリアライズされます。
+         */
         class Serializable
         {
             friend class Serializer;
-
         protected:
             virtual bool serialize(std::ostream &stream) const = 0;
             virtual bool deserialize(const std::istream &stream) = 0;
@@ -339,6 +348,11 @@ namespace oreore
             virtual ~Serializable() = default;
         };
 
+        /**
+         * シリアライザ
+         * Serializableを継承したクラスを指定することで、
+         * 指定されたクラスをシリアライザ/デシリアライズします。
+         */
         class Serializer final : public Terminal<Serializer>
         {
         private:
@@ -359,9 +373,70 @@ namespace oreore
             { }
         };
 
-        template<typename T>
-        using Encrypter = Nonterminal<T>;
+        /**
+         * 暗号化方式クラス
+         * このクラスを継承したクラスは、Encrypter及びDecrypterによって
+         * 暗号化/復号化されます。
+         */
+        class Cipher
+        {
+            friend class Encrypter;
+            friend class Decrypter;
+        protected:
+            virtual bool encrypt(Stream::StreamType &stream) const = 0;
+            virtual bool decrypt(Stream::StreamType &stream) const = 0;
 
+        public:
+            Cipher() = default;
+            virtual ~Cipher() = default;
+        };
+
+        /**
+         * 暗号化クラス
+         * Cipherを継承したクラスを指定することで、
+         * ストリームの内容を指定した暗号化方式で暗号化します。
+         */
+        class Encrypter final : public Nonterminal<Encrypter>
+        {
+        private:
+            const Cipher &cipher;
+
+            inline bool process(Stream &stream) override
+            {
+                return cipher.encrypt(stream.getStream());
+            }
+
+        public:
+            Encrypter(const Cipher &cipher)
+            : cipher(cipher)
+            { }
+        };
+
+        /**
+         * 復号化クラス
+         * Cipherを継承したクラスを指定することで、
+         * ストリームの内容を指定した暗号化方式で復号化します。
+         */
+        class Decrypter final : public Nonterminal<Decrypter>
+        {
+        private:
+            const Cipher &cipher;
+
+            inline bool process(Stream &stream) override
+            {
+                return cipher.decrypt(stream.getStream());
+            }
+
+        public:
+            Decrypter(const Cipher &cipher)
+            : cipher(cipher)
+            { }
+        };
+
+        /**
+         * ストレージクラス
+         * ストリームの内容を別のデータ形式やファイルへ保存します。
+         */
         template<typename T>
         using Storage = Terminal<T>;
     }
