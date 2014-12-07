@@ -40,20 +40,16 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 　俺々は複数のバージョンのcocos2dxに対応するため、cocos2dxのバージョンごとに異なるブランチを利用しています。
 
 * ococos2dx-2.2.2  
-	　cocos2dx 2.2.2向けのブランチです。作者が2.x系を利用しなくなったため、このブランチの更新は停止しています。
+	　cocos2dx 2.2.2向けのブランチです。  
+	　作者が2.x系を利用しなくなったため、このブランチの更新は停止しています。
 
 * cocos2dx 3.0  
 	　cocos2dx 3.0安定版向けのブランチです。このブランチが最新です。
-* その他のブランチ
+* その他のブランチ  
 	　cocos2dxの過去のバージョンで利用されたoreoreのブランチです。更新は停止しています。
 
 # 構成
-　俺々は、以下のライブラリ群を含んでいます。
-
-* common utility
-* cocos2dx Action library
-* cocos2dx Node library
-* Fluxion (cocos2dx Action Generator)
+　俺々は、以下のライブラリ群を含んでいます。  
 
 ## common utility
 cocos2dxにかかわらず利用できるユーティリティです。  
