@@ -21,6 +21,8 @@ namespace oreore
 {
     namespace Step
     {
+
+#if 0
         // forward
         class Encrypter;
         class Serializable;
@@ -248,7 +250,239 @@ namespace oreore
 
         inline bool Storage::operator>>(Encrypter &enc) const { return process(enc); }
         inline bool Storage::operator>>(Encrypter &&enc) const { return process(enc); }
+#endif
+        class Stream final
+        {
+        private:
+        public:
+        };
 
+        class ProcessBase
+        {
+            friend class ProcessHolder;
+
+            class ProcessQueue
+            {
+                using List = std::vector<ProcessBase *>;
+            private:
+                List list;
+            public:
+                void push(ProcessBase *p)
+                {
+                    list.push_back(p);
+                }
+            };
+
+            class ProcessQueueContainer
+            {
+                friend class ProcessHolder;
+            private:
+                ProcessQueue *queue;
+
+            public:
+                ProcessQueueContainer(ProcessQueue *queue)
+                : queue(queue)
+                { }
+
+                ~ProcessQueueContainer()
+                {
+                    if(queue)
+                    {
+                        std::cout << "close 1" << std::endl;
+                    }
+                }
+
+                inline ProcessQueueContainer &operator>>(const ProcessBase &process)
+                {
+                    queue->push(process.clone());
+                    return *this;
+                }
+
+                bool startAsync()
+                {
+                    if(!queue)
+                    {
+                        return false;
+                    }
+
+                    std::cout << "close 5" << std::endl;
+                    queue = nullptr;
+                    return true;
+                }
+            };
+        private:
+            ProcessQueue *queue;
+
+        protected:
+
+        public:
+            ProcessBase()
+            : queue(nullptr)
+            { }
+            
+            ProcessBase(ProcessQueue *queue)
+            : queue(queue)
+            { }
+
+            virtual ~ProcessBase() = default;
+
+            virtual ProcessBase *clone() const = 0;
+
+            inline ProcessQueueContainer operator>>(const ProcessBase &process) const
+            {
+                ProcessQueue *q = new ProcessQueue();
+                q->push(clone());
+                q->push(process.clone());
+                return ProcessQueueContainer(q);
+            }
+
+
+        };
+
+        class ProcessHolder final
+        {
+        private:
+            ProcessBase::ProcessQueue *queue;
+            ProcessHolder() = delete;
+
+            ProcessHolder(const ProcessHolder &rhs) = delete;
+        public:
+            ProcessHolder(ProcessBase::ProcessQueueContainer &container)
+            : queue(container.queue)
+            {
+                container.queue = nullptr;
+            }
+
+            ProcessHolder(ProcessHolder &&rhs)
+            {
+                queue = rhs.queue;
+                rhs.queue = nullptr;
+            }
+
+            ~ProcessHolder()
+            {
+                if(queue)
+                {
+                    std::cout << "close 2" << std::endl;
+                }
+            }
+
+            ProcessHolder &operator=(ProcessHolder &rhs)
+            {
+                queue = rhs.queue;
+                rhs.queue = nullptr;
+                return *this;
+            }
+
+            bool start()
+            {
+                if(!queue)
+                {
+                    return false;
+                }
+
+                std::cout << "close 3" << std::endl;
+                queue = nullptr;
+                return true;
+            }
+
+            bool startAsync()
+            {
+                if(!queue)
+                {
+                    return false;
+                }
+
+                std::cout << "close 4" << std::endl;
+                queue = nullptr;
+                return true;
+            }
+        };
+
+        template<typename T>
+        class Process : public ProcessBase
+        {
+        private:
+            inline ProcessBase *clone() const override
+            {
+                return new T(*static_cast<const T *>(this));
+            }
+
+        protected:
+            virtual bool process(Stream &stream) = 0;
+
+        public:
+            Process() = default;
+            virtual ~Process() = default;
+
+        };
+
+        template<typename T>
+        class Serializable : public Process<T>
+        {
+        private:
+        public:
+            Serializable() = default;
+            virtual ~Serializable() = default;
+        };
+
+        template<typename T>
+        class Encrypter : public Process<T>
+        {
+        private:
+        public:
+            Encrypter() = default;
+            virtual ~Encrypter() = default;
+        };
+
+        template<typename T>
+        class Storage : public Process<T>
+        {
+        private:
+        public:
+            Storage() = default;
+            virtual ~Storage() = default;
+        };
+
+        /* test */
+        class JSON final : public Serializable<JSON>
+        {
+        private:
+            bool process(Stream &stream) override
+            {
+                return true;
+            }
+
+        public:
+            JSON() = default;
+            ~JSON() = default;
+        };
+
+        class StringStorage final : public Storage<StringStorage>
+        {
+        private:
+            bool process(Stream &stream) override
+            {
+                return true;
+            }
+
+        public:
+            StringStorage() = default;
+            ~StringStorage() = default;
+        };
+
+        class Blowfish final : public Encrypter<Blowfish>
+        {
+        private:
+            bool process(Stream &stream) override
+            {
+                return true;
+            }
+
+        public:
+            Blowfish() = default;
+            ~Blowfish() = default;
+        };
     }
 }
 

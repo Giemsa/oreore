@@ -55,6 +55,11 @@ bool HelloWorld::init()
         ) * x::inf()
     );
 
+    Step::ProcessHolder h = Step::JSON() >>  Step::Blowfish() >> Step::Blowfish() >> Step::StringStorage();
+    Step::ProcessHolder i = std::move(h);
+
+    std::cout << "process" << std::endl;
+
     return true;
 }
 

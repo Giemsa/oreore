@@ -11,16 +11,8 @@
 		30DC7B711A30B5CD00214270 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7AB01A30B5CC00214270 /* blowfish.cpp */; };
 		30DC7B721A30B5CD00214270 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7AB11A30B5CC00214270 /* blowfish.h */; };
 		30DC7B731A30B5CD00214270 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7AB11A30B5CC00214270 /* blowfish.h */; };
-		30DC7C8D1A30B60200214270 /* Encrypter.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C821A30B60200214270 /* Encrypter.h */; };
-		30DC7C8E1A30B60200214270 /* Encrypter.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C821A30B60200214270 /* Encrypter.h */; };
-		30DC7C911A30B60200214270 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C851A30B60200214270 /* JSON.h */; };
-		30DC7C921A30B60200214270 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C851A30B60200214270 /* JSON.h */; };
 		30DC7C951A30B60200214270 /* Step.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C871A30B60200214270 /* Step.h */; };
 		30DC7C961A30B60200214270 /* Step.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C871A30B60200214270 /* Step.h */; };
-		30DC7C971A30B60200214270 /* BasicStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7C891A30B60200214270 /* BasicStorage.cpp */; };
-		30DC7C981A30B60200214270 /* BasicStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7C891A30B60200214270 /* BasicStorage.cpp */; };
-		30DC7C991A30B60200214270 /* BasicStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C8A1A30B60200214270 /* BasicStorage.h */; };
-		30DC7C9A1A30B60200214270 /* BasicStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C8A1A30B60200214270 /* BasicStorage.h */; };
 		30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
 		30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */ = {isa = PBXBuildFile; fileRef = 30EFBFC51987E1DE007AF580 /* RepeatWith.h */; };
 		30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
@@ -141,11 +133,7 @@
 /* Begin PBXFileReference section */
 		30DC7AB01A30B5CC00214270 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
 		30DC7AB11A30B5CC00214270 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
-		30DC7C821A30B60200214270 /* Encrypter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encrypter.h; sourceTree = "<group>"; };
-		30DC7C851A30B60200214270 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
-		30DC7C891A30B60200214270 /* BasicStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicStorage.cpp; sourceTree = "<group>"; };
-		30DC7C8A1A30B60200214270 /* BasicStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicStorage.h; sourceTree = "<group>"; };
 		30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RepeatWith.cpp; sourceTree = "<group>"; };
 		30EFBFC51987E1DE007AF580 /* RepeatWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatWith.h; sourceTree = "<group>"; };
 		7A75968B194FF08A004A6CE8 /* liboreore iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -265,7 +253,6 @@
 		30DC7C801A30B60200214270 /* encrypter */ = {
 			isa = PBXGroup;
 			children = (
-				30DC7C821A30B60200214270 /* Encrypter.h */,
 			);
 			path = encrypter;
 			sourceTree = "<group>";
@@ -273,7 +260,6 @@
 		30DC7C831A30B60200214270 /* serializer */ = {
 			isa = PBXGroup;
 			children = (
-				30DC7C851A30B60200214270 /* JSON.h */,
 			);
 			path = serializer;
 			sourceTree = "<group>";
@@ -281,8 +267,6 @@
 		30DC7C881A30B60200214270 /* storage */ = {
 			isa = PBXGroup;
 			children = (
-				30DC7C891A30B60200214270 /* BasicStorage.cpp */,
-				30DC7C8A1A30B60200214270 /* BasicStorage.h */,
 			);
 			path = storage;
 			sourceTree = "<group>";
@@ -425,7 +409,6 @@
 				7A75966A194FF08A004A6CE8 /* bg.h in Headers */,
 				7A75966B194FF08A004A6CE8 /* Debug.h in Headers */,
 				7A75966C194FF08A004A6CE8 /* oreore.h in Headers */,
-				30DC7C911A30B60200214270 /* JSON.h in Headers */,
 				7A75966D194FF08A004A6CE8 /* oreore.h in Headers */,
 				7A75966F194FF08A004A6CE8 /* Utils.h in Headers */,
 				7A759670194FF08A004A6CE8 /* Persistent.h in Headers */,
@@ -444,7 +427,6 @@
 				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
 				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
-				30DC7C991A30B60200214270 /* BasicStorage.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
 				30DC7C951A30B60200214270 /* Step.h in Headers */,
 				7A759680194FF08A004A6CE8 /* Formatter.h in Headers */,
@@ -452,7 +434,6 @@
 				7A759682194FF08A004A6CE8 /* ShatteredSprite.h in Headers */,
 				30DC7B721A30B5CD00214270 /* blowfish.h in Headers */,
 				7A759683194FF08A004A6CE8 /* MultiResolution.h in Headers */,
-				30DC7C8D1A30B60200214270 /* Encrypter.h in Headers */,
 				7A759684194FF08A004A6CE8 /* SceneManager.h in Headers */,
 				7A759685194FF08A004A6CE8 /* icon.h in Headers */,
 				7A759686194FF08A004A6CE8 /* CallInterval.h in Headers */,
@@ -474,14 +455,11 @@
 				7A7FC832194ED99C006EA6B4 /* oreore.h in Headers */,
 				7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */,
 				7A7FC83E194ED99C006EA6B4 /* Persistent.h in Headers */,
-				30DC7C8E1A30B60200214270 /* Encrypter.h in Headers */,
 				7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */,
-				30DC7C9A1A30B60200214270 /* BasicStorage.h in Headers */,
 				7A7FC837194ED99C006EA6B4 /* Fluxion.h in Headers */,
 				7A7FC81F194ED99C006EA6B4 /* Shake.h in Headers */,
 				7A7FC834194ED99C006EA6B4 /* AssetLoader.h in Headers */,
 				7A7FC829194ED99C006EA6B4 /* ImageMappedPolygon.h in Headers */,
-				30DC7C921A30B60200214270 /* JSON.h in Headers */,
 				7A7FC81B194ED99C006EA6B4 /* MusicFadeTo.h in Headers */,
 				7A7FC84B194ED99C006EA6B4 /* Utils.h in Headers */,
 				7A7FC842194ED99C006EA6B4 /* Sound.h in Headers */,
@@ -586,7 +564,6 @@
 				7A759654194FF08A004A6CE8 /* SceneManager.cpp in Sources */,
 				7A759655194FF08A004A6CE8 /* ToggleButton.cpp in Sources */,
 				7A759656194FF08A004A6CE8 /* AttractMove.cpp in Sources */,
-				30DC7C971A30B60200214270 /* BasicStorage.cpp in Sources */,
 				30DC7B701A30B5CD00214270 /* blowfish.cpp in Sources */,
 				7A759657194FF08A004A6CE8 /* MultiResolution.cpp in Sources */,
 				7A759658194FF08A004A6CE8 /* SimpleButton.cpp in Sources */,
@@ -620,7 +597,6 @@
 				7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */,
 				7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */,
 				30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */,
-				30DC7C981A30B60200214270 /* BasicStorage.cpp in Sources */,
 				30DC7B711A30B5CD00214270 /* blowfish.cpp in Sources */,
 				7A7FC83C194ED99C006EA6B4 /* MultiResolution.cpp in Sources */,
 				7A7FC82E194ED99C006EA6B4 /* SimpleButton.cpp in Sources */,
