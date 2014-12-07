@@ -16,6 +16,7 @@
 
 // storage
 #include "./utils/step/storage/StringStorage.h"
+#include "./utils/step/storage/FileStorage.h"
 
 // serializer
 #include "./utils/step/serializer/JSON.h"

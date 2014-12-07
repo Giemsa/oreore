@@ -135,6 +135,7 @@
 		3029814D1A346F7C00F80987 /* JSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		302981511A34712200F80987 /* msgpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = msgpack.h; sourceTree = "<group>"; };
 		303C13C51A349A5000A1BD9A /* Blowfish.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blowfish.h; sourceTree = "<group>"; };
+		303C13C61A34AD1100A1BD9A /* FileStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileStorage.h; sourceTree = "<group>"; };
 		30DC7AB01A30B5CC00214270 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
 		30DC7AB11A30B5CC00214270 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
@@ -283,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				301775921A346E3A0001644F /* StringStorage.h */,
+				303C13C61A34AD1100A1BD9A /* FileStorage.h */,
 			);
 			path = storage;
 			sourceTree = "<group>";

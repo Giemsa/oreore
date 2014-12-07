@@ -8,6 +8,12 @@ namespace oreore
 {
     namespace Step
     {
+        /**
+         * JSONシリアライザ
+         * このクラスを継承し、serialize/deserializeを継承することで、
+         * 任意のデータをJSONにシリアライズすることができます。
+         * なお、JSONの操作にはpicojsonを使用します。
+         */
         class JSON : public Serializable
         {
         private:

@@ -7,6 +7,10 @@ namespace oreore
 {
     namespace Step
     {
+        /**
+         * 文字列からストリームを生成、またはストリームの内容を
+         * 文字列に書き出します。
+         */
         class StringStorage final : public Storage<StringStorage>
         {
         private:

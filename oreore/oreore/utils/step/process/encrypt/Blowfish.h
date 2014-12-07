@@ -10,6 +10,9 @@ namespace oreore
     {
         namespace Encrypt
         {
+            /**
+             * Blowfishアルゴリズムによる共通鍵暗号を施します。
+             */
             class Blowfish final : public Cipher
             {
                 using CharVector = std::vector<char>;

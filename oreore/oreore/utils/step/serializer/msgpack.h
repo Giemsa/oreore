@@ -17,6 +17,11 @@ namespace oreore
 {
     namespace Step
     {
+        /**
+         * MessagePackシリアライザ
+         * このクラスを継承し、serialize/deserializeを継承することで、
+         * 任意のデータをMessagePack形式にシリアライズすることができます。
+         */
         class MessagePack : public Serializable
         {
         private:
