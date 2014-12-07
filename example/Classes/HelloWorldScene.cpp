@@ -129,7 +129,7 @@ bool HelloWorld::init()
         const bool r = h.start();
 
         std::cout << "convert to json: " << std::boolalpha << r << std::endl;
-        std::cout << json << std::endl;
+        std::cout << "data: " << json << std::endl;
     }
 
     {
