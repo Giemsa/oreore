@@ -35,12 +35,12 @@ namespace oreore
                 std::string err;
                 std::istreambuf_iterator<char> it(stream.rdbuf());
                 picojson::parse(v, it, std::istreambuf_iterator<char>(), &err);
-                return deserialize(v);
+                return deserialize(v, err);
             }
 
         protected:
             virtual bool serialize(picojson::value &value) const = 0;
-            virtual bool deserialize(const picojson::value &value) = 0;
+            virtual bool deserialize(const picojson::value &value, const std::string &error) = 0;
 
         public:
             JSON() = default;

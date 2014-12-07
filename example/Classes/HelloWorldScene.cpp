@@ -17,7 +17,7 @@ private:
         return true;
     }
 
-    bool deserialize(const picojson::value &value) override
+    bool deserialize(const picojson::value &value, const std::string &error) override
     {
         if(!value.is<picojson::object>())
         {
