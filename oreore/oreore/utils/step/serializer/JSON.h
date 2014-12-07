@@ -2,29 +2,43 @@
 #define __OREORE_STEP_SERIALIZER_JSON_H__
 
 #include "../Step.h"
+#include "../../../libs/picojson/picojson.h"
 
 namespace oreore
 {
     namespace Step
     {
-        class JSON final : public Serializable<JSON>
+        class JSON : public Serializable
         {
         private:
-            bool start(Stream &stream) override
+            bool serialize(std::ostream &stream) const override
             {
-                std::cout << "JSON start" << std::endl;
-                return true;
+                picojson::value v;
+                if(!serialize(v))
+                {
+                    return false;
+                }
+
+                v.serialize(std::ostream_iterator<char>(stream));
+                return !stream.fail();
             }
 
-            bool end(Stream &stream) override
+            bool deserialize(const std::istream &stream) override
             {
-                std::cout << "JSON end" << std::endl;
-                return true;
+                picojson::value v;
+                std::string err;
+                std::istreambuf_iterator<char> it(stream.rdbuf());
+                picojson::parse(v, it, std::istreambuf_iterator<char>(), &err);
+                return deserialize(v);
             }
+
+        protected:
+            virtual bool serialize(picojson::value &value) const = 0;
+            virtual bool deserialize(const picojson::value &value) = 0;
 
         public:
             JSON() = default;
-            ~JSON() = default;
+            virtual ~JSON() = default;
         };
     }
 }

@@ -7,16 +7,16 @@ namespace oreore
 {
     namespace Step
     {
-        class MessagePack final : public Serializable<MessagePack>
+        class MessagePack : public Serializable
         {
         private:
-            bool start(Stream &stream) override
+            bool serialize(std::ostream &stream) const override
             {
                 std::cout << "MessagePack start" << std::endl;
                 return true;
             }
 
-            bool end(Stream &stream) override
+            bool deserialize(const std::istream &stream) override
             {
                 std::cout << "MessagePack end" << std::endl;
                 return true;
@@ -24,7 +24,7 @@ namespace oreore
 
         public:
             MessagePack() = default;
-            ~MessagePack() = default;
+            virtual ~MessagePack() = default;
         };
     }
 }

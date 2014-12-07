@@ -10,20 +10,40 @@ namespace oreore
         class StringStorage final : public Storage<StringStorage>
         {
         private:
+            bool is_const;
+
+            union
+            {
+                std::string *buf;
+                const std::string *cbuf;
+            };
+
             bool start(Stream &stream) override
             {
-                std::cout << "StringStorage start" << std::endl;
+                stream.getStream().str(is_const ? *cbuf : *buf);
                 return true;
             }
 
             bool end(Stream &stream) override
             {
-                std::cout << "StringStorage end" << std::endl;
+                if(is_const)
+                {
+                    return false;
+                }
+
+                *buf = stream.getStream().str();
                 return true;
             }
 
         public:
-            StringStorage() = default;
+            StringStorage(std::string &str)
+            : buf(&str), is_const(false)
+            { }
+
+            StringStorage(const std::string &str)
+            : cbuf(&str), is_const(true)
+            { }
+
             ~StringStorage() = default;
         };
     }

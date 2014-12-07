@@ -3,6 +3,69 @@
 using namespace cocos2d;
 using namespace oreore;
 
+/* sample json structure */
+class SaveData final : public Step::JSON
+{
+private:
+    bool serialize(picojson::value &value) const override
+    {
+        picojson::object obj;
+        obj["name"] = picojson::value(name);
+        obj["score"] = picojson::value(static_cast<double>(score));
+
+        value = picojson::value(obj);
+        return true;
+    }
+
+    bool deserialize(const picojson::value &value) override
+    {
+        if(!value.is<picojson::object>())
+        {
+            return false;
+        }
+
+        {
+            const picojson::value &v = value.get("name");
+            if(!v.is<std::string>())
+            {
+                return false;
+            }
+
+            name = v.get<std::string>();
+        }
+
+        {
+            const picojson::value &v = value.get("score");
+            if(!v.is<double>())
+            {
+                return false;
+            }
+
+            score = static_cast<int>(v.get<double>());
+        }
+
+        return true;
+    }
+
+public:
+    std::string name;
+    int score;
+
+    SaveData()
+    : name(""), score(0)
+    { }
+
+    SaveData(const std::string &name, const int score)
+    : name(name), score(score)
+    { }
+
+    ~SaveData() { }
+
+};
+
+
+
+/* sample code */
 bool HelloWorld::init()
 {
     if(!SceneBase::init())
@@ -55,9 +118,25 @@ bool HelloWorld::init()
         ) * x::inf()
     );
 
-    Step::JSON() >>  Step::Encrypt::Blowfish() >> Step::Encrypt::Blowfish() >> Step::StringStorage();
+    // Step example
+    SaveData data("oreore", 123456);
+    SaveData rd;
+    std::string json;
 
-    std::cout << "process" << std::endl;
+    {
+        Step::ProcessHolder h = Step::Serializer(data) >> Step::StringStorage(json);
+        const bool r = h.start();
+
+        std::cout << "convert to json: " << std::boolalpha << r << std::endl;
+        std::cout << json << std::endl;
+    }
+
+    {
+        const bool r = Step::StringStorage(json) >> Step::Serializer(rd);
+
+        std::cout << "convert from json: " << std::boolalpha << r << std::endl;
+        std::cout << "name: " << rd.name << ", score: " << rd.score << std::endl;
+    }
 
     return true;
 }

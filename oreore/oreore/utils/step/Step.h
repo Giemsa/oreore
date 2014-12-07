@@ -23,12 +23,16 @@ namespace oreore
     {
         class Stream final
         {
+        public:
+            using StreamType = std::stringstream;
         private:
-            bool initialized;
+            StreamType ss;
         public:
             Stream()
-            : initialized(false)
+            : ss(std::stringstream::in | std::stringstream::out | std::ios::binary)
             { }
+
+            inline StreamType &getStream() { return ss; }
         };
 
         enum class Phase
@@ -136,13 +140,25 @@ namespace oreore
                     }
                 }
 
-                inline ProcessQueueContainer &operator>>(const ProcessBase &process)
+                inline ProcessQueueContainer &operator>>(ProcessBase &process)
                 {
                     queue->push(process.clone());
                     return *this;
                 }
 
                 bool startAsync()
+                {
+                    if(!queue)
+                    {
+                        return false;
+                    }
+
+                    const bool r = ProcessKicker(queue).kick();
+                    queue = nullptr;
+                    return r;
+                }
+
+                inline operator bool()
                 {
                     if(!queue)
                     {
@@ -173,8 +189,9 @@ namespace oreore
             virtual ~ProcessBase() = default;
 
             virtual ProcessBase *clone() const = 0;
+            virtual void destroy() { }
 
-            inline ProcessQueueContainer operator>>(const ProcessBase &process) const
+            inline ProcessQueueContainer operator>>(const ProcessBase &process)
             {
                 ProcessQueue *q = new ProcessQueue();
                 q->push(clone());
@@ -193,6 +210,12 @@ namespace oreore
 
         public:
             ProcessHolder(ProcessBase::ProcessQueueContainer &container)
+            : queue(container.queue)
+            {
+                container.queue = nullptr;
+            }
+
+            ProcessHolder(ProcessBase::ProcessQueueContainer &&container)
             : queue(container.queue)
             {
                 container.queue = nullptr;
@@ -303,13 +326,37 @@ namespace oreore
             virtual ~Nonterminal() = default;
         };
 
-        template<typename T>
-        class Serializable : public Terminal<T>
+        class Serializable
         {
-        private:
+            friend class Serializer;
+
+        protected:
+            virtual bool serialize(std::ostream &stream) const = 0;
+            virtual bool deserialize(const std::istream &stream) = 0;
+
         public:
             Serializable() = default;
             virtual ~Serializable() = default;
+        };
+
+        class Serializer final : public Terminal<Serializer>
+        {
+        private:
+            Serializable &data;
+
+            inline bool start(Stream &stream) override
+            {
+                return data.serialize(stream.getStream());
+            }
+
+            inline bool end(Stream &stream) override
+            {
+                return data.deserialize(stream.getStream());
+            }
+        public:
+            Serializer(Serializable &data)
+            : data(data)
+            { }
         };
 
         template<typename T>
