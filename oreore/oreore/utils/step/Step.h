@@ -24,7 +24,18 @@ namespace oreore
         class Stream final
         {
         private:
+            bool initialized;
         public:
+            Stream()
+            : initialized(false)
+            { }
+        };
+
+        enum class Phase
+        {
+            Start,
+            Intermidiate,
+            End
         };
 
         class ProcessBase
@@ -37,9 +48,39 @@ namespace oreore
             private:
                 List list;
             public:
+                ~ProcessQueue()
+                {
+                    for(auto *p : list)
+                    {
+                        delete p;
+                    }
+                }
+
                 void push(ProcessBase *p)
                 {
                     list.push_back(p);
+                }
+
+                bool process() const
+                {
+                    Stream s;
+                    bool r = true;
+
+                    switch(list.size())
+                    {
+                        case 0: return r;
+                        case 1: return list.front()->process(s, Phase::Start);
+                    }
+
+                    r &= list.front()->process(s, Phase::Start);
+                    for(int i = 1; i < list.size() - 1; ++i)
+                    {
+                        r &= list[i]->process(s, Phase::Intermidiate);
+                    }
+
+                    r &= list.back()->process(s, Phase::End);
+
+                    return r;
                 }
             };
 
@@ -47,6 +88,7 @@ namespace oreore
             {
             private:
                 const ProcessQueue *queue;
+
             public:
                 ProcessKicker() { }
                 ProcessKicker(const ProcessQueue *queue)
@@ -55,22 +97,28 @@ namespace oreore
                     std::cout << "created" << std::endl;
                 }
 
-                void kick()
+                bool kick()
                 {
                     std::cout << "kick" << std::endl;
+                    const bool r = queue->process();
                     delete queue;
+                    return r;
                 }
 
-                void kick(const std::function<void(bool)> &callback)
+                bool kick(const std::function<void(bool)> &callback)
                 {
                     std::cout << "kick with callback" << std::endl;
+                    const bool r = queue->process();
                     delete queue;
+                    return r;
                 }
 
-                void kickAsync(const std::function<void(bool)> &callback)
+                bool kickAsync(const std::function<void(bool)> &callback)
                 {
                     std::cout << "async kick with callback" << std::endl;
+                    const bool r = queue->process();
                     delete queue;
+                    return r;
                 }
             };
 
@@ -106,14 +154,17 @@ namespace oreore
                         return false;
                     }
 
-                    ProcessKicker(queue).kick();
+                    const bool r = ProcessKicker(queue).kick();
                     queue = nullptr;
-                    return true;
+                    return r;
                 }
             };
 
         private:
             ProcessQueue *queue;
+
+        protected:
+            virtual bool process(Stream &stream, const Phase phase) = 0;
 
         public:
             ProcessBase()
@@ -180,9 +231,9 @@ namespace oreore
                     return false;
                 }
 
-                ProcessBase::ProcessKicker(queue).kick();
+                const bool r = ProcessBase::ProcessKicker(queue).kick();
                 queue = nullptr;
-                return true;
+                return r;
             }
 
             bool startAsync(const std::function<void(bool)> &callback)
@@ -192,9 +243,9 @@ namespace oreore
                     return false;
                 }
 
-                ProcessBase::ProcessKicker(queue).kickAsync(callback);
+                const bool r = ProcessBase::ProcessKicker(queue).kickAsync(callback);
                 queue = nullptr;
-                return true;
+                return r;
             }
         };
 
@@ -207,9 +258,6 @@ namespace oreore
                 return new T(*static_cast<const T *>(this));
             }
 
-        protected:
-            virtual bool process(Stream &stream) = 0;
-
         public:
             Process() = default;
             virtual ~Process() = default;
@@ -217,7 +265,51 @@ namespace oreore
         };
 
         template<typename T>
-        class Serializable : public Process<T>
+        class Terminal : public Process<T>
+        {
+        private:
+            bool process(Stream &stream, const Phase phase) override
+            {
+                switch(phase)
+                {
+                    case Phase::Start: return start(stream);
+                    case Phase::End:   return end(stream);
+                    default:           assert(0); return false;
+                }
+            }
+
+        protected:
+            virtual bool start(Stream &stream) = 0;
+            virtual bool end(Stream &stream) = 0;
+
+        public:
+            Terminal() = default;
+            virtual ~Terminal() = default;
+        };
+
+        template<typename T>
+        class Nonterminal : public Process<T>
+        {
+        private:
+            bool process(Stream &stream, const Phase phase) override
+            {
+                switch(phase)
+                {
+                    case Phase::Intermidiate: return process(stream);
+                    default:                  assert(0); return false;
+                }
+            }
+
+        protected:
+            virtual bool process(Stream &stream) = 0;
+
+        public:
+            Nonterminal() = default;
+            virtual ~Nonterminal() = default;
+        };
+
+        template<typename T>
+        class Serializable : public Terminal<T>
         {
         private:
         public:
@@ -226,29 +318,24 @@ namespace oreore
         };
 
         template<typename T>
-        class Encrypter : public Process<T>
-        {
-        private:
-        public:
-            Encrypter() = default;
-            virtual ~Encrypter() = default;
-        };
+        using Encrypter = Nonterminal<T>;
 
         template<typename T>
-        class Storage : public Process<T>
-        {
-        private:
-        public:
-            Storage() = default;
-            virtual ~Storage() = default;
-        };
+        using Storage = Terminal<T>;
 
         /* test */
         class JSON final : public Serializable<JSON>
         {
         private:
-            bool process(Stream &stream) override
+            bool start(Stream &stream) override
             {
+                std::cout << "JSON start" << std::endl;
+                return true;
+            }
+
+            bool end(Stream &stream) override
+            {
+                std::cout << "JSON end" << std::endl;
                 return true;
             }
 
@@ -260,8 +347,15 @@ namespace oreore
         class StringStorage final : public Storage<StringStorage>
         {
         private:
-            bool process(Stream &stream) override
+            bool start(Stream &stream) override
             {
+                std::cout << "StringStorage start" << std::endl;
+                return true;
+            }
+
+            bool end(Stream &stream) override
+            {
+                std::cout << "StringStorage end" << std::endl;
                 return true;
             }
 
@@ -275,6 +369,7 @@ namespace oreore
         private:
             bool process(Stream &stream) override
             {
+                std::cout << "Blowfish process" << std::endl;
                 return true;
             }
 
