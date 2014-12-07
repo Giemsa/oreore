@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <type_traits>
+#include <functional>
 
 /*
  * Step データシリアライズユーティリティ
@@ -261,7 +262,7 @@ namespace oreore
         {
             friend class ProcessHolder;
 
-            class ProcessQueue
+            class ProcessQueue final
             {
                 using List = std::vector<ProcessBase *>;
             private:
@@ -273,7 +274,38 @@ namespace oreore
                 }
             };
 
-            class ProcessQueueContainer
+            class ProcessKicker final
+            {
+            private:
+                const ProcessQueue *queue;
+            public:
+                ProcessKicker() { }
+                ProcessKicker(const ProcessQueue *queue)
+                : queue(queue)
+                {
+                    std::cout << "created" << std::endl;
+                }
+
+                void kick()
+                {
+                    std::cout << "kick" << std::endl;
+                    delete queue;
+                }
+
+                void kick(const std::function<void(bool)> &callback)
+                {
+                    std::cout << "kick with callback" << std::endl;
+                    delete queue;
+                }
+
+                void kickAsync(const std::function<void(bool)> &callback)
+                {
+                    std::cout << "async kick with callback" << std::endl;
+                    delete queue;
+                }
+            };
+
+            class ProcessQueueContainer final
             {
                 friend class ProcessHolder;
             private:
@@ -288,7 +320,7 @@ namespace oreore
                 {
                     if(queue)
                     {
-                        std::cout << "close 1" << std::endl;
+                        ProcessKicker(queue).kick();
                     }
                 }
 
@@ -305,15 +337,14 @@ namespace oreore
                         return false;
                     }
 
-                    std::cout << "close 5" << std::endl;
+                    ProcessKicker(queue).kick();
                     queue = nullptr;
                     return true;
                 }
             };
+
         private:
             ProcessQueue *queue;
-
-        protected:
 
         public:
             ProcessBase()
@@ -335,8 +366,6 @@ namespace oreore
                 q->push(process.clone());
                 return ProcessQueueContainer(q);
             }
-
-
         };
 
         class ProcessHolder final
@@ -346,6 +375,7 @@ namespace oreore
             ProcessHolder() = delete;
 
             ProcessHolder(const ProcessHolder &rhs) = delete;
+
         public:
             ProcessHolder(ProcessBase::ProcessQueueContainer &container)
             : queue(container.queue)
@@ -363,7 +393,7 @@ namespace oreore
             {
                 if(queue)
                 {
-                    std::cout << "close 2" << std::endl;
+                    ProcessBase::ProcessKicker(queue).kick();
                 }
             }
 
@@ -381,19 +411,19 @@ namespace oreore
                     return false;
                 }
 
-                std::cout << "close 3" << std::endl;
+                ProcessBase::ProcessKicker(queue).kick();
                 queue = nullptr;
                 return true;
             }
 
-            bool startAsync()
+            bool startAsync(const std::function<void(bool)> &callback)
             {
                 if(!queue)
                 {
                     return false;
                 }
 
-                std::cout << "close 4" << std::endl;
+                ProcessBase::ProcessKicker(queue).kickAsync(callback);
                 queue = nullptr;
                 return true;
             }
