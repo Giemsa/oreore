@@ -28,6 +28,7 @@
 #include "utils/SceneManager.h"
 #include "utils/MultiResolution.h"
 #include "utils/AssetLoader.h"
+#include "utils/async.h"
 #include "utils/Sound.h"
 #include "utils/Persistent.h"
 #include "utils/HSV.h"

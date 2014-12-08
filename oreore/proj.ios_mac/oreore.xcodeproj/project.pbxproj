@@ -141,6 +141,7 @@
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
 		30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RepeatWith.cpp; sourceTree = "<group>"; };
 		30EFBFC51987E1DE007AF580 /* RepeatWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatWith.h; sourceTree = "<group>"; };
+		30F82CE71A35F5950071F43C /* async.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async.h; sourceTree = "<group>"; };
 		7A75968B194FF08A004A6CE8 /* liboreore iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7FC7C7194ED969006EA6B4 /* liboreore Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboreore Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A7FC7D1194ED99B006EA6B4 /* AttractMove.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttractMove.cpp; sourceTree = "<group>"; };
@@ -385,6 +386,7 @@
 		7A7FC7F5194ED99B006EA6B4 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				30F82CE71A35F5950071F43C /* async.h */,
 				7A7FC7F6194ED99B006EA6B4 /* AssetLoader.cpp */,
 				7A7FC7F7194ED99C006EA6B4 /* AssetLoader.h */,
 				7A7FC7F8194ED99C006EA6B4 /* Debug.cpp */,

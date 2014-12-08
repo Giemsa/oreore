@@ -118,26 +118,41 @@ bool HelloWorld::init()
         ) * x::inf()
     );
 
-    // Step example
-    Step::Encrypt::Blowfish bf("sample key");
-    SaveData data("oreore", 123456);
-    SaveData rd;
-    std::string json;
+    // Async example
+    std::cout << "main thread id:     " << std::this_thread::get_id() << std::endl;
+    AsyncTask task(
+        []() { // task
+            std::cout << "task thread id:     " << std::this_thread::get_id() << std::endl;
 
-    {
-        Step::ProcessHolder h = Step::Serializer(data) >> Step::Encrypter(bf) >> Step::StringStorage(json);
-        const bool r = h.start();
+            // Step example
+            Step::Encrypt::Blowfish bf("sample key");
+            SaveData data("oreore", 123456);
+            SaveData rd;
+            std::string json;
 
-        std::cout << "convert to json: " << std::boolalpha << r << std::endl;
-        std::cout << "data: " << json << std::endl;
-    }
+            {
+                Step::ProcessHolder h = Step::Serializer(data) >> Step::Encrypter(bf) >> Step::StringStorage(json);
+                const bool r = h.start();
 
-    {
-        const bool r = Step::StringStorage(json) >> Step::Decrypter(bf) >> Step::Serializer(rd);
+                std::cout << "convert to json: " << std::boolalpha << r << std::endl;
+                std::cout << "data: " << json << std::endl;
+            }
 
-        std::cout << "convert from json: " << std::boolalpha << r << std::endl;
-        std::cout << "name: " << rd.name << ", score: " << rd.score << std::endl;
-    }
+            {
+                const bool r = Step::StringStorage(json) >> Step::Decrypter(bf) >> Step::Serializer(rd);
+
+                std::cout << "convert from json: " << std::boolalpha << r << std::endl;
+                std::cout << "name: " << rd.name << ", score: " << rd.score << std::endl;
+            }
+
+            return true; // lambda(or function) should be return bool type value
+        },
+        [](const bool result) { // complete callback(run on main thread)
+            std::cout << "callback thread id: " << std::this_thread::get_id() << std::endl;
+            std::cout << "AsyncTask result: " << std::boolalpha << result << std::endl;
+        }
+    );
+    
 
     return true;
 }
