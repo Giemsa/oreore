@@ -4,7 +4,7 @@ layout: default
 # Common Utility
 
 ## 概要
-　cocos2dxの有無にかかわらず、何となく使えるかもしれない雑多な処理をまとめたユーティリティ群です。
+　何となく使えるかもしれない雑多な処理をまとめたユーティリティ群です。
 
 ## 使い方
 
@@ -26,9 +26,6 @@ layout: default
 
 * TimeCounter.h (非推奨)
 	* 時間を計測するときに利用していたクラスです。メンテナンスされていません。
-
-* Observer [cocos2dx-3.0Rのみ]
-	* cocos2dxで言うところのNotificationCenter(CCNotificationCenter)と同等の機能を持つクラスです。
 
 * MultiResolution [cocos2dx-3.0のみ]
 	* 多解像度対応を行います。詳しくは[MultiResolution](./mr.html)を参照してください。
@@ -114,6 +111,20 @@ layout: default
 
 　それぞれラジアンを度数に、度数をラジアンに変換します。
 
+### AsyncTask
+　簡単な非同期処理を行うクラスです。**cocos2dx-3.0リポジトリのみで実装されています。**  
+AsyncTaskは、処理を別スレッドで行い、処理完了のコールバックをメインスレッドで実行します。cocos2dxはマルチスレッド非対応であるため、Refを継承したクラスを利用してしまうとデータレースが発生してしまう可能性があるので、利用には注意が必要です。サンプルフォルダにサンプルコードを掲載しています。  
+　コンストラクタは以下のようになっています。
+
+	template<typename F, typename... Args>
+	AsyncTask(const F &func, const Callback &callback, Args&&... args)
+
+　第一引数はタスク関数です。ここで指定した関数やラムダ式が別スレッドで動作します。任意個の引数を取ることが出来ます。戻り値はbool型である必要があります。  
+　第二引数は処理完了コールバック関数です。引数はbool型です。定義は
+
+	using Callback = std::function<void(bool)>;
+
+　第三引数以降は、第一引数で指定したタスク関数に渡す引数です。この辺はstd::threadと同じなのでそちらを参照してください。
 
 ### Persistent
 　cocos2dxの参照カウントを管理するクラスです。**cocos2dx-3.0リポジトリのみで実装されています。**

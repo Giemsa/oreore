@@ -45,6 +45,7 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 
 * cocos2dx 3.0  
 	　cocos2dx 3.0安定版向けのブランチです。このブランチが最新です。
+
 * その他のブランチ  
 	　cocos2dxの過去のバージョンで利用されたoreoreのブランチです。更新は停止しています。
 
@@ -52,7 +53,7 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 　俺々は、以下のライブラリ群を含んでいます。  
 
 ## common utility
-cocos2dxにかかわらず利用できるユーティリティです。  
+雑多なユーティリティ群です。  
 [common utility](./commonutility.html) を参照してください。
 
 ## SceneManager
