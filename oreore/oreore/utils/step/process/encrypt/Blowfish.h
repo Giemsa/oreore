@@ -22,8 +22,8 @@ namespace oreore
                 bool encrypt(Stream::StreamType &stream) const
                 {
                     const CharVector &buf = blowfish.encrypt(
-                        std::istream_iterator<char>(stream),
-                        std::istream_iterator<char>()
+                        std::istreambuf_iterator<char>(stream),
+                        std::istreambuf_iterator<char>()
                     );
                     stream.str("");
                     stream.clear();
@@ -34,8 +34,8 @@ namespace oreore
                 bool decrypt(Stream::StreamType &stream) const
                 {
                     const CharVector &buf = blowfish.decrypt(
-                        std::istream_iterator<char>(stream),
-                        std::istream_iterator<char>()
+                        std::istreambuf_iterator<char>(stream),
+                        std::istreambuf_iterator<char>()
                     );
                     stream.str("");
                     stream.clear();

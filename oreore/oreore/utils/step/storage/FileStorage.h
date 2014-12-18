@@ -19,7 +19,7 @@ namespace oreore
 
             bool start(Stream &stream) override
             {
-                std::ifstream ifs(filename);
+                std::ifstream ifs(filename, std::ios::in | std::ios::binary);
                 if(!ifs)
                 {
                     return false;
@@ -31,7 +31,7 @@ namespace oreore
 
             bool end(Stream &stream) override
             {
-                std::ofstream ofs(filename);
+                std::ofstream ofs(filename, std::ios::out | std::ios::binary | std::ios::trunc);
                 if(!ofs)
                 {
                     return false;
