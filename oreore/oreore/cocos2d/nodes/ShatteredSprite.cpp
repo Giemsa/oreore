@@ -240,10 +240,21 @@ namespace oreore
         Sprite::updateColor();
         if(shattered)
         {
-            std::fill(
-                colors.begin(), colors.end(),
-                Color4B(getColor().r, getColor().g, getColor().b, getOpacity())
-            );
+            if(getTexture()->hasPremultipliedAlpha())
+            {
+                const float opacity = getOpacity() / 255.0f;
+                std::fill(
+                    colors.begin(), colors.end(),
+                    Color4B(getColor().r * opacity, getColor().g * opacity, getColor().b * opacity, getOpacity())
+                );
+            }
+            else
+            {
+                std::fill(
+                    colors.begin(), colors.end(),
+                    Color4B(getColor().r, getColor().g, getColor().b, getOpacity())
+                );
+            }
         }
     }
 
