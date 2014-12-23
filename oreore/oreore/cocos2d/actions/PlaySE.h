@@ -2,6 +2,7 @@
 #define __OREORE_COCOS2D_PLAYSE_H__
 
 #include "cocos2d.h"
+#include "../utils/Fluxion.h"
 
 namespace oreore
 {
@@ -21,6 +22,20 @@ namespace oreore
         virtual PlaySE *reverse() const override;
         virtual PlaySE *clone() const override;
     };
+
+    // fluxion plugin
+    namespace fluxion
+    {
+        using PlaySE = Action<oreore::PlaySE>;
+    }
+
+    namespace x
+    {
+        inline fluxion::PlaySE playSE(const std::string &filename)
+        {
+            return fluxion::PlaySE(filename);
+        }
+    }
 }
 
 #endif
