@@ -10,6 +10,14 @@ namespace oreore
     /* SoundManager */
     std::unique_ptr<SoundManager> SoundManager::manager;
 
+    namespace
+    {
+        std::string defaultResolver(const std::string &filename, const bool isBGM)
+        {
+            return filename;
+        }
+    }
+
     bool SoundManager::init()
     {
         if(!CCNode::init())
@@ -22,6 +30,8 @@ namespace oreore
         enabled = true;
         reservedMusicFile.clear();
         currentlyPlaying.clear();
+
+        resolver = defaultResolver;
 
         return true;
     }
@@ -38,7 +48,7 @@ namespace oreore
         return *manager;
     }
 
-    void SoundManager::playBGM(const std::string &filename , const float duration, const bool loop)
+    void SoundManager::playBGM(const std::string &filename, const float duration, const bool loop)
     {
         if(getBGMVolume() > 0.0f && currentlyPlaying == filename && SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
         {
@@ -54,12 +64,12 @@ namespace oreore
 
         if(duration == 0.0f)
         {
-            SimpleAudioEngine::getInstance()->playBackgroundMusic(filename.c_str(), loop);
+            SimpleAudioEngine::getInstance()->playBackgroundMusic(resolver(filename, true).c_str(), loop);
         }
         else
         {
             setBGMVolume(0.0f);
-            SimpleAudioEngine::getInstance()->playBackgroundMusic(filename.c_str(), loop);
+            SimpleAudioEngine::getInstance()->playBackgroundMusic(resolver(filename, true).c_str(), loop);
             fadeIn(duration);
         }
     }
@@ -95,7 +105,7 @@ namespace oreore
             return 0;
         }
 
-        return SimpleAudioEngine::getInstance()->playEffect(filename.c_str(), loop);
+        return SimpleAudioEngine::getInstance()->playEffect(resolver(filename, false).c_str(), loop);
     }
 
     void SoundManager::stopSE(const unsigned int id)
@@ -202,6 +212,7 @@ namespace oreore
             CCAssert(reservedMusicFile.empty(), "reservedMusicFile is not empty.");
             return false;
         }
+
         reservedMusicFile = filename;
         runAction(
             CCSequence::create(
@@ -291,5 +302,30 @@ namespace oreore
             setSEVolume(storedSEVolume);
         }
     }
-}
 
+    template<typename T>
+    void SoundManager::_preload(const T &list)
+    {
+        SimpleAudioEngine *eng = SimpleAudioEngine::getInstance();
+        for(auto &file : list)
+        {
+            eng->preloadEffect(resolver(file, false).c_str());
+        }
+    }
+
+    void SoundManager::preload(const std::initializer_list<std::string> &list) { _preload(list); }
+    void SoundManager::preload(const FileList &list) { _preload(list); }
+
+    template<typename T>
+    void SoundManager::_unload(const T &list)
+    {
+        SimpleAudioEngine *eng = SimpleAudioEngine::getInstance();
+        for(auto &file : list)
+        {
+            eng->unloadEffect(resolver(file, false).c_str());
+        }
+    }
+
+    void SoundManager::unload(const std::initializer_list<std::string> &list) { _unload(list); }
+    void SoundManager::unload(const FileList &list) { _unload(list); }
+}
