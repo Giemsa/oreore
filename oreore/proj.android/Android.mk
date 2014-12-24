@@ -8,8 +8,11 @@ LOCAL_MODULE_FILENAME := liboreore
 
 FILE_LIST := $(wildcard $(LOCAL_PATH)/../oreore/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../oreore/cocos2d/**/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../oreore/libs/blowfish/*.cpp)
 
 LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
+
+LOCAL_CPPFLAGS := -DPICOJSON_USE_LOCALE=0
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/core \
                     $(LOCAL_PATH)/cocos2dx \
@@ -28,7 +31,9 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../oreore \
                            $(LOCAL_PATH)/../oreore/cocos2d/actions \
                            $(LOCAL_PATH)/../oreore/cocos2d/nodes \
                            $(LOCAL_PATH)/../oreore/cocos2d/utils \
-                           $(LOCAL_PATH)/../oreore/libs/msgpack-c/include
+                           $(LOCAL_PATH)/../oreore/libs/msgpack-c/include \
+                           $(LOCAL_PATH)/../oreore/libs/picojson \
+                           $(LOCAL_PATH)/../oreore/libs/blowfish
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_extension_static
 

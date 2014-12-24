@@ -39,7 +39,7 @@ namespace oreore
 
         public:
             MessagePack() = default;
-            virtual ~MessagePack() = default;
+            virtual ~MessagePack() { }
         };
     }
 }

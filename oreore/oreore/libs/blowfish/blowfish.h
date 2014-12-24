@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <cstddef>
 #include <vector>
+#include <string>
 
 namespace oreore
 {

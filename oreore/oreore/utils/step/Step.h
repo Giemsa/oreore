@@ -177,7 +177,7 @@ namespace oreore
             : queue(queue)
             { }
 
-            virtual ~ProcessBase() = default;
+            virtual ~ProcessBase() { }
 
             virtual ProcessBase *clone() const = 0;
             virtual void destroy() { }
@@ -273,7 +273,7 @@ namespace oreore
 
         public:
             Process() = default;
-            virtual ~Process() = default;
+            virtual ~Process() { }
 
         };
 
@@ -302,7 +302,7 @@ namespace oreore
 
         public:
             Terminal() = default;
-            virtual ~Terminal() = default;
+            virtual ~Terminal() { }
         };
 
         /**
@@ -328,7 +328,7 @@ namespace oreore
 
         public:
             Nonterminal() = default;
-            virtual ~Nonterminal() = default;
+            virtual ~Nonterminal() { }
         };
 
         /**
@@ -345,7 +345,7 @@ namespace oreore
 
         public:
             Serializable() = default;
-            virtual ~Serializable() = default;
+            virtual ~Serializable() { }
         };
 
         /**
@@ -388,7 +388,7 @@ namespace oreore
 
         public:
             Cipher() = default;
-            virtual ~Cipher() = default;
+            virtual ~Cipher() { }
         };
 
         /**
