@@ -12,6 +12,8 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 	* **現在メンテナンスされていません。**
 * **俺々 for cocos2dx 3.0**
 	* C++11がビルドできる環境
+		* iOS: Xcode 5以降
+		* Android: Android NDK r9d以降(**要gcc 4.8以降**) r10d推奨
 	* cocos2dx 3.0安定版
 
 # 使い方
