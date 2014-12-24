@@ -217,6 +217,13 @@ namespace oreore
         {
             this->resolver = resolver;
         }
+
+        /**
+         * @brief 現在再生中のBGM名を取得します
+         * 返却されるBGM名には、リゾルバによる加工は施されません
+         * また、再生中でない場合は空文字列が返ります
+         */
+        std::string getCurrentBGMName() const { return currentlyPlaying; }
     };
 }
 
