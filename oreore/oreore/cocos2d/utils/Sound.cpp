@@ -125,11 +125,11 @@ namespace oreore
 
     void SoundManager::setBGMVolume(const float volume)
     {
-        storedBGMVolume = volume * bgmVolume;
+        storedBGMVolume = range(0.0f, volume, 1.0f) * bgmVolume;
 
         if(enabled && !bgmMute)
         {
-            SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume * bgmVolume);
+            SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(storedBGMVolume);
         }
     }
 
@@ -145,24 +145,26 @@ namespace oreore
 
     void SoundManager::setSEVolume(const float volume)
     {
-        storedSEVolume = volume * seVolume;
+        storedSEVolume = range(0.0f, volume, 1.0f) * seVolume;
 
         if(enabled && !seMute)
         {
-            SimpleAudioEngine::getInstance()->setEffectsVolume(volume * seVolume);
+            SimpleAudioEngine::getInstance()->setEffectsVolume(storedSEVolume);
         }
     }
 
     void SoundManager::setMaxBGMVolume(const float volume)
     {
+        const float tmp = bgmVolume;
         bgmVolume = range(0.0f, volume, 1.0f);
-        setBGMVolume(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
+        setBGMVolume(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / tmp);
     }
 
     void SoundManager::setMaxSEVolume(const float volume)
     {
+        const float tmp = seVolume;
         seVolume = range(0.0f, volume, 1.0f);
-        setSEVolume(SimpleAudioEngine::getInstance()->getEffectsVolume());
+        setSEVolume(SimpleAudioEngine::getInstance()->getEffectsVolume() / tmp);
     }
 
     void SoundManager::fadeIn(const float duration)
