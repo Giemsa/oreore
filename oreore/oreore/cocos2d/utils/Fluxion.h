@@ -375,26 +375,21 @@ namespace oreore
             using ElasticOut   = fluxion::Ease1<cocos2d::EaseElasticOut, float>;
             using ElasticInOut = fluxion::Ease1<cocos2d::EaseElasticInOut, float>;
         }
-    }
 
-    inline fluxion::SequentialAction operator>>(cocos2d::Action *a, const fluxion::ActionBase &b)
-    {
-        return fluxion::SequentialAction(a, b);
-    }
+        inline SequentialAction operator>>(cocos2d::Action *a, const ActionBase &b)
+        {
+            return SequentialAction(a, b);
+        }
 
-    inline fluxion::SequentialAction operator>>(cocos2d::Action *a, const std::function<void()> &func)
-    {
-        return fluxion::SequentialAction(a, cocos2d::CallFunc::create(func));
-    }
+        inline SequentialAction operator>>(const std::function<void()> &func, const ActionBase &b)
+        {
+            return SequentialAction(cocos2d::CallFunc::create(func), b);
+        }
 
-    inline fluxion::SequentialAction operator>>(const std::function<void()> &func, const fluxion::ActionBase &b)
-    {
-        return fluxion::SequentialAction(cocos2d::CallFunc::create(func), b);
-    }
-
-    inline fluxion::ParallelAction operator+(cocos2d::FiniteTimeAction *a, const fluxion::ActionBase &b)
-    {
-        return fluxion::ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
+        inline ParallelAction operator+(cocos2d::FiniteTimeAction *a, const ActionBase &b)
+        {
+            return ParallelAction(a, static_cast<cocos2d::FiniteTimeAction *>(b));
+        }
     }
 
     namespace x
@@ -500,6 +495,14 @@ namespace oreore
 
         // for old oreore compatibility
         namespace Ease = ease;
+    }
+}
+
+namespace cocos2d
+{
+    inline oreore::fluxion::SequentialAction operator>>(Action *a, const std::function<void()> &func)
+    {
+        return oreore::fluxion::SequentialAction(a, CallFunc::create(func));
     }
 }
 
