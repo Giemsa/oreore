@@ -3,8 +3,9 @@
 
 #include "TutorialBase.h"
 #include "TutorialSequence.h"
-#include "TutorialClippingRect.h"
 #include "TutorialManager.h"
-#include "TutorialClippingSprite.h"
+#include "ClippingSprite.h"
+#include "ClippingRect.h"
+#include "ClippingScale9Sprite.h"
 
 #endif

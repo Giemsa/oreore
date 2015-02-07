@@ -1,5 +1,5 @@
-#ifndef __OREORE_COCOS2DX_TUTORIALMANAGER_H__
-#define __OREORE_COCOS2DX_TUTORIALMANAGER_H__
+#ifndef __OREORE_TUTORIAL_TUTORIALMANAGER_H__
+#define __OREORE_TUTORIAL_TUTORIALMANAGER_H__
 
 #include "TutorialBase.h"
 #include <unordered_map>

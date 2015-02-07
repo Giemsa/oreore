@@ -1,4 +1,4 @@
-#include "TutorialClippingSprite.h"
+#include "ClippingScale9Sprite.h"
 #include "TutorialBase.h"
 
 namespace oreore
@@ -7,11 +7,11 @@ namespace oreore
 
     namespace Tutorial
     {
-        /* ClippingSprite */
-        ClippingSprite* ClippingSprite::createWithSpriteFrameName(const std::string &fileName, const float width, const float height)
+        /* ClippingScale9Sprite */
+        ClippingScale9Sprite* ClippingScale9Sprite::createWithSpriteFrameName(const std::string &name, const float width, const float height)
         {
-            ClippingSprite *r = new ClippingSprite();
-            if(r && r->initWithSpriteFrameName(fileName, width, height))
+            ClippingScale9Sprite *r = new ClippingScale9Sprite();
+            if(r && r->initWithSpriteFrameName(name, width, height))
             {
                 r->autorelease();
                 return r;
@@ -21,9 +21,9 @@ namespace oreore
             return nullptr;
         }
 
-        ClippingSprite* ClippingSprite::create(const std::string &fileName, const float width, const float height)
+        ClippingScale9Sprite* ClippingScale9Sprite::create(const std::string &fileName, const float width, const float height)
         {
-            ClippingSprite *r = new ClippingSprite();
+            ClippingScale9Sprite *r = new ClippingScale9Sprite();
             if(r && r->initWithFile(fileName, width, height))
             {
                 r->autorelease();
@@ -34,9 +34,9 @@ namespace oreore
             return nullptr;
         }
 
-        bool ClippingSprite::initWithSpriteFrameName(const std::string &fileName, const float width, const float height)
+        bool ClippingScale9Sprite::initWithSpriteFrameName(const std::string &name, const float width, const float height)
         {
-            SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(fileName);
+            SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(name);
             const float w = frame->getRect().size.width;
             const float h = frame->getRect().size.height;
 
@@ -52,12 +52,12 @@ namespace oreore
 
             _scale9Image->setGlobalZOrder(TutorialBase::DefaultZOrder);
             _scale9Image->setBlendFunc({ GL_DST_COLOR, GL_ONE });
-            touchEnabled = true;
+            setTouchEnabled(true);
 
             return true;
         }
 
-        bool ClippingSprite::initWithFile(const std::string &fileName, const float width, const float height)
+        bool ClippingScale9Sprite::initWithFile(const std::string &fileName, const float width, const float height)
         {
             Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(fileName);
             if(!texture)
@@ -81,7 +81,7 @@ namespace oreore
 
             _scale9Image->setGlobalZOrder(TutorialBase::DefaultZOrder);
             _scale9Image->setBlendFunc({ GL_DST_COLOR, GL_ONE });
-            touchEnabled = true;
+            setTouchEnabled(true);
 
             return true;
         }

@@ -1,5 +1,5 @@
 #include "TutorialBase.h"
-#include "TutorialClippingRect.h"
+#include "ClippingNode.h"
 #include "../utils/Fluxion.h"
 
 namespace oreore
@@ -61,18 +61,13 @@ namespace oreore
                     continue;
                 }
 
-                TutorialClippingRect *clip = dynamic_cast<TutorialClippingRect *>(node);
+                ClippingNode *clip = dynamic_cast<ClippingNode *>(node);
                 if(clip)
                 {
-                    if(clip->isTouchEnabled() && clip->hit(p))
+                    if(clip->isTouchEnabled() && node->getBoundingBox().containsPoint(p))
                     {
                         return false;
                     }
-                }
-
-                if(node->getBoundingBox().containsPoint(p))
-                {
-                    return false;
                 }
             }
 
@@ -90,44 +85,51 @@ namespace oreore
             Node::addChild(child, localZOrder, tag);
         }
 
-        Tutorial::ClippingSprite *TutorialBase::createClip(const std::string &filename, const float width, const float height)
+        ClippingScale9Sprite *TutorialBase::createClip(const std::string &filename, const float width, const float height)
         {
-            Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::create(filename, width, height);
+            ClippingScale9Sprite *sprite = ClippingScale9Sprite::create(filename, width, height);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }
 
-        Tutorial::ClippingSprite *TutorialBase::createClip(const std::string &filename, const float size)
+        ClippingScale9Sprite *TutorialBase::createClip(const std::string &filename, const float size)
         {
-            Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::create(filename, size);
+            ClippingScale9Sprite *sprite = ClippingScale9Sprite::create(filename, size);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }
 
-        Tutorial::ClippingSprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float width, const float height)
+        ClippingScale9Sprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float width, const float height)
         {
-            Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::createWithSpriteFrameName(name, width, height);
+            ClippingScale9Sprite *sprite = ClippingScale9Sprite::createWithSpriteFrameName(name, width, height);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }
 
-        Tutorial::ClippingSprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float size)
+        ClippingScale9Sprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float size)
         {
-            Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::createWithSpriteFrameName(name, size);
+            ClippingScale9Sprite *sprite = ClippingScale9Sprite::createWithSpriteFrameName(name, size);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }
 
-        Sprite *TutorialBase::createClip(const std::string &filename)
+        ClippingSprite *TutorialBase::createClip(const std::string &filename)
         {
-            Sprite *sprite = Sprite::create(filename);
+            ClippingSprite *sprite = ClippingSprite::create(filename);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }
 
-        Sprite *TutorialBase::createClipWithSpriteFramrName(const std::string &name)
+        ClippingSprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name)
         {
-            Sprite *sprite = Sprite::createWithSpriteFrameName(name);
+            ClippingSprite *sprite = ClippingSprite::createWithSpriteFrameName(name);
+            Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+            return sprite;
+        }
+
+        ClippingRect *TutorialBase::createClip(const float width, const float height)
+        {
+            ClippingRect *sprite = ClippingRect::create(width, height);
             Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
             return sprite;
         }

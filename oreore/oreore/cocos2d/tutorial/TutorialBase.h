@@ -3,7 +3,9 @@
 
 #include "cocos2d.h"
 #include "TutorialSequence.h"
-#include "TutorialClippingSprite.h"
+#include "ClippingSprite.h"
+#include "ClippingScale9Sprite.h"
+#include "ClippingRect.h"
 
 namespace oreore
 {
@@ -55,12 +57,14 @@ namespace oreore
 
             virtual void addChild(cocos2d::Node *child, int localZOrder, int tag) override;
 
-            Tutorial::ClippingSprite *createClip(const std::string &filename, const float width, const float height);
-            Tutorial::ClippingSprite *createClip(const std::string &filename, const float size);
-            Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float width, const float height);
-            Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float size);
-            cocos2d::Sprite *createClip(const std::string &filename);
-            cocos2d::Sprite *createClipWithSpriteFramrName(const std::string &name);
+            ClippingScale9Sprite *createClip(const std::string &filename, const float width, const float height);
+            ClippingScale9Sprite *createClip(const std::string &filename, const float size);
+            ClippingScale9Sprite *createClipWithSpriteFrameName(const std::string &name, const float width, const float height);
+            ClippingScale9Sprite *createClipWithSpriteFrameName(const std::string &name, const float size);
+            ClippingSprite *createClip(const std::string &filename);
+            ClippingSprite *createClipWithSpriteFrameName(const std::string &name);
+            ClippingRect *createClip(const float width, const float height);
+            ClippingRect *createClip(const cocos2d::Size &size) { return createClip(size.width, size.height); }
         public:
             TutorialBase()
             : maskLayer(nullptr)

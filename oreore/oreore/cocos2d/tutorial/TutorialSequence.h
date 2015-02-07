@@ -1,5 +1,5 @@
-#ifndef __OREORE_COCOS2DX_TUTORIALSEQUENCE_H__
-#define __OREORE_COCOS2DX_TUTORIALSEQUENCE_H__
+#ifndef __OREORE_TUTORIAL_SEQUENCE_H__
+#define __OREORE_TUTORIAL_SEQUENCE_H__
 
 #include <vector>
 #include <functional>
