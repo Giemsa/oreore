@@ -33,6 +33,9 @@
 #include "utils/Persistent.h"
 #include "utils/HSV.h"
 
+/* tutorial */
+#include "tutorial/Tutorial.h"
+
 #ifndef OREORE_RELEASE
 #   include "utils/Formatter.h"
 #endif
