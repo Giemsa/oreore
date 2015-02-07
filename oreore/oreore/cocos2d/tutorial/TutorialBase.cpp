@@ -6,44 +6,31 @@ namespace oreore
 {
     using namespace cocos2d;
 
-    namespace
-    {
-        const float TutorialZOrder = 10240;
-    }
-
     /* TutorialBase */
     bool TutorialBase::init()
     {
-        if(!ClippingNode::init())
+        if(!Node::init())
         {
             return false;
         }
 
         const Size &size = Director::getInstance()->getWinSize();
         maskLayer = LayerColor::create(Color4B(0, 0, 0, 0x88), size.width, size.height);
-        maskLayer->setGlobalZOrder(TutorialZOrder);
-        ClippingNode::addChild(maskLayer, maskLayer->getLocalZOrder(), maskLayer->getTag());
+        maskLayer->setGlobalZOrder(DefaultZOrder);
+        Node::addChild(maskLayer, maskLayer->getLocalZOrder(), maskLayer->getTag());
 
-        layer = Layer::create();
-        layer->setGlobalZOrder(TutorialZOrder);
-
-        setInverted(true);
-        setStencil(layer);
         setPosition(Point::ZERO);
-        setAlphaThreshold(1.0f);
         setContentSize(size);
-        setGlobalZOrder(TutorialZOrder);
-        setVisible(false);
-        setCascadeOpacityEnabled(true);
-
         ignoreAnchorPointForPosition(true);
 
+        setVisible(false);
+        setCascadeOpacityEnabled(true);
         return true;
     }
 
     void TutorialBase::onEnter()
     {
-        ClippingNode::onEnter();
+        Node::onEnter();
         listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         listener->onTouchBegan = CC_CALLBACK_2(TutorialBase::onTouchBegan, this);
@@ -54,7 +41,7 @@ namespace oreore
     void TutorialBase::onExit()
     {
         getEventDispatcher()->removeEventListener(listener);
-        ClippingNode::onExit();
+        Node::onExit();
     }
 
     bool TutorialBase::onTouchBegan(Touch *touch, Event *event)
@@ -65,10 +52,23 @@ namespace oreore
         }
 
         const Point &p = touch->getLocation();
-        for(auto *node : layer->getChildren())
+        for(auto *node : getChildren())
         {
+            if(node == maskLayer)
+            {
+                continue;
+            }
+
             TutorialClippingRect *clip = dynamic_cast<TutorialClippingRect *>(node);
-            if(clip && clip->isTouchEnabled() && clip->hit(p))
+            if(clip)
+            {
+                if(clip->isTouchEnabled() && clip->hit(p))
+                {
+                    return false;
+                }
+            }
+
+            if(node->getBoundingBox().containsPoint(p))
             {
                 return false;
             }
@@ -82,27 +82,57 @@ namespace oreore
     
     }
 
+    void TutorialBase::addChild(Node *child, int localZOrder, int tag)
+    {
+        child->setGlobalZOrder(child->getGlobalZOrder() + DefaultZOrder + 1);
+        Node::addChild(child, localZOrder, tag);
+    }
+
+    Tutorial::ClippingSprite *TutorialBase::createClip(const std::string &filename, const float width, const float height)
+    {
+        Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::create(filename, width, height);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
+    Tutorial::ClippingSprite *TutorialBase::createClip(const std::string &filename, const float size)
+    {
+        Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::create(filename, size);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
+    Tutorial::ClippingSprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float width, const float height)
+    {
+        Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::createWithSpriteFrameName(name, width, height);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
+    Tutorial::ClippingSprite *TutorialBase::createClipWithSpriteFrameName(const std::string &name, const float size)
+    {
+        Tutorial::ClippingSprite *sprite = Tutorial::ClippingSprite::createWithSpriteFrameName(name, size);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
+    Sprite *TutorialBase::createClip(const std::string &filename)
+    {
+        Sprite *sprite = Sprite::create(filename);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
+    Sprite *TutorialBase::createClipWithSpriteFramrName(const std::string &name)
+    {
+        Sprite *sprite = Sprite::createWithSpriteFrameName(name);
+        Node::addChild(sprite, sprite->getLocalZOrder(), sprite->getTag());
+        return sprite;
+    }
+
     void TutorialBase::complete()
     {
         completed = true;
-    }
-
-    void TutorialBase::addChild(cocos2d::Node *child)
-    {
-        child->setGlobalZOrder(TutorialZOrder);
-        layer->addChild(child);
-    }
-
-    void TutorialBase::addChild(cocos2d::Node *child, int localZOrder)
-    {
-        child->setGlobalZOrder(TutorialZOrder);
-        layer->addChild(child, localZOrder);
-    }
-
-    void TutorialBase::addChild(cocos2d::Node *child, int localZOrder, int tag)
-    {
-        child->setGlobalZOrder(TutorialZOrder);
-        layer->addChild(child, localZOrder, tag);
     }
 
     bool TutorialBase::showTutorial(const std::function<bool()> &callback)

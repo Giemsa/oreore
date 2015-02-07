@@ -5,5 +5,6 @@
 #include "TutorialSequence.h"
 #include "TutorialClippingRect.h"
 #include "TutorialManager.h"
+#include "TutorialClippingSprite.h"
 
 #endif

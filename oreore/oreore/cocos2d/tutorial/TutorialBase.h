@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "TutorialSequence.h"
+#include "extensions/cocos-ext.h"
+#include "TutorialClippingSprite.h"
 
 namespace oreore
 {
@@ -13,13 +15,14 @@ namespace oreore
     };
 
     /* チュートリアルベース */
-    class TutorialBase : public cocos2d::ClippingNode
+    class TutorialBase : public cocos2d::Node
     {
         template<typename T>
         friend class detail::TutorialPlayInfo;
+    public:
+        static constexpr float DefaultZOrder = 10240.0f;
     private:
         cocos2d::LayerColor *maskLayer;
-        cocos2d::Layer *layer;
         cocos2d::EventListenerTouchOneByOne *listener;
         bool completed;
         bool locked;
@@ -38,13 +41,28 @@ namespace oreore
 
         bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
         void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
-        virtual void addChild(cocos2d::Node *child) override;
-        virtual void addChild(cocos2d::Node *child, int localZOrder) override;
+
+        virtual void addChild(cocos2d::Node *child) override
+        {
+            addChild(child, child->getLocalZOrder(), child->getTag());
+        }
+
+        virtual void addChild(cocos2d::Node *child, int localZOrder) override
+        {
+            addChild(child, localZOrder, child->getTag());
+        }
+
         virtual void addChild(cocos2d::Node *child, int localZOrder, int tag) override;
+
+        Tutorial::ClippingSprite *createClip(const std::string &filename, const float width, const float height);
+        Tutorial::ClippingSprite *createClip(const std::string &filename, const float size);
+        Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float width, const float height);
+        Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float size);
+        cocos2d::Sprite *createClip(const std::string &filename);
+        cocos2d::Sprite *createClipWithSpriteFramrName(const std::string &name);
     public:
         TutorialBase()
         : maskLayer(nullptr)
-        , layer(nullptr)
         , listener(nullptr)
         , completed(false)
         , locked(true)
@@ -54,6 +72,8 @@ namespace oreore
 
         virtual void onEnter() override;
         virtual void onExit() override;
+
+        // void addChild();
 
         bool hasRoot() const { return getParent(); }
         bool showTutorial(const std::function<bool()> &callback);
