@@ -3,126 +3,128 @@
 
 #include "cocos2d.h"
 #include "TutorialSequence.h"
-#include "extensions/cocos-ext.h"
 #include "TutorialClippingSprite.h"
 
 namespace oreore
 {
-    namespace detail
+    namespace Tutorial
     {
-        template<typename T>
-        class TutorialPlayInfo;
-    };
-
-    /* チュートリアルベース */
-    class TutorialBase : public cocos2d::Node
-    {
-        template<typename T>
-        friend class detail::TutorialPlayInfo;
-    public:
-        static constexpr float DefaultZOrder = 10240.0f;
-    private:
-        cocos2d::LayerColor *maskLayer;
-        cocos2d::EventListenerTouchOneByOne *listener;
-        bool completed;
-        bool locked;
-        float fadeSpeed;
-
-        bool init() override;
-    protected:
-
-        // implementation in Tutorial.h
-        template<typename T>
-        static TutorialSequence &addTrigger(const T trigger);
-
-        void complete();
-        void setFadeSpeed(const float speed) { fadeSpeed = speed; }
-        float getFadeSpeed() const { return fadeSpeed; }
-
-        bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-        void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
-
-        virtual void addChild(cocos2d::Node *child) override
+        namespace detail
         {
-            addChild(child, child->getLocalZOrder(), child->getTag());
-        }
+            template<typename T>
+            class TutorialPlayInfo;
+        };
 
-        virtual void addChild(cocos2d::Node *child, int localZOrder) override
+        /* チュートリアルベース */
+        class TutorialBase : public cocos2d::Node
         {
-            addChild(child, localZOrder, child->getTag());
-        }
+            template<typename T>
+            friend class detail::TutorialPlayInfo;
+        public:
+            static constexpr float DefaultZOrder = 10240.0f;
+        private:
+            cocos2d::LayerColor *maskLayer;
+            cocos2d::EventListenerTouchOneByOne *listener;
+            bool completed;
+            bool locked;
+            float fadeSpeed;
 
-        virtual void addChild(cocos2d::Node *child, int localZOrder, int tag) override;
+            bool init() override;
+        protected:
 
-        Tutorial::ClippingSprite *createClip(const std::string &filename, const float width, const float height);
-        Tutorial::ClippingSprite *createClip(const std::string &filename, const float size);
-        Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float width, const float height);
-        Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float size);
-        cocos2d::Sprite *createClip(const std::string &filename);
-        cocos2d::Sprite *createClipWithSpriteFramrName(const std::string &name);
-    public:
-        TutorialBase()
-        : maskLayer(nullptr)
-        , listener(nullptr)
-        , completed(false)
-        , locked(true)
-        , fadeSpeed(0.4f)
-        { }
-        virtual ~TutorialBase() { }
+            // implementation in Tutorial.h
+            template<typename T>
+            static TutorialSequence &addTrigger(const T trigger);
 
-        virtual void onEnter() override;
-        virtual void onExit() override;
+            void complete();
+            void setFadeSpeed(const float speed) { fadeSpeed = speed; }
+            float getFadeSpeed() const { return fadeSpeed; }
 
-        // void addChild();
+            bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+            void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 
-        bool hasRoot() const { return getParent(); }
-        bool showTutorial(const std::function<bool()> &callback);
-    };
+            virtual void addChild(cocos2d::Node *child) override
+            {
+                addChild(child, child->getLocalZOrder(), child->getTag());
+            }
 
-    namespace detail
-    {
-        struct TutorialPlayInfoBase
-        {
-            bool isPlayed;
-            TutorialBase *instance;
+            virtual void addChild(cocos2d::Node *child, int localZOrder) override
+            {
+                addChild(child, localZOrder, child->getTag());
+            }
 
-            TutorialPlayInfoBase()
-            : isPlayed(false), instance(nullptr)
+            virtual void addChild(cocos2d::Node *child, int localZOrder, int tag) override;
+
+            Tutorial::ClippingSprite *createClip(const std::string &filename, const float width, const float height);
+            Tutorial::ClippingSprite *createClip(const std::string &filename, const float size);
+            Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float width, const float height);
+            Tutorial::ClippingSprite *createClipWithSpriteFrameName(const std::string &name, const float size);
+            cocos2d::Sprite *createClip(const std::string &filename);
+            cocos2d::Sprite *createClipWithSpriteFramrName(const std::string &name);
+        public:
+            TutorialBase()
+            : maskLayer(nullptr)
+            , listener(nullptr)
+            , completed(false)
+            , locked(true)
+            , fadeSpeed(0.4f)
             { }
+            virtual ~TutorialBase() { }
 
-            virtual ~TutorialPlayInfoBase()
-            {
-                instance->release();
-            }
+            virtual void onEnter() override;
+            virtual void onExit() override;
 
-            virtual TutorialBase *create() const = 0;
-            TutorialBase *getInstance()
-            {
-                if(!instance)
-                {
-                    instance = create();
-                }
+            // void addChild();
 
-                return instance;
-            }
+            bool hasRoot() const { return getParent(); }
+            bool showTutorial(const std::function<bool()> &callback);
         };
 
-        template<typename T>
-        class TutorialPlayInfo : public TutorialPlayInfoBase
+        namespace detail
         {
-            T *create() const override
+            struct TutorialPlayInfoBase
             {
-                T * r = new T();
-                if(r && r->init())
+                bool isPlayed;
+                TutorialBase *instance;
+
+                TutorialPlayInfoBase()
+                : isPlayed(false), instance(nullptr)
+                { }
+
+                virtual ~TutorialPlayInfoBase()
                 {
-                    r->autorelease();
-                    r->retain();
-                    return r;
+                    instance->release();
                 }
 
-                return nullptr;
-            }
-        };
+                virtual TutorialBase *create() const = 0;
+                TutorialBase *getInstance()
+                {
+                    if(!instance)
+                    {
+                        instance = create();
+                    }
+
+                    return instance;
+                }
+            };
+
+            template<typename T>
+            class TutorialPlayInfo : public TutorialPlayInfoBase
+            {
+                T *create() const override
+                {
+                    T * r = new T();
+                    if(r && r->init())
+                    {
+                        r->autorelease();
+                        r->retain();
+                        return r;
+                    }
+
+                    return nullptr;
+                }
+            };
+        }
     }
 }
 
