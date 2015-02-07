@@ -123,7 +123,7 @@ layout: default
 	... >> Step::FileStorage("test.data"); // test.dataへ保存
 	Step::FileStorage("test.data") >> ... // test.dataから読み込み
 
-### 例
+## 例
 　以下は文字列へデータを保存する方法です。
 
 	SaveData data; // Serializableを継承したクラス
@@ -145,9 +145,9 @@ layout: default
 
 のようになります。
 
-### もっと便利な使い方
+## もっと便利な使い方
 
-#### ストリームの事前構築
+### ストリームの事前構築
 　Step::ProcessHolderを用いることで、ストリームを事前に構築することが出来ます。
 
 	Step::ProcessHolder st = Step::Serializer(data) >> Step::StringStorage(str);
@@ -156,7 +156,7 @@ layout: default
 ProcessHolderのstartを呼ぶことで、構築されたストリームを実行することが出来ます。  
 ProcessHolderは、効率のためコピー禁止クラスとなっています。別の変数へ所有権を移動させる場合はstd::moveを利用して下さい。
 
-#### 非同期処理
+### 非同期処理
 　**以下は実装中の機能になります。**  
 　暗号化やディスクアクセス等、処理負荷の高い処理を行う場合は、ストリームの処理を非同期で行うことが出来ます。
 

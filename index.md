@@ -6,15 +6,15 @@ layout: default
 cocos2dx 3.0向けの汎用的な処理群をまとめました。
 
 # 動作環境
-* **俺々 for cocos2dx 2.2.2**
+* 俺々 for cocos2dx 2.2.2
 	* C++コンパイラ
 	* cocos2dx 2.2.2
 	* **現在メンテナンスされていません。**
-* **俺々 for cocos2dx 3.0**
+* 俺々 for cocos2dx 3.0
 	* C++11がビルドできる環境
 		* iOS: Xcode 5以降
 		* Android: Android NDK r9d以降(**要gcc 4.8以降**) r10d推奨
-	* cocos2dx 3.0安定版
+	* cocos2dx 3.0安定版以降
 
 # 使い方
 
@@ -23,7 +23,7 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 
 	git clone https://github.com/Giemsa/oreore.git
 
-　iOSの場合、`oreore/proj.ios/oreore.xcodeproj`をサブプロジェクトとして追加してください (exampleフォルダ内にサンプルがあります)。
+　iOSの場合、`oroere/oreore`フォルダをプロジェクトに追加するか、`oreore/proj.ios/oreore.xcodeproj`をサブプロジェクトとして追加してください (exampleフォルダ内にサンプルがあります)。サブプロジェクトとして追加した場合、使用するcocos2dxのバージョンがexampleのものになってしまうので、oreoreプロジェクトのHeader Search Path等を適宜変更してください。
 
 　Androidの場合、ゲームプロジェクトの`proj.android/jni/Android.mk`に、`oreore/proj.android/Android.mk`をインポートするように記述します。
 
@@ -43,13 +43,13 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 
 * ococos2dx-2.2.2  
 	　cocos2dx 2.2.2向けのブランチです。  
-	　作者が2.x系を利用しなくなったため、このブランチの更新は停止しています。
+	　**作者が2.x系を利用しなくなったため、このブランチの更新は停止しています。**
 
 * cocos2dx 3.0  
 	　cocos2dx 3.0安定版向けのブランチです。このブランチが最新です。
 
 * その他のブランチ  
-	　cocos2dxの過去のバージョンで利用されたoreoreのブランチです。更新は停止しています。
+	　**cocos2dxの過去のバージョンで利用されたoreoreのブランチです。更新は停止しています。**
 
 # 構成
 　俺々は、以下のライブラリ群を含んでいます。  
@@ -59,7 +59,7 @@ cocos2dx 3.0向けの汎用的な処理群をまとめました。
 [common utility](./commonutility.html) を参照してください。
 
 ## SceneManager
-cocos2dxでシーン管理を行うクラスです。  
+cocos2dxでシーン管理を行うクラスです。**現在使用されていません。**  
 [SceneManager](./scenemanager.html) を参照してください。
 
 ## cocos2dx Action library
