@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <functional>
+#include "buffer.hpp"
 
 namespace oreore
 {
@@ -158,7 +159,7 @@ namespace oreore
             template<typename T>
             friend class TutorialManager;
 
-            using PhaseList = std::vector<TutorialPhase>;
+            using PhaseList = utils::buffer<TutorialPhase>;
         private:
             PhaseList phaseList;
             TutorialPhase *currentPhase;
@@ -168,6 +169,7 @@ namespace oreore
             : currentPhase(nullptr), instantiator(inst)
             { }
 
+            void setupPhase(TutorialPhase &&phase);
             bool proceed(TutorialPhase *phase);
         public:
             TutorialSequence()

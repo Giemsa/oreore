@@ -27,6 +27,7 @@ namespace oreore
         private:
             cocos2d::LayerColor *maskLayer;
             cocos2d::EventListenerTouchOneByOne *listener;
+            TutorialSequence *sequence;
             bool completed;
             bool locked;
             float fadeSpeed;
@@ -72,16 +73,15 @@ namespace oreore
             , completed(false)
             , locked(true)
             , fadeSpeed(0.4f)
+            , sequence(nullptr)
             { }
             virtual ~TutorialBase() { }
 
             virtual void onEnter() override;
             virtual void onExit() override;
 
-            // void addChild();
-
             bool hasRoot() const { return getParent(); }
-            bool showTutorial(const std::function<bool()> &callback);
+            bool showTutorial(TutorialSequence *seq, const std::function<bool()> &callback);
         };
 
         namespace detail

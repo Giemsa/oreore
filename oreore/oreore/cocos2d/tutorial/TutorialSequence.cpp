@@ -9,30 +9,37 @@ namespace oreore
         : currentPhase(nullptr), instantiator(nullptr)
         {
             TutorialPhase tmp(phase);
-            tmp.index = phaseList.size();
-            phaseList.push_back(std::move(tmp));
+            setupPhase(std::move(tmp));
         }
 
         TutorialSequence::TutorialSequence(TutorialPhase &&phase)
         : currentPhase(nullptr), instantiator(nullptr)
         {
-            phase.index = phaseList.size();
-            phaseList.push_back(std::move(phase));
+            setupPhase(std::move(phase));
         }
 
         TutorialSequence &TutorialSequence::operator>>(const TutorialPhase &phase)
         {
             TutorialPhase tmp(phase);
-            tmp.index = phaseList.size();
-            phaseList.push_back(std::move(tmp));
+            setupPhase(std::move(tmp));
             return *this;
         }
 
         TutorialSequence &TutorialSequence::operator>>(TutorialPhase &&phase)
         {
-            phase.index = phaseList.size();
-            phaseList.push_back(std::move(phase));
+            setupPhase(std::move(phase));
             return *this;
+        }
+
+        void TutorialSequence::setupPhase(TutorialPhase &&phase)
+        {
+            phase.index = phaseList.size();
+            TutorialPhase *prev = phaseList.empty() ? nullptr : &phaseList.back();
+            phaseList.push_back(std::move(phase));
+            if(prev)
+            {
+                prev->next = &phaseList.back();
+            }
         }
 
         bool TutorialSequence::proceed(TutorialPhase *phase)
@@ -41,7 +48,7 @@ namespace oreore
             if(instantiator)
             {
                 TutorialBase *tutorial = instantiator->getInstance();
-                return tutorial->showTutorial([phase, tutorial]() {
+                return tutorial->showTutorial(this, [phase, tutorial]() {
                     return phase->proceed(tutorial);
                 });
             }

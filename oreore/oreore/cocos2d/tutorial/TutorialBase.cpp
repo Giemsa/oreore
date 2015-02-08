@@ -76,7 +76,18 @@ namespace oreore
 
         void TutorialBase::onTouchEnded(Touch *touch, Event *event)
         {
-        
+            if(locked)
+            {
+                return;
+            }
+
+            if(completed)
+            {
+                if(sequence)
+                {
+                    sequence->proceed();
+                }
+            }
         }
 
         void TutorialBase::addChild(Node *child, int localZOrder, int tag)
@@ -139,9 +150,11 @@ namespace oreore
             completed = true;
         }
 
-        bool TutorialBase::showTutorial(const std::function<bool()> &callback)
+        bool TutorialBase::showTutorial(TutorialSequence *seq, const std::function<bool()> &callback)
         {
             using namespace oreore;
+
+            sequence = seq;
 
             if(!getParent())
             {

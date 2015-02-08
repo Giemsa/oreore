@@ -27,8 +27,8 @@ namespace oreore
              * @brief スプライトフレーム名からクリッピング領域を作成する
              * 指定する画像はアルファ値を持った白単色画像である必要がある
              * @param fileName ファイル名
-             * @param width 可変領域の幅(パーセント)
-             * @param height 可変領域の高さ(パーセント)
+             * @param width 固定領域の幅(パーセント)
+             * @param height 固定領域の高さ(パーセント)
              */
             static ClippingScale9Sprite* createWithSpriteFrameName(const std::string &name, const float width , const float height);
 
@@ -36,7 +36,7 @@ namespace oreore
              * @brief スプライトフレーム名からクリッピング領域を作成する
              * 指定する画像はアルファ値を持った白単色画像である必要がある
              * @param fileName ファイル名
-             * @param size 可変領域の幅、高さ(パーセント)
+             * @param size 固定領域の幅、高さ(パーセント)
              */
             static ClippingScale9Sprite* createWithSpriteFrameName(const std::string &name, const float size)
             {
@@ -47,8 +47,8 @@ namespace oreore
              * @brief ファイルからクリッピング領域を作成する
              * 指定する画像はアルファ値を持った白単色画像である必要がある
              * @param fileName ファイル名
-             * @param width 可変領域の幅(パーセント)
-             * @param height 可変領域の高さ(パーセント)
+             * @param width 固定領域の幅(パーセント)
+             * @param height 固定領域の高さ(パーセント)
              */
             static ClippingScale9Sprite* create(const std::string &fileName, const float width, const float height);
 
@@ -56,7 +56,7 @@ namespace oreore
              * @brief ファイルからクリッピング領域を作成する
              * 指定する画像はアルファ値を持った白単色画像である必要がある
              * @param fileName ファイル名
-             * @param size 可変領域の幅、高さ(パーセント)
+             * @param size 固定領域の幅、高さ(パーセント)
              */
             static ClippingScale9Sprite* create(const std::string &fileName, const float size)
             {
