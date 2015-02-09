@@ -2,6 +2,7 @@
 #define __OREORE_TUTORIAL_TUTORIALMANAGER_H__
 
 #include "TutorialBase.h"
+#include "DataConnector.h"
 #include <unordered_map>
 #include "../../utils/step/serializer/JSON.h"
 
@@ -37,15 +38,45 @@ namespace oreore
             };
         }
 
-        template<typename T>
+        template<typename T, typename D>
         class TutorialManager final : public detail::TutorialManagerBase
         {
             friend class TutorialBase;
 
             using SequenceList = std::unordered_map<int, TutorialSequence>;
         public:
-            using TutorialIDType = T;
+            using TutorialID = T;
+            using DataConnectorID = D;
+
+            /* チュートリアルベース */
+            class TutorialBase : public detail::TutorialBaseBase
+            {
+                template<typename U>
+                friend class detail::TutorialPlayInfo;
+            protected:
+                static TutorialSequence &addTrigger(const T trigger)
+                {
+                    return getInstance().add(trigger);
+                }
+
+                template<typename U>
+                U &getData(const D id)
+                {
+                    return getInstance().dataConnector.template get<U>(id);
+                }
+
+                template<typename U>
+                const U &getData(const D id) const
+                {
+                    return getInstance().dataConnector.template get<U>(id);
+                }
+            public:
+                TutorialBase() { }
+                virtual ~TutorialBase() { }
+            };
+
         private:
+            DataConnector<D> dataConnector;
             SequenceList seqList;
             detail::TutorialPlayInfoBase *instantiator;
 
@@ -80,22 +111,18 @@ namespace oreore
                 return it->second.proceed();
             }
 
-            template<typename U>
+            template<typename V>
             void loadTutorial()
             {
-                static detail::TutorialPlayInfo<U> instance;
+                static detail::TutorialPlayInfo<V> instance;
                 instantiator = &instance;
-                U::registerPhase();
+                V::registerPhase();
                 instantiator = nullptr;
             }
-        };
 
-        // TutorialBase implementation
-        template<typename T>
-        TutorialSequence &TutorialBase::addTrigger(const T trigger)
-        {
-            return TutorialManager<T>::getInstance().add(trigger);
-        }
+            DataConnector<D> &getDataConnector() { return dataConnector; }
+            const DataConnector<D> &getDataConnector() const { return dataConnector; }
+        };
     }
 }
 

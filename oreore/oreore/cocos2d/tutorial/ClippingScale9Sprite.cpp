@@ -50,7 +50,7 @@ namespace oreore
                 return false;
             }
 
-            _scale9Image->setGlobalZOrder(TutorialBase::DefaultZOrder);
+            _scale9Image->setGlobalZOrder(detail::TutorialBaseBase::DefaultZOrder);
             _scale9Image->setBlendFunc({ GL_DST_COLOR, GL_ONE });
             setTouchEnabled(true);
 
@@ -79,7 +79,7 @@ namespace oreore
                 return false;
             }
 
-            _scale9Image->setGlobalZOrder(TutorialBase::DefaultZOrder);
+            _scale9Image->setGlobalZOrder(detail::TutorialBaseBase::DefaultZOrder);
             _scale9Image->setBlendFunc({ GL_DST_COLOR, GL_ONE });
             setTouchEnabled(true);
 

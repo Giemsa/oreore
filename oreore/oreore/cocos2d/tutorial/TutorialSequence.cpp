@@ -47,7 +47,7 @@ namespace oreore
             currentPhase = phase;
             if(instantiator)
             {
-                TutorialBase *tutorial = instantiator->getInstance();
+                detail::TutorialBaseBase *tutorial = instantiator->getInstance();
                 return tutorial->showTutorial(this, [phase, tutorial]() {
                     return phase->proceed(tutorial);
                 });

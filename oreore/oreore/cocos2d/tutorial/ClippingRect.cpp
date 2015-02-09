@@ -30,7 +30,7 @@ namespace oreore
 
             ignoreAnchorPointForPosition(false);
             setAnchorPoint(Point::ANCHOR_MIDDLE);
-            setGlobalZOrder(TutorialBase::DefaultZOrder);
+            setGlobalZOrder(detail::TutorialBaseBase::DefaultZOrder);
             setBlendFunc({ GL_DST_COLOR, GL_ONE });
             ClippingNode::setTouchEnabled(true);
             return true;

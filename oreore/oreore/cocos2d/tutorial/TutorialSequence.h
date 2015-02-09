@@ -156,7 +156,7 @@ namespace oreore
 
         class TutorialSequence
         {
-            template<typename T>
+            template<typename T, typename U>
             friend class TutorialManager;
 
             using PhaseList = utils::buffer<TutorialPhase>;

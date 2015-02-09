@@ -41,7 +41,7 @@ namespace oreore
                 return false;
             }
 
-            setGlobalZOrder(TutorialBase::DefaultZOrder);
+            setGlobalZOrder(detail::TutorialBaseBase::DefaultZOrder);
             setBlendFunc({ GL_DST_COLOR, GL_ONE });
             setTouchEnabled(true);
 
@@ -55,7 +55,7 @@ namespace oreore
                 return false;
             }
 
-            setGlobalZOrder(TutorialBase::DefaultZOrder);
+            setGlobalZOrder(detail::TutorialBaseBase::DefaultZOrder);
             setBlendFunc({ GL_DST_COLOR, GL_ONE });
             setTouchEnabled(true);
 
