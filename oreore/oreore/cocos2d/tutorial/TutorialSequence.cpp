@@ -6,14 +6,14 @@ namespace oreore
     namespace Tutorial
     {
         TutorialSequence::TutorialSequence(const TutorialPhase &phase)
-        : currentPhase(nullptr), instantiator(nullptr)
+        : currentPhase(nullptr), tutorial(nullptr)
         {
             TutorialPhase tmp(phase);
             setupPhase(std::move(tmp));
         }
 
         TutorialSequence::TutorialSequence(TutorialPhase &&phase)
-        : currentPhase(nullptr), instantiator(nullptr)
+        : currentPhase(nullptr), tutorial(nullptr)
         {
             setupPhase(std::move(phase));
         }
@@ -26,6 +26,19 @@ namespace oreore
         }
 
         TutorialSequence &TutorialSequence::operator>>(TutorialPhase &&phase)
+        {
+            setupPhase(std::move(phase));
+            return *this;
+        }
+
+        TutorialSequence &TutorialSequence::operator>>(const TutorialPhase::func_type &phase)
+        {
+            TutorialPhase tmp(phase);
+            setupPhase(std::move(tmp));
+            return *this;
+        }
+
+        TutorialSequence &TutorialSequence::operator>>(TutorialPhase::func_type &&phase)
         {
             setupPhase(std::move(phase));
             return *this;
@@ -45,15 +58,9 @@ namespace oreore
         bool TutorialSequence::proceed(TutorialPhase *phase)
         {
             currentPhase = phase;
-            if(instantiator)
-            {
-                detail::TutorialBaseBase *tutorial = instantiator->getInstance();
-                return tutorial->showTutorial(this, [phase, tutorial]() {
-                    return phase->proceed(tutorial);
-                });
-            }
-
-            return phase->proceed();
+            return tutorial->showTutorial(this, [phase]() {
+                return phase->proceed();
+            });
         }
 
         bool TutorialSequence::proceed()

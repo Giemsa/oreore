@@ -73,6 +73,11 @@ namespace oreore
                     }
                 }
 
+                if(touchEnabled && completed)
+                {
+                    // next phase
+                }
+
                 return true;
             }
 
@@ -149,6 +154,18 @@ namespace oreore
 
             void TutorialBaseBase::complete()
             {
+                /*
+                for(auto *node : getChildren())
+                {
+                    if(node == maskLayer)
+                    {
+                        continue;
+                    }
+
+                    node->removeFromParent();
+                }
+                */
+
                 completed = true;
             }
 

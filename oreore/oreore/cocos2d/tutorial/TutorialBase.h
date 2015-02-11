@@ -11,15 +11,18 @@ namespace oreore
 {
     namespace Tutorial
     {
+        // forward
+        template<typename T, typename D>
+        class TutorialManager; // in TutorialManager.h
+
         namespace detail
         {
-            template<typename T>
-            class TutorialPlayInfo;
-
             class TutorialBaseBase : public cocos2d::Node
             {
-                template<typename T>
-                friend class detail::TutorialPlayInfo;
+                template<typename T, typename D>
+                friend class oreore::Tutorial::TutorialManager;
+
+                friend class oreore::Tutorial::TutorialSequence;
             public:
                 static constexpr float DefaultZOrder = 10240.0f;
             private:
@@ -28,6 +31,7 @@ namespace oreore
                 TutorialSequence *sequence;
                 bool completed;
                 bool locked;
+                bool touchEnabled;
                 float fadeSpeed;
 
                 bool init() override;
@@ -66,6 +70,7 @@ namespace oreore
                 , listener(nullptr)
                 , completed(false)
                 , locked(true)
+                , touchEnabled(true)
                 , fadeSpeed(0.4f)
                 , sequence(nullptr)
                 { }
@@ -76,55 +81,10 @@ namespace oreore
 
                 bool hasRoot() const { return getParent(); }
                 bool showTutorial(TutorialSequence *seq, const std::function<bool()> &callback);
+                void setTouchEnabled(const bool enable) { touchEnabled = enable; }
+                virtual void registerPhase() = 0;
             };
         };
-
-
-        namespace detail
-        {
-            struct TutorialPlayInfoBase
-            {
-                bool isPlayed;
-                detail::TutorialBaseBase *instance;
-
-                TutorialPlayInfoBase()
-                : isPlayed(false), instance(nullptr)
-                { }
-
-                virtual ~TutorialPlayInfoBase()
-                {
-                    instance->release();
-                }
-
-                virtual detail::TutorialBaseBase *create() const = 0;
-                detail::TutorialBaseBase *getInstance()
-                {
-                    if(!instance)
-                    {
-                        instance = create();
-                    }
-
-                    return instance;
-                }
-            };
-
-            template<typename T>
-            class TutorialPlayInfo : public TutorialPlayInfoBase
-            {
-                T *create() const override
-                {
-                    T * r = new T();
-                    if(r && r->init())
-                    {
-                        r->autorelease();
-                        r->retain();
-                        return r;
-                    }
-
-                    return nullptr;
-                }
-            };
-        }
     }
 }
 

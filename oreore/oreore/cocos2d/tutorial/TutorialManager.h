@@ -44,15 +44,15 @@ namespace oreore
             friend class TutorialBase;
 
             using SequenceList = std::unordered_map<int, TutorialSequence>;
+            using TutorialList = std::vector<detail::TutorialBaseBase *>;
         public:
             using TutorialID = T;
             using DataConnectorID = D;
+            using DataConnector = oreore::Tutorial::DataConnector<D>;
 
             /* チュートリアルベース */
             class TutorialBase : public detail::TutorialBaseBase
             {
-                template<typename U>
-                friend class detail::TutorialPlayInfo;
             protected:
                 static TutorialSequence &addTrigger(const T trigger)
                 {
@@ -76,11 +76,13 @@ namespace oreore
             };
 
         private:
-            DataConnector<D> dataConnector;
+            DataConnector dataConnector;
             SequenceList seqList;
-            detail::TutorialPlayInfoBase *instantiator;
+            TutorialList tutorialList;
+            detail::TutorialBaseBase *tutorial;
 
             TutorialManager()
+            : tutorial(nullptr)
             { }
 
             ~TutorialManager()
@@ -89,7 +91,7 @@ namespace oreore
             TutorialSequence &add(const T trigger)
             {
                 return seqList.insert(
-                    std::make_pair(static_cast<int>(trigger), TutorialSequence(instantiator))
+                    std::make_pair(static_cast<int>(trigger), TutorialSequence(tutorial))
                 ).first->second;
             }
         public:
@@ -111,17 +113,26 @@ namespace oreore
                 return it->second.proceed();
             }
 
-            template<typename V>
+            template<typename U>
             void loadTutorial()
             {
-                static detail::TutorialPlayInfo<V> instance;
-                instantiator = &instance;
-                V::registerPhase();
-                instantiator = nullptr;
+                U *t = new U();
+                if(t && t->init())
+                {
+                    t->autorelease();
+                    t->retain();
+                    tutorial = t;
+                    t->registerPhase();
+                    tutorial = nullptr;
+                    tutorialList.push_back(t);
+                    return;
+                }
+
+                delete t;
             }
 
-            DataConnector<D> &getDataConnector() { return dataConnector; }
-            const DataConnector<D> &getDataConnector() const { return dataConnector; }
+            DataConnector &getDataConnector() { return dataConnector; }
+            const DataConnector &getDataConnector() const { return dataConnector; }
         };
     }
 }

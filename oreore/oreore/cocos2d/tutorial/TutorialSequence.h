@@ -12,11 +12,12 @@ namespace oreore
         // forward
         namespace detail
         {
-            class TutorialPlayInfoBase; // in TutorialBase.h
+            class TutorialBaseBase; // in TutorialBase.h
         }
 
         class TutorialBase; // in TutorialBase.h
 
+        /*
         class TutorialPhase final
         {
             friend class TutorialSequence;
@@ -154,6 +155,64 @@ namespace oreore
             }
         };
 
+        template < template <typename...> class Template, typename T >
+        struct is_instantiation_of : std::false_type {};
+
+        template < template <typename...> class Template, typename... Args >
+        struct is_instantiation_of< Template, Template<Args...> > : std::true_type {};
+        */
+
+        class TutorialPhase
+        {
+            friend class TutorialSequence;
+        public:
+            using func_type = std::function<bool(const size_t)>;
+        private:
+            func_type proc;
+            TutorialPhase *next;
+            size_t index;
+
+            TutorialPhase(const TutorialPhase &rhs)
+            : proc(rhs.proc), next(rhs.next), index(rhs.index)
+            { }
+        public:
+            TutorialPhase()
+            : next(nullptr), index(0)
+            { }
+
+            TutorialPhase(const func_type &proc)
+            : proc(proc), next(nullptr), index(0)
+            { }
+
+            TutorialPhase(TutorialPhase &&rhs)
+            : proc(rhs.proc), next(rhs.next), index(rhs.index)
+            {
+                rhs.proc = nullptr;
+                rhs.next = nullptr;
+                rhs.index = 0;
+            }
+
+            bool proceed() const
+            {
+                return proc(index);
+            }
+
+            TutorialPhase &operator=(const TutorialPhase &) = delete;
+            TutorialPhase &operator=(TutorialPhase &&rhs)
+            {
+                proc = rhs.proc;
+                rhs.proc = nullptr;
+
+                next = rhs.next;
+                rhs.next = nullptr;
+
+                index = rhs.index;
+                rhs.index = 0;
+
+                return *this;
+            }
+        };
+
         class TutorialSequence
         {
             template<typename T, typename U>
@@ -163,30 +222,32 @@ namespace oreore
         private:
             PhaseList phaseList;
             TutorialPhase *currentPhase;
-            detail::TutorialPlayInfoBase *instantiator;
+            detail::TutorialBaseBase *tutorial;
 
-            TutorialSequence(detail::TutorialPlayInfoBase *inst)
-            : currentPhase(nullptr), instantiator(inst)
+            TutorialSequence(detail::TutorialBaseBase *tutorial)
+            : currentPhase(nullptr), tutorial(tutorial)
             { }
 
             void setupPhase(TutorialPhase &&phase);
             bool proceed(TutorialPhase *phase);
         public:
             TutorialSequence()
-            : currentPhase(nullptr), instantiator(nullptr)
+            : currentPhase(nullptr), tutorial(nullptr)
             { }
             TutorialSequence(const TutorialSequence &) = delete;
             TutorialSequence(TutorialSequence &&rhs)
-            : phaseList(std::move(rhs.phaseList)), currentPhase(rhs.currentPhase), instantiator(rhs.instantiator)
+            : phaseList(std::move(rhs.phaseList)), currentPhase(rhs.currentPhase), tutorial(rhs.tutorial)
             {
                 rhs.currentPhase = nullptr;
-                rhs.instantiator = nullptr;
+                rhs.tutorial = nullptr;
             }
 
             TutorialSequence(const TutorialPhase &phase);
             TutorialSequence(TutorialPhase &&phase);
             TutorialSequence &operator>>(const TutorialPhase &phase);
             TutorialSequence &operator>>(TutorialPhase &&phase);
+            TutorialSequence &operator>>(const TutorialPhase::func_type &phase);
+            TutorialSequence &operator>>(TutorialPhase::func_type &&phase);
 
             TutorialSequence &operator=(const TutorialSequence &) = delete;
             TutorialSequence &operator=(TutorialSequence &&rhs)
@@ -196,8 +257,8 @@ namespace oreore
                 currentPhase = rhs.currentPhase;
                 rhs.currentPhase = nullptr;
 
-                instantiator = rhs.instantiator;
-                rhs.instantiator = nullptr;
+                tutorial = rhs.tutorial;
+                rhs.tutorial = nullptr;
 
                 return *this;
             }
