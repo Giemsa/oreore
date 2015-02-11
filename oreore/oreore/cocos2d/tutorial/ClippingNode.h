@@ -1,6 +1,8 @@
 #ifndef __OREORE_TUTORIAL_CLIPPINGNODE_H__
 #define __OREORE_TUTORIAL_CLIPPINGNODE_H__
 
+#include "../../utils/variant.hpp"
+
 namespace oreore
 {
     namespace Tutorial
