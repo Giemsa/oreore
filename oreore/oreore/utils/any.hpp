@@ -40,6 +40,10 @@ namespace oreore
         placeholder_base *data_;
 
     public:
+        any()
+        : data_(nullptr)
+        { }
+
         template<typename T>
         any(T &&value)
         : data_(new placeholder<
@@ -89,6 +93,20 @@ namespace oreore
         T &get()
         {
             return dynamic_cast<placeholder<T> &>(*data_).value_;
+        }
+
+        template<typename T>
+        bool is() const
+        {
+            return dynamic_cast<placeholder<T> *>(data_) != nullptr;
+        }
+
+        bool empty() const { return data_ != nullptr; }
+
+        void reset()
+        {
+            delete data_;
+            data_ = nullptr;
         }
     };
 }

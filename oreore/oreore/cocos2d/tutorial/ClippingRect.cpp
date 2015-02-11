@@ -35,5 +35,15 @@ namespace oreore
             ClippingNode::setTouchEnabled(true);
             return true;
         }
+
+        bool ClippingRect::checkTouch(const cocos2d::Point &pos) const
+        {
+            if(hasTouchHandle())
+            {
+                return ClippingNode::checkTouch(pos);
+            }
+
+            return getBoundingBox().containsPoint(pos);
+        }
     }
 }

@@ -206,6 +206,20 @@ namespace oreore
             type_ = detail::get_index<R, T...>::value;
             return *this;
         }
+
+        template<typename U>
+        bool is() const
+        {
+            return type_ >= 0 && type_ == detail::get_index<U, T...>::value;
+        }
+
+        bool empty() const { return type_ == -1; }
+
+        void reset()
+        {
+            Destructor<sizeof...(T) - 1, T...>::call(type_, storage_);
+            type_ = -1;
+        }
     };
 }
 

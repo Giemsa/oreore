@@ -66,7 +66,7 @@ namespace oreore
                     ClippingNode *clip = dynamic_cast<ClippingNode *>(node);
                     if(clip)
                     {
-                        if(clip->isTouchEnabled() && node->getBoundingBox().containsPoint(p))
+                        if(clip->isTouchEnabled() && clip->checkTouch(p))
                         {
                             return false;
                         }

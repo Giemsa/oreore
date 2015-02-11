@@ -62,6 +62,8 @@ namespace oreore
             {
                 return create(fileName, size, size);
             }
+
+            bool checkTouch(const cocos2d::Point &pos) const;
         };
     };
 }

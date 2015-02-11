@@ -19,6 +19,7 @@ namespace oreore
             using ClippingNode::isTouchEnabled;
 
             static ClippingRect *create(const float width, const float height);
+            bool checkTouch(const cocos2d::Point &pos) const;
         };
     }
 }

@@ -31,13 +31,13 @@ namespace oreore
                 float fadeSpeed;
 
                 bool init() override;
+
+                bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+                void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
             protected:
                 void complete();
                 void setFadeSpeed(const float speed) { fadeSpeed = speed; }
                 float getFadeSpeed() const { return fadeSpeed; }
-
-                bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-                void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 
                 virtual void addChild(cocos2d::Node *child) override
                 {

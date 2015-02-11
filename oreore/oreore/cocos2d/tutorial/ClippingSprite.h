@@ -34,6 +34,8 @@ namespace oreore
              * @param fileName ファイル名
              */
             static ClippingSprite* create(const std::string &fileName);
+
+            bool checkTouch(const cocos2d::Point &pos) const;
         };
     };
 }
