@@ -14,6 +14,8 @@
 #include "actions/SwayMoveTo.h"
 #include "actions/CallInterval.h"
 #include "actions/RepeatWith.h"
+#include "actions/ResizeBy.h"
+#include "actions/ResizeTo.h"
 
 /* nodes */
 #include "nodes/Overlay.h"

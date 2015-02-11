@@ -82,6 +82,7 @@ namespace oreore
                 bool hasRoot() const { return getParent(); }
                 bool showTutorial(TutorialSequence *seq, const std::function<bool()> &callback);
                 void setTouchEnabled(const bool enable) { touchEnabled = enable; }
+                void setLock(const bool lock) { locked = lock; }
                 virtual void registerPhase() = 0;
             };
         };

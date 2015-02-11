@@ -43,6 +43,14 @@
 		30DC7B731A30B5CD00214270 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7AB11A30B5CC00214270 /* blowfish.h */; };
 		30DC7C951A30B60200214270 /* Step.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C871A30B60200214270 /* Step.h */; };
 		30DC7C961A30B60200214270 /* Step.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7C871A30B60200214270 /* Step.h */; };
+		30DF70BD1A8BC84F002C053D /* ResizeBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF70B91A8BC84F002C053D /* ResizeBy.cpp */; };
+		30DF70BE1A8BC84F002C053D /* ResizeBy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF70B91A8BC84F002C053D /* ResizeBy.cpp */; };
+		30DF70BF1A8BC84F002C053D /* ResizeBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DF70BA1A8BC84F002C053D /* ResizeBy.h */; };
+		30DF70C01A8BC84F002C053D /* ResizeBy.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DF70BA1A8BC84F002C053D /* ResizeBy.h */; };
+		30DF70C11A8BC84F002C053D /* ResizeTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF70BB1A8BC84F002C053D /* ResizeTo.cpp */; };
+		30DF70C21A8BC84F002C053D /* ResizeTo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DF70BB1A8BC84F002C053D /* ResizeTo.cpp */; };
+		30DF70C31A8BC84F002C053D /* ResizeTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DF70BC1A8BC84F002C053D /* ResizeTo.h */; };
+		30DF70C41A8BC84F002C053D /* ResizeTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DF70BC1A8BC84F002C053D /* ResizeTo.h */; };
 		30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
 		30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */ = {isa = PBXBuildFile; fileRef = 30EFBFC51987E1DE007AF580 /* RepeatWith.h */; };
 		30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */; };
@@ -186,6 +194,10 @@
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
 		30DF70A91A8B52C7002C053D /* any.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = any.hpp; sourceTree = "<group>"; };
 		30DF70AA1A8B52C7002C053D /* variant.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = variant.hpp; sourceTree = "<group>"; };
+		30DF70B91A8BC84F002C053D /* ResizeBy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResizeBy.cpp; sourceTree = "<group>"; };
+		30DF70BA1A8BC84F002C053D /* ResizeBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeBy.h; sourceTree = "<group>"; };
+		30DF70BB1A8BC84F002C053D /* ResizeTo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResizeTo.cpp; sourceTree = "<group>"; };
+		30DF70BC1A8BC84F002C053D /* ResizeTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeTo.h; sourceTree = "<group>"; };
 		30EFBFC41987E1DE007AF580 /* RepeatWith.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RepeatWith.cpp; sourceTree = "<group>"; };
 		30EFBFC51987E1DE007AF580 /* RepeatWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatWith.h; sourceTree = "<group>"; };
 		30F82CE71A35F5950071F43C /* async.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async.h; sourceTree = "<group>"; };
@@ -424,6 +436,10 @@
 				7A7FC7DC194ED99B006EA6B4 /* MusicFadeTo.h */,
 				7A7FC7DD194ED99B006EA6B4 /* PlaySE.cpp */,
 				7A7FC7DE194ED99B006EA6B4 /* PlaySE.h */,
+				30DF70B91A8BC84F002C053D /* ResizeBy.cpp */,
+				30DF70BA1A8BC84F002C053D /* ResizeBy.h */,
+				30DF70BB1A8BC84F002C053D /* ResizeTo.cpp */,
+				30DF70BC1A8BC84F002C053D /* ResizeTo.h */,
 				7A7FC7DF194ED99B006EA6B4 /* Shake.cpp */,
 				7A7FC7E0194ED99B006EA6B4 /* Shake.h */,
 				7A7FC7E1194ED99B006EA6B4 /* ShakeFadeOut.cpp */,
@@ -524,8 +540,10 @@
 				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
 				30A476EA1A86703C00961CD8 /* ClippingScale9Sprite.h in Headers */,
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
+				30DF70BF1A8BC84F002C053D /* ResizeBy.h in Headers */,
 				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
 				30A476FC1A86703C00961CD8 /* TutorialSequence.h in Headers */,
+				30DF70C31A8BC84F002C053D /* ResizeTo.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
 				30DC7C951A30B60200214270 /* Step.h in Headers */,
 				30A476EE1A86703C00961CD8 /* ClippingSprite.h in Headers */,
@@ -578,8 +596,10 @@
 				7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */,
 				7A7FC839194ED99C006EA6B4 /* Formatter.h in Headers */,
 				7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */,
+				30DF70C41A8BC84F002C053D /* ResizeTo.h in Headers */,
 				7A7FC82D194ED99C006EA6B4 /* ShatteredSprite.h in Headers */,
 				7A7FC83D194ED99C006EA6B4 /* MultiResolution.h in Headers */,
+				30DF70C01A8BC84F002C053D /* ResizeBy.h in Headers */,
 				30DC7B731A30B5CD00214270 /* blowfish.h in Headers */,
 				7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */,
 				7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */,
@@ -665,10 +685,12 @@
 				30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */,
 				7A75964C194FF08A004A6CE8 /* CallInterval.cpp in Sources */,
 				7A75964D194FF08A004A6CE8 /* ShatteredSprite.cpp in Sources */,
+				30DF70BD1A8BC84F002C053D /* ResizeBy.cpp in Sources */,
 				7A75964E194FF08A004A6CE8 /* AssetLoader.cpp in Sources */,
 				7A75964F194FF08A004A6CE8 /* ShakeFadeOut.cpp in Sources */,
 				7A759651194FF08A004A6CE8 /* Formatter.cpp in Sources */,
 				7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */,
+				30DF70C11A8BC84F002C053D /* ResizeTo.cpp in Sources */,
 				7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */,
 				7A759654194FF08A004A6CE8 /* SceneManager.cpp in Sources */,
 				7A759655194FF08A004A6CE8 /* ToggleButton.cpp in Sources */,
@@ -705,10 +727,12 @@
 				7A7FC812194ED99C006EA6B4 /* CallInterval.cpp in Sources */,
 				7A7FC82C194ED99C006EA6B4 /* ShatteredSprite.cpp in Sources */,
 				7A7FC833194ED99C006EA6B4 /* AssetLoader.cpp in Sources */,
+				30DF70BE1A8BC84F002C053D /* ResizeBy.cpp in Sources */,
 				7A7FC820194ED99C006EA6B4 /* ShakeFadeOut.cpp in Sources */,
 				7A7FC838194ED99C006EA6B4 /* Formatter.cpp in Sources */,
 				7A7FC84A194ED99C006EA6B4 /* Utils.cpp in Sources */,
 				7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */,
+				30DF70C21A8BC84F002C053D /* ResizeTo.cpp in Sources */,
 				7A7FC83F194ED99C006EA6B4 /* SceneManager.cpp in Sources */,
 				7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */,
 				7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */,

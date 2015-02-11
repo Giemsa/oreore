@@ -19,15 +19,10 @@ namespace oreore
 
     bool SwayMoveTo::initWithDuration(const float duration, const Point &pos, const float amp, const float freq, const SwayDirection type)
     {
-        if(!ActionInterval::initWithDuration(duration))
+        if(!SwayMoveBy::initWithDuration(duration, pos, amp, freq, type))
         {
             return false;
         }
-
-        this->pos = pos;
-        this->amp = amp;
-        this->freq = freq;
-        dir = type;
 
         return true;
     }
