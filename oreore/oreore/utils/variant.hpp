@@ -97,7 +97,7 @@ namespace oreore
      * @brief 簡易版のboost::variant
      */
     template<typename ...T>
-    class vatiant final
+    class variant final
     {
         using Storage = typename std::aligned_storage<
             detail::max<sizeof(T)...>::value,
@@ -142,7 +142,7 @@ namespace oreore
         Storage storage_;
 
     public:
-        vatiant()
+        variant()
         : type_(-1)
         { }
 
@@ -153,13 +153,13 @@ namespace oreore
             >::type,
             typename = typename std::enable_if<detail::find<R, T...>::value>::type
         >
-        vatiant(U &&data)
+        variant(U &&data)
         : type_(detail::get_index<R, T...>::value)
         {
             new(&storage_) R(std::forward<U>(data));
         }
 
-        ~vatiant()
+        ~variant()
         {
             Destructor<sizeof...(T) - 1, T...>::call(type_, storage_);
         }
@@ -199,7 +199,7 @@ namespace oreore
             >::type,
             typename = typename std::enable_if<detail::find<R, T...>::value>::type
         >
-        vatiant &operator=(U &&data)
+        variant &operator=(U &&data)
         {
             Destructor<sizeof...(T) - 1, T...>::call(type_, storage_);
             new(&storage_) R(std::forward<U>(data));
