@@ -28,7 +28,7 @@ namespace oreore
             inline SequentialAction operator>>(const std::function<void()> &action);
             inline ParallelAction operator+(const ActionBase &action);
             inline ParallelAction operator+(cocos2d::FiniteTimeAction *action);
-            inline Repeat operator*(const int count);
+            inline Repeat operator*(const unsigned int times);
             virtual operator cocos2d::FiniteTimeAction *() const = 0;
         };
 
@@ -209,8 +209,8 @@ namespace oreore
 
         class Repeat : public ActionIntervalBase
         {
-            cocos2d::Repeat *action;
         private:
+            cocos2d::Repeat *action;
         public:
             Repeat(const ActionBase &action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
             Repeat(cocos2d::ActionInterval *action, const unsigned int times) : action(cocos2d::Repeat::create(action, times)) { }
@@ -245,6 +245,11 @@ namespace oreore
             {
                 return Ease<T>(T::create(static_cast<cocos2d::ActionInterval *>(*action)));
             }
+
+            inline Ease<T> apply(const cocos2d::ActionInterval *action) const
+            {
+                return Ease<T>(T::create(action));
+            }
         };
 
         template<typename T, typename P>
@@ -264,6 +269,11 @@ namespace oreore
             {
                 return Ease1<T, P>(T::create(static_cast<cocos2d::ActionInterval *>(*action), param), param);
             }
+
+            inline Ease1<T, P> apply(const cocos2d::ActionInterval *action) const
+            {
+                return Ease1<T, P>(T::create(action, param), param);
+            }
         };
 
         class RepeatForever : public ActionModifier
@@ -277,6 +287,11 @@ namespace oreore
             inline RepeatForever apply(const ActionIntervalBase *action) const
             {
                 return RepeatForever(cocos2d::Repeat::create(static_cast<cocos2d::ActionInterval *>(*action), -1));
+            }
+
+            inline RepeatForever apply(cocos2d::ActionInterval *action) const
+            {
+                return RepeatForever(cocos2d::Repeat::create(action, -1));
             }
         };
 
@@ -306,9 +321,9 @@ namespace oreore
             return ParallelAction(*this, action);
         }
 
-        inline Repeat ActionBase::operator *(const int count)
+        inline Repeat ActionBase::operator *(const unsigned int times)
         {
-            return Repeat(*this, count);
+            return Repeat(*this, times);
         }
 
         /* ActionInterval impl */
@@ -503,6 +518,15 @@ namespace cocos2d
     inline oreore::fluxion::SequentialAction operator>>(Action *a, const std::function<void()> &func)
     {
         return oreore::fluxion::SequentialAction(a, CallFunc::create(func));
+    }
+
+    template<
+        typename T,
+        typename = typename std::enable_if<std::is_base_of<oreore::fluxion::ActionModifier, T>::value>::type
+    >
+    inline T operator*(ActionInterval *a, const T &mod)
+    {
+        return mod.apply(a);
     }
 }
 
