@@ -2,7 +2,7 @@
 #define __OREORE_COCOS2DX_TUTORIAL_H__
 
 #include "TutorialBase.h"
-#include "TutorialSequence.h"
+#include "TutorialPhase.h"
 #include "TutorialManager.h"
 #include "ClippingSprite.h"
 #include "ClippingRect.h"

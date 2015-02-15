@@ -1,9 +1,10 @@
 #ifndef __OREORE_TUTORIAL_TUTORIALMANAGER_H__
 #define __OREORE_TUTORIAL_TUTORIALMANAGER_H__
 
+#include <unordered_map>
 #include "TutorialBase.h"
 #include "DataConnector.h"
-#include <unordered_map>
+#include "TutorialPhase.h"
 #include "../../utils/step/serializer/JSON.h"
 
 namespace oreore
@@ -43,7 +44,7 @@ namespace oreore
         {
             friend class TutorialBase;
 
-            using SequenceList = std::unordered_map<int, TutorialSequence>;
+            using PhaseList = std::unordered_multimap<int, TutorialPhase>;
             using TutorialList = std::vector<detail::TutorialBaseBase *>;
         public:
             using TutorialID = T;
@@ -54,11 +55,6 @@ namespace oreore
             class TutorialBase : public detail::TutorialBaseBase
             {
             protected:
-                static TutorialSequence &addTrigger(const T trigger)
-                {
-                    return getInstance().add(trigger);
-                }
-
                 template<typename U>
                 U &getData(const D id)
                 {
@@ -70,6 +66,29 @@ namespace oreore
                 {
                     return getInstance().dataConnector.template get<U>(id);
                 }
+
+                TutorialPhase phase(const T trigger, const TutorialPhase::func_type &func, const PhaseType type)
+                {
+                    return TutorialPhase(static_cast<int>(trigger), func, type, this);
+                }
+
+                TutorialPhase phase(const T trigger, const TutorialPhase::func_type &func)
+                {
+                    return TutorialPhase(static_cast<int>(trigger), func, this);
+                }
+
+                TutorialPhase phase(const TutorialPhase::func_type &func)
+                {
+                    return TutorialPhase(func, this);
+                }
+
+                void addSequence(const std::initializer_list<TutorialPhase> seq)
+                {
+                    for(auto &p : seq)
+                    {
+                        getInstance().add(p);
+                    }
+                }
             public:
                 TutorialBase() { }
                 virtual ~TutorialBase() { }
@@ -77,7 +96,7 @@ namespace oreore
 
         private:
             DataConnector dataConnector;
-            SequenceList seqList;
+            PhaseList phaseList;
             TutorialList tutorialList;
             detail::TutorialBaseBase *tutorial;
 
@@ -88,11 +107,14 @@ namespace oreore
             ~TutorialManager()
             { }
 
-            TutorialSequence &add(const T trigger)
+            void add(const TutorialPhase &phase)
             {
-                return seqList.insert(
-                    std::make_pair(static_cast<int>(trigger), TutorialSequence(tutorial))
-                ).first->second;
+                const size_t idx = phaseList.size();
+                TutorialPhase &p = phaseList.insert(
+                    std::make_pair(phase.getTrigger(), phase)
+                )->second;
+                p.setIndex(idx);
+                p.setType(idx == 0 ? PhaseType::Begin : PhaseType::Stay);
             }
         public:
             static TutorialManager &getInstance()
@@ -104,13 +126,30 @@ namespace oreore
             /* 再生可能であればチュートリアルを再生する */
             bool trigger(const T id)
             {
-                const typename SequenceList::iterator it = seqList.find(static_cast<int>(id));
-                if(it == seqList.end())
+                const std::pair<
+                    typename PhaseList::iterator,
+                    typename PhaseList::iterator
+                > &r = phaseList.equal_range(static_cast<int>(id));
+
+                // 未再生シーケンスのうち、最もIDの若いものを再生
+                size_t m = std::numeric_limits<size_t>::max();
+                TutorialPhase *phase = nullptr;
+                for(typename PhaseList::iterator it = r.first; it != r.second; ++it)
+                {
+                    TutorialPhase &p = it->second;
+                    if(!p.isPlayed() && p.getIndex() < m)
+                    {
+                        m = p.getIndex();
+                        phase = &p;
+                    }
+                }
+
+                if(!phase)
                 {
                     return false;
                 }
 
-                return it->second.proceed();
+                return phase->proceed();
             }
 
             template<typename U>

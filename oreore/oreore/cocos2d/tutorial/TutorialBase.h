@@ -2,7 +2,7 @@
 #define __OREORE_COCOS2DX_TUTORIALBASE_H__
 
 #include "cocos2d.h"
-#include "TutorialSequence.h"
+#include "TutorialPhase.h"
 #include "ClippingSprite.h"
 #include "ClippingScale9Sprite.h"
 #include "ClippingRect.h"
@@ -21,18 +21,16 @@ namespace oreore
             {
                 template<typename T, typename D>
                 friend class oreore::Tutorial::TutorialManager;
-
-                friend class oreore::Tutorial::TutorialSequence;
             public:
                 static constexpr float DefaultZOrder = 10240.0f;
             private:
                 cocos2d::LayerColor *maskLayer;
                 cocos2d::EventListenerTouchOneByOne *listener;
-                TutorialSequence *sequence;
                 bool completed;
                 bool locked;
                 bool touchEnabled;
                 float fadeSpeed;
+                size_t seq_id;
 
                 bool init() override;
 
@@ -72,7 +70,7 @@ namespace oreore
                 , locked(true)
                 , touchEnabled(true)
                 , fadeSpeed(0.4f)
-                , sequence(nullptr)
+                , seq_id(0)
                 { }
                 virtual ~TutorialBaseBase() { }
 
@@ -80,7 +78,7 @@ namespace oreore
                 virtual void onExit() override;
 
                 bool hasRoot() const { return getParent(); }
-                bool showTutorial(TutorialSequence *seq, const std::function<bool()> &callback);
+                bool showTutorial(TutorialPhase *phase, const std::function<bool()> &callback);
                 void setTouchEnabled(const bool enable) { touchEnabled = enable; }
                 void setLock(const bool lock) { locked = lock; }
                 virtual void registerPhase() = 0;

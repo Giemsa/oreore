@@ -1,10 +1,10 @@
 #ifndef __OREORE_TUTORIAL_DATACONNECTOR_H__
 #define __OREORE_TUTORIAL_DATACONNECTOR_H__
 
-#include "cocos2d.h"
-#include "../../utils/any.hpp"
 #include <exception>
 #include <unordered_map>
+#include "cocos2d.h"
+#include "../../utils/any.hpp"
 
 namespace oreore
 {

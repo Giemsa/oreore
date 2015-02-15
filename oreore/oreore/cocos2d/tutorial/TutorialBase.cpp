@@ -88,6 +88,7 @@ namespace oreore
                     return;
                 }
 
+                /*
                 if(completed)
                 {
                     if(sequence)
@@ -95,6 +96,7 @@ namespace oreore
                         sequence->proceed();
                     }
                 }
+                */
             }
 
             void TutorialBaseBase::addChild(Node *child, int localZOrder, int tag)
@@ -169,11 +171,10 @@ namespace oreore
                 completed = true;
             }
 
-            bool TutorialBaseBase::showTutorial(TutorialSequence *seq, const std::function<bool()> &callback)
+            bool TutorialBaseBase::showTutorial(TutorialPhase *phase, const std::function<bool()> &callback)
             {
                 using namespace oreore;
 
-                sequence = seq;
                 completed = false;
 
                 if(!getParent())
