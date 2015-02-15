@@ -7,18 +7,23 @@ namespace oreore
     {
         bool TutorialPhase::proceed()
         {
-            using namespace oreore;
-
-            if(type == PhaseType::Begin)
+            switch(type)
             {
-                return base->showTutorial(this, [this]() {
+                case PhaseType::Begin:
+                    return base->showTutorial([this]() {
+                        played = true;
+                        return proc(index);
+                    });
+
+                case PhaseType::Stay:
                     played = true;
                     return proc(index);
-                });
-            }
 
-            played = true;
-            return proc(index);
+                case PhaseType::End:
+                    base->hideTutorial();
+                    played = true;
+                    return proc(index);
+            }
         }
     }
 }

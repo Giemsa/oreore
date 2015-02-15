@@ -29,6 +29,11 @@ namespace oreore
 
         bool ClippingNode::checkTouch(const Point &pos) const
         {
+            if(!touchEnabled)
+            {
+                return false;
+            }
+
             if(touchInfo.empty())
             {
                 CCASSERT(false, "invalid path");

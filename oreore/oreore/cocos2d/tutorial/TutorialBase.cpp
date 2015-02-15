@@ -66,7 +66,7 @@ namespace oreore
                     ClippingNode *clip = dynamic_cast<ClippingNode *>(node);
                     if(clip)
                     {
-                        if(clip->isTouchEnabled() && clip->checkTouch(p))
+                        if(clip->checkTouch(p))
                         {
                             return false;
                         }
@@ -156,25 +156,32 @@ namespace oreore
 
             void TutorialBaseBase::complete()
             {
-                /*
-                for(auto *node : getChildren())
+                if(finished)
                 {
-                    if(node == maskLayer)
+                    if(getParent() && getOpacity() > 0)
                     {
-                        continue;
+                        locked = true;
+                        runAction(
+                            x::fadeOut(fadeSpeed) >> [this]() {
+                                removeTutorial();
+                                removeFromParent();
+                            }
+                        );
                     }
-
-                    node->removeFromParent();
+                    else
+                    {
+                        removeTutorial();
+                        removeFromParent();
+                    }
                 }
-                */
-
-                completed = true;
+                else
+                {
+                    completed = true;
+                }
             }
 
-            bool TutorialBaseBase::showTutorial(TutorialPhase *phase, const std::function<bool()> &callback)
+            bool TutorialBaseBase::showTutorial(const std::function<bool()> &callback)
             {
-                using namespace oreore;
-
                 completed = false;
 
                 if(!getParent())

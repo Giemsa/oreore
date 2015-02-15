@@ -21,6 +21,8 @@ namespace oreore
             {
                 template<typename T, typename D>
                 friend class oreore::Tutorial::TutorialManager;
+
+                using PhaseList = std::unordered_multimap<int, TutorialPhase>;
             public:
                 static constexpr float DefaultZOrder = 10240.0f;
             private:
@@ -29,14 +31,18 @@ namespace oreore
                 bool completed;
                 bool locked;
                 bool touchEnabled;
+                bool finished;
                 float fadeSpeed;
-                size_t seq_id;
+                PhaseList phaseList;
 
                 bool init() override;
 
                 bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
                 void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+
+                virtual void removeTutorial() const = 0;
             protected:
+
                 void complete();
                 void setFadeSpeed(const float speed) { fadeSpeed = speed; }
                 float getFadeSpeed() const { return fadeSpeed; }
@@ -69,8 +75,8 @@ namespace oreore
                 , completed(false)
                 , locked(true)
                 , touchEnabled(true)
+                , finished(false)
                 , fadeSpeed(0.4f)
-                , seq_id(0)
                 { }
                 virtual ~TutorialBaseBase() { }
 
@@ -78,7 +84,8 @@ namespace oreore
                 virtual void onExit() override;
 
                 bool hasRoot() const { return getParent(); }
-                bool showTutorial(TutorialPhase *phase, const std::function<bool()> &callback);
+                bool showTutorial(const std::function<bool()> &callback);
+                void hideTutorial() { finished = true; }
                 void setTouchEnabled(const bool enable) { touchEnabled = enable; }
                 void setLock(const bool lock) { locked = lock; }
                 virtual void registerPhase() = 0;

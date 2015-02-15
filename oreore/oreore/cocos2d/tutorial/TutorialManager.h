@@ -43,9 +43,9 @@ namespace oreore
         class TutorialManager final : public detail::TutorialManagerBase
         {
             friend class TutorialBase;
+            friend class detail::TutorialBaseBase;
 
             using PhaseList = std::unordered_multimap<int, TutorialPhase>;
-            using TutorialList = std::vector<detail::TutorialBaseBase *>;
         public:
             using TutorialID = T;
             using DataConnectorID = D;
@@ -54,6 +54,42 @@ namespace oreore
             /* チュートリアルベース */
             class TutorialBase : public detail::TutorialBaseBase
             {
+                template<typename S, typename E>
+                friend class TutorialManager;
+            private:
+                bool trigger(const T id)
+                {
+                    const std::pair<
+                        typename PhaseList::iterator,
+                        typename PhaseList::iterator
+                    > &r = phaseList.equal_range(static_cast<int>(id));
+
+                    // 未再生シーケンスのうち、最もIDの若いものを再生
+                    size_t m = std::numeric_limits<size_t>::max();
+                    TutorialPhase *phase = nullptr;
+                    for(typename PhaseList::iterator it = r.first; it != r.second; ++it)
+                    {
+                        TutorialPhase &p = it->second;
+                        if(!p.isPlayed() && p.getIndex() < m)
+                        {
+                            m = p.getIndex();
+                            phase = &p;
+                        }
+                    }
+
+                    if(!phase)
+                    {
+                        return false;
+                    }
+
+                    return phase->proceed();
+                }
+
+                void removeTutorial() const override
+                {
+                    getInstance().removeTutorial(this);
+                }
+
             protected:
                 template<typename U>
                 U &getData(const D id)
@@ -84,9 +120,17 @@ namespace oreore
 
                 void addSequence(const std::initializer_list<TutorialPhase> seq)
                 {
-                    for(auto &p : seq)
+                    for(auto &phase : seq)
                     {
-                        getInstance().add(p);
+                        const size_t idx = phaseList.size();
+                        TutorialPhase &p = phaseList.insert(
+                            std::make_pair(phase.getTrigger(), phase)
+                        )->second;
+                        p.setIndex(idx);
+                        if(idx == 0)
+                        {
+                            p.setType(PhaseType::Begin);
+                        }
                     }
                 }
             public:
@@ -95,8 +139,10 @@ namespace oreore
             };
 
         private:
+            using TutorialList = std::vector<TutorialBase *>;
+
+        private:
             DataConnector dataConnector;
-            PhaseList phaseList;
             TutorialList tutorialList;
             detail::TutorialBaseBase *tutorial;
 
@@ -107,14 +153,12 @@ namespace oreore
             ~TutorialManager()
             { }
 
-            void add(const TutorialPhase &phase)
+            void removeTutorial(const TutorialBase *tutorial)
             {
-                const size_t idx = phaseList.size();
-                TutorialPhase &p = phaseList.insert(
-                    std::make_pair(phase.getTrigger(), phase)
-                )->second;
-                p.setIndex(idx);
-                p.setType(idx == 0 ? PhaseType::Begin : PhaseType::Stay);
+                tutorialList.erase(
+                    std::remove(tutorialList.begin(), tutorialList.end(), tutorial),
+                    tutorialList.end()
+                );
             }
         public:
             static TutorialManager &getInstance()
@@ -126,30 +170,15 @@ namespace oreore
             /* 再生可能であればチュートリアルを再生する */
             bool trigger(const T id)
             {
-                const std::pair<
-                    typename PhaseList::iterator,
-                    typename PhaseList::iterator
-                > &r = phaseList.equal_range(static_cast<int>(id));
-
-                // 未再生シーケンスのうち、最もIDの若いものを再生
-                size_t m = std::numeric_limits<size_t>::max();
-                TutorialPhase *phase = nullptr;
-                for(typename PhaseList::iterator it = r.first; it != r.second; ++it)
+                for(typename TutorialList::iterator it = tutorialList.begin(); it != tutorialList.end(); ++it)
                 {
-                    TutorialPhase &p = it->second;
-                    if(!p.isPlayed() && p.getIndex() < m)
+                    if((*it)->trigger(id))
                     {
-                        m = p.getIndex();
-                        phase = &p;
+                        return true;
                     }
                 }
 
-                if(!phase)
-                {
-                    return false;
-                }
-
-                return phase->proceed();
+                return false;
             }
 
             template<typename U>
