@@ -104,5 +104,27 @@ namespace oreore
             resolutions.push_back(rc);
         }
     }
+
+    void MultiResolution::enableDebugAssetDirectory(const std::string &dir)
+    {
+        using PathList = std::vector<std::string>;
+
+        const std::string &doc = FileUtils::getInstance()->getWritablePath();
+        PathList paths;
+        const PathList &searchPaths = FileUtils::getInstance()->getSearchPaths();
+        paths.reserve(searchPaths.size() * 2);
+
+        for(auto &path : searchPaths)
+        {
+            paths.push_back(doc + dir + "/" + path);
+        }
+
+        for(auto &path : searchPaths)
+        {
+            paths.push_back(path);
+        }
+
+        FileUtils::getInstance()->setSearchPaths(paths);
+    }
 }
 

@@ -135,7 +135,9 @@ namespace oreore
         }
 
         MultiResolution()
-            : designSize(960, 640), policy(ResolutionPolicy::UNKNOWN), baseScaling(2.0f)
+        : designSize(960, 640)
+        , policy(ResolutionPolicy::UNKNOWN)
+        , baseScaling(2.0f)
         { }
         ~MultiResolution() { }
 
@@ -149,6 +151,7 @@ namespace oreore
         void setResolutionList(const std::initializer_list<ResolutionConfig> &args);
         inline float getBaseScaling() const { return baseScaling; }
         inline void setBaseScaling(const float scale) { baseScaling = scale; }
+        void enableDebugAssetDirectory(const std::string &dir = "debug");
     };
 }
 
