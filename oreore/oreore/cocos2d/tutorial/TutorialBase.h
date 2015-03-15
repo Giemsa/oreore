@@ -22,7 +22,8 @@ namespace oreore
                 template<typename T, typename D>
                 friend class oreore::Tutorial::TutorialManager;
 
-                using PhaseList = std::unordered_multimap<int, TutorialPhase>;
+            protected:
+                using PhaseList = std::vector<TutorialPhase>;
             public:
                 static constexpr float DefaultZOrder = 10240.0f;
             private:

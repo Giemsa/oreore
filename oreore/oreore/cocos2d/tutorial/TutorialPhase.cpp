@@ -5,12 +5,12 @@ namespace oreore
 {
     namespace Tutorial
     {
-        bool TutorialPhase::proceed()
+        bool TutorialPhase::proceed(const size_t index)
         {
             switch(type)
             {
                 case PhaseType::Begin:
-                    return base->showTutorial([this]() {
+                    return base->showTutorial([this, index]() {
                         played = true;
                         return proc(index);
                     });

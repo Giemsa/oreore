@@ -28,7 +28,6 @@ namespace oreore
         private:
             func_type proc;
             TutorialPhase *next;
-            size_t index;
             int trigger;
             bool played;
             bool tapToNext;
@@ -37,7 +36,6 @@ namespace oreore
         public:
             TutorialPhase()
             : next(nullptr)
-            , index(0)
             , trigger(0)
             , played(false)
             , tapToNext(false)
@@ -48,7 +46,6 @@ namespace oreore
             TutorialPhase(const func_type &proc, detail::TutorialBaseBase *base)
             : proc(proc)
             , next(nullptr)
-            , index(0)
             , trigger(0)
             , played(false)
             , tapToNext(true)
@@ -59,7 +56,6 @@ namespace oreore
             TutorialPhase(const int trigger, const func_type &proc, detail::TutorialBaseBase *base)
             : proc(proc)
             , next(nullptr)
-            , index(0)
             , trigger(trigger)
             , played(false)
             , tapToNext(false)
@@ -70,7 +66,6 @@ namespace oreore
             TutorialPhase(const int trigger, const func_type &proc, const PhaseType type, detail::TutorialBaseBase *base)
             : proc(proc)
             , next(nullptr)
-            , index(0)
             , trigger(trigger)
             , played(false)
             , tapToNext(false)
@@ -81,7 +76,6 @@ namespace oreore
             TutorialPhase(const TutorialPhase &rhs)
             : proc(rhs.proc)
             , next(rhs.next)
-            , index(rhs.index)
             , trigger(rhs.trigger)
             , played(rhs.played)
             , tapToNext(rhs.tapToNext)
@@ -92,7 +86,6 @@ namespace oreore
             TutorialPhase(TutorialPhase &&rhs)
             : proc(rhs.proc)
             , next(rhs.next)
-            , index(rhs.index)
             , trigger(rhs.trigger)
             , played(rhs.played)
             , tapToNext(rhs.tapToNext)
@@ -104,7 +97,7 @@ namespace oreore
                 rhs.base = nullptr;
             }
 
-            bool proceed();
+            bool proceed(const size_t index);
 
             TutorialPhase &operator=(const TutorialPhase &) = delete;
             TutorialPhase &operator=(TutorialPhase &&rhs)
@@ -115,7 +108,6 @@ namespace oreore
                 next = rhs.next;
                 rhs.next = nullptr;
 
-                index = rhs.index;
                 trigger = rhs.trigger;
                 played = rhs.played;
                 tapToNext = rhs.tapToNext;
@@ -128,8 +120,6 @@ namespace oreore
             }
 
             int getTrigger() const { return trigger; }
-            void setIndex(const size_t n) { index = n; }
-            size_t getIndex() const { return index; }
             bool isPlayed() const { return played; }
             PhaseType getType() const { return type; }
             void setType(const PhaseType t) { type = t; }

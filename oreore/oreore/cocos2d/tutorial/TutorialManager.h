@@ -44,8 +44,6 @@ namespace oreore
         {
             friend class TutorialBase;
             friend class detail::TutorialBaseBase;
-
-            using PhaseList = std::unordered_multimap<int, TutorialPhase>;
         public:
             using TutorialID = T;
             using DataConnectorID = D;
@@ -59,30 +57,52 @@ namespace oreore
             private:
                 bool trigger(const T id)
                 {
-                    const std::pair<
-                        typename PhaseList::iterator,
-                        typename PhaseList::iterator
-                    > &r = phaseList.equal_range(static_cast<int>(id));
-
-                    // 未再生シーケンスのうち、最もIDの若いものを再生
-                    size_t m = std::numeric_limits<size_t>::max();
-                    TutorialPhase *phase = nullptr;
-                    for(typename PhaseList::iterator it = r.first; it != r.second; ++it)
+                    bool played = true;
+                    size_t index = 0;
+                    for(PhaseList::iterator it = phaseList.begin(); it != phaseList.end(); ++it, ++index)
                     {
-                        TutorialPhase &p = it->second;
-                        if(!p.isPlayed() && p.getIndex() < m)
+                        if(it->isPlayed())
                         {
-                            m = p.getIndex();
-                            phase = &p;
+                            continue;
                         }
+
+                        if(it->getTrigger() == static_cast<int>(id))
+                        {
+                            if(played || it->getType() == PhaseType::Begin)
+                            {
+                                return it->proceed(index);
+                            }
+                        }
+
+                        played = false;
                     }
 
-                    if(!phase)
+                    return false;
+                }
+
+
+                bool canPlay(const T id) const
+                {
+                    bool played = true;
+                    for(auto &phase : phaseList)
                     {
-                        return false;
+                        if(phase.isPlayed())
+                        {
+                            continue;
+                        }
+
+                        if(phase.getTrigger() == static_cast<int>(id))
+                        {
+                            if(played || phase.getType() == PhaseType::Begin)
+                            {
+                                return true;
+                            }
+                        }
+
+                        played = false;
                     }
 
-                    return phase->proceed();
+                    return false;
                 }
 
                 void removeTutorial() const override
@@ -122,14 +142,10 @@ namespace oreore
                 {
                     for(auto &phase : seq)
                     {
-                        const size_t idx = phaseList.size();
-                        TutorialPhase &p = phaseList.insert(
-                            std::make_pair(phase.getTrigger(), phase)
-                        )->second;
-                        p.setIndex(idx);
-                        if(idx == 0)
+                        phaseList.push_back(phase);
+                        if(phaseList.size() == 1)
                         {
-                            p.setType(PhaseType::Begin);
+                            phaseList.back().setType(PhaseType::Begin);
                         }
                     }
                 }
@@ -170,9 +186,23 @@ namespace oreore
             /* 再生可能であればチュートリアルを再生する */
             bool trigger(const T id)
             {
-                for(typename TutorialList::iterator it = tutorialList.begin(); it != tutorialList.end(); ++it)
+                for(auto *t : tutorialList)
                 {
-                    if((*it)->trigger(id))
+                    if(t->trigger(id))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            /* 再生可能か */
+            bool canPlay(const T id) const
+            {
+                for(auto *t : tutorialList)
+                {
+                    if(t->canPlay(id))
                     {
                         return true;
                     }
