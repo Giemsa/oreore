@@ -38,6 +38,8 @@ namespace oreore
 
         template<typename T>
         void _unload(const T &list);
+
+        float getValue(const float v, const float t) const;
     public:
         /**
          * @brief インスタンスを取得します

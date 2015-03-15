@@ -120,7 +120,7 @@ namespace oreore
             return storedBGMVolume;
         }
 
-        return SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / bgmVolume;
+        return getValue(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume(), bgmVolume);
     }
 
     void SoundManager::setBGMVolume(const float volume)
@@ -140,7 +140,7 @@ namespace oreore
             return storedSEVolume;
         }
 
-        return SimpleAudioEngine::getInstance()->getEffectsVolume() / seVolume;
+        return getValue(SimpleAudioEngine::getInstance()->getEffectsVolume(), seVolume);
     }
 
     void SoundManager::setSEVolume(const float volume)
@@ -157,14 +157,14 @@ namespace oreore
     {
         const float tmp = bgmVolume;
         bgmVolume = range(0.0f, volume, 1.0f);
-        setBGMVolume(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() / tmp);
+        setBGMVolume(getValue(SimpleAudioEngine::getInstance()->getBackgroundMusicVolume(), tmp));
     }
 
     void SoundManager::setMaxSEVolume(const float volume)
     {
         const float tmp = seVolume;
         seVolume = range(0.0f, volume, 1.0f);
-        setSEVolume(SimpleAudioEngine::getInstance()->getEffectsVolume() / tmp);
+        setSEVolume(getValue(SimpleAudioEngine::getInstance()->getEffectsVolume(), tmp));
     }
 
     void SoundManager::fadeIn(const float duration)
@@ -303,6 +303,12 @@ namespace oreore
             seMute = false;
             setSEVolume(storedSEVolume);
         }
+    }
+
+
+    float SoundManager::getValue(const float v, const float t) const
+    {
+        return fabsf(t) < std::numeric_limits<float>::epsilon() ? 1.0f : v / t;
     }
 
     template<typename T>
