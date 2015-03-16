@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <functional>
+#include <sstream>
+#include <vector>
+#include <cassert>
 
 /*
  * Step データシリアライズユーティリティ

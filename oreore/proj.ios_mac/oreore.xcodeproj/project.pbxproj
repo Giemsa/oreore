@@ -7,36 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30A476E01A86703C00961CD8 /* ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D11A86703C00961CD8 /* ClippingNode.cpp */; };
-		30A476E11A86703C00961CD8 /* ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D11A86703C00961CD8 /* ClippingNode.cpp */; };
-		30A476E21A86703C00961CD8 /* ClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D21A86703C00961CD8 /* ClippingNode.h */; };
-		30A476E31A86703C00961CD8 /* ClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D21A86703C00961CD8 /* ClippingNode.h */; };
-		30A476E41A86703C00961CD8 /* ClippingRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D31A86703C00961CD8 /* ClippingRect.cpp */; };
-		30A476E51A86703C00961CD8 /* ClippingRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D31A86703C00961CD8 /* ClippingRect.cpp */; };
-		30A476E61A86703C00961CD8 /* ClippingRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D41A86703C00961CD8 /* ClippingRect.h */; };
-		30A476E71A86703C00961CD8 /* ClippingRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D41A86703C00961CD8 /* ClippingRect.h */; };
-		30A476E81A86703C00961CD8 /* ClippingScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D51A86703C00961CD8 /* ClippingScale9Sprite.cpp */; };
-		30A476E91A86703C00961CD8 /* ClippingScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D51A86703C00961CD8 /* ClippingScale9Sprite.cpp */; };
-		30A476EA1A86703C00961CD8 /* ClippingScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D61A86703C00961CD8 /* ClippingScale9Sprite.h */; };
-		30A476EB1A86703C00961CD8 /* ClippingScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D61A86703C00961CD8 /* ClippingScale9Sprite.h */; };
-		30A476EC1A86703C00961CD8 /* ClippingSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D71A86703C00961CD8 /* ClippingSprite.cpp */; };
-		30A476ED1A86703C00961CD8 /* ClippingSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476D71A86703C00961CD8 /* ClippingSprite.cpp */; };
-		30A476EE1A86703C00961CD8 /* ClippingSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D81A86703C00961CD8 /* ClippingSprite.h */; };
-		30A476EF1A86703C00961CD8 /* ClippingSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D81A86703C00961CD8 /* ClippingSprite.h */; };
-		30A476F01A86703C00961CD8 /* Tutorial.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D91A86703C00961CD8 /* Tutorial.h */; };
-		30A476F11A86703C00961CD8 /* Tutorial.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476D91A86703C00961CD8 /* Tutorial.h */; };
-		30A476F21A86703C00961CD8 /* TutorialBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DA1A86703C00961CD8 /* TutorialBase.cpp */; };
-		30A476F31A86703C00961CD8 /* TutorialBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DA1A86703C00961CD8 /* TutorialBase.cpp */; };
-		30A476F41A86703C00961CD8 /* TutorialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DB1A86703C00961CD8 /* TutorialBase.h */; };
-		30A476F51A86703C00961CD8 /* TutorialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DB1A86703C00961CD8 /* TutorialBase.h */; };
-		30A476F61A86703C00961CD8 /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DC1A86703C00961CD8 /* TutorialManager.cpp */; };
-		30A476F71A86703C00961CD8 /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DC1A86703C00961CD8 /* TutorialManager.cpp */; };
-		30A476F81A86703C00961CD8 /* TutorialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DD1A86703C00961CD8 /* TutorialManager.h */; };
-		30A476F91A86703C00961CD8 /* TutorialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DD1A86703C00961CD8 /* TutorialManager.h */; };
-		30A476FA1A86703C00961CD8 /* TutorialSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DE1A86703C00961CD8 /* TutorialSequence.cpp */; };
-		30A476FB1A86703C00961CD8 /* TutorialSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A476DE1A86703C00961CD8 /* TutorialSequence.cpp */; };
-		30A476FC1A86703C00961CD8 /* TutorialSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DF1A86703C00961CD8 /* TutorialSequence.h */; };
-		30A476FD1A86703C00961CD8 /* TutorialSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A476DF1A86703C00961CD8 /* TutorialSequence.h */; };
+		305D5FDC1AB71337009A8175 /* ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCB1AB71337009A8175 /* ClippingNode.cpp */; };
+		305D5FDD1AB71337009A8175 /* ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCB1AB71337009A8175 /* ClippingNode.cpp */; };
+		305D5FDE1AB71337009A8175 /* ClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FCC1AB71337009A8175 /* ClippingNode.h */; };
+		305D5FDF1AB71337009A8175 /* ClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FCC1AB71337009A8175 /* ClippingNode.h */; };
+		305D5FE01AB71337009A8175 /* ClippingRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCD1AB71337009A8175 /* ClippingRect.cpp */; };
+		305D5FE11AB71337009A8175 /* ClippingRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCD1AB71337009A8175 /* ClippingRect.cpp */; };
+		305D5FE21AB71337009A8175 /* ClippingRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FCE1AB71337009A8175 /* ClippingRect.h */; };
+		305D5FE31AB71337009A8175 /* ClippingRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FCE1AB71337009A8175 /* ClippingRect.h */; };
+		305D5FE41AB71337009A8175 /* ClippingScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCF1AB71337009A8175 /* ClippingScale9Sprite.cpp */; };
+		305D5FE51AB71337009A8175 /* ClippingScale9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FCF1AB71337009A8175 /* ClippingScale9Sprite.cpp */; };
+		305D5FE61AB71337009A8175 /* ClippingScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD01AB71337009A8175 /* ClippingScale9Sprite.h */; };
+		305D5FE71AB71337009A8175 /* ClippingScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD01AB71337009A8175 /* ClippingScale9Sprite.h */; };
+		305D5FE81AB71337009A8175 /* ClippingSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD11AB71337009A8175 /* ClippingSprite.cpp */; };
+		305D5FE91AB71337009A8175 /* ClippingSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD11AB71337009A8175 /* ClippingSprite.cpp */; };
+		305D5FEA1AB71337009A8175 /* ClippingSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD21AB71337009A8175 /* ClippingSprite.h */; };
+		305D5FEB1AB71337009A8175 /* ClippingSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD21AB71337009A8175 /* ClippingSprite.h */; };
+		305D5FEC1AB71337009A8175 /* DataConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD31AB71337009A8175 /* DataConnector.cpp */; };
+		305D5FED1AB71337009A8175 /* DataConnector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD31AB71337009A8175 /* DataConnector.cpp */; };
+		305D5FEE1AB71337009A8175 /* DataConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD41AB71337009A8175 /* DataConnector.h */; };
+		305D5FEF1AB71337009A8175 /* DataConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD41AB71337009A8175 /* DataConnector.h */; };
+		305D5FF01AB71337009A8175 /* Tutorial.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD51AB71337009A8175 /* Tutorial.h */; };
+		305D5FF11AB71337009A8175 /* Tutorial.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD51AB71337009A8175 /* Tutorial.h */; };
+		305D5FF21AB71337009A8175 /* TutorialBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD61AB71337009A8175 /* TutorialBase.cpp */; };
+		305D5FF31AB71337009A8175 /* TutorialBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD61AB71337009A8175 /* TutorialBase.cpp */; };
+		305D5FF41AB71337009A8175 /* TutorialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD71AB71337009A8175 /* TutorialBase.h */; };
+		305D5FF51AB71337009A8175 /* TutorialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD71AB71337009A8175 /* TutorialBase.h */; };
+		305D5FF61AB71337009A8175 /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD81AB71337009A8175 /* TutorialManager.cpp */; };
+		305D5FF71AB71337009A8175 /* TutorialManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FD81AB71337009A8175 /* TutorialManager.cpp */; };
+		305D5FF81AB71337009A8175 /* TutorialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD91AB71337009A8175 /* TutorialManager.h */; };
+		305D5FF91AB71337009A8175 /* TutorialManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FD91AB71337009A8175 /* TutorialManager.h */; };
+		305D5FFA1AB71337009A8175 /* TutorialPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FDA1AB71337009A8175 /* TutorialPhase.cpp */; };
+		305D5FFB1AB71337009A8175 /* TutorialPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FDA1AB71337009A8175 /* TutorialPhase.cpp */; };
+		305D5FFC1AB71337009A8175 /* TutorialPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FDB1AB71337009A8175 /* TutorialPhase.h */; };
+		305D5FFD1AB71337009A8175 /* TutorialPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 305D5FDB1AB71337009A8175 /* TutorialPhase.h */; };
+		305D5FFF1AB71387009A8175 /* JSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FFE1AB71387009A8175 /* JSON.cpp */; };
+		305D60001AB71387009A8175 /* JSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D5FFE1AB71387009A8175 /* JSON.cpp */; };
+		305D60021AB71EA9009A8175 /* msgpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D60011AB71EA9009A8175 /* msgpack.cpp */; };
+		305D60031AB71EA9009A8175 /* msgpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305D60011AB71EA9009A8175 /* msgpack.cpp */; };
 		30DC7B701A30B5CD00214270 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7AB01A30B5CC00214270 /* blowfish.cpp */; };
 		30DC7B711A30B5CD00214270 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DC7AB01A30B5CC00214270 /* blowfish.cpp */; };
 		30DC7B721A30B5CD00214270 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DC7AB11A30B5CC00214270 /* blowfish.h */; };
@@ -174,21 +182,25 @@
 		302981511A34712200F80987 /* msgpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = msgpack.h; sourceTree = "<group>"; };
 		303C13C51A349A5000A1BD9A /* Blowfish.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blowfish.h; sourceTree = "<group>"; };
 		303C13C61A34AD1100A1BD9A /* FileStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileStorage.h; sourceTree = "<group>"; };
-		30A476D11A86703C00961CD8 /* ClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNode.cpp; sourceTree = "<group>"; };
-		30A476D21A86703C00961CD8 /* ClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNode.h; sourceTree = "<group>"; };
-		30A476D31A86703C00961CD8 /* ClippingRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingRect.cpp; sourceTree = "<group>"; };
-		30A476D41A86703C00961CD8 /* ClippingRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingRect.h; sourceTree = "<group>"; };
-		30A476D51A86703C00961CD8 /* ClippingScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingScale9Sprite.cpp; sourceTree = "<group>"; };
-		30A476D61A86703C00961CD8 /* ClippingScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingScale9Sprite.h; sourceTree = "<group>"; };
-		30A476D71A86703C00961CD8 /* ClippingSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingSprite.cpp; sourceTree = "<group>"; };
-		30A476D81A86703C00961CD8 /* ClippingSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingSprite.h; sourceTree = "<group>"; };
-		30A476D91A86703C00961CD8 /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
-		30A476DA1A86703C00961CD8 /* TutorialBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialBase.cpp; sourceTree = "<group>"; };
-		30A476DB1A86703C00961CD8 /* TutorialBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBase.h; sourceTree = "<group>"; };
-		30A476DC1A86703C00961CD8 /* TutorialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialManager.cpp; sourceTree = "<group>"; };
-		30A476DD1A86703C00961CD8 /* TutorialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialManager.h; sourceTree = "<group>"; };
-		30A476DE1A86703C00961CD8 /* TutorialSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialSequence.cpp; sourceTree = "<group>"; };
-		30A476DF1A86703C00961CD8 /* TutorialSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialSequence.h; sourceTree = "<group>"; };
+		305D5FCB1AB71337009A8175 /* ClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingNode.cpp; sourceTree = "<group>"; };
+		305D5FCC1AB71337009A8175 /* ClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingNode.h; sourceTree = "<group>"; };
+		305D5FCD1AB71337009A8175 /* ClippingRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingRect.cpp; sourceTree = "<group>"; };
+		305D5FCE1AB71337009A8175 /* ClippingRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingRect.h; sourceTree = "<group>"; };
+		305D5FCF1AB71337009A8175 /* ClippingScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingScale9Sprite.cpp; sourceTree = "<group>"; };
+		305D5FD01AB71337009A8175 /* ClippingScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingScale9Sprite.h; sourceTree = "<group>"; };
+		305D5FD11AB71337009A8175 /* ClippingSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClippingSprite.cpp; sourceTree = "<group>"; };
+		305D5FD21AB71337009A8175 /* ClippingSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClippingSprite.h; sourceTree = "<group>"; };
+		305D5FD31AB71337009A8175 /* DataConnector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataConnector.cpp; sourceTree = "<group>"; };
+		305D5FD41AB71337009A8175 /* DataConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataConnector.h; sourceTree = "<group>"; };
+		305D5FD51AB71337009A8175 /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
+		305D5FD61AB71337009A8175 /* TutorialBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialBase.cpp; sourceTree = "<group>"; };
+		305D5FD71AB71337009A8175 /* TutorialBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBase.h; sourceTree = "<group>"; };
+		305D5FD81AB71337009A8175 /* TutorialManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialManager.cpp; sourceTree = "<group>"; };
+		305D5FD91AB71337009A8175 /* TutorialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialManager.h; sourceTree = "<group>"; };
+		305D5FDA1AB71337009A8175 /* TutorialPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialPhase.cpp; sourceTree = "<group>"; };
+		305D5FDB1AB71337009A8175 /* TutorialPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialPhase.h; sourceTree = "<group>"; };
+		305D5FFE1AB71387009A8175 /* JSON.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSON.cpp; sourceTree = "<group>"; };
+		305D60011AB71EA9009A8175 /* msgpack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = msgpack.cpp; sourceTree = "<group>"; };
 		30DC7AB01A30B5CC00214270 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
 		30DC7AB11A30B5CC00214270 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		30DC7C871A30B60200214270 /* Step.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Step.h; sourceTree = "<group>"; };
@@ -290,21 +302,23 @@
 		30A476D01A86703C00961CD8 /* tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				30A476D11A86703C00961CD8 /* ClippingNode.cpp */,
-				30A476D21A86703C00961CD8 /* ClippingNode.h */,
-				30A476D31A86703C00961CD8 /* ClippingRect.cpp */,
-				30A476D41A86703C00961CD8 /* ClippingRect.h */,
-				30A476D51A86703C00961CD8 /* ClippingScale9Sprite.cpp */,
-				30A476D61A86703C00961CD8 /* ClippingScale9Sprite.h */,
-				30A476D71A86703C00961CD8 /* ClippingSprite.cpp */,
-				30A476D81A86703C00961CD8 /* ClippingSprite.h */,
-				30A476D91A86703C00961CD8 /* Tutorial.h */,
-				30A476DA1A86703C00961CD8 /* TutorialBase.cpp */,
-				30A476DB1A86703C00961CD8 /* TutorialBase.h */,
-				30A476DC1A86703C00961CD8 /* TutorialManager.cpp */,
-				30A476DD1A86703C00961CD8 /* TutorialManager.h */,
-				30A476DE1A86703C00961CD8 /* TutorialSequence.cpp */,
-				30A476DF1A86703C00961CD8 /* TutorialSequence.h */,
+				305D5FCB1AB71337009A8175 /* ClippingNode.cpp */,
+				305D5FCC1AB71337009A8175 /* ClippingNode.h */,
+				305D5FCD1AB71337009A8175 /* ClippingRect.cpp */,
+				305D5FCE1AB71337009A8175 /* ClippingRect.h */,
+				305D5FCF1AB71337009A8175 /* ClippingScale9Sprite.cpp */,
+				305D5FD01AB71337009A8175 /* ClippingScale9Sprite.h */,
+				305D5FD11AB71337009A8175 /* ClippingSprite.cpp */,
+				305D5FD21AB71337009A8175 /* ClippingSprite.h */,
+				305D5FD31AB71337009A8175 /* DataConnector.cpp */,
+				305D5FD41AB71337009A8175 /* DataConnector.h */,
+				305D5FD51AB71337009A8175 /* Tutorial.h */,
+				305D5FD61AB71337009A8175 /* TutorialBase.cpp */,
+				305D5FD71AB71337009A8175 /* TutorialBase.h */,
+				305D5FD81AB71337009A8175 /* TutorialManager.cpp */,
+				305D5FD91AB71337009A8175 /* TutorialManager.h */,
+				305D5FDA1AB71337009A8175 /* TutorialPhase.cpp */,
+				305D5FDB1AB71337009A8175 /* TutorialPhase.h */,
 			);
 			path = tutorial;
 			sourceTree = "<group>";
@@ -360,6 +374,8 @@
 			children = (
 				3029814D1A346F7C00F80987 /* JSON.h */,
 				302981511A34712200F80987 /* msgpack.h */,
+				305D5FFE1AB71387009A8175 /* JSON.cpp */,
+				305D60011AB71EA9009A8175 /* msgpack.cpp */,
 			);
 			path = serializer;
 			sourceTree = "<group>";
@@ -513,46 +529,47 @@
 			files = (
 				7A759665194FF08A004A6CE8 /* ShakeFadeOut.h in Headers */,
 				7A759667194FF08A004A6CE8 /* ToggleButton.h in Headers */,
-				30A476E61A86703C00961CD8 /* ClippingRect.h in Headers */,
 				7A759669194FF08A004A6CE8 /* Move.h in Headers */,
-				30A476F41A86703C00961CD8 /* TutorialBase.h in Headers */,
 				7A75966A194FF08A004A6CE8 /* bg.h in Headers */,
 				7A75966B194FF08A004A6CE8 /* Debug.h in Headers */,
 				7A75966C194FF08A004A6CE8 /* oreore.h in Headers */,
 				7A75966D194FF08A004A6CE8 /* oreore.h in Headers */,
 				7A75966F194FF08A004A6CE8 /* Utils.h in Headers */,
+				305D5FEE1AB71337009A8175 /* DataConnector.h in Headers */,
 				7A759670194FF08A004A6CE8 /* Persistent.h in Headers */,
 				7A759671194FF08A004A6CE8 /* SwayMoveBy.h in Headers */,
 				7A759672194FF08A004A6CE8 /* Fluxion.h in Headers */,
 				7A759673194FF08A004A6CE8 /* Shake.h in Headers */,
-				30A476E21A86703C00961CD8 /* ClippingNode.h in Headers */,
 				30EFBFC71987E1DE007AF580 /* RepeatWith.h in Headers */,
 				7A759674194FF08A004A6CE8 /* AssetLoader.h in Headers */,
 				7A759675194FF08A004A6CE8 /* ImageMappedPolygon.h in Headers */,
 				7A759676194FF08A004A6CE8 /* MusicFadeTo.h in Headers */,
 				7A759677194FF08A004A6CE8 /* Utils.h in Headers */,
-				30A476F81A86703C00961CD8 /* TutorialManager.h in Headers */,
 				7A759678194FF08A004A6CE8 /* Sound.h in Headers */,
-				30A476F01A86703C00961CD8 /* Tutorial.h in Headers */,
+				305D5FE61AB71337009A8175 /* ClippingScale9Sprite.h in Headers */,
+				305D5FFC1AB71337009A8175 /* TutorialPhase.h in Headers */,
 				7A759679194FF08A004A6CE8 /* CircleMoveTo.h in Headers */,
+				305D5FE21AB71337009A8175 /* ClippingRect.h in Headers */,
+				305D5FEA1AB71337009A8175 /* ClippingSprite.h in Headers */,
 				7A75967A194FF08A004A6CE8 /* TimeCounter.h in Headers */,
 				7A75967B194FF08A004A6CE8 /* PlaySE.h in Headers */,
 				7A75967C194FF08A004A6CE8 /* Overlay.h in Headers */,
-				30A476EA1A86703C00961CD8 /* ClippingScale9Sprite.h in Headers */,
 				7A75967D194FF08A004A6CE8 /* SimpleButton.h in Headers */,
 				30DF70BF1A8BC84F002C053D /* ResizeBy.h in Headers */,
+				305D5FDE1AB71337009A8175 /* ClippingNode.h in Headers */,
 				7A75967E194FF08A004A6CE8 /* dlog.h in Headers */,
-				30A476FC1A86703C00961CD8 /* TutorialSequence.h in Headers */,
 				30DF70C31A8BC84F002C053D /* ResizeTo.h in Headers */,
 				7A75967F194FF08A004A6CE8 /* SwayMoveTo.h in Headers */,
 				30DC7C951A30B60200214270 /* Step.h in Headers */,
-				30A476EE1A86703C00961CD8 /* ClippingSprite.h in Headers */,
+				305D5FF01AB71337009A8175 /* Tutorial.h in Headers */,
 				7A759680194FF08A004A6CE8 /* Formatter.h in Headers */,
 				7A759681194FF08A004A6CE8 /* AttractMove.h in Headers */,
 				7A759682194FF08A004A6CE8 /* ShatteredSprite.h in Headers */,
 				30DC7B721A30B5CD00214270 /* blowfish.h in Headers */,
 				7A759683194FF08A004A6CE8 /* MultiResolution.h in Headers */,
+				305D5FF41AB71337009A8175 /* TutorialBase.h in Headers */,
 				7A759684194FF08A004A6CE8 /* SceneManager.h in Headers */,
+				305D5FF81AB71337009A8175 /* TutorialManager.h in Headers */,
 				7A759685194FF08A004A6CE8 /* icon.h in Headers */,
 				7A759686194FF08A004A6CE8 /* CallInterval.h in Headers */,
 				7A759687194FF08A004A6CE8 /* CircleMoveBy.h in Headers */,
@@ -564,47 +581,48 @@
 			buildActionMask = 2147483647;
 			files = (
 				30DC7C961A30B60200214270 /* Step.h in Headers */,
-				30A476F11A86703C00961CD8 /* Tutorial.h in Headers */,
 				7A7FC821194ED99C006EA6B4 /* ShakeFadeOut.h in Headers */,
 				7A7FC831194ED99C006EA6B4 /* ToggleButton.h in Headers */,
 				7A7FC819194ED99C006EA6B4 /* Move.h in Headers */,
-				30A476E71A86703C00961CD8 /* ClippingRect.h in Headers */,
 				7A7FC83A194ED99C006EA6B4 /* bg.h in Headers */,
 				7A7FC836194ED99C006EA6B4 /* Debug.h in Headers */,
 				7A7FC848194ED99C006EA6B4 /* oreore.h in Headers */,
 				7A7FC832194ED99C006EA6B4 /* oreore.h in Headers */,
-				30A476EF1A86703C00961CD8 /* ClippingSprite.h in Headers */,
 				7A7FC843194ED99C006EA6B4 /* Utils.h in Headers */,
 				7A7FC83E194ED99C006EA6B4 /* Persistent.h in Headers */,
+				305D5FF11AB71337009A8175 /* Tutorial.h in Headers */,
 				7A7FC823194ED99C006EA6B4 /* SwayMoveBy.h in Headers */,
 				7A7FC837194ED99C006EA6B4 /* Fluxion.h in Headers */,
+				305D5FFD1AB71337009A8175 /* TutorialPhase.h in Headers */,
 				7A7FC81F194ED99C006EA6B4 /* Shake.h in Headers */,
 				7A7FC834194ED99C006EA6B4 /* AssetLoader.h in Headers */,
+				305D5FDF1AB71337009A8175 /* ClippingNode.h in Headers */,
 				7A7FC829194ED99C006EA6B4 /* ImageMappedPolygon.h in Headers */,
 				7A7FC81B194ED99C006EA6B4 /* MusicFadeTo.h in Headers */,
-				30A476F51A86703C00961CD8 /* TutorialBase.h in Headers */,
-				30A476E31A86703C00961CD8 /* ClippingNode.h in Headers */,
 				7A7FC84B194ED99C006EA6B4 /* Utils.h in Headers */,
 				7A7FC842194ED99C006EA6B4 /* Sound.h in Headers */,
 				7A7FC817194ED99C006EA6B4 /* CircleMoveTo.h in Headers */,
 				7A7FC849194ED99C006EA6B4 /* TimeCounter.h in Headers */,
 				7A7FC81D194ED99C006EA6B4 /* PlaySE.h in Headers */,
-				30A476F91A86703C00961CD8 /* TutorialManager.h in Headers */,
 				7A7FC82B194ED99C006EA6B4 /* Overlay.h in Headers */,
 				7A7FC82F194ED99C006EA6B4 /* SimpleButton.h in Headers */,
 				7A7FC845194ED99C006EA6B4 /* dlog.h in Headers */,
+				305D5FF51AB71337009A8175 /* TutorialBase.h in Headers */,
 				7A7FC825194ED99C006EA6B4 /* SwayMoveTo.h in Headers */,
 				7A7FC839194ED99C006EA6B4 /* Formatter.h in Headers */,
 				7A7FC811194ED99C006EA6B4 /* AttractMove.h in Headers */,
+				305D5FF91AB71337009A8175 /* TutorialManager.h in Headers */,
+				305D5FE71AB71337009A8175 /* ClippingScale9Sprite.h in Headers */,
+				305D5FEF1AB71337009A8175 /* DataConnector.h in Headers */,
 				30DF70C41A8BC84F002C053D /* ResizeTo.h in Headers */,
 				7A7FC82D194ED99C006EA6B4 /* ShatteredSprite.h in Headers */,
 				7A7FC83D194ED99C006EA6B4 /* MultiResolution.h in Headers */,
 				30DF70C01A8BC84F002C053D /* ResizeBy.h in Headers */,
 				30DC7B731A30B5CD00214270 /* blowfish.h in Headers */,
 				7A7FC840194ED99C006EA6B4 /* SceneManager.h in Headers */,
+				305D5FEB1AB71337009A8175 /* ClippingSprite.h in Headers */,
+				305D5FE31AB71337009A8175 /* ClippingRect.h in Headers */,
 				7A7FC83B194ED99C006EA6B4 /* icon.h in Headers */,
-				30A476EB1A86703C00961CD8 /* ClippingScale9Sprite.h in Headers */,
-				30A476FD1A86703C00961CD8 /* TutorialSequence.h in Headers */,
 				7A7FC813194ED99C006EA6B4 /* CallInterval.h in Headers */,
 				7A7FC815194ED99C006EA6B4 /* CircleMoveBy.h in Headers */,
 			);
@@ -679,7 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30A476E81A86703C00961CD8 /* ClippingScale9Sprite.cpp in Sources */,
+				305D60021AB71EA9009A8175 /* msgpack.cpp in Sources */,
 				7A75964A194FF08A004A6CE8 /* Sound.cpp in Sources */,
 				7A75964B194FF08A004A6CE8 /* ImageMappedPolygon.cpp in Sources */,
 				30EFBFC61987E1DE007AF580 /* RepeatWith.cpp in Sources */,
@@ -692,27 +710,30 @@
 				7A759652194FF08A004A6CE8 /* Utils.cpp in Sources */,
 				30DF70C11A8BC84F002C053D /* ResizeTo.cpp in Sources */,
 				7A759653194FF08A004A6CE8 /* CircleMoveTo.cpp in Sources */,
+				305D5FF61AB71337009A8175 /* TutorialManager.cpp in Sources */,
 				7A759654194FF08A004A6CE8 /* SceneManager.cpp in Sources */,
 				7A759655194FF08A004A6CE8 /* ToggleButton.cpp in Sources */,
 				7A759656194FF08A004A6CE8 /* AttractMove.cpp in Sources */,
+				305D5FDC1AB71337009A8175 /* ClippingNode.cpp in Sources */,
+				305D5FEC1AB71337009A8175 /* DataConnector.cpp in Sources */,
+				305D5FE81AB71337009A8175 /* ClippingSprite.cpp in Sources */,
 				30DC7B701A30B5CD00214270 /* blowfish.cpp in Sources */,
 				7A759657194FF08A004A6CE8 /* MultiResolution.cpp in Sources */,
-				30A476F21A86703C00961CD8 /* TutorialBase.cpp in Sources */,
+				305D5FE41AB71337009A8175 /* ClippingScale9Sprite.cpp in Sources */,
+				305D5FFF1AB71387009A8175 /* JSON.cpp in Sources */,
 				7A759658194FF08A004A6CE8 /* SimpleButton.cpp in Sources */,
-				30A476E01A86703C00961CD8 /* ClippingNode.cpp in Sources */,
-				30A476F61A86703C00961CD8 /* TutorialManager.cpp in Sources */,
+				305D5FFA1AB71337009A8175 /* TutorialPhase.cpp in Sources */,
 				7A759659194FF08A004A6CE8 /* PlaySE.cpp in Sources */,
 				7A75965A194FF08A004A6CE8 /* SwayMoveBy.cpp in Sources */,
 				7A75965B194FF08A004A6CE8 /* CircleMoveBy.cpp in Sources */,
 				7A75965C194FF08A004A6CE8 /* MusicFadeTo.cpp in Sources */,
-				30A476FA1A86703C00961CD8 /* TutorialSequence.cpp in Sources */,
-				30A476E41A86703C00961CD8 /* ClippingRect.cpp in Sources */,
+				305D5FE01AB71337009A8175 /* ClippingRect.cpp in Sources */,
 				7A75965D194FF08A004A6CE8 /* SwayMoveTo.cpp in Sources */,
 				7A75965E194FF08A004A6CE8 /* Debug.cpp in Sources */,
 				7A75965F194FF08A004A6CE8 /* Shake.cpp in Sources */,
-				30A476EC1A86703C00961CD8 /* ClippingSprite.cpp in Sources */,
 				7A759660194FF08A004A6CE8 /* Overlay.cpp in Sources */,
 				7A759661194FF08A004A6CE8 /* Move.cpp in Sources */,
+				305D5FF21AB71337009A8175 /* TutorialBase.cpp in Sources */,
 				7A759662194FF08A004A6CE8 /* dlog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -721,7 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30A476E91A86703C00961CD8 /* ClippingScale9Sprite.cpp in Sources */,
+				305D60031AB71EA9009A8175 /* msgpack.cpp in Sources */,
 				7A7FC841194ED99C006EA6B4 /* Sound.cpp in Sources */,
 				7A7FC828194ED99C006EA6B4 /* ImageMappedPolygon.cpp in Sources */,
 				7A7FC812194ED99C006EA6B4 /* CallInterval.cpp in Sources */,
@@ -734,27 +755,30 @@
 				7A7FC816194ED99C006EA6B4 /* CircleMoveTo.cpp in Sources */,
 				30DF70C21A8BC84F002C053D /* ResizeTo.cpp in Sources */,
 				7A7FC83F194ED99C006EA6B4 /* SceneManager.cpp in Sources */,
+				305D5FF71AB71337009A8175 /* TutorialManager.cpp in Sources */,
 				7A7FC830194ED99C006EA6B4 /* ToggleButton.cpp in Sources */,
 				7A7FC810194ED99C006EA6B4 /* AttractMove.cpp in Sources */,
 				30EFBFC81987E1FA007AF580 /* RepeatWith.cpp in Sources */,
+				305D5FDD1AB71337009A8175 /* ClippingNode.cpp in Sources */,
+				305D5FED1AB71337009A8175 /* DataConnector.cpp in Sources */,
+				305D5FE91AB71337009A8175 /* ClippingSprite.cpp in Sources */,
 				30DC7B711A30B5CD00214270 /* blowfish.cpp in Sources */,
 				7A7FC83C194ED99C006EA6B4 /* MultiResolution.cpp in Sources */,
-				30A476F31A86703C00961CD8 /* TutorialBase.cpp in Sources */,
+				305D5FE51AB71337009A8175 /* ClippingScale9Sprite.cpp in Sources */,
+				305D60001AB71387009A8175 /* JSON.cpp in Sources */,
 				7A7FC82E194ED99C006EA6B4 /* SimpleButton.cpp in Sources */,
-				30A476E11A86703C00961CD8 /* ClippingNode.cpp in Sources */,
-				30A476F71A86703C00961CD8 /* TutorialManager.cpp in Sources */,
+				305D5FFB1AB71337009A8175 /* TutorialPhase.cpp in Sources */,
 				7A7FC81C194ED99C006EA6B4 /* PlaySE.cpp in Sources */,
 				7A7FC822194ED99C006EA6B4 /* SwayMoveBy.cpp in Sources */,
 				7A7FC814194ED99C006EA6B4 /* CircleMoveBy.cpp in Sources */,
 				7A7FC81A194ED99C006EA6B4 /* MusicFadeTo.cpp in Sources */,
-				30A476FB1A86703C00961CD8 /* TutorialSequence.cpp in Sources */,
-				30A476E51A86703C00961CD8 /* ClippingRect.cpp in Sources */,
+				305D5FE11AB71337009A8175 /* ClippingRect.cpp in Sources */,
 				7A7FC824194ED99C006EA6B4 /* SwayMoveTo.cpp in Sources */,
 				7A7FC835194ED99C006EA6B4 /* Debug.cpp in Sources */,
 				7A7FC81E194ED99C006EA6B4 /* Shake.cpp in Sources */,
-				30A476ED1A86703C00961CD8 /* ClippingSprite.cpp in Sources */,
 				7A7FC82A194ED99C006EA6B4 /* Overlay.cpp in Sources */,
 				7A7FC818194ED99C006EA6B4 /* Move.cpp in Sources */,
+				305D5FF31AB71337009A8175 /* TutorialBase.cpp in Sources */,
 				7A7FC844194ED99C006EA6B4 /* dlog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
