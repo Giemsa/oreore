@@ -241,6 +241,13 @@ namespace oreore
 
                 return r;
             }
+
+            template<typename U>
+            U *bindTutorial(U *t) const
+            {
+                static U *binded = t;
+                return binded;
+            }
         public:
             static TutorialManager &getInstance()
             {
@@ -288,10 +295,17 @@ namespace oreore
                     t->registerPhase();
                     tutorial = nullptr;
                     tutorialList.push_back(t);
+                    bindTutorial(t);
                     return;
                 }
 
                 delete t;
+            }
+
+            template<typename U>
+            U *getTutorial() const
+            {
+                return bindTutorial<U>(nullptr);
             }
 
             DataConnector &getDataConnector() { return dataConnector; }
