@@ -28,8 +28,10 @@ namespace oreore
                 virtual ~TutorialManagerBase()
                 { }
 
-                void load();
-                void save(const std::function<void(const bool)> &callback);
+                bool load();
+                void loadAsync();
+                bool save();
+                void saveAsync(const std::function<void(const bool)> &callback);
 
                 void setFileName(const std::string &name) { fileName = fileName; }
                 const std::string &getFileName() const { return fileName; }
@@ -58,6 +60,11 @@ namespace oreore
                     size_t index = 0;
                     for(PhaseList::iterator it = phaseList.begin(); it != phaseList.end(); ++it, ++index)
                     {
+                        if(it->getType() == PhaseType::Begin)
+                        {
+                            played = true;
+                        }
+
                         if(it->isPlayed())
                         {
                             continue;
@@ -83,6 +90,11 @@ namespace oreore
                     bool played = true;
                     for(auto &phase : phaseList)
                     {
+                        if(phase.getType() == PhaseType::Begin)
+                        {
+                            played = true;
+                        }
+
                         if(phase.isPlayed())
                         {
                             continue;
