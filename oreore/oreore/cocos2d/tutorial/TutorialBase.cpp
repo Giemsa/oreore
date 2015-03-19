@@ -163,14 +163,14 @@ namespace oreore
                         locked = true;
                         runAction(
                             x::fadeOut(fadeSpeed) >> [this]() {
-                                removeTutorial();
+                                // removeTutorial();
                                 removeFromParent();
                             }
                         );
                     }
                     else
                     {
-                        removeTutorial();
+                        // removeTutorial();
                         removeFromParent();
                     }
                 }
@@ -206,6 +206,70 @@ namespace oreore
                 }
 
                 return callback();
+            }
+
+            bool TutorialBaseBase::loadTutorial(const picojson::value &data)
+            {
+                if(!data.is<picojson::object>())
+                {
+                    return false;
+                }
+
+                {
+                    const picojson::value &v = data.get("name");
+                    if(!v.is<std::string>())
+                    {
+                        return false;
+                    }
+
+                    name_ = v.get<std::string>();
+                }
+
+                bool r = true;
+                {
+                    const picojson::value &v = data.get("phases");
+                    if(!v.is<picojson::array>())
+                    {
+                        return false;
+                    }
+
+                    const picojson::array &list = v.get<picojson::array>();
+                    if(list.size() != phaseList.size())
+                    {
+                        return false;
+                    }
+
+                    PhaseList::iterator it = phaseList.begin();
+                    for(auto &e : list)
+                    {
+                        r &= (it++)->loadPhase(e);
+                    }
+                }
+
+                return r;
+            }
+
+            bool TutorialBaseBase::saveTutorial(picojson::array &out) const
+            {
+                picojson::object obj;
+
+                // name
+                obj.insert(std::make_pair("name", picojson::value(name_)));
+
+                // phase
+                {
+                    picojson::array ary;
+                    for(auto &phase : phaseList)
+                    {
+                        phase.savePhase(ary);
+                    }
+
+                    obj.insert(std::make_pair("phases", picojson::value(ary)));
+                }
+
+
+                out.push_back(picojson::value(obj));
+                return true;
             }
         }
     }

@@ -10,32 +10,6 @@ namespace oreore
 
         namespace detail
         {
-            bool TutorialManagerBase::deserialize(const picojson::value &data, const std::string &error)
-            {
-                using namespace oreore;
-
-                if(!error.empty())
-                {
-                    return false;
-                }
-
-                if(!data.is<picojson::object>())
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            bool TutorialManagerBase::serialize(picojson::value &out) const
-            {
-                using namespace oreore;
-
-                picojson::object obj;
-
-                return true;
-            }
-
             void TutorialManagerBase::load()
             {
                 using namespace oreore;
@@ -64,13 +38,15 @@ namespace oreore
 
                             // 進捗データをクリアして保存
                             resetAll();
-                            save();
+                            save([](const bool) {
+                                CCLOG("save complete");
+                            });
                         }
                     }
                 );
             }
 
-            void TutorialManagerBase::save()
+            void TutorialManagerBase::save(const std::function<void(const bool)> &callback)
             {
                 using namespace oreore;
 
@@ -89,7 +65,7 @@ namespace oreore
 
             void TutorialManagerBase::resetAll()
             {
-            
+
             }
         }
     }

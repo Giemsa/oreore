@@ -2,6 +2,7 @@
 #define __OREORE_COCOS2DX_TUTORIALBASE_H__
 
 #include "cocos2d.h"
+#include "../../libs/picojson/picojson.h"
 #include "TutorialPhase.h"
 #include "ClippingSprite.h"
 #include "ClippingScale9Sprite.h"
@@ -27,6 +28,7 @@ namespace oreore
             public:
                 static constexpr float DefaultZOrder = 10240.0f;
             private:
+                std::string name_;
                 cocos2d::LayerColor *maskLayer;
                 cocos2d::EventListenerTouchOneByOne *listener;
                 bool completed;
@@ -41,7 +43,7 @@ namespace oreore
                 bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
                 void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 
-                virtual void removeTutorial() const = 0;
+                virtual void removeTutorial() = 0;
             protected:
 
                 void complete();
@@ -70,8 +72,9 @@ namespace oreore
                 ClippingRect *createClip(const cocos2d::Size &size) { return createClip(size.width, size.height); }
 
             public:
-                TutorialBaseBase()
-                : maskLayer(nullptr)
+                TutorialBaseBase(const char *name)
+                : name_(name)
+                , maskLayer(nullptr)
                 , listener(nullptr)
                 , completed(false)
                 , locked(true)
@@ -90,6 +93,10 @@ namespace oreore
                 void setTouchEnabled(const bool enable) { touchEnabled = enable; }
                 void setLock(const bool lock) { locked = lock; }
                 virtual void registerPhase() = 0;
+
+                const std::string &getName() const { return name_; }
+                bool loadTutorial(const picojson::value &data);
+                bool saveTutorial(picojson::array &out) const;
             };
         };
     }

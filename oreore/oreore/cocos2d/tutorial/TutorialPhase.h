@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <functional>
+#include "../../libs/picojson/picojson.h"
 
 namespace oreore
 {
@@ -123,6 +124,8 @@ namespace oreore
             bool isPlayed() const { return played; }
             PhaseType getType() const { return type; }
             void setType(const PhaseType t) { type = t; }
+            bool loadPhase(const picojson::value &data);
+            bool savePhase(picojson::array &list) const;
         };
     }
 }

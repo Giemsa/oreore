@@ -18,9 +18,6 @@ namespace oreore
             private:
                 std::string fileName;
             protected:
-                bool deserialize(const picojson::value &data, const std::string &error) override;
-                bool serialize(picojson::value &out) const override;
-
                 void resetAll();
             public:
                 TutorialManagerBase()
@@ -32,7 +29,7 @@ namespace oreore
                 { }
 
                 void load();
-                void save();
+                void save(const std::function<void(const bool)> &callback);
 
                 void setFileName(const std::string &name) { fileName = fileName; }
                 const std::string &getFileName() const { return fileName; }
@@ -105,11 +102,10 @@ namespace oreore
                     return false;
                 }
 
-                void removeTutorial() const override
+                void removeTutorial() override
                 {
                     getInstance().removeTutorial(this);
                 }
-
             protected:
                 template<typename U>
                 U &getData(const D id)
@@ -150,14 +146,16 @@ namespace oreore
                     }
                 }
             public:
-                TutorialBase() { }
+                TutorialBase(const char *name)
+                : detail::TutorialBaseBase(name)
+                { }
+
                 virtual ~TutorialBase() { }
             };
 
         private:
             using TutorialList = std::vector<TutorialBase *>;
 
-        private:
             DataConnector dataConnector;
             TutorialList tutorialList;
             detail::TutorialBaseBase *tutorial;
@@ -167,14 +165,69 @@ namespace oreore
             { }
 
             ~TutorialManager()
-            { }
-
-            void removeTutorial(const TutorialBase *tutorial)
             {
+                for(auto *t : tutorialList)
+                {
+                    t->release();
+                }
+            }
+
+            void removeTutorial(TutorialBase *tutorial)
+            {
+                tutorial->release();
                 tutorialList.erase(
                     std::remove(tutorialList.begin(), tutorialList.end(), tutorial),
                     tutorialList.end()
                 );
+            }
+
+            bool serialize(picojson::value &out) const override
+            {
+                picojson::array list;
+
+                bool r = true;
+                for(auto *t : tutorialList)
+                {
+                    r &= t->saveTutorial(list);
+                }
+
+                // シリアライズに失敗してたら保存しない
+                if(r)
+                {
+                    out = picojson::value(list);
+                }
+
+                return r;
+            }
+
+            bool deserialize(const picojson::value &data, const std::string &error) override
+            {
+                using namespace oreore;
+
+                if(!error.empty())
+                {
+                    return false;
+                }
+
+                if(!data.is<picojson::array>())
+                {
+                    return false;
+                }
+
+                const picojson::array &list = data.get<picojson::array>();
+                if(list.size() != tutorialList.size())
+                {
+                    return false;
+                }
+
+                bool r = true;
+                typename TutorialList::iterator it = tutorialList.begin();
+                for(auto &e : list)
+                {
+                    r &= (*it++)->loadTutorial(e);
+                }
+
+                return r;
             }
         public:
             static TutorialManager &getInstance()
