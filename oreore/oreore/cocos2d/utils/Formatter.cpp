@@ -44,6 +44,16 @@ namespace oreore
         os << ")";
         return os;
     }
+
+    std::ostream& operator <<(std::ostream& os, const cocos2d::Node *t)
+    {
+        if(t)
+        {
+            return os << t->getDescription();
+        }
+
+        return os << "(nullptr)";
+    }
 }
 
 #endif
